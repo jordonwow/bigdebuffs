@@ -4,4 +4,5 @@
 	<Script file="deDE.lua"/>
 	<Script file="koKR.lua"/>
 	<Script file="ptBR.lua"/>
+	<Script file="zhCN.lua"/>
 </Ui>
