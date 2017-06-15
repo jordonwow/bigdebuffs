@@ -2,11 +2,24 @@
 
 BigDebuffs is an _extremely lightweight_ addon that hooks the Blizzard raid frames to increase the debuff size of crowd control effects. Additionally, it replaces unit frame portraits with debuff durations when important debuffs are present.
 
+## v6.2
+
+* Added Blood Mirror
+* Added Bonestorm
+* Added Dancing Rune Weapon
+* Added Hungering Rune Weapon
+* Added Prismatic Cloak
+* Added Tombstone
+* Fixed Asphyxiate
+* Fixed Bursting Shot
+* Fixed Lua errors in instances
+
 ## v6.1
-* Fixed bug where interrupt was being displayed when it wasn't landed successfully
-* Added Korean locale
-* Added German locale
+
 * Added Brazilian Portuguese locale
+* Added German locale
+* Added Korean locale
+* Fixed bug where interrupt was being displayed when it wasn't landed successfully
 
 ## v6.0
 
