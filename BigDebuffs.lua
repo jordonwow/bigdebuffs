@@ -921,7 +921,7 @@ function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, ...)
 	-- Find unit
 	for i = 1, #unitsWithRaid do
 		local unit = unitsWithRaid[i]
-		if destGUID == UnitGUID(unit) and not select(8, UnitChannelInfo(unit)) then
+		if destGUID == UnitGUID(unit) and (event ~= "SPELL_CAST_SUCCESS" or select(8, UnitChannelInfo(unit)) == false)  then
 			local duration = spell.duration
 			local _, class = UnitClass(unit)
 

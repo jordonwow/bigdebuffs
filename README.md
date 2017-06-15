@@ -1,8 +1,17 @@
-# v6.0
+# BigDebuffs
+
+BigDebuffs is an _extremely lightweight_ addon that hooks the Blizzard raid frames to increase the debuff size of crowd control effects. Additionally, it replaces unit frame portraits with debuff durations when important debuffs are present.
+
+## v6.1
+* Fixed bug where interrupt was being displayed when it wasn't landed successfully
+* Added Korean locale
+* Added German locale
+* Added Brazilian Portuguese locale
+
+## v6.0
 
 ### Interrupts
 Interrupts will now be shown as BigDebuffs and are fully customizable.
-
 
 ### New spells
 
@@ -44,11 +53,12 @@ Interrupts will now be shown as BigDebuffs and are fully customizable.
 * Counterstrike Totem
 * Touch of Karma
 
+---
 
 > **Developer's Note:** I'd like to thank the following people for their contributions to this release:
-> * [NorkTheOrc][1] for his meticulous overhaul of the spell list. Most of the additions and fixes in this release were sent in by him.
-> * [Pride][2] for his help updating the spell list.
-> * [Jax][3] for his awesome concept of showing interrupts as a debuff, which I've fully integrated into this release.
+>  [NorkTheOrc][1] for his meticulous overhaul of the spell list. Most of the additions and fixes in this release were sent in by him.
+>  [Pride][2] for his help updating the spell list.
+>  [Jax][3] for his awesome concept of showing interrupts as a debuff, which I've fully integrated into this release.
 
 [1]: https://mods.curse.com/members/NorktheOrc/projects
 [2]: https://www.twitch.tv/pride_rag
