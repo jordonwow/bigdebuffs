@@ -1175,7 +1175,6 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 		if ( count >= 10 ) then
 			countText = BUFF_STACKS_OVERFLOW;
 		end
-		debuffFrame.count:SetFont(BigDebuffs.db.profile.raidFrames.cooldownFont, BigDebuffs.db.profile.raidFrames.cooldownFontSize, BigDebuffs.db.profile.unitFrames.cooldownFontEffect);
 		debuffFrame.count:Show();
 		debuffFrame.count:SetText(countText);
 	else
@@ -1184,6 +1183,8 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 	debuffFrame:SetID(index);
 	if ( expirationTime and expirationTime ~= 0 ) then
 		local startTime = expirationTime - duration;
+		local text = debuffFrame.cooldown:GetRegions();
+		text:SetFont(BigDebuffs.db.profile.raidFrames.cooldownFont, BigDebuffs.db.profile.raidFrames.cooldownFontSize, BigDebuffs.db.profile.unitFrames.cooldownFontEffect);
 		debuffFrame.cooldown:SetCooldown(startTime, duration);
 		debuffFrame.cooldown:Show();
 	else
