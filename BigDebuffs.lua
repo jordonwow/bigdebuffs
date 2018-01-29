@@ -1176,8 +1176,6 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 		if ( count >= 10 ) then
 			countText = BUFF_STACKS_OVERFLOW;
 		end
-		local text = debuffFrame.count:GetRegions();
-		text:SetFont(SM:Fetch("font",BigDebuffs.db.profile.raidFrames.cooldownFont), BigDebuffs.db.profile.raidFrames.cooldownFontSize, BigDebuffs.db.profile.raidFrames.cooldownFontEffect);
 		debuffFrame.count:Show();
 		debuffFrame.count:SetText(countText);
 	else
