@@ -10,4 +10,5 @@
 	<Include file="libs\AceConfig-3.0\AceConfig-3.0.xml"/>
 	<Include file="libs\AceLocale-3.0\AceLocale-3.0.xml" />
 	<Include file="libs\LibDualSpec-1.0\LibDualSpec-1.0.lua"/>
+	<Include file="libs\LibSharedMedia-3.0\lib.xml"/>
 </Ui>
