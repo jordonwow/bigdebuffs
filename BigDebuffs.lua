@@ -11,6 +11,9 @@ local defaults = {
 			anchor = "INNER",
 			enabled = true,
 			cooldownCount = true,
+			cooldownFontSize = 10,
+			cooldownFontEffect = "OUTLINE",
+			cooldownFont = "Fonts\\FRIZQT__.TTF",
 			hideBliz = true,
 			redirectBliz = false,
 			increaseBuffs = false,
@@ -35,6 +38,9 @@ local defaults = {
 		unitFrames = {
 			enabled = true,
 			cooldownCount = true,
+			cooldownFontSize = 10,
+			cooldownFontEffect = "OUTLINE",
+			cooldownFont = "Fonts\\FRIZQT__.TTF",
 			tooltips = true,
 			player = {
 				enabled = true,
@@ -757,6 +763,10 @@ function BigDebuffs:Refresh()
 	for unit, frame in pairs(self.UnitFrames) do
 		frame:Hide()
 		frame.current = nil
+		if(self.db.profile.unitFrames.cooldownCount) then 
+			local text = frame.cooldown:GetRegions()
+			if text then text:SetFont(self.db.profile.unitFrames.cooldownFont, self.db.profile.unitFrames.cooldownFontSize, self.db.profile.unitFrames.cooldownFontEffect) end
+		end
 		frame.cooldown:SetHideCountdownNumbers(not self.db.profile.unitFrames.cooldownCount)
 		frame.cooldown.noCooldownCount = not self.db.profile.unitFrames.cooldownCount
 		self:UNIT_AURA(unit)
@@ -1165,6 +1175,7 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 		if ( count >= 10 ) then
 			countText = BUFF_STACKS_OVERFLOW;
 		end
+		debuffFrame.count:SetFont(BigDebuffs.db.profile.raidFrames.cooldownFont, BigDebuffs.db.profile.raidFrames.cooldownFontSize, BigDebuffs.db.profile.unitFrames.cooldownFontEffect);
 		debuffFrame.count:Show();
 		debuffFrame.count:SetText(countText);
 	else
