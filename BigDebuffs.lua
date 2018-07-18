@@ -1152,9 +1152,9 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 		expirationTime = spell.expires
 	else
 		if (isBossBuff) then
-			name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId = UnitBuff(unit, index, filter);
+			name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId = UnitBuff(unit, index, filter);
 		else
-			name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId = UnitDebuff(unit, index, filter);
+			name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId = UnitDebuff(unit, index, filter);
 		end
 	end
 
@@ -1210,7 +1210,7 @@ function BigDebuffs:ShowBigDebuffs(frame)
 	local warning, warningId
 
 	for i = 1, 40 do
-		local _,_,_,_, dispelType, _, time, caster, _,_, id = UnitDebuff(frame.displayedUnit, i)
+		local _,_,_, dispelType, _, time, caster, _,_, id = UnitDebuff(frame.displayedUnit, i)
 		if id then
 			local reaction = caster and UnitReaction("player", caster) or 0
 			local friendlySmokeBomb = id == 212183 and reaction > 4
@@ -1359,7 +1359,7 @@ hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
 	--Now we go through the debuffs with a priority (e.g. Weakened Soul and Forbearance)
 	index = 1;
 	while ( frameNum <= maxDebuffs ) do
-		local debuffName, _,_,_,_,_,_,_,_,_, id = UnitDebuff(frame.displayedUnit, index, filter);
+		local debuffName, _,_,_,_,_,_,_,_, id = UnitDebuff(frame.displayedUnit, index, filter);
 		if ( debuffName ) then
 			if ( CompactUnitFrame_UtilIsPriorityDebuff(frame.displayedUnit, index, filter) or IsPriorityDebuff(id)) then
 				local debuffFrame = frame.debuffFrames[frameNum];
@@ -1380,7 +1380,7 @@ hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
 	--Now, we display all normal debuffs.
 	if ( frame.optionTable.displayNonBossDebuffs ) then
 	while ( frameNum <= maxDebuffs ) do
-		local debuffName, _,_,_,_,_,_,_,_,_, id = UnitDebuff(frame.displayedUnit, index, filter);
+		local debuffName, _,_,_,_,_,_,_,_, id = UnitDebuff(frame.displayedUnit, index, filter);
 		if ( debuffName ) then
 			if BigDebuffs.test or (( CompactUnitFrame_UtilShouldDisplayDebuff(frame.displayedUnit, index, filter) and not CompactUnitFrame_UtilIsBossAura(frame.displayedUnit, index, filter, false) and
 				not CompactUnitFrame_UtilIsPriorityDebuff(frame.displayedUnit, index, filter) and not IsPriorityDebuff(id))) then
@@ -1424,7 +1424,7 @@ function BigDebuffs:UNIT_AURA(unit)
 
 	for i = 1, 40 do
 		-- Check debuffs
-		local _,_, n, _,_, d, e, caster, _,_, id = UnitDebuff(unit, i)
+		local _, n, _,_, d, e, caster, _,_, id = UnitDebuff(unit, i)
 		if id then
 			if self.Spells[id] then
 				local reaction = caster and UnitReaction("player", caster) or 0
@@ -1444,7 +1444,7 @@ function BigDebuffs:UNIT_AURA(unit)
 		end
 
 		-- Check buffs
-		local _,_, n, _,_, d, e, _,_,_, id = UnitBuff(unit, i)
+		local _, n, _,_, d, e, _,_,_, id = UnitBuff(unit, i)
 		if id then
 			if self.Spells[id] then
 				local p = self:GetAuraPriority(id)
