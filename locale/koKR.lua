@@ -18,7 +18,7 @@ L["Cooldown Count"] = "재사용 대기시간 숫자"
 L["Custom Priority"] = "사용자 설정 우선순위"
 L["Custom Size"] = "사용자 설정 크기"
 L["Dispellable CC"] = "해제 가능한 군중 제어"
---Translation missing 
+--Translation missing
 -- L["Dispellable PvE"] = ""
 L["Dispellable Roots"] = "해제 가능한 이동 불가"
 L["Enable BigDebuffs on raid frames"] = "공격대 창에 BigDebuffs를 사용합니다"
@@ -39,7 +39,7 @@ L["immunities"] = "면역"
 L["immunities_spells"] = "주문 면역"
 L["Increase Maximum Buffs"] = "최대 강화 효과 증가"
 L["INNER"] = "내부"
---Translation missing 
+--Translation missing
 -- L["interrupts"] = ""
 L["LEFT"] = "왼쪽"
 L["Manual"] = "수동"
@@ -60,10 +60,10 @@ L["Set the custom size of this spell"] = "이 주문의 사용자 설정 크기�
 L["Set the maximum number of debuffs displayed"] = "표시되는 최대 약화 효과 수를 설정합니다"
 L["Set the size of crowd control debuffs"] = "군중 제어 약화 효과의 크기를 설정합니다"
 L["Set the size of dispellable crowd control debuffs"] = "해제 가능한 군중 제어 약화 효과의 크기를 설정합니다"
---Translation missing 
+--Translation missing
 -- L["Set the size of dispellable PvE debuffs"] = ""
 L["Set the size of dispellable roots"] = "해제 가능한 이동 불가의 크기를 설정합니다"
---Translation missing 
+--Translation missing
 -- L["Set the size of interrupts"] = ""
 L["Set the size of other debuffs"] = "그 밖의 약화 효과의 크기를 설정합니다"
 L["Set the size of roots"] = "이동 불가의 크기를 설정합니다"
@@ -73,7 +73,7 @@ L["Sets the maximum buffs to 6"] = "최대 강화 효과 수를 6으로 설정�
 L["Show Crowd Control on the unit frames"] = "유닛 창에 군중 제어를 표시합니다"
 L["Show Defensive Buffs on the unit frames"] = "유닛 창에 방어적 강화 효과를 표시합니다"
 L["Show Immunities on the unit frames"] = "유닛 창에 면역을 표시합니다"
---Translation missing 
+--Translation missing
 -- L["Show Interrupts on the unit frames"] = ""
 L["Show Offensive Buffs on the unit frames"] = "유닛 창에 공격적 강화 효과를 표시합니다"
 L["Show Other Buffs on the unit frames"] = "유닛 창에 그 밖의 강화 효과를 표시합니다"

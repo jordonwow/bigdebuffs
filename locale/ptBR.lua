@@ -18,7 +18,7 @@ L["Cooldown Count"] = "Contador"
 L["Custom Priority"] = "Ajustar Prioridade"
 L["Custom Size"] = "Ajustar Tamanho"
 L["Dispellable CC"] = "CC Disperssados"
---Translation missing 
+--Translation missing
 -- L["Dispellable PvE"] = ""
 L["Dispellable Roots"] = "Raízes Dissipadas"
 L["Enable BigDebuffs on raid frames"] = "Ativar BigDebuffs em Raid"
@@ -39,7 +39,7 @@ L["immunities"] = "Imunidades"
 L["immunities_spells"] = "Imunidades à Magias"
 L["Increase Maximum Buffs"] = "Aumentar Máximo de Bônus"
 L["INNER"] = "INNER"
---Translation missing 
+--Translation missing
 -- L["interrupts"] = ""
 L["LEFT"] = "ESQUERDA"
 L["Manual"] = "Manual"
@@ -60,10 +60,10 @@ L["Set the custom size of this spell"] = "Ajustar o tamanho desta magia"
 L["Set the maximum number of debuffs displayed"] = "Ajuste o máximo de penalidades exibidas"
 L["Set the size of crowd control debuffs"] = "Ajuste o tamanho das penalidades do CC"
 L["Set the size of dispellable crowd control debuffs"] = "Ajuste o tamanho de penalidades do CC dissipadas"
---Translation missing 
+--Translation missing
 -- L["Set the size of dispellable PvE debuffs"] = ""
 L["Set the size of dispellable roots"] = "Ajuste o tamanho de raízes dissipadas"
---Translation missing 
+--Translation missing
 -- L["Set the size of interrupts"] = ""
 L["Set the size of other debuffs"] = "Ajuste o tamanho de outras penalidades"
 L["Set the size of roots"] = "Ajuste o tamanho das raízes"
@@ -73,7 +73,7 @@ L["Sets the maximum buffs to 6"] = "Ajuste para 6 o máximo de bônus"
 L["Show Crowd Control on the unit frames"] = "Exibir quadros de unidades do CC"
 L["Show Defensive Buffs on the unit frames"] = "Exibir Bônus de Defesa em quadros de unidade"
 L["Show Immunities on the unit frames"] = "Exibir Imunidades em quadros de unidades"
---Translation missing 
+--Translation missing
 -- L["Show Interrupts on the unit frames"] = ""
 L["Show Offensive Buffs on the unit frames"] = "Exibir Bônus Ofensivo nos quadros de unidades"
 L["Show Other Buffs on the unit frames"] = "Exibir Outros Bônus nos quadros de unidades"

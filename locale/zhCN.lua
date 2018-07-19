@@ -38,7 +38,7 @@ L["immunities"] = "免疫"
 L["immunities_spells"] = "法术免疫"
 L["Increase Maximum Buffs"] = "增加最大Buff数量"
 L["INNER"] = "内部"
---Translation missing 
+--Translation missing
 -- L["interrupts"] = ""
 L["LEFT"] = "左侧"
 L["Manual"] = "手动"
@@ -61,7 +61,7 @@ L["Set the size of crowd control debuffs"] = "其他群体控制效果的大小"
 L["Set the size of dispellable crowd control debuffs"] = "可驱散群体控制效果的大小"
 L["Set the size of dispellable PvE debuffs"] = "设置可驱散pve法术dubuffs大小"
 L["Set the size of dispellable roots"] = "可驱散定身效果的大小"
---Translation missing 
+--Translation missing
 -- L["Set the size of interrupts"] = ""
 L["Set the size of other debuffs"] = "其他DeBuff的大小"
 L["Set the size of roots"] = "其他定身效果的大小"
@@ -71,7 +71,7 @@ L["Sets the maximum buffs to 6"] = "设置最大BUFF数量6个"
 L["Show Crowd Control on the unit frames"] = "在头像框体上显示群体控制buff"
 L["Show Defensive Buffs on the unit frames"] = "在头像框体上显示防御类buff"
 L["Show Immunities on the unit frames"] = "在头像框体上显示群体控制效果"
---Translation missing 
+--Translation missing
 -- L["Show Interrupts on the unit frames"] = ""
 L["Show Offensive Buffs on the unit frames"] = "在头像框体上显示进攻类buff"
 L["Show Other Buffs on the unit frames"] = "在头像框体上显示其他类型buff"

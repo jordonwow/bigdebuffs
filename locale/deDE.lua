@@ -18,7 +18,7 @@ L["Cooldown Count"] = "Abklingzeitzahl"
 L["Custom Priority"] = "Benutzerdefinierte Priorität"
 L["Custom Size"] = "Benutzerdefinierte Größe"
 L["Dispellable CC"] = "Bannbare Kontrollverlusteffekte"
---Translation missing 
+--Translation missing
 -- L["Dispellable PvE"] = ""
 L["Dispellable Roots"] = "Bannbare Bewegungsunfähigkeiten"
 L["Enable BigDebuffs on raid frames"] = "Aktiviert BigDebuffs auf Schlachtzugsfenstern"
@@ -39,7 +39,7 @@ L["immunities"] = "Immunitäten"
 L["immunities_spells"] = "Zauberimmunitäten "
 L["Increase Maximum Buffs"] = "Maximalanzahl Stärkungszauber erhöhen"
 L["INNER"] = "INNEN"
---Translation missing 
+--Translation missing
 -- L["interrupts"] = ""
 L["LEFT"] = "LINKS"
 L["Manual"] = "Manuell"
@@ -60,10 +60,10 @@ L["Set the custom size of this spell"] = "Legt die benutzerdefinierte Größe di
 L["Set the maximum number of debuffs displayed"] = "Legt die Maximalanzahl angezeigter Schwächungszauber fest"
 L["Set the size of crowd control debuffs"] = "Legt die Größe der Kontrollverlust-Schwächugszauber fest"
 L["Set the size of dispellable crowd control debuffs"] = "Legt die Größe der bannbaren Kontrollverlust-Schwächugszauber fest"
---Translation missing 
+--Translation missing
 -- L["Set the size of dispellable PvE debuffs"] = ""
 L["Set the size of dispellable roots"] = "Legt die Größe von bannbaren Bewegungsunfähigkeiten fest"
---Translation missing 
+--Translation missing
 -- L["Set the size of interrupts"] = ""
 L["Set the size of other debuffs"] = "Legt die Größe anderer Schwächungszauber fest"
 L["Set the size of roots"] = "Legt die Größe von Bewegungsunfähigkeiten fest"
@@ -73,7 +73,7 @@ L["Sets the maximum buffs to 6"] = "Legt die Maximalanzahl der Schwächungszaube
 L["Show Crowd Control on the unit frames"] = "Zeigt Kontrollverlusteffekte auf den Einheitenfenstern"
 L["Show Defensive Buffs on the unit frames"] = "Zeigt defensive Stärkungszauber auf den Einheitenfenstern"
 L["Show Immunities on the unit frames"] = "Zeigt Immunitäten auf den Einheitenfenstern"
---Translation missing 
+--Translation missing
 -- L["Show Interrupts on the unit frames"] = ""
 L["Show Offensive Buffs on the unit frames"] = "Zeigt offensive Stärkungszauber auf den Einheitenfenstern"
 L["Show Other Buffs on the unit frames"] = "Zeigt andere Stärkungszauber auf den Einheitenfenstern"

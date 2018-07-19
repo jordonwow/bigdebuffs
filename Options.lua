@@ -129,7 +129,7 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
 						},
 					},
 				},
-				
+
 				size = raidFrames and {
 					name = L["Size"],
 					type = "group",
@@ -384,8 +384,8 @@ function BigDebuffs:SetupOptions()
 						type = "group",
 						inline = true,
 						args = WarningDebuffs,
-					}	
-					
+					}
+
 				}
 			},
 			unitFrames = {
@@ -819,7 +819,7 @@ function BigDebuffs:SetupOptions()
 	}
 
 	self.options.plugins.profiles = { profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db) }
-	
+
 	local LibDualSpec = LibStub('LibDualSpec-1.0')
 	LibDualSpec:EnhanceDatabase(self.db, "BigDebuffsDB")
 	LibDualSpec:EnhanceOptions(self.options.plugins.profiles.profiles, self.db)

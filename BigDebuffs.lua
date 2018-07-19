@@ -127,7 +127,7 @@ BigDebuffs.Spells = {
 
 	-- Death Knight
 
-	[47476] = { type = "cc" }, -- Strangulate 
+	[47476] = { type = "cc" }, -- Strangulate
 	[48707] = { type = "immunities_spells" }, -- Anti-Magic Shell
 	[48792] = { type = "buffs_defensive" }, -- Icebound Fortitude
 	[49028] = { type = "buffs_offensive" }, -- Dancing Rune Weapon
@@ -159,7 +159,7 @@ BigDebuffs.Spells = {
 	[179057] = { type = "cc" }, -- Chaos Nova
 	[187827] = { type = "buffs_defensive" }, -- Metamorphosis
 	[188499] = { type = "buffs_defensive" }, -- Blade Dance
-	[188501] = { type = "buffs_offensive" }, -- Spectral Sight	
+	[188501] = { type = "buffs_offensive" }, -- Spectral Sight
 	[204490] = { type = "cc" }, -- Sigil of Silence
 	[205629] = { type = "buffs_defensive" }, -- Demonic Trample
 	[205630] = { type = "cc" }, -- Illidan's Grasp
@@ -807,7 +807,7 @@ function BigDebuffs:AttachUnitFrame(unit)
 					frame.blizzard = k == "Blizzard"
 					if not frame.blizzard then break end
 				end
-			end		
+			end
 		end
 	end
 
@@ -853,7 +853,7 @@ function BigDebuffs:AttachUnitFrame(unit)
 			local relativeFrame = _G[anchors.Blizzard.units[unit]] or UIParent
 			frame:SetPoint("CENTER", relativeFrame, "CENTER")
 		end
-		
+
 		frame:SetSize(config.size, config.size)
 	end
 
@@ -918,7 +918,7 @@ end
 
 function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, ...)
 
-	-- SPELL_INTERRUPT doesn't fire for some channeled spells 
+	-- SPELL_INTERRUPT doesn't fire for some channeled spells
 	if event ~= "SPELL_INTERRUPT" and event ~= "SPELL_CAST_SUCCESS" then return end
 
 	local _,_,_,_,_, destGUID, _,_,_, spellId = ...
@@ -950,7 +950,7 @@ function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, ...)
 				self:UNIT_AURA_ALL_UNITS()
 			end)
 
-			self:UNIT_AURA_ALL_UNITS()			
+			self:UNIT_AURA_ALL_UNITS()
 
 			return
 
@@ -1078,7 +1078,7 @@ function BigDebuffs:GetDebuffSize(id, dispellable)
 			return self.db.profile.raidFrames.pve
 		end
 	end
-	
+
 	if not self.Spells[id] then return end
 	id = self.Spells[id].parent or id -- Check for parent spellID
 
@@ -1108,7 +1108,7 @@ end
 function BigDebuffs:GetDebuffPriority(id)
 	if not self.Spells[id] then return 0 end
 	id = self.Spells[id].parent or id -- Check for parent spellID
-	
+
 	return self.db.profile.spells[id] and self.db.profile.spells[id].priority or
 		self.db.profile.priority[self.Spells[id].type] or 0
 end
@@ -1117,7 +1117,7 @@ end
 function BigDebuffs:GetAuraPriority(id)
 	if not self.Spells[id] then return end
 	id = self.Spells[id].parent or id -- Check for parent spellID
-	
+
 	-- Make sure category is enabled
 	if not self.db.profile.unitFrames[self.Spells[id].type] then return end
 
@@ -1152,9 +1152,9 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 		expirationTime = spell.expires
 	else
 		if (isBossBuff) then
-			name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId = UnitBuff(unit, index, filter);
+			name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId = UnitBuff(unit, index, filter);
 		else
-			name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId = UnitDebuff(unit, index, filter);
+			name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId = UnitDebuff(unit, index, filter);
 		end
 	end
 
@@ -1198,7 +1198,7 @@ function BigDebuffs:ShowBigDebuffs(frame)
 
 	if not UnitIsPlayer(frame.displayedUnit) then
 		return
-	end	
+	end
 
 	local UnitDebuff = self.test and UnitDebuffTest or UnitDebuff
 
@@ -1210,7 +1210,7 @@ function BigDebuffs:ShowBigDebuffs(frame)
 	local warning, warningId
 
 	for i = 1, 40 do
-		local _,_,_,_, dispelType, _, time, caster, _,_, id = UnitDebuff(frame.displayedUnit, i)
+		local _,_,_, dispelType, _, time, caster, _,_, id = UnitDebuff(frame.displayedUnit, i)
 		if id then
 			local reaction = caster and UnitReaction("player", caster) or 0
 			local friendlySmokeBomb = id == 212183 and reaction > 4
@@ -1289,7 +1289,7 @@ function BigDebuffs:ShowBigDebuffs(frame)
 			CompactUnitFrame_HideAllDebuffs(frame)
 		end
 
-		for i = 1, #debuffs do			
+		for i = 1, #debuffs do
 			if index <= self.db.profile.raidFrames.maxDebuffs or debuffs[i][1] == warning then
 				if not frame.BigDebuffs[index] then break end
 				frame.BigDebuffs[index].baseSize = frame:GetHeight() * debuffs[i][2] * 0.01
@@ -1307,7 +1307,7 @@ end
 hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
 	if not UnitIsPlayer(frame.displayedUnit) then
 		return
-	end	
+	end
 
 	if ( not frame.optionTable.displayDebuffs ) then
 		CompactUnitFrame_HideAllDebuffs(frame);
@@ -1355,11 +1355,11 @@ hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
 		end
 		index = index + 1;
 	end
-	
+
 	--Now we go through the debuffs with a priority (e.g. Weakened Soul and Forbearance)
 	index = 1;
 	while ( frameNum <= maxDebuffs ) do
-		local debuffName, _,_,_,_,_,_,_,_,_, id = UnitDebuff(frame.displayedUnit, index, filter);
+		local debuffName, _,_,_,_,_,_,_,_, id = UnitDebuff(frame.displayedUnit, index, filter);
 		if ( debuffName ) then
 			if ( CompactUnitFrame_UtilIsPriorityDebuff(frame.displayedUnit, index, filter) or IsPriorityDebuff(id)) then
 				local debuffFrame = frame.debuffFrames[frameNum];
@@ -1371,16 +1371,16 @@ hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
 		end
 		index = index + 1;
 	end
-	
+
 	if ( frame.optionTable.displayOnlyDispellableDebuffs ) then
 		filter = "RAID";
 	end
-	
+
 	index = 1;
 	--Now, we display all normal debuffs.
 	if ( frame.optionTable.displayNonBossDebuffs ) then
 	while ( frameNum <= maxDebuffs ) do
-		local debuffName, _,_,_,_,_,_,_,_,_, id = UnitDebuff(frame.displayedUnit, index, filter);
+		local debuffName, _,_,_,_,_,_,_,_, id = UnitDebuff(frame.displayedUnit, index, filter);
 		if ( debuffName ) then
 			if BigDebuffs.test or (( CompactUnitFrame_UtilShouldDisplayDebuff(frame.displayedUnit, index, filter) and not CompactUnitFrame_UtilIsBossAura(frame.displayedUnit, index, filter, false) and
 				not CompactUnitFrame_UtilIsPriorityDebuff(frame.displayedUnit, index, filter) and not IsPriorityDebuff(id))) then
@@ -1394,7 +1394,7 @@ hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
 		index = index + 1;
 	end
 	end
-	
+
 	for i=frameNum, frame.maxDebuffs do
 		local debuffFrame = frame.debuffFrames[i];
 		debuffFrame:Hide();
@@ -1424,7 +1424,7 @@ function BigDebuffs:UNIT_AURA(unit)
 
 	for i = 1, 40 do
 		-- Check debuffs
-		local _,_, n, _,_, d, e, caster, _,_, id = UnitDebuff(unit, i)
+		local _, n, _,_, d, e, caster, _,_, id = UnitDebuff(unit, i)
 		if id then
 			if self.Spells[id] then
 				local reaction = caster and UnitReaction("player", caster) or 0
@@ -1444,7 +1444,7 @@ function BigDebuffs:UNIT_AURA(unit)
 		end
 
 		-- Check buffs
-		local _,_, n, _,_, d, e, _,_,_, id = UnitBuff(unit, i)
+		local _, n, _,_, d, e, _,_,_, id = UnitBuff(unit, i)
 		if id then
 			if self.Spells[id] then
 				local p = self:GetAuraPriority(id)
@@ -1476,9 +1476,9 @@ function BigDebuffs:UNIT_AURA(unit)
 			expires = spell.expires
 			icon = GetSpellTexture(spellId)
 			interrupt = spellId
-		end		
+		end
 	end
-	
+
 
 	if debuff then
 		if duration < 1 then duration = 1 end -- auras like Solar Beam don't have a duration
@@ -1496,7 +1496,7 @@ function BigDebuffs:UNIT_AURA(unit)
 				frame.icon:SetTexture(icon)
 			end
 		end
-		
+
 		frame.cooldown:SetCooldown(expires - duration, duration)
 		frame:Show()
 		frame.cooldown:SetSwipeColor(0, 0, 0, 0.6)
@@ -1535,15 +1535,15 @@ hooksecurefunc("CompactUnitFrame_UpdateBuffs", function(frame)
 
 	if not UnitIsPlayer(frame.displayedUnit) then
 		return
-	end	
-	
+	end
+
 	if not BigDebuffs.db.profile.raidFrames.increaseBuffs then return end
 
 	if ( not frame.optionTable.displayBuffs ) then
 		CompactUnitFrame_HideAllBuffs(frame);
 		return;
 	end
-	
+
 	local index = 1;
 	local frameNum = 1;
 	local filter = nil;
