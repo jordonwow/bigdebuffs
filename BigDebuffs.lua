@@ -130,7 +130,7 @@ BigDebuffs.Spells = {
 	[47476] = { type = "cc" }, -- Strangulate
 	[48707] = { type = "immunities_spells" }, -- Anti-Magic Shell
 	[48792] = { type = "buffs_defensive" }, -- Icebound Fortitude
-	[49028] = { type = "buffs_offensive" }, -- Dancing Rune Weapon
+	[81256] = { type = "buffs_defensive" }, -- Dancing Rune Weapon
 	[51271] = { type = "buffs_offensive" }, -- Pillar of Frost
 	[55233] = { type = "buffs_defensive" }, -- Vampiric Blood
 	[77606] = { type = "buffs_other" }, -- Dark Simulacrum
