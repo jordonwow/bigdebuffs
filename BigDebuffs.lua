@@ -129,6 +129,7 @@ BigDebuffs.Spells = {
 
 	[47476] = { type = "cc" }, -- Strangulate
 	[48707] = { type = "immunities_spells" }, -- Anti-Magic Shell
+	[48265] = { type = "buffs_defensive" }, -- Death's Advance
 	[48792] = { type = "buffs_defensive" }, -- Icebound Fortitude
 	[49028] = { type = "buffs_offensive" }, -- Dancing Rune Weapon
 	[51271] = { type = "buffs_offensive" }, -- Pillar of Frost
@@ -147,6 +148,7 @@ BigDebuffs.Spells = {
 	[207167] = { type = "cc" }, -- Blinding Sleet
 	[207171] = { type = "cc" }, -- Winter is Coming
 	[207256] = { type = "buffs_offensive" }, -- Obliteration
+	[207289] = { type = "buffs_offensive" }, -- Unholy Frenzy
 	[207319] = { type = "buffs_defensive" }, -- Corpse Shield
 	[212332] = { type = "cc" }, -- Smash
 		[212337] = { type = "cc", parent = 212332 }, -- Powerful Smash
@@ -181,6 +183,8 @@ BigDebuffs.Spells = {
 	[339] = { type = "roots" }, -- Entangling Roots
 	[740] = { type = "buffs_defensive" }, -- Tranquility
 	[1850] = { type = "buffs_other" }, -- Dash
+		[252216] = { type = "buffs_other", parent = 1850 }, -- Tiger Dash
+	[2637] = { type = "cc" }, -- Hibernate
 	[5211] = { type = "cc" }, -- Mighty Bash
 	[5217] = { type = "buffs_offensive" }, -- Tiger's Fury
 	[22812] = { type = "buffs_defensive" }, -- Barkskin
@@ -211,6 +215,7 @@ BigDebuffs.Spells = {
 	[22570] = { type = "cc" }, -- Maim
 		[203123] = { type = "cc", parent = 22570 }, -- Maim
 		[236025] = { type = "cc", parent = 22570 }, -- Enraged Maim (Feral Honor Talent)
+	[236696] = { type = "buffs_defensive" }, -- Thorns (PvP Talent)
 
 	-- Hunter
 
@@ -222,12 +227,13 @@ BigDebuffs.Spells = {
 	[19577] = { type = "cc" }, -- Intimidation
 		[24394] = { type = "cc", parent = 19577 }, -- Intimidation
 	[53480] = { type = "buffs_defensive" }, -- Roar of Sacrifice (Hunter Pet Skill)
-	[117526] = { type = "cc" }, -- Binding Shot Stun
+	[117526] = { type = "roots" }, -- Binding Shot 
 	[131894] = { type = "buffs_offensive" }, -- A Murder of Crows (Beast Mastery, Marksmanship)
 		[206505] = { type = "buffs_offensive", parent = 131894 }, -- A Murder of Crows (Survival)
 	[186265] = { type = "buffs_defensive" }, -- Aspect of the Turtle
 	[186289] = { type = "buffs_offensive" }, -- Aspect of the Eagle
 	[238559] = { type = "cc" }, -- Bursting Shot
+		[186387] = { type = "cc", parent = 238559 }, -- Bursting Shot
 	[193526] = { type = "buffs_offensive" }, -- Trueshot
 	[193530] = { type = "buffs_offensive" }, -- Aspect of the Wild
 	[199483] = { type = "buffs_defensive" }, -- Camouflage
@@ -237,6 +243,7 @@ BigDebuffs.Spells = {
 	[209790] = { type = "cc" }, -- Freezing Arrow
 	[209997] = { type = "buffs_defensive" }, -- Play Dead
 	[213691] = { type = "cc" }, -- Scatter Shot
+	[272682] = { type = "buffs_defensive" }, -- Master's Call
 
 	-- Mage
 
@@ -346,8 +353,10 @@ BigDebuffs.Spells = {
 	[47536] = { type = "buffs_defensive" }, -- Rapture
 	[47585] = { type = "buffs_defensive" }, -- Dispersion
 	[47788] = { type = "buffs_defensive" }, -- Guardian Spirit
+	[64044] = { type = "cc" }, -- Psychic Horror
 	[64843] = { type = "buffs_defensive" }, -- Divine Hymn
 	[81782] = { type = "buffs_defensive" }, -- Power Word: Barrier
+		[271466] = { type = "buffs_defensive", parent = 81782 }, -- Luminous Barrier (Disc Talent)
 	[87204] = { type = "cc" }, -- Sin and Punishment
 	[193223] = { type = "buffs_offensive" }, -- Surrender to Madness
 	[194249] = { type = "buffs_offensive" }, -- Voidform
@@ -359,7 +368,7 @@ BigDebuffs.Spells = {
 	[200196] = { type = "cc" }, -- Holy Word: Chastise
 		[200200] = { type = "cc", parent = 200196 }, -- Holy Word: Chastise (Stun)
 	[205369] = { type = "cc" }, -- Mind Bomb
-		[226943] = { type = "cc", parent = 205369 }, -- Mind Bomb (Stun)
+		[226943] = { type = "cc", parent = 205369 }, -- Mind Bomb (Disorient)
 	[213610] = { type = "buffs_defensive" }, -- Holy Ward
 	[215769] = { type = "buffs_defensive" }, -- Spirit of Redemption
 	[221660] = { type = "immunities_spells" }, -- Holy Concentration
@@ -412,6 +421,7 @@ BigDebuffs.Spells = {
 	[204293] = { type = "buffs_defensive" }, -- Spirit Link
 	[204366] = { type = "buffs_offensive" }, -- Thundercharge
 	[204945] = { type = "buffs_offensive" }, -- Doom Winds
+	[260878] = { type = "buffs_defensive" }, -- Spirit Wolf
 
 
 	-- Warlock
@@ -429,6 +439,8 @@ BigDebuffs.Spells = {
 	[89766] = { type = "cc" }, -- Axe Toss
 	[104773] = { type = "immunities_spells" }, -- Unending Resolve
 	[108416] = { type = "buffs_defensive" }, -- Dark Pact
+	[113860] = { type = "buffs_offensive" }, -- Dark Soul: Misery (Affliction)
+	[113858] = { type = "buffs_offensive" }, -- Dark Soul: Instability (Demonology)
 	[118699] = { type = "cc" }, -- Fear
 		[130616] = { type = "cc", parent = 118699 }, -- Fear (Glyph of Fear)
 	[171017] = { type = "cc" }, -- Meteor Strike
@@ -441,7 +453,7 @@ BigDebuffs.Spells = {
 	-- Warrior
 
 	[871] = { type = "buffs_defensive" }, -- Shield Wall
-	[1719] = { type = "buffs_offensive" }, -- Battle Cry
+	[1719] = { type = "buffs_offensive" }, -- Recklessness
 	[5246] = { type = "cc" }, -- Intimidating Shout
 	[12975] = { type = "buffs_defensive" }, -- Last Stand
 	[18499] = { type = "buffs_other" }, -- Berserker Rage
@@ -449,7 +461,7 @@ BigDebuffs.Spells = {
 		[213915] = { type = "immunities_spells", parent = 23920 }, -- Mass Spell Reflection
 		[216890] = { type = "immunities_spells", parent = 23920 }, -- Spell Reflection (Arms, Fury)
 	[46968] = { type = "cc" }, -- Shockwave
-	[97462] = { type = "buffs_defensive" }, -- Commanding Shout
+	[97462] = { type = "buffs_defensive" }, -- Rallying Cry
 	[105771] = { type = "roots" }, -- Charge (Warrior)
 	[107574] = { type = "buffs_offensive" }, -- Avatar
 	[118038] = { type = "buffs_defensive" }, -- Die by the Sword
@@ -480,6 +492,7 @@ BigDebuffs.Spells = {
 		[232633] = { type = "cc", parent = 129597 }, -- Arcane Torrent
 	[192001] = { type = "buffs_other" }, -- Drink
 		[167152] = { type = "buffs_other", parent = 192001 }, -- Refreshment
+	[257040] = { type = "buffs_other" }, -- Spatial Rift
 
 	-- Legacy (may be deprecated)
 
@@ -490,6 +503,15 @@ BigDebuffs.Spells = {
 }
 
 local specDispel = {
+	[62] = { -- Arcane Mage
+		Curse = true,
+	},		
+	[63] = { -- Fire Mage
+		Curse = true,
+	},		
+	[64] = { -- Frost Mage
+		Curse = true,
+	},		
 	[65] = { -- Holy Paladin
 		Magic = true,
 		Poison = true,
