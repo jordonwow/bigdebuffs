@@ -901,7 +901,8 @@ end
 local function UnitDebuffTest(unit, index)
 	local debuff = TestDebuffs[index]
 	if not debuff then return end
-	return "Test", nil, debuff[2], 0, debuff[4], 0, 0, nil, nil, nil, debuff[1]
+	-- name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId
+	return "Test", debuff[2], 0, debuff[4], 0, 0, nil, nil, nil, debuff[1]
 end
 
 function BigDebuffs:OnEnable()
@@ -940,12 +941,20 @@ function BigDebuffs:PLAYER_ENTERING_WORLD()
 	end
 end
 
-function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, ...)
+local function UnitBuffByName(unit, name)
+	for i = 1, 40 do
+		local n = UnitBuff(unit, i)
+		if n == name then return end
+	end
+end
+
+function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED()
+
+	local _, event, _,_,_,_,_, destGUID, _,_,_, spellId = CombatLogGetCurrentEventInfo()
 
 	-- SPELL_INTERRUPT doesn't fire for some channeled spells
 	if event ~= "SPELL_INTERRUPT" and event ~= "SPELL_CAST_SUCCESS" then return end
 
-	local _,_,_,_,_, destGUID, _,_,_, spellId = ...
 	local spell = self.Spells[spellId]
 
 	if not spell or spell.type ~= "interrupts" then return end
@@ -957,12 +966,12 @@ function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, ...)
 			local duration = spell.duration
 			local _, class = UnitClass(unit)
 
-			if class == "PRIEST" or class == "SHAMAN" or class == "WARLOCK" then
-				duration = duration * 0.7
-			end
+			-- if class == "PRIEST" or class == "SHAMAN" or class == "WARLOCK" then
+			-- 	duration = duration * 0.7
+			-- end
 
-			if UnitBuff(unit, "Burning Determination") or UnitBuff(unit, "Calming Waters") or UnitBuff(unit, "Casting Circle") then
-				duration = duration * 0.3
+			if UnitBuffByName(unit, "Calming Waters") then
+				duration = duration * 0.5
 			end
 
 			self.units[destGUID] = self.units[destGUID] or {}
@@ -1158,14 +1167,26 @@ function BigDebuffs:GetAuraPriority(id)
 	return self.db.profile.priority[self.Spells[id].type] or 0
 end
 
--- Copy this function to check for testing mode
-local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, isBossAura, isBossBuff, test)
+function CompactUnitFrame_UtilSetDispelDebuff(dispellDebuffFrame, debuffType, index)
+	dispellDebuffFrame:Show();
+	dispellDebuffFrame.icon:SetTexture("Interface\\RaidFrame\\Raid-Icon-Debuff"..debuffType);
+	dispellDebuffFrame:SetID(index);
+end
+
+function CompactUnitFrame_HideAllDispelDebuffs(frame)
+	if frame.dispelDebuffFrames then
+		for i=1, #frame.dispelDebuffFrames do
+			frame.dispelDebuffFrames[i]:Hide();
+		end
+	end
+end
+
+function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, isBossAura, isBossBuff, test)
 	local UnitDebuff = test and UnitDebuffTest or UnitDebuff
 	-- make sure you are using the correct index here!
 	--isBossAura says make this look large.
 	--isBossBuff looks in HELPFULL auras otherwise it looks in HARMFULL ones
-	local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId;
-
+	local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId;
 	if index == -1 then
 		-- it's an interrupt
 		local spell = BigDebuffs.units[UnitGUID(unit)]
@@ -1176,9 +1197,9 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 		expirationTime = spell.expires
 	else
 		if (isBossBuff) then
-			name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId = UnitBuff(unit, index, filter);
+			name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId = UnitBuff(unit, index, filter);
 		else
-			name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellId = UnitDebuff(unit, index, filter);
+			name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId = UnitDebuff(unit, index, filter);
 		end
 	end
 
@@ -1186,7 +1207,7 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 	debuffFrame.icon:SetTexture(icon);
 	if ( count > 1 ) then
 		local countText = count;
-		if ( count >= 10 ) then
+		if ( count >= 100 ) then
 			countText = BUFF_STACKS_OVERFLOW;
 		end
 		debuffFrame.count:Show();
@@ -1195,12 +1216,12 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 		debuffFrame.count:Hide();
 	end
 	debuffFrame:SetID(index);
-	if ( expirationTime and expirationTime ~= 0 ) then
+	local enabled = expirationTime and expirationTime ~= 0;
+	if enabled then
 		local startTime = expirationTime - duration;
-		debuffFrame.cooldown:SetCooldown(startTime, duration);
-		debuffFrame.cooldown:Show();
+		CooldownFrame_Set(debuffFrame.cooldown, startTime, duration, true);
 	else
-		debuffFrame.cooldown:Hide();
+		CooldownFrame_Clear(debuffFrame.cooldown);
 	end
 
 	local color = DebuffTypeColor[debuffType] or DebuffTypeColor["none"];
@@ -1208,7 +1229,8 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 
 	debuffFrame.isBossBuff = isBossBuff;
 	if ( isBossAura ) then
-		debuffFrame:SetSize(debuffFrame.baseSize + BOSS_DEBUFF_SIZE_INCREASE, debuffFrame.baseSize + BOSS_DEBUFF_SIZE_INCREASE);
+		local size = min(debuffFrame.baseSize + BOSS_DEBUFF_SIZE_INCREASE, debuffFrame.maxHeight);
+		debuffFrame:SetSize(size, size);
 	else
 		debuffFrame:SetSize(debuffFrame.baseSize, debuffFrame.baseSize);
 	end
