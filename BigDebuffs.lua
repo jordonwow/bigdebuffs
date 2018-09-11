@@ -197,6 +197,7 @@ BigDebuffs.Spells = {
 	[102560] = { type = "buffs_offensive" }, -- Incarnation: Chosen of Elune
 	[106951] = { type = "buffs_offensive" }, -- Berserk
 	[155835] = { type = "buffs_defensive" }, -- Bristling Fur
+	[192081] = { type = "buffs_defensive" }, -- Ironfur
 	[163505] = { type = "cc" }, -- Rake
 	[194223] = { type = "buffs_offensive" }, -- Celestial Alignment
 	[200851] = { type = "buffs_defensive" }, -- Rage of the Sleeper
