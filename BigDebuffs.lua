@@ -914,14 +914,15 @@ function BigDebuffs:OnEnable()
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	self:PLAYER_TALENT_UPDATE()
 
+	-- (finish animations deprecated in latest OmniCC beta)
 	-- Prevent OmniCC finish animations
-	if OmniCC then
-		self:RawHook(OmniCC, "TriggerEffect", function(object, cooldown)
-			local name = cooldown:GetName()
-			if name and name:find("BigDebuffs") then return end
-			self.hooks[OmniCC].TriggerEffect(object, cooldown)
-		end, true)
-	end
+	-- if OmniCC then
+	-- 	self:RawHook(OmniCC, "TriggerEffect", function(object, cooldown)
+	-- 		local name = cooldown:GetName()
+	-- 		if name and name:find("BigDebuffs") then return end
+	-- 		self.hooks[OmniCC].TriggerEffect(object, cooldown)
+	-- 	end, true)
+	-- end
 
 	InsertTestDebuff(8122, "Magic") -- Psychic Scream
 	InsertTestDebuff(408, nil) -- Kidney Shot
