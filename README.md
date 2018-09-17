@@ -8,6 +8,10 @@ https://wow.curseforge.com/projects/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v7.2
+
+* Fix bug causing LUA errors
+
 ## v7.1
 
 * BFA compatibility fixes and spell updates
