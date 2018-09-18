@@ -8,6 +8,10 @@ https://wow.curseforge.com/projects/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v7.3
+
+* Add tracking of BFA polymorph glyphs
+
 ## v7.2
 
 * Fix bug causing LUA errors
