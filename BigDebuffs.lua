@@ -1019,6 +1019,7 @@ function BigDebuffs:AddBigDebuffs(frame)
 			local buffPrefix = frameName .. "Buff"
 			local buffFrame = _G[buffPrefix .. i] or CreateFrame("Button", buffPrefix .. i, frame, "CompactBuffTemplate")
 			buffFrame:ClearAllPoints()
+			buffFrame:SetSize(frame.buffFrames[1]:GetSize())
 			if math.fmod(i - 1, 3) == 0 then
 				buffFrame:SetPoint("BOTTOMRIGHT", _G[buffPrefix .. i - 3], "TOPRIGHT")
 			else
