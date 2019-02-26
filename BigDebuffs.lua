@@ -2,6 +2,7 @@
 -- BigDebuffs by Jordon
 
 BigDebuffs = LibStub("AceAddon-3.0"):NewAddon("BigDebuffs", "AceEvent-3.0", "AceHook-3.0")
+local SM = LibStub("LibSharedMedia-3.0")
 
 -- Defaults
 local defaults = {
@@ -11,6 +12,9 @@ local defaults = {
 			anchor = "INNER",
 			enabled = true,
 			cooldownCount = true,
+			cooldownFontSize = 10,
+			cooldownFontEffect = "OUTLINE",
+			cooldownFont = "Friz Quadrata TT",
 			hideBliz = true,
 			redirectBliz = false,
 			increaseBuffs = false,
@@ -35,6 +39,9 @@ local defaults = {
 		unitFrames = {
 			enabled = true,
 			cooldownCount = true,
+			cooldownFontSize = 16,
+			cooldownFontEffect = "OUTLINE",
+			cooldownFont = "Friz Quadrata TT",
 			tooltips = true,
 			player = {
 				enabled = true,
@@ -787,6 +794,13 @@ function BigDebuffs:Refresh()
 	for unit, frame in pairs(self.UnitFrames) do
 		frame:Hide()
 		frame.current = nil
+		if self.db.profile.unitFrames.cooldownCount then
+			local text = frame.cooldown:GetRegions()
+			if text then
+				text:SetFont(SM:Fetch("font",BigDebuffs.db.profile.unitFrames.cooldownFont),
+					self.db.profile.unitFrames.cooldownFontSize, self.db.profile.unitFrames.cooldownFontEffect)
+			end
+		end
 		frame.cooldown:SetHideCountdownNumbers(not self.db.profile.unitFrames.cooldownCount)
 		frame.cooldown.noCooldownCount = not self.db.profile.unitFrames.cooldownCount
 		self:UNIT_AURA(unit)
@@ -803,6 +817,13 @@ function BigDebuffs:AttachUnitFrame(unit)
 		frame = CreateFrame("Button", frameName, UIParent, "BigDebuffsUnitFrameTemplate")
 		self.UnitFrames[unit] = frame
 		frame:SetScript("OnEvent", function() self:UNIT_AURA(unit) end)
+		if self.db.profile.unitFrames.cooldownCount then
+			local text = frame.cooldown:GetRegions()
+			if text then
+				text:SetFont(SM:Fetch("font",BigDebuffs.db.profile.unitFrames.cooldownFont),
+					self.db.profile.unitFrames.cooldownFontSize, self.db.profile.unitFrames.cooldownFontEffect)
+			end
+		end
 		frame.cooldown:SetHideCountdownNumbers(not self.db.profile.unitFrames.cooldownCount)
 		frame.cooldown.noCooldownCount = not self.db.profile.unitFrames.cooldownCount
 		frame.icon:SetDrawLayer("BORDER")
@@ -1216,6 +1237,10 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 	local enabled = expirationTime and expirationTime ~= 0;
 	if enabled then
 		local startTime = expirationTime - duration;
+		local text = debuffFrame.cooldown:GetRegions();
+		text:SetFont(SM:Fetch("font",BigDebuffs.db.profile.raidFrames.cooldownFont),
+			BigDebuffs.db.profile.raidFrames.cooldownFontSize, BigDebuffs.db.profile.raidFrames.cooldownFontEffect);
+
 		CooldownFrame_Set(debuffFrame.cooldown, startTime, duration, true);
 	else
 		CooldownFrame_Clear(debuffFrame.cooldown);
