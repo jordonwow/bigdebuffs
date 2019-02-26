@@ -221,6 +221,7 @@ BigDebuffs.Spells = {
 
 	[136] = { type = "buffs_defensive" }, -- Mend Pet
 	[3355] = { type = "cc" }, -- Freezing Trap
+		[203340] = { type ="cc" }, -- Diamond Ice (Survival Honor Talent)
 	[5384] = { type = "buffs_defensive" }, -- Feign Death
 	[19386] = { type = "cc" }, -- Wyvern Sting
 	[19574] = { type = "buffs_offensive" }, -- Bestial Wrath
@@ -497,7 +498,8 @@ BigDebuffs.Spells = {
 		[232633] = { type = "cc", parent = 129597 }, -- Arcane Torrent
 	[192001] = { type = "buffs_other" }, -- Drink
 		[167152] = { type = "buffs_other", parent = 192001 }, -- Refreshment
-	[257040] = { type = "buffs_other" }, -- Spatial Rift
+	[256948] = { type = "buffs_other" }, -- Spatial Rift
+	[255654] = { type = "cc" }, --Bull Rush
 
 	-- Legacy (may be deprecated)
 
