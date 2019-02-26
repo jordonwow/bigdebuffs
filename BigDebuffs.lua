@@ -406,6 +406,9 @@ BigDebuffs.Spells = {
 		[211004] = { type = "cc", parent = 51514 }, -- Hex (Spider)
 		[211010] = { type = "cc", parent = 51514 }, -- Hex (Snake)
 		[211015] = { type = "cc", parent = 51514 }, -- Hex (Cockroach)
+		[269352] = { type = "cc", parent = 51514 }, -- Hex (Skeletal Hatchling)
+		[277778] = { type = "cc", parent = 51514 }, -- Hex (Zandalari Tendonripper)
+		[277784] = { type = "cc", parent = 51514 }, -- Hex (Wicker Mongrel)
 	[79206] = { type = "buffs_defensive" }, -- Spiritwalker's Grace 60 * OTHER
 	[108281] = { type = "buffs_defensive" }, -- Ancestral Guidance
 	[16166] = { type = "buffs_offensive" }, -- Elemental Mastery
