@@ -801,6 +801,8 @@ function BigDebuffs:AttachUnitFrame(unit)
 		frame = CreateFrame("Button", frameName, UIParent, "BigDebuffsUnitFrameTemplate")
 		self.UnitFrames[unit] = frame
 		frame:SetScript("OnEvent", function() self:UNIT_AURA(unit) end)
+		frame.cooldown:SetHideCountdownNumbers(not self.db.profile.unitFrames.cooldownCount)
+		frame.cooldown.noCooldownCount = not self.db.profile.unitFrames.cooldownCount
 		frame.icon:SetDrawLayer("BORDER")
 		frame:RegisterUnitEvent("UNIT_AURA", unit)
 		frame:RegisterForDrag("LeftButton")
