@@ -8,6 +8,13 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v7.5
+
+* Add options to customize font and size of cooldown text
+* Add Diamond Ice
+* Fix Spatial Rift
+* Add Bull Rush
+
 ## v7.4
 
 * Update for 8.1
