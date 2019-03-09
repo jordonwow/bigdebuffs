@@ -1101,6 +1101,7 @@ end
 local pending = {}
 
 hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
+	if not BigDebuffs.db.profile.raidFrames.enabled then return end
 	if frame:IsForbidden() then return end
 	local name = frame:GetName()
 	if not name or not name:match("^Compact") then return end
