@@ -203,6 +203,7 @@ BigDebuffs.Spells = {
 	[81261] = { type = "cc" }, -- Solar Beam
 	[102342] = { type = "buffs_defensive" }, -- Ironbark
 	[102359] = { type = "roots" }, -- Mass Entanglement
+	[279642] = { type = "buffs_offensive" }, -- Lively Spirit
 	[102543] = { type = "buffs_offensive" }, -- Incarnation: King of the Jungle
 	[102558] = { type = "buffs_offensive" }, -- Incarnation: Guardian of Ursoc
 	[102560] = { type = "buffs_offensive" }, -- Incarnation: Chosen of Elune
