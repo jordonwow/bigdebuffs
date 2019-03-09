@@ -978,7 +978,7 @@ end
 local function UnitBuffByName(unit, name)
 	for i = 1, 40 do
 		local n = UnitBuff(unit, i)
-		if n == name then return end
+		if n == name then return true end
 	end
 end
 
