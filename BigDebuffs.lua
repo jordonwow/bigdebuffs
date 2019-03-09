@@ -435,7 +435,10 @@ BigDebuffs.Spells = {
 	[204366] = { type = "buffs_offensive" }, -- Thundercharge
 	[204945] = { type = "buffs_offensive" }, -- Doom Winds
 	[260878] = { type = "buffs_defensive" }, -- Spirit Wolf
-
+	[8178] = { type = "immunities_spells" }, -- Grounding
+		[255016] = { type = "immunities_spells", parent = 8178 }, -- Grounding
+		[204336] = { type = "immunities_spells", parent = 8178 }, -- Grounding
+		[34079] = { type = "immunities_spells", parent = 8178 }, -- Grounding
 
 	-- Warlock
 
