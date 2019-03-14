@@ -8,12 +8,17 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v7.7
+
+* Add Gladiator's Maledict
+* Add Touch of Death
+* Add option to hide based on group size
+
 ## v7.6
 
 * Add Grounding Totem
 * Add Lively Spirit
 * Minor bug fixes
-
 
 ## v7.5
 
