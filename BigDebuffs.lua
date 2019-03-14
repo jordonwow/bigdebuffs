@@ -35,6 +35,10 @@ local defaults = {
 				[233490] = true, -- Unstable Affliction
 				[34914] = true, -- Vampiric Touch
 			},
+			inRaid = {
+				hide = false,
+				size = 5
+			}
 		},
 		unitFrames = {
 			enabled = true,
@@ -1269,6 +1273,7 @@ end
 function BigDebuffs:ShowBigDebuffs(frame)
 
 	if not self.db.profile.raidFrames.enabled or not frame.debuffFrames or not frame.BigDebuffs then return end
+	if not self:ShowInRaids() then return end
 
 	if not UnitIsPlayer(frame.displayedUnit) then
 		return
@@ -1601,6 +1606,16 @@ end
 
 function BigDebuffs:UNIT_PET()
 	self:UNIT_AURA("pet")
+end
+
+function BigDebuffs:ShowInRaids()
+	local grpSize = GetNumGroupMembers();
+	local inRaid = self.db.profile.raidFrames.inRaid;
+	if ( inRaid.hide and grpSize > inRaid.size ) then
+	    return false;
+	end
+
+	return true;
 end
 
 -- Show extra buffs
