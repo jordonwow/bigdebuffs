@@ -511,6 +511,7 @@ BigDebuffs.Spells = {
 		[167152] = { type = "buffs_other", parent = 192001 }, -- Refreshment
 	[256948] = { type = "buffs_other" }, -- Spatial Rift
 	[255654] = { type = "cc" }, --Bull Rush
+	[294127] = { type = "cc" }, -- Maledict
 
 	-- Legacy (may be deprecated)
 
