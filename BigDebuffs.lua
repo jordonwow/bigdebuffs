@@ -301,6 +301,7 @@ BigDebuffs.Spells = {
 	-- Monk
 
 	[115078] = { type = "cc" }, -- Paralysis
+	[115080] = { type = "buffs_offensive" }, -- Touch of Death
 	[115203] = { type = "buffs_defensive" }, -- Fortifying Brew (Brewmaster)
 		[201318] = { type = "buffs_defensive", parent = 115203 }, -- Fortifying Brew (Windwalker Honor Talent)
 		[243435] = { type = "buffs_defensive", parent = 115203 }, -- Fortifying Brew (Mistweaver)
