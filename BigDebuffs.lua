@@ -35,6 +35,7 @@ local defaults = {
 				[233490] = true, -- Unstable Affliction
 				[34914] = true, -- Vampiric Touch
 				[294127] = true, -- Gladiator's Maledict (PvP trinket healing absorb)
+			},
 			inRaid = {
 				hide = false,
 				size = 5
