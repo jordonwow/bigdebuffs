@@ -2,6 +2,7 @@
 -- BigDebuffs by Jordon
 
 BigDebuffs = LibStub("AceAddon-3.0"):NewAddon("BigDebuffs", "AceEvent-3.0", "AceHook-3.0")
+local SM = LibStub("LibSharedMedia-3.0")
 
 -- Defaults
 local defaults = {
@@ -11,6 +12,9 @@ local defaults = {
 			anchor = "INNER",
 			enabled = true,
 			cooldownCount = true,
+			cooldownFontSize = 10,
+			cooldownFontEffect = "OUTLINE",
+			cooldownFont = "Friz Quadrata TT",
 			hideBliz = true,
 			redirectBliz = false,
 			increaseBuffs = false,
@@ -30,11 +34,18 @@ local defaults = {
 				[81261] = true, -- Solar Beam
 				[233490] = true, -- Unstable Affliction
 				[34914] = true, -- Vampiric Touch
-			},
+				[294127] = true, -- Gladiator's Maledict (PvP trinket healing absorb)
+			inRaid = {
+				hide = false,
+				size = 5
+			}
 		},
 		unitFrames = {
 			enabled = true,
 			cooldownCount = true,
+			cooldownFontSize = 16,
+			cooldownFontEffect = "OUTLINE",
+			cooldownFont = "Friz Quadrata TT",
 			tooltips = true,
 			player = {
 				enabled = true,
@@ -100,6 +111,7 @@ BigDebuffs.WarningDebuffs = {
 	233498, -- Unstable Affliction
 	233499, -- Unstable Affliction
 	34914, -- Vampiric Touch
+	294127,-- Gladiator's Maledict (PvP trinket healing absorb)
 }
 
 BigDebuffs.Spells = {
@@ -139,6 +151,7 @@ BigDebuffs.Spells = {
 	[91800] = { type = "cc" }, -- Gnaw
 	[108194] = { type = "cc" }, -- Asphyxiate
 		[221562] = { type = "cc", parent = 108194 }, -- Asphyxiate (Blood)
+	[130736] = { type = "buffs_offensive" }, -- Soul Reaper
 	[152279] = { type = "buffs_offensive" }, -- Breath of Sindragosa
 	[194679] = { type = "buffs_defensive" }, -- Rune Tap
 	[194844] = { type = "buffs_defensive" }, -- Bonestorm
@@ -289,6 +302,7 @@ BigDebuffs.Spells = {
 	-- Monk
 
 	[115078] = { type = "cc" }, -- Paralysis
+	[115080] = { type = "buffs_offensive" }, -- Touch of Death
 	[115203] = { type = "buffs_defensive" }, -- Fortifying Brew (Brewmaster)
 		[201318] = { type = "buffs_defensive", parent = 115203 }, -- Fortifying Brew (Windwalker Honor Talent)
 		[243435] = { type = "buffs_defensive", parent = 115203 }, -- Fortifying Brew (Mistweaver)
@@ -298,15 +312,16 @@ BigDebuffs.Spells = {
 	[122278] = { type = "buffs_defensive" }, -- Dampen Harm
 	[122470] = { type = "buffs_defensive" }, -- Touch of Karma
 	[122783] = { type = "buffs_defensive" }, -- Diffuse Magic
-	[137639] = { type = "buffs_defensive" }, -- Storm, Earth, and Fire
+	[137639] = { type = "buffs_offensive" }, -- Storm, Earth, and Fire
+		[152173] = { type = "buffs_offensive", parent = 137639 }, -- Serenity
 	[198909] = { type = "cc" }, -- Song of Chi-Ji
-	[201325] = { type = "buffs_defensive" }, -- Zen Meditation
-		[115176] = { type = "buffs_defensive", parent = 201325 }, -- Zen Meditation
+	[115176] = { type = "buffs_defensive" }, -- Zen Meditation
 	[202162] = { type = "buffs_defensive" }, -- Guard
 	[202274] = { type = "cc" }, -- Incendiary Brew
+	[209584] = { type = "immunities_spells" }, -- Zen Focus Tea
 	[216113] = { type = "buffs_defensive" }, -- Way of the Crane
-	[232055] = { type = "cc" }, -- Fists of Fury
-		[120086] = { type = "cc", parent = 232055 }, -- Fists of Fury
+	[232055] = { type = "buffs_offensive" }, -- Fists of Fury
+		[120086] = { type = "buffs_offensive", parent = 232055 }, -- Fists of Fury
 	[233759] = { type = "cc" }, -- Grapple Weapon
 
 	-- Paladin
@@ -344,8 +359,8 @@ BigDebuffs.Spells = {
 
 	-- Priest
 
-	[586] = { type = "buffs_defensive" }, -- Fade
-		[213602] = { type = "buffs_defensive" }, -- Greater Fade
+	[586] = { type = "buffs_other" }, -- Fade
+		[213602] = { type = "immunities" }, -- Greater Fade
 	[605] = { type = "cc", priority = true }, -- Mind Control
 	[8122] = { type = "cc" }, -- Psychic Scream
 	[9484] = { type = "cc" }, -- Shackle Undead
@@ -407,6 +422,9 @@ BigDebuffs.Spells = {
 		[211004] = { type = "cc", parent = 51514 }, -- Hex (Spider)
 		[211010] = { type = "cc", parent = 51514 }, -- Hex (Snake)
 		[211015] = { type = "cc", parent = 51514 }, -- Hex (Cockroach)
+		[269352] = { type = "cc", parent = 51514 }, -- Hex (Skeletal Hatchling)
+		[277778] = { type = "cc", parent = 51514 }, -- Hex (Zandalari Tendonripper)
+		[277784] = { type = "cc", parent = 51514 }, -- Hex (Wicker Mongrel)
 	[79206] = { type = "buffs_defensive" }, -- Spiritwalker's Grace 60 * OTHER
 	[108281] = { type = "buffs_defensive" }, -- Ancestral Guidance
 	[16166] = { type = "buffs_offensive" }, -- Elemental Mastery
@@ -425,7 +443,11 @@ BigDebuffs.Spells = {
 	[204366] = { type = "buffs_offensive" }, -- Thundercharge
 	[204945] = { type = "buffs_offensive" }, -- Doom Winds
 	[260878] = { type = "buffs_defensive" }, -- Spirit Wolf
-
+	[290641] = { type = "immunities_spells" }, -- Ancestral Gift (PvP Talent)
+	[8178] = { type = "immunities_spells" }, -- Grounding
+		[255016] = { type = "immunities_spells", parent = 8178 }, -- Grounding
+		[204336] = { type = "immunities_spells", parent = 8178 }, -- Grounding
+		[34079] = { type = "immunities_spells", parent = 8178 }, -- Grounding
 
 	-- Warlock
 
@@ -475,6 +497,7 @@ BigDebuffs.Spells = {
 	[227847] = { type = "immunities" }, -- Bladestorm (Arms)
 		[46924] = { type = "immunities", parent = 227847 }, -- Bladestorm (Fury)
 		[152277] = { type = "immunities", parent = 227847 }, -- Ravager
+	[223657] = { type = "buffs_defensive" }, -- Safeguard
 	[228920] = { type = "buffs_defensive" }, -- Ravager
 	[236077] = { type = "cc" }, -- Disarm
 		[236236] = { type = "cc", parent = 236077 }, -- Disarm
@@ -483,20 +506,12 @@ BigDebuffs.Spells = {
 
 	[20549] = { type = "cc" }, -- War Stomp
 	[107079] = { type = "cc" }, -- Quaking Palm
-	[129597] = { type = "cc" }, -- Arcane Torrent
-		[25046] = { type = "cc", parent = 129597 }, -- Arcane Torrent
-		[28730] = { type = "cc", parent = 129597 }, -- Arcane Torrent
-		[50613] = { type = "cc", parent = 129597 }, -- Arcane Torrent
-		[69179] = { type = "cc", parent = 129597 }, -- Arcane Torrent
-		[80483] = { type = "cc", parent = 129597 }, -- Arcane Torrent
-		[155145] = { type = "cc", parent = 129597 }, -- Arcane Torrent
-		[202719] = { type = "cc", parent = 129597 }, -- Arcane Torrent
-		[202719] = { type = "cc", parent = 129597 }, -- Arcane Torrent
-		[232633] = { type = "cc", parent = 129597 }, -- Arcane Torrent
 	[192001] = { type = "buffs_other" }, -- Drink
 		[167152] = { type = "buffs_other", parent = 192001 }, -- Refreshment
+		[274914] = { type = "buffs_other", parent = 192001 }, -- Drink
 	[256948] = { type = "buffs_other" }, -- Spatial Rift
 	[255654] = { type = "cc" }, --Bull Rush
+	[294127] = { type = "buffs_other" }, -- Gladiator's Maledict (PvP trinket healing absorb)
 
 	-- Legacy (may be deprecated)
 
@@ -598,11 +613,12 @@ BigDebuffs.PriorityDebuffs = {
 	233499, -- Unstable Affliction
 	34914, -- Vampiric Touch
 	102355, -- Faerie Swarm
-	117405, -- Binding Shot
+	--117405, -- Binding Shot
 	122470, -- Touch of Karma
 	208997, -- Counterstrike Totem
-	770, -- Faerie Fire
+	--770, -- Faerie Fire
 	130736, -- Soul Reaper (Unholy)
+	294127, -- Gladiator's Maledict (PvP trinket healing absorb)
 }
 
 -- Store interrupt spellId and start time
@@ -784,6 +800,13 @@ function BigDebuffs:Refresh()
 	for unit, frame in pairs(self.UnitFrames) do
 		frame:Hide()
 		frame.current = nil
+		if self.db.profile.unitFrames.cooldownCount then
+			local text = frame.cooldown:GetRegions()
+			if text then
+				text:SetFont(SM:Fetch("font",BigDebuffs.db.profile.unitFrames.cooldownFont),
+					self.db.profile.unitFrames.cooldownFontSize, self.db.profile.unitFrames.cooldownFontEffect)
+			end
+		end
 		frame.cooldown:SetHideCountdownNumbers(not self.db.profile.unitFrames.cooldownCount)
 		frame.cooldown.noCooldownCount = not self.db.profile.unitFrames.cooldownCount
 		self:UNIT_AURA(unit)
@@ -800,6 +823,15 @@ function BigDebuffs:AttachUnitFrame(unit)
 		frame = CreateFrame("Button", frameName, UIParent, "BigDebuffsUnitFrameTemplate")
 		self.UnitFrames[unit] = frame
 		frame:SetScript("OnEvent", function() self:UNIT_AURA(unit) end)
+		if self.db.profile.unitFrames.cooldownCount then
+			local text = frame.cooldown:GetRegions()
+			if text then
+				text:SetFont(SM:Fetch("font",BigDebuffs.db.profile.unitFrames.cooldownFont),
+					self.db.profile.unitFrames.cooldownFontSize, self.db.profile.unitFrames.cooldownFontEffect)
+			end
+		end
+		frame.cooldown:SetHideCountdownNumbers(not self.db.profile.unitFrames.cooldownCount)
+		frame.cooldown.noCooldownCount = not self.db.profile.unitFrames.cooldownCount
 		frame.icon:SetDrawLayer("BORDER")
 		frame:RegisterUnitEvent("UNIT_AURA", unit)
 		frame:RegisterForDrag("LeftButton")
@@ -906,7 +938,7 @@ local function UnitDebuffTest(unit, index)
 	local debuff = TestDebuffs[index]
 	if not debuff then return end
 	-- name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId
-	return "Test", debuff[2], 0, debuff[4], 0, 0, nil, nil, nil, debuff[1]
+	return "Test", debuff[2], 0, debuff[4], 60, GetTime() + 60, nil, nil, nil, debuff[1]
 end
 
 function BigDebuffs:OnEnable()
@@ -948,7 +980,7 @@ end
 local function UnitBuffByName(unit, name)
 	for i = 1, 40 do
 		local n = UnitBuff(unit, i)
-		if n == name then return end
+		if n == name then return true end
 	end
 end
 
@@ -966,7 +998,7 @@ function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED()
 	-- Find unit
 	for i = 1, #unitsWithRaid do
 		local unit = unitsWithRaid[i]
-		if destGUID == UnitGUID(unit) and (event ~= "SPELL_CAST_SUCCESS" or select(8, UnitChannelInfo(unit)) == false) then
+		if destGUID == UnitGUID(unit) and (event ~= "SPELL_CAST_SUCCESS" or select(7, UnitChannelInfo(unit)) == false) then
 			local duration = spell.duration
 			local _, class = UnitClass(unit)
 
@@ -1021,6 +1053,7 @@ function BigDebuffs:AddBigDebuffs(frame)
 			local buffPrefix = frameName .. "Buff"
 			local buffFrame = _G[buffPrefix .. i] or CreateFrame("Button", buffPrefix .. i, frame, "CompactBuffTemplate")
 			buffFrame:ClearAllPoints()
+			buffFrame:SetSize(frame.buffFrames[1]:GetSize())
 			if math.fmod(i - 1, 3) == 0 then
 				buffFrame:SetPoint("BOTTOMRIGHT", _G[buffPrefix .. i - 3], "TOPRIGHT")
 			else
@@ -1070,6 +1103,7 @@ end
 local pending = {}
 
 hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
+	if not BigDebuffs.db.profile.raidFrames.enabled then return end
 	if frame:IsForbidden() then return end
 	local name = frame:GetName()
 	if not name or not name:match("^Compact") then return end
@@ -1210,6 +1244,10 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 	local enabled = expirationTime and expirationTime ~= 0;
 	if enabled then
 		local startTime = expirationTime - duration;
+		local text = debuffFrame.cooldown:GetRegions();
+		text:SetFont(SM:Fetch("font",BigDebuffs.db.profile.raidFrames.cooldownFont),
+			BigDebuffs.db.profile.raidFrames.cooldownFontSize, BigDebuffs.db.profile.raidFrames.cooldownFontEffect);
+
 		CooldownFrame_Set(debuffFrame.cooldown, startTime, duration, true);
 	else
 		CooldownFrame_Clear(debuffFrame.cooldown);
@@ -1232,6 +1270,7 @@ end
 function BigDebuffs:ShowBigDebuffs(frame)
 
 	if not self.db.profile.raidFrames.enabled or not frame.debuffFrames or not frame.BigDebuffs then return end
+	if not self:ShowInRaids() then return end
 
 	if not UnitIsPlayer(frame.displayedUnit) then
 		return
@@ -1526,9 +1565,9 @@ function BigDebuffs:UNIT_AURA(unit)
 				SetPortraitToTexture(frame.icon, icon)
 
 				-- Adapt
-				if frame.anchor and Adapt and Adapt.portraits[frame.anchor] then
-					Adapt.portraits[frame.anchor].modelLayer:SetFrameStrata("BACKGROUND")
-				end
+				-- if frame.anchor and Adapt and Adapt.portraits[frame.anchor] then
+				-- 	Adapt.portraits[frame.anchor].modelLayer:SetFrameStrata("BACKGROUND")
+				-- end
 			else
 				frame.icon:SetTexture(icon)
 			end
@@ -1545,9 +1584,9 @@ function BigDebuffs:UNIT_AURA(unit)
 		frame.current = icon
 	else
 		-- Adapt
-		if frame.anchor and frame.blizzard and Adapt and Adapt.portraits[frame.anchor] then
-			Adapt.portraits[frame.anchor].modelLayer:SetFrameStrata("LOW")
-		end
+		-- if frame.anchor and frame.blizzard and Adapt and Adapt.portraits[frame.anchor] then
+		-- 	Adapt.portraits[frame.anchor].modelLayer:SetFrameStrata("LOW")
+		-- end
 
 		frame:Hide()
 		frame.current = nil
@@ -1564,6 +1603,16 @@ end
 
 function BigDebuffs:UNIT_PET()
 	self:UNIT_AURA("pet")
+end
+
+function BigDebuffs:ShowInRaids()
+	local grpSize = GetNumGroupMembers();
+	local inRaid = self.db.profile.raidFrames.inRaid;
+	if ( inRaid.hide and grpSize > inRaid.size ) then
+	    return false;
+	end
+
+	return true;
 end
 
 -- Show extra buffs
