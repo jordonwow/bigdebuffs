@@ -907,7 +907,7 @@ function BigDebuffs:ShowBigDebuffs(frame)
         local size = self:GetDebuffSize(spellId, false)
         if size then
             big = true
-            tinsert(debuffs, { -1, size, 0, self:GetDebuffPriority(id) })
+            tinsert(debuffs, { -1, size, 0, self:GetDebuffPriority(spellId) })
         end
     end
 
