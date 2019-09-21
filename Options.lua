@@ -41,7 +41,10 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
             args = {},
         }
         local key = "spell"..spellID
-        local raidFrames = spell.type == "cc" or spell.type == "roots" or spell.type == "special" or spell.type == "interrupts"
+        local raidFrames = spell.type == "cc" or
+            spell.type == "roots" or
+            spell.type == "special" or
+            spell.type == "interrupts"
         Spells[spell.type].args[key] = {
             type = "group",
             get = function(info)
@@ -54,8 +57,16 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                 BigDebuffs.db.profile.spells[spellID][name] = value
                 BigDebuffs:Refresh()
             end,
-            name = function(info) local name = SpellNames[spellID] or GetSpellInfo(spellID) SpellNames[spellID] = name return name end,
-            icon = function() local icon = SpellIcons[spellID] or GetSpellTexture(spellID) SpellIcons[spellID] = icon return icon end,
+            name = function(info)
+                local name = SpellNames[spellID] or GetSpellInfo(spellID)
+                SpellNames[spellID] = name
+                return name
+            end,
+            icon = function()
+                local icon = SpellIcons[spellID] or GetSpellTexture(spellID)
+                SpellIcons[spellID] = icon
+                return icon
+            end,
             args = {
                 visibility = {
                     order = 1,
@@ -64,7 +75,8 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                     inline = true,
                     get = function(info)
                         local name = info[#info]
-                        local value = (BigDebuffs.db.profile.spells[spellID] and BigDebuffs.db.profile.spells[spellID][name]) or
+                        local value = (BigDebuffs.db.profile.spells[spellID] and
+                            BigDebuffs.db.profile.spells[spellID][name]) or
                             (not BigDebuffs.Spells[spellID]["no"..name] and 1)
                         return value and value == 1
                     end,
@@ -125,10 +137,14 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                             max = 100,
                             step = 1,
                             order = 3,
-                            disabled = function() return not BigDebuffs.db.profile.spells[spellID] or not BigDebuffs.db.profile.spells[spellID].customPriority end,
+                            disabled = function()
+                                return not BigDebuffs.db.profile.spells[spellID] or
+                                not BigDebuffs.db.profile.spells[spellID].customPriority
+                            end,
                             get = function(info)
                                 -- Pull the category priority
-                                return BigDebuffs.db.profile.spells[spellID] and BigDebuffs.db.profile.spells[spellID].priority and
+                                return BigDebuffs.db.profile.spells[spellID] and
+                                    BigDebuffs.db.profile.spells[spellID].priority and
                                     BigDebuffs.db.profile.spells[spellID].priority or
                                     BigDebuffs.db.profile.priority[spell.type]
                             end,
@@ -162,7 +178,8 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                             desc = L["Set the custom size of this spell"],
                             get = function(info)
                                 -- Pull the category size
-                                return BigDebuffs.db.profile.spells[spellID] and BigDebuffs.db.profile.spells[spellID].size and
+                                return BigDebuffs.db.profile.spells[spellID] and
+                                    BigDebuffs.db.profile.spells[spellID].size and
                                     BigDebuffs.db.profile.spells[spellID].size/100 or
                                     BigDebuffs.db.profile.raidFrames[string.lower(spell.type)]/100
                             end,
@@ -172,7 +189,8 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                                 BigDebuffs.db.profile.spells[spellID][name] = value*100
                                 BigDebuffs:Refresh()
                             end,
-                            disabled = function() return not BigDebuffs.db.profile.spells[spellID] or not BigDebuffs.db.profile.spells[spellID].customSize end,
+                            disabled = function() return not BigDebuffs.db.profile.spells[spellID] or
+                                not BigDebuffs.db.profile.spells[spellID].customSize end,
                             min = 0,
                             max = 1,
                             step = 0.01,
@@ -218,7 +236,11 @@ function BigDebuffs:SetupOptions()
                 disabled = function(info) return info[2] and not self.db.profile[info[1]].enabled end,
                 order = 10,
                 get = function(info) local name = info[#info] return self.db.profile.raidFrames[name] end,
-                set = function(info, value) local name = info[#info] self.db.profile.raidFrames[name] = value self:Refresh() end,
+                set = function(info, value)
+                    local name = info[#info]
+                    self.db.profile.raidFrames[name] = value
+                    self:Refresh()
+                end,
                 args = {
                     enabled = {
                         type = "toggle",
@@ -329,8 +351,15 @@ function BigDebuffs:SetupOptions()
                         type = "group",
                         inline = true,
                         order = 20,
-                        get = function(info) local name = info[#info] return self.db.profile.raidFrames[name]/100 end,
-                        set = function(info, value) local name = info[#info] self.db.profile.raidFrames[name] = value*100 self:Refresh() end,
+                        get = function(info)
+                            local name = info[#info]
+                            return self.db.profile.raidFrames[name]/100
+                        end,
+                        set = function(info, value)
+                            local name = info[#info]
+                            self.db.profile.raidFrames[name] = value*100
+                            self:Refresh()
+                        end,
                         args = {
                             dispellable = {
                                 type = "range",
@@ -341,8 +370,15 @@ function BigDebuffs:SetupOptions()
                                 max = 1,
                                 step = 0.01,
                                 order = 1,
-                                get = function(info) local name = info[#info] return self.db.profile.raidFrames.dispellable.cc/100 end,
-                                set = function(info, value) local name = info[#info] self.db.profile.raidFrames.dispellable.cc = value*100 self:Refresh() end,
+                                get = function(info)
+                                    local name = info[#info]
+                                    return self.db.profile.raidFrames.dispellable.cc/100
+                                end,
+                                set = function(info, value)
+                                    local name = info[#info]
+                                    self.db.profile.raidFrames.dispellable.cc = value*100
+                                    self:Refresh()
+                                end,
                             },
                             cc = {
                                 type = "range",
@@ -363,8 +399,15 @@ function BigDebuffs:SetupOptions()
                                 max = 1,
                                 step = 0.01,
                                 order = 4,
-                                get = function(info) local name = info[#info] return self.db.profile.raidFrames.dispellable.roots/100 end,
-                                set = function(info, value) local name = info[#info] self.db.profile.raidFrames.dispellable.roots= value*100 self:Refresh() end,
+                                get = function(info)
+                                    local name = info[#info]
+                                    return self.db.profile.raidFrames.dispellable.roots/100
+                                end,
+                                set = function(info, value)
+                                    local name = info[#info]
+                                    self.db.profile.raidFrames.dispellable.roots= value*100
+                                    self:Refresh()
+                                end,
                             },
                             roots = {
                                 type = "range",
@@ -455,7 +498,11 @@ function BigDebuffs:SetupOptions()
                 disabled = function(info) return info[2] and not self.db.profile[info[1]].enabled end,
                 childGroups = "tab",
                 get = function(info) local name = info[#info] return self.db.profile.unitFrames[name] end,
-                set = function(info, value) local name = info[#info] self.db.profile.unitFrames[name] = value self:Refresh() end,
+                set = function(info, value)
+                    local name = info[#info]
+                    self.db.profile.unitFrames[name] = value
+                    self:Refresh()
+                end,
                 args = {
                     enabled = {
                         type = "toggle",
@@ -515,9 +562,19 @@ function BigDebuffs:SetupOptions()
                     },
                     player = {
                         type = "group",
-                        disabled = function(info) return not self.db.profile[info[1]].enabled or (info[3] and not self.db.profile.unitFrames[info[2]].enabled) end,
-                        get = function(info) local name = info[#info] return self.db.profile.unitFrames.player[name] end,
-                        set = function(info, value) local name = info[#info] self.db.profile.unitFrames.player[name] = value self:Refresh() self:Refresh() end,
+                        disabled = function(info)
+                            return not self.db.profile[info[1]].enabled or
+                                (info[3] and not self.db.profile.unitFrames[info[2]].enabled)
+                        end,
+                        get = function(info)
+                            local name = info[#info]
+                            return self.db.profile.unitFrames.player[name]
+                        end,
+                        set = function(info, value)
+                            local name = info[#info]
+                            self.db.profile.unitFrames.player[name] = value
+                            self:Refresh()
+                        end,
                         args = {
                             enabled = {
                                 type = "toggle",
@@ -539,7 +596,11 @@ function BigDebuffs:SetupOptions()
                             },
                             size = {
                                 type = "range",
-                                disabled = function(info) local name = info[2] return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "auto" end,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or
+                                        self.db.profile.unitFrames[name].anchor == "auto"
+                                end,
                                 name = L["Size"],
                                 desc = L["Set the size of the frame"],
                                 min = 8,
@@ -553,9 +614,19 @@ function BigDebuffs:SetupOptions()
                     },
                     target = {
                         type = "group",
-                        disabled = function(info) return not self.db.profile[info[1]].enabled or (info[3] and not self.db.profile.unitFrames[info[2]].enabled) end,
-                        get = function(info) local name = info[#info] return self.db.profile.unitFrames.target[name] end,
-                        set = function(info, value) local name = info[#info] self.db.profile.unitFrames.target[name] = value self:Refresh() self:Refresh() end,
+                        disabled = function(info)
+                            return not self.db.profile[info[1]].enabled or
+                                (info[3] and not self.db.profile.unitFrames[info[2]].enabled)
+                        end,
+                        get = function(info)
+                            local name = info[#info]
+                            return self.db.profile.unitFrames.target[name]
+                        end,
+                        set = function(info, value)
+                            local name = info[#info]
+                            self.db.profile.unitFrames.target[name] = value
+                            self:Refresh()
+                        end,
                         args = {
                             enabled = {
                                 type = "toggle",
@@ -577,7 +648,11 @@ function BigDebuffs:SetupOptions()
                             },
                             size = {
                                 type = "range",
-                                disabled = function(info) local name = info[2] return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "auto" end,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or
+                                        self.db.profile.unitFrames[name].anchor == "auto"
+                                end,
                                 name = L["Size"],
                                 desc = L["Set the size of the frame"],
                                 min = 8,
@@ -592,9 +667,19 @@ function BigDebuffs:SetupOptions()
                     },
                     pet = {
                         type = "group",
-                        disabled = function(info) return not self.db.profile[info[1]].enabled or (info[3] and not self.db.profile.unitFrames[info[2]].enabled) end,
-                        get = function(info) local name = info[#info] return self.db.profile.unitFrames.pet[name] end,
-                        set = function(info, value) local name = info[#info] self.db.profile.unitFrames.pet[name] = value self:Refresh() self:Refresh() end,
+                        disabled = function(info)
+                            return not self.db.profile[info[1]].enabled or
+                                (info[3] and not self.db.profile.unitFrames[info[2]].enabled)
+                        end,
+                        get = function(info)
+                            local name = info[#info]
+                            return self.db.profile.unitFrames.pet[name]
+                        end,
+                        set = function(info, value)
+                            local name = info[#info]
+                            self.db.profile.unitFrames.pet[name] = value
+                            self:Refresh()
+                        end,
                         args = {
                             enabled = {
                                 type = "toggle",
@@ -616,7 +701,11 @@ function BigDebuffs:SetupOptions()
                             },
                             size = {
                                 type = "range",
-                                disabled = function(info) local name = info[2] return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "auto" end,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or
+                                        self.db.profile.unitFrames[name].anchor == "auto"
+                                end,
                                 name = L["Size"],
                                 desc = L["Set the size of the frame"],
                                 min = 8,
@@ -631,9 +720,19 @@ function BigDebuffs:SetupOptions()
                     },
                     party = {
                         type = "group",
-                        disabled = function(info) return not self.db.profile[info[1]].enabled or (info[3] and not self.db.profile.unitFrames[info[2]].enabled) end,
-                        get = function(info) local name = info[#info] return self.db.profile.unitFrames.party[name] end,
-                        set = function(info, value) local name = info[#info] self.db.profile.unitFrames.party[name] = value self:Refresh() self:Refresh() end,
+                        disabled = function(info)
+                            return not self.db.profile[info[1]].enabled or
+                                (info[3] and not self.db.profile.unitFrames[info[2]].enabled)
+                        end,
+                        get = function(info)
+                            local name = info[#info]
+                            return self.db.profile.unitFrames.party[name]
+                        end,
+                        set = function(info, value)
+                            local name = info[#info]
+                            self.db.profile.unitFrames.party[name] = value
+                            self:Refresh()
+                        end,
                         args = {
                             enabled = {
                                 type = "toggle",
@@ -655,7 +754,11 @@ function BigDebuffs:SetupOptions()
                             },
                             size = {
                                 type = "range",
-                                disabled = function(info) local name = info[2] return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "auto" end,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or
+                                        self.db.profile.unitFrames[name].anchor == "auto"
+                                end,
                                 name = L["Size"],
                                 desc = L["Set the size of the frame"],
                                 min = 8,

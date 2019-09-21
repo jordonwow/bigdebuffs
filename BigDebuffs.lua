@@ -917,11 +917,12 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
 end
 
 function BigDebuffs:ShowBigDebuffs(frame)
-
-    if not self.db.profile.raidFrames.enabled or not frame.debuffFrames or not frame.BigDebuffs then return end
-    if not self:ShowInRaids() then return end
-
-    if not UnitIsPlayer(frame.displayedUnit) then
+    if (not self.db.profile.raidFrames.enabled) or
+        (not frame.debuffFrames) or
+        (not frame.BigDebuffs) or
+        (not self:ShowInRaids()) or
+        (not UnitIsPlayer(frame.displayedUnit))
+    then
         return
     end
 
@@ -1030,9 +1031,7 @@ function BigDebuffs:ShowBigDebuffs(frame)
                 index = index + 1
             end
         end
-
     end
-
 end
 
 -- We need to copy the entire function to avoid taint
