@@ -3,16 +3,21 @@ local L = LibStub("AceLocale-3.0"):GetLocale("BigDebuffs")
 local SM = LibStub("LibSharedMedia-3.0")
 
 local WarningDebuffs = {}
-for i = 1, #BigDebuffs.WarningDebuffs do
-    local id = BigDebuffs.WarningDebuffs[i]
-    local name = GetSpellInfo(id)
-    WarningDebuffs[name] = {
-        type = "toggle",
-        get = function(info) local key = info[#info-2] return BigDebuffs.db.profile[key].warningList[id] end,
-        set = function(info, value) local key = info[#info-2] BigDebuffs.db.profile[key].warningList[id] = value BigDebuffs:Refresh() end,
-        name = name,
-        desc = L["Show this debuff if present while BigDebuffs are displayed"],
-    }
+if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+    for i = 1, #BigDebuffs.WarningDebuffs do
+        local id = BigDebuffs.WarningDebuffs[i]
+        local name = GetSpellInfo(id)
+        WarningDebuffs[name] = {
+            type = "toggle",
+            get = function(info) local key = info[#info-2] return BigDebuffs.db.profile[key].warningList[id] end,
+            set = function(info, value)
+                local key = info[#info-2]
+                BigDebuffs.db.profile[key].warningList[id] = value BigDebuffs:Refresh()
+            end,
+            name = name,
+            desc = L["Show this debuff if present while BigDebuffs are displayed"],
+        }
+    end
 end
 
 local order = {
@@ -349,16 +354,6 @@ function BigDebuffs:SetupOptions()
                                 step = 0.01,
                                 order = 2,
                             },
-                            warning = {
-                                type = "range",
-                                isPercent = true,
-                                name = L["Warning Debuffs"],
-                                desc = L["Set the size of warning debuffs"],
-                                min = 0,
-                                max = 1,
-                                step = 0.01,
-                                order = 6,
-                            },
                             dispellableRoots = {
                                 type = "range",
                                 isPercent = true,
@@ -412,13 +407,6 @@ function BigDebuffs:SetupOptions()
                                 order = 8,
                             },
                         },
-                    },
-                    warning = {
-                        name = L["Warning Debuffs"],
-                        order = 30,
-                        type = "group",
-                        inline = true,
-                        args = WarningDebuffs,
                     },
                     inRaid = {
                         name = L["Extras"],
@@ -602,45 +590,6 @@ function BigDebuffs:SetupOptions()
                         desc = L["Enable BigDebuffs on the target frame"],
                         order = 2,
                     },
-                    focus = {
-                        type = "group",
-                        disabled = function(info) return not self.db.profile[info[1]].enabled or (info[3] and not self.db.profile.unitFrames[info[2]].enabled) end,
-                        get = function(info) local name = info[#info] return self.db.profile.unitFrames.focus[name] end,
-                        set = function(info, value) local name = info[#info] self.db.profile.unitFrames.focus[name] = value self:Refresh() self:Refresh() end,
-                        args = {
-                            enabled = {
-                                type = "toggle",
-                                disabled = function(info) return not self.db.profile[info[1]].enabled end,
-                                name = L["Enabled"],
-                                order = 1,
-                                width = "full",
-                                desc = L["Enable BigDebuffs on the focus frame"],
-                            },
-                            anchor = {
-                                name = L["Anchor"],
-                                desc = L["Anchor to attach the BigDebuffs frames"],
-                                type = "select",
-                                values = {
-                                    ["auto"] = L["Automatic"],
-                                    ["manual"] = L["Manual"],
-                                },
-                                order = 2,
-                            },
-                            size = {
-                                type = "range",
-                                disabled = function(info) local name = info[2] return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "auto" end,
-                                name = L["Size"],
-                                desc = L["Set the size of the frame"],
-                                min = 8,
-                                max = 512,
-                                step = 1,
-                                order = 3,
-                            },
-                        },
-                        name = L["Focus Frame"],
-                        desc = L["Enable BigDebuffs on the focus frame"],
-                        order = 3,
-                    },
                     pet = {
                         type = "group",
                         disabled = function(info) return not self.db.profile[info[1]].enabled or (info[3] and not self.db.profile.unitFrames[info[2]].enabled) end,
@@ -719,45 +668,6 @@ function BigDebuffs:SetupOptions()
                         desc = L["Enable BigDebuffs on the party frames"],
                         order = 5,
                     },
-                    arena = {
-                        type = "group",
-                        disabled = function(info) return not self.db.profile[info[1]].enabled or (info[3] and not self.db.profile.unitFrames[info[2]].enabled) end,
-                        get = function(info) local name = info[#info] return self.db.profile.unitFrames.arena[name] end,
-                        set = function(info, value) local name = info[#info] self.db.profile.unitFrames.arena[name] = value self:Refresh() self:Refresh() end,
-                        args = {
-                            enabled = {
-                                type = "toggle",
-                                disabled = function(info) return not self.db.profile[info[1]].enabled end,
-                                name = L["Enabled"],
-                                order = 1,
-                                width = "full",
-                                desc = L["Enable BigDebuffs on the arena frames"],
-                            },
-                            anchor = {
-                                name = L["Anchor"],
-                                desc = L["Anchor to attach the BigDebuffs frames"],
-                                type = "select",
-                                values = {
-                                    ["auto"] = L["Automatic"],
-                                    ["manual"] = L["Manual"],
-                                },
-                                order = 2,
-                            },
-                            size = {
-                                type = "range",
-                                disabled = function(info) local name = info[2] return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "auto" end,
-                                name = L["Size"],
-                                desc = L["Set the size of the frame"],
-                                min = 8,
-                                max = 512,
-                                step = 1,
-                                order = 3,
-                            },
-                        },
-                        name = L["Arena Frames"],
-                        desc = L["Enable BigDebuffs on the arena frames"],
-                        order = 6,
-                    },
                     spells = {
                         order = 20,
                         name = L["Spells"],
@@ -833,6 +743,136 @@ function BigDebuffs:SetupOptions()
             },
         }
     }
+
+    if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+        self.options.args.raidFrames.args.warning = {
+            name = L["Warning Debuffs"],
+            order = 30,
+            type = "group",
+            inline = true,
+            args = WarningDebuffs,
+        }
+
+        self.options.args.raidFrames.args.scale.args.warning = {
+            type = "range",
+            isPercent = true,
+            name = L["Warning Debuffs"],
+            desc = L["Set the size of warning debuffs"],
+            min = 0,
+            max = 1,
+            step = 0.01,
+            order = 6,
+        }
+
+        self.options.args.unitFrames.args.focus = {
+            type = "group",
+            disabled = function(info)
+                return not self.db.profile[info[1]].enabled or
+                    (info[3] and not self.db.profile.unitFrames[info[2]].enabled)
+            end,
+            get = function(info)
+                local name = info[#info]
+                return self.db.profile.unitFrames.focus[name]
+            end,
+            set = function(info, value)
+                local name = info[#info] self.db.profile.unitFrames.focus[name] = value
+                self:Refresh()
+            end,
+            args = {
+                enabled = {
+                    type = "toggle",
+                    disabled = function(info)
+                        return not self.db.profile[info[1]].enabled
+                    end,
+                    name = L["Enabled"],
+                    order = 1,
+                    width = "full",
+                    desc = L["Enable BigDebuffs on the focus frame"],
+                },
+                anchor = {
+                    name = L["Anchor"],
+                    desc = L["Anchor to attach the BigDebuffs frames"],
+                    type = "select",
+                    values = {
+                        ["auto"] = L["Automatic"],
+                        ["manual"] = L["Manual"],
+                    },
+                    order = 2,
+                },
+                size = {
+                    type = "range",
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or
+                            self.db.profile.unitFrames[name].anchor == "auto"
+                    end,
+                    name = L["Size"],
+                    desc = L["Set the size of the frame"],
+                    min = 8,
+                    max = 512,
+                    step = 1,
+                    order = 3,
+                },
+            },
+            name = L["Focus Frame"],
+            desc = L["Enable BigDebuffs on the focus frame"],
+            order = 3,
+        }
+
+        self.options.args.unitFrames.args.arena = {
+            type = "group",
+            disabled = function(info)
+                return not self.db.profile[info[1]].enabled or
+                    (info[3] and not self.db.profile.unitFrames[info[2]].enabled)
+            end,
+            get = function(info)
+                local name = info[#info]
+                return self.db.profile.unitFrames.arena[name]
+            end,
+            set = function(info, value)
+                local name = info[#info]
+                self.db.profile.unitFrames.arena[name] = value
+                self:Refresh()
+            end,
+            args = {
+                enabled = {
+                    type = "toggle",
+                    disabled = function(info) return not self.db.profile[info[1]].enabled end,
+                    name = L["Enabled"],
+                    order = 1,
+                    width = "full",
+                    desc = L["Enable BigDebuffs on the arena frames"],
+                },
+                anchor = {
+                    name = L["Anchor"],
+                    desc = L["Anchor to attach the BigDebuffs frames"],
+                    type = "select",
+                    values = {
+                        ["auto"] = L["Automatic"],
+                        ["manual"] = L["Manual"],
+                    },
+                    order = 2,
+                },
+                size = {
+                    type = "range",
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or
+                        self.db.profile.unitFrames[name].anchor == "auto"
+                    end,
+                    name = L["Size"],
+                    desc = L["Set the size of the frame"],
+                    min = 8,
+                    max = 512,
+                    step = 1,
+                    order = 3,
+                },
+            },
+            name = L["Arena Frames"],
+            desc = L["Enable BigDebuffs on the arena frames"],
+            order = 6,
+        }
+    end
 
     self.options.args.priority = {
         name = L["Priority"],
@@ -926,9 +966,11 @@ function BigDebuffs:SetupOptions()
 
     self.options.plugins.profiles = { profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db) }
 
-    local LibDualSpec = LibStub('LibDualSpec-1.0')
-    LibDualSpec:EnhanceDatabase(self.db, "BigDebuffsDB")
-    LibDualSpec:EnhanceOptions(self.options.plugins.profiles.profiles, self.db)
+    if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+        local LibDualSpec = LibStub('LibDualSpec-1.0')
+        LibDualSpec:EnhanceDatabase(self.db, "BigDebuffsDB")
+        LibDualSpec:EnhanceOptions(self.options.plugins.profiles.profiles, self.db)
+    end
 
     LibStub("AceConfig-3.0"):RegisterOptionsTable("BigDebuffs", self.options)
     LibStub("AceConfigDialog-3.0"):AddToBlizOptions("BigDebuffs", "BigDebuffs")

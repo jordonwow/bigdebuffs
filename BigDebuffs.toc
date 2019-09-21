@@ -1,4 +1,9 @@
-## Interface: 80100
+#@retail@
+## Interface: 80200
+#@end-retail@
+#@non-retail@
+# ## Interface: 11302
+#@end-non-retail@
 ## Title: BigDebuffs
 ## Notes: Increases the debuff size of crowd control effects on the Blizzard raid frames
 ## Version: @project-version@
@@ -8,10 +13,32 @@
 ## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibDualSpec-1.0, Adapt, OmniCC
 
 #@no-lib-strip@
-embeds.xml
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+Libs\AceAddon-3.0\AceAddon-3.0.xml
+Libs\AceDB-3.0\AceDB-3.0.xml
+Libs\AceDBOptions-3.0\AceDBOptions-3.0.xml
+Libs\AceEvent-3.0\AceEvent-3.0.xml
+Libs\AceHook-3.0\AceHook-3.0.xml
+Libs\AceGUI-3.0\AceGUI-3.0.xml
+Libs\AceConfig-3.0\AceConfig-3.0.xml
+Libs\AceLocale-3.0\AceLocale-3.0.xml
+#@retail@
+Libs\LibDualSpec-1.0\LibDualSpec-1.0.lua
+#@end-retail@
+Libs\LibSharedMedia-3.0\lib.xml
+#@non-retail@
+Libs\LibClassicDurations\LibClassicDurations.xml
+#@end-non-retail@
 #@end-no-lib-strip@
 
-locale\locale.xml
+Locales\Locales.xml
 BigDebuffs.xml
+#@retail@
+Retail.lua
+#@end-retail@
+#@non-retail@
+Classic.lua
+#@end-non-retail@
 BigDebuffs.lua
 Options.lua

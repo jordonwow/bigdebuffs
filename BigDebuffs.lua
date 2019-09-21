@@ -1,8 +1,12 @@
 
 -- BigDebuffs by Jordon
 
-BigDebuffs = LibStub("AceAddon-3.0"):NewAddon("BigDebuffs", "AceEvent-3.0", "AceHook-3.0")
+local addonName, addon = ...
+
+BigDebuffs = LibStub("AceAddon-3.0"):NewAddon(addonName, "AceEvent-3.0", "AceHook-3.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local LibClassicDurations = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and LibStub("LibClassicDurations")
+if LibClassicDurations then LibClassicDurations:Register(addonName) end
 
 -- Defaults
 local defaults = {
@@ -52,11 +56,6 @@ local defaults = {
                 anchor = "auto",
                 size = 50,
             },
-            focus = {
-                enabled = true,
-                anchor = "auto",
-                size = 50,
-            },
             target = {
                 enabled = true,
                 anchor = "auto",
@@ -68,11 +67,6 @@ local defaults = {
                 size = 50,
             },
             party = {
-                enabled = true,
-                anchor = "auto",
-                size = 50,
-            },
-            arena = {
                 enabled = true,
                 anchor = "auto",
                 size = 50,
@@ -104,140 +98,149 @@ local defaults = {
 BigDebuffs.WarningDebuffs = addon.WarningDebuffs or {}
 BigDebuffs.Spells = addon.Spells
 
+-- create a lookup table since CombatLogGetCurrentEventInfo() returns 0 for spellId
+local spellIdByName
+if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
+    spellIdByName = {}
+    for id, value in pairs(BigDebuffs.Spells) do
+        if not value.parent then spellIdByName[GetSpellInfo(id)] = id end
+    end
+    local classDispel = {
+        PRIEST = {
+            Magic = true,
+            Disease = true,
+        },
+        MAGE = {
+            Curse = true,
+        },
+        PALADIN = {
+            Magic = true,
+            Poison = true,
+            Disease = true,
+        },
+        DRUID = {
+            Curse = true,
+            Poison = true,
+        },
+        SHAMAN = {
+            Disease = true,
+            Poison = true,
+        },
+        WARLOCK = {
+            -- Felhunter's Devour Magic or Doomguard's Dispel Magic
+            Magic = function() return IsUsableSpell(GetSpellInfo(19736)) or IsUsableSpell(GetSpellInfo(19476)) end,
+        },
+    }
+    BigDebuffs.dispelTypes = classDispel[select(2, UnitClass("player"))] or {}
+else
+    defaults.profile.unitFrames.focus = {
+        enabled = true,
+        anchor = "auto",
+        size = 50,
+    }
 
-local specDispel = {
-    [62] = { -- Arcane Mage
-        Curse = true,
-    },
-    [63] = { -- Fire Mage
-        Curse = true,
-    },
-    [64] = { -- Frost Mage
-        Curse = true,
-    },
-    [65] = { -- Holy Paladin
-        Magic = true,
-        Poison = true,
-        Disease = true,
-    },
-    [66] = { -- Protection Paladin
-        Poison = true,
-        Disease = true,
-    },
-    [70] = { -- Retribution Paladin
-        Poison = true,
-        Disease = true,
-    },
-    [102] = { -- Balance Druid
-        Curse = true,
-        Poison = true,
-    },
-    [103] = { -- Feral Druid
-        Curse = true,
-        Poison = true,
-    },
-    [104] = { -- Guardian Druid
-        Curse = true,
-        Poison = true,
-    },
-    [105] = { -- Restoration Druid
-        Magic = true,
-        Curse = true,
-        Poison = true,
-    },
-    [256] = { -- Discipline Priest
-        Magic = true,
-        Disease = true,
-    },
-    [257] = { -- Holy Priest
-        Magic = true,
-        Disease = true,
-    },
-    [258] = { -- Shadow Priest
-        Magic = true,
-        Disease = true,
-    },
-    [262] = { -- Elemental Shaman
-        Curse = true,
-    },
-    [263] = { -- Enhancement Shaman
-        Curse = true,
-    },
-    [264] = { -- Restoration Shaman
-        Magic = true,
-        Curse = true,
-    },
-    [268] = { -- Brewmaster Monk
-        Poison = true,
-        Disease = true,
-    },
-    [269] = { -- Windwalker Monk
-        Poison = true,
-        Disease = true,
-    },
-    [270] = { -- Mistweaver Monk
-        Magic = true,
-        Poison = true,
-        Disease = true,
-    },
-    [577] = {
-        Magic = function() return GetSpellInfo(205604) end, -- Reverse Magic
-    },
-    [581] = {
-        Magic = function() return GetSpellInfo(205604) end, -- Reverse Magic
-    },
-}
+    defaults.profile.unitFrames.arena = {
+        enabled = true,
+        anchor = "auto",
+        size = 50,
+    }
 
--- Make sure we always see these debuffs, but don't make them bigger
-BigDebuffs.PriorityDebuffs = {
-    233490, -- Unstable Affliction
-    233496, -- Unstable Affliction
-    233497, -- Unstable Affliction
-    233498, -- Unstable Affliction
-    233499, -- Unstable Affliction
-    34914, -- Vampiric Touch
-    102355, -- Faerie Swarm
-    117405, -- Binding Shot
-    122470, -- Touch of Karma
-    208997, -- Counterstrike Totem
-    770, -- Faerie Fire
-    130736, -- Soul Reaper (Unholy)
-}
+    BigDebuffs.specDispelTypes = {
+        [62] = { -- Arcane Mage
+            Curse = true,
+        },
+        [63] = { -- Fire Mage
+            Curse = true,
+        },
+        [64] = { -- Frost Mage
+            Curse = true,
+        },
+        [65] = { -- Holy Paladin
+            Magic = true,
+            Poison = true,
+            Disease = true,
+        },
+        [66] = { -- Protection Paladin
+            Poison = true,
+            Disease = true,
+        },
+        [70] = { -- Retribution Paladin
+            Poison = true,
+            Disease = true,
+        },
+        [102] = { -- Balance Druid
+            Curse = true,
+            Poison = true,
+        },
+        [103] = { -- Feral Druid
+            Curse = true,
+            Poison = true,
+        },
+        [104] = { -- Guardian Druid
+            Curse = true,
+            Poison = true,
+        },
+        [105] = { -- Restoration Druid
+            Magic = true,
+            Curse = true,
+            Poison = true,
+        },
+        [256] = { -- Discipline Priest
+            Magic = true,
+            Disease = true,
+        },
+        [257] = { -- Holy Priest
+            Magic = true,
+            Disease = true,
+        },
+        [258] = { -- Shadow Priest
+            Magic = true,
+            Disease = true,
+        },
+        [262] = { -- Elemental Shaman
+            Curse = true,
+        },
+        [263] = { -- Enhancement Shaman
+            Curse = true,
+        },
+        [264] = { -- Restoration Shaman
+            Magic = true,
+            Curse = true,
+        },
+        [268] = { -- Brewmaster Monk
+            Poison = true,
+            Disease = true,
+        },
+        [269] = { -- Windwalker Monk
+            Poison = true,
+            Disease = true,
+        },
+        [270] = { -- Mistweaver Monk
+            Magic = true,
+            Poison = true,
+            Disease = true,
+        },
+        [577] = {
+            Magic = function() return GetSpellInfo(205604) end, -- Reverse Magic
+        },
+        [581] = {
+            Magic = function() return GetSpellInfo(205604) end, -- Reverse Magic
+        },
+    }
+end
+
+BigDebuffs.PriorityDebuffs = addon.PriorityDebuffs
 
 -- Store interrupt spellId and start time
 BigDebuffs.units = {}
 
-local units = {
-    "player",
-    "pet",
-    "target",
-    "focus",
-    "party1",
-    "party2",
-    "party3",
-    "party4",
-    "arena1",
-    "arena2",
-    "arena3",
-    "arena4",
-    "arena5",
-}
+local units = addon.Units
 
-local unitsWithRaid = {
-    "player",
-    "pet",
-    "target",
-    "focus",
-    "party1",
-    "party2",
-    "party3",
-    "party4",
-    "arena1",
-    "arena2",
-    "arena3",
-    "arena4",
-    "arena5",
-}
+local unitsWithRaid = {}
+
+for i = 1, #units do
+    table.insert(unitsWithRaid, units[i])
+end
 
 for i = 1, 40 do
     table.insert(unitsWithRaid, "raid" .. i)
@@ -400,7 +403,7 @@ function BigDebuffs:AttachUnitFrame(unit)
     if InCombatLockdown() then return end
 
     local frame = self.UnitFrames[unit]
-    local frameName = "BigDebuffs" .. unit .. "UnitFrame"
+    local frameName = addonName .. unit .. "UnitFrame"
 
     if not frame then
         frame = CreateFrame("Button", frameName, UIParent, "BigDebuffsUnitFrameTemplate")
@@ -491,7 +494,7 @@ function BigDebuffs:AttachUnitFrame(unit)
             frame:SetPoint(unpack(self.db.profile.unitFrames[unit].position))
         else
             -- No saved position, anchor to the blizzard position
-            LoadAddOn("Blizzard_ArenaUI")
+            if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then LoadAddOn("Blizzard_ArenaUI") end
             local relativeFrame = _G[anchors.Blizzard.units[unit]] or UIParent
             frame:SetPoint("CENTER", relativeFrame, "CENTER")
         end
@@ -525,30 +528,37 @@ local function UnitDebuffTest(unit, index)
 end
 
 function BigDebuffs:OnEnable()
-    self:RegisterEvent("PLAYER_TALENT_UPDATE")
     self:RegisterEvent("PLAYER_REGEN_ENABLED")
-    self:RegisterEvent("PLAYER_FOCUS_CHANGED")
     self:RegisterEvent("PLAYER_TARGET_CHANGED")
     self:RegisterEvent("UNIT_PET")
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
     self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-    self:PLAYER_TALENT_UPDATE()
+
+    if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+        self:RegisterEvent("PLAYER_TALENT_UPDATE")
+        self:RegisterEvent("PLAYER_FOCUS_CHANGED")
+        self:PLAYER_TALENT_UPDATE()
+    end
 
     -- (finish animations deprecated in latest OmniCC)
     -- Prevent OmniCC finish animations
     if OmniCC and OmniCC.TriggerEffect then
         self:RawHook(OmniCC, "TriggerEffect", function(object, cooldown)
             local name = cooldown:GetName()
-            if name and name:find("BigDebuffs") then return end
+            if name and name:find(addonName) then return end
             self.hooks[OmniCC].TriggerEffect(object, cooldown)
         end, true)
     end
 
     InsertTestDebuff(8122, "Magic") -- Psychic Scream
     InsertTestDebuff(408, nil) -- Kidney Shot
-    InsertTestDebuff(233490, "Magic") -- Unstable Affliction
+
+    if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+        InsertTestDebuff(233490, "Magic") -- Unstable Affliction
+        InsertTestDebuff(114404, nil) -- Void Tendrils
+    end
+
     InsertTestDebuff(339, "Magic") -- Entangling Roots
-    InsertTestDebuff(114404, nil) -- Void Tendrils
     InsertTestDebuff(589, "Magic") -- Shadow Word: Pain
     InsertTestDebuff(772, nil) -- Rend
 
@@ -569,25 +579,26 @@ end
 
 function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED()
 
-    local _, event, _,_,_,_,_, destGUID, _,_,_, spellId = CombatLogGetCurrentEventInfo()
+    local _, event, _,_,_,_,_, destGUID, _,_,_, spellId, spellName = CombatLogGetCurrentEventInfo()
 
     -- SPELL_INTERRUPT doesn't fire for some channeled spells
     if event ~= "SPELL_INTERRUPT" and event ~= "SPELL_CAST_SUCCESS" then return end
 
-    local spell = self.Spells[spellId]
+    if spellId == 0 then spellId = spellIdByName[spellName] end
 
-    if not spell or spell.type ~= "interrupts" then return end
+    local spell = self.Spells[spellId]
+    if not spell then return end
+    local spellType = spell.parent and self.Spells[spell.parent].type or spell.type
+    if spellType ~= INTERRUPT then return end
 
     -- Find unit
     for i = 1, #unitsWithRaid do
         local unit = unitsWithRaid[i]
-        if destGUID == UnitGUID(unit) and (event ~= "SPELL_CAST_SUCCESS" or select(7, UnitChannelInfo(unit)) == false) then
-            local duration = spell.duration
+        if destGUID == UnitGUID(unit) and (event ~= "SPELL_CAST_SUCCESS" or
+            (UnitChannelInfo and select(7, UnitChannelInfo(unit)) == false))
+        then
+            local duration = spell.parent and self.Spells[spell.parent].duration or spell.duration
             local _, class = UnitClass(unit)
-
-            -- if class == "PRIEST" or class == "SHAMAN" or class == "WARLOCK" then
-            --  duration = duration * 0.7
-            -- end
 
             if UnitBuffByName(unit, "Calming Waters") then
                 duration = duration * 0.5
@@ -596,6 +607,8 @@ function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED()
             self.units[destGUID] = self.units[destGUID] or {}
             self.units[destGUID].expires = GetTime() + duration
             self.units[destGUID].spellId = spellId
+            self.units[destGUID].duration = duration
+            self.units[destGUID].spellId = spell.parent and spell.parent or spellId
 
             -- Make sure we clear it after the duration
             C_Timer.After(duration, function()
@@ -634,7 +647,8 @@ function BigDebuffs:AddBigDebuffs(frame)
     if self.db.profile.raidFrames.increaseBuffs then
         for i = 4, MAX_BUFFS do
             local buffPrefix = frameName .. "Buff"
-            local buffFrame = _G[buffPrefix .. i] or CreateFrame("Button", buffPrefix .. i, frame, "CompactBuffTemplate")
+            local buffFrame = _G[buffPrefix .. i] or
+                CreateFrame("Button", buffPrefix .. i, frame, "CompactBuffTemplate")
             buffFrame:ClearAllPoints()
             buffFrame:SetSize(frame.buffFrames[1]:GetSize())
             if math.fmod(i - 1, 3) == 0 then
@@ -697,9 +711,11 @@ hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
     end
 end)
 
-function BigDebuffs:PLAYER_TALENT_UPDATE()
-    local specID = GetSpecializationInfo(GetSpecialization() or 1)
-    self.specDispel = specID and specDispel[specID] and specDispel[specID]
+if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+    function BigDebuffs:PLAYER_TALENT_UPDATE()
+        local specID = GetSpecializationInfo(GetSpecialization() or 1)
+        self.specDispel = specID and self.specDispelTypes[specID] and self.specDispelTypes[specID]
+    end
 end
 
 function BigDebuffs:PLAYER_REGEN_ENABLED()
@@ -719,10 +735,26 @@ end
 
 hooksecurefunc("CompactUnitFrame_HideAllDebuffs", HideBigDebuffs)
 
-function BigDebuffs:IsDispellable(dispelType)
-    if not dispelType or not self.specDispel then return end
-    if type(self.specDispel[dispelType]) == "function" then return self.specDispel[dispelType]() end
-    return self.specDispel[dispelType]
+function BigDebuffs:IsDispellable(unit, dispelType)
+    if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
+        -- if stoneform is usable and it's on player
+        if not dispelType then return end
+        if type(self.dispelTypes[dispelType]) == "function" then return self.dispelTypes[dispelType]() end
+
+        -- dwarves can use Stoneform to remove diseases and poisons
+        if (not self.dispelTypes[dispelType]) and
+            unit == "player" and
+            (dispelType == "Poison" or dispelType == "Disease")
+        then
+            return IsUsableSpell("Stoneform")
+        end
+
+        return self.dispelTypes[dispelType]
+    else
+        if not dispelType or not self.specDispel then return end
+        if type(self.specDispel[dispelType]) == "function" then return self.specDispel[dispelType]() end
+        return self.specDispel[dispelType]
+    end
 end
 
 function BigDebuffs:GetDebuffSize(id, dispellable)
@@ -746,7 +778,9 @@ function BigDebuffs:GetDebuffSize(id, dispellable)
         if self.db.profile.spells[id].size then return self.db.profile.spells[id].size end
     end
 
-    if self.Spells[id].noraidFrames and (not self.db.profile.spells[id] or not self.db.profile.spells[id].raidFrames) then
+    if self.Spells[id].noraidFrames and
+        (not self.db.profile.spells[id] or not self.db.profile.spells[id].raidFrames)
+    then
         return
     end
 
@@ -781,33 +815,56 @@ function BigDebuffs:GetAuraPriority(id)
         if self.db.profile.spells[id].priority then return self.db.profile.spells[id].priority end
     end
 
-    if self.Spells[id].nounitFrames and (not self.db.profile.spells[id] or not self.db.profile.spells[id].unitFrames) then
+    if self.Spells[id].nounitFrames and
+        (not self.db.profile.spells[id] or not self.db.profile.spells[id].unitFrames)
+    then
         return
     end
 
     return self.db.profile.priority[self.Spells[id].type] or 0
 end
 
--- Copy this function to check for testing mode
+if LibClassicDurations then
+    hooksecurefunc("CompactUnitFrame_UtilSetBuff", function(buffFrame, unit, index, filter)
+        if not LibClassicDurations then return end
+        local name, icon, count, debuffType, duration, expirationTime, unitCaster,
+            canStealOrPurge, _, spellId, canApplyAura = UnitBuff(unit, index, filter);
+        local durationNew, expirationTimeNew = LibClassicDurations:GetAuraDurationByUnit(unit, spellId, unitCaster)
+        if duration == 0 and durationNew then
+            duration = durationNew
+            expirationTime = expirationTimeNew
+        end
+        local enabled = expirationTime and expirationTime ~= 0;
+        if enabled then
+            local startTime = expirationTime - duration;
+            CooldownFrame_Set(buffFrame.cooldown, startTime, duration, true);
+        else
+            CooldownFrame_Clear(buffFrame.cooldown);
+        end
+    end)
+end
+
 local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, isBossAura, isBossBuff, test)
     local UnitDebuff = test and UnitDebuffTest or UnitDebuff
     -- make sure you are using the correct index here!
     --isBossAura says make this look large.
     --isBossBuff looks in HELPFULL auras otherwise it looks in HARMFULL ones
-    local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId;
+    local _, icon, count, debuffType, duration, expirationTime, unitCaster, _, _, spellId;
     if index == -1 then
         -- it's an interrupt
         local spell = BigDebuffs.units[UnitGUID(unit)]
         spellId = spell.spellId
         icon = GetSpellTexture(spellId)
         count = 1
-        duration = BigDebuffs.Spells[spellId].duration
+        duration = spell.duration
         expirationTime = spell.expires
     else
         if (isBossBuff) then
-            name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId = UnitBuff(unit, index, filter);
+            _, icon, count, debuffType, duration, expirationTime,
+                unitCaster, _, _, spellId = UnitBuff(unit, index, filter);
         else
-            name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId = UnitDebuff(unit, index, filter);
+            _, icon, count, debuffType, duration, expirationTime,
+                unitCaster, _, _, spellId = UnitDebuff(unit, index, filter);
         end
     end
 
@@ -824,6 +881,15 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
         debuffFrame.count:Hide();
     end
     debuffFrame:SetID(index);
+
+    if LibClassicDurations then
+        local durationNew, expirationTimeNew = LibClassicDurations:GetAuraDurationByUnit(unit, spellId, unitCaster)
+        if duration == 0 and durationNew then
+            duration = durationNew
+            expirationTime = expirationTimeNew
+        end
+    end
+
     local enabled = expirationTime and expirationTime ~= 0;
     if enabled then
         local startTime = expirationTime - duration;
@@ -873,30 +939,36 @@ function BigDebuffs:ShowBigDebuffs(frame)
         if id then
             local reaction = caster and UnitReaction("player", caster) or 0
             local friendlySmokeBomb = id == 212183 and reaction > 4
-            local size = self:GetDebuffSize(id, self:IsDispellable(dispelType))
+            local size = self:GetDebuffSize(id, self:IsDispellable(frame.displayedUnit, dispelType))
             if size and not friendlySmokeBomb then
                 big = true
                 local duration = time and time - now or 0
                 tinsert(debuffs, { i, size, duration, self:GetDebuffPriority(id) })
             elseif self.db.profile.raidFrames.redirectBliz or
             (self.db.profile.raidFrames.anchor == "INNER" and not self.db.profile.raidFrames.hideBliz) then
-                if not frame.optionTable.displayOnlyDispellableDebuffs or self:IsDispellable(dispelType) then
-                    tinsert(debuffs, { i, self.db.profile.raidFrames.default, 0, 0 }) -- duration 0 to preserve Blizzard order
+                if not frame.optionTable.displayOnlyDispellableDebuffs or
+                    self:IsDispellable(frame.displayedUnit, dispelType)
+                then
+                    -- duration 0 to preserve Blizzard order
+                    tinsert(debuffs, { i, self.db.profile.raidFrames.default, 0, 0 })
                 end
             end
 
             -- Set warning debuff
-            local k
-            for j = 1, #self.WarningDebuffs do
-                if id == self.WarningDebuffs[j] and
-                self.db.profile.raidFrames.warningList[id] and
-                not friendlySmokeBomb and
-                (not k or j < k) then
-                    k = j
-                    warning = i
-                    warningId = id
+            if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+                local k
+                for j = 1, #self.WarningDebuffs do
+                    if id == self.WarningDebuffs[j] and
+                    self.db.profile.raidFrames.warningList[id] and
+                    not friendlySmokeBomb and
+                    (not k or j < k) then
+                        k = j
+                        warning = i
+                        warningId = id
+                    end
                 end
             end
+
         end
     end
 
@@ -952,7 +1024,8 @@ function BigDebuffs:ShowBigDebuffs(frame)
             if index <= self.db.profile.raidFrames.maxDebuffs or debuffs[i][1] == warning then
                 if not frame.BigDebuffs[index] then break end
                 frame.BigDebuffs[index].baseSize = frame:GetHeight() * debuffs[i][2] * 0.01
-                CompactUnitFrame_UtilSetDebuff(frame.BigDebuffs[index], frame.displayedUnit, debuffs[i][1], nil, false, false, self.test)
+                CompactUnitFrame_UtilSetDebuff(frame.BigDebuffs[index],
+                    frame.displayedUnit, debuffs[i][1], nil, false, false, self.test)
                 frame.BigDebuffs[index].cooldown:SetSwipeColor(0, 0, 0, 0.7)
                 index = index + 1
             end
@@ -968,10 +1041,11 @@ hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
         return
     end
 
-    if ( not frame.optionTable.displayDebuffs ) then
+    if ( not frame.debuffFrames or not frame.optionTable.displayDebuffs ) then
         CompactUnitFrame_HideAllDebuffs(frame);
         return;
     end
+
     local test = BigDebuffs.test
     local UnitDebuff = test and UnitDebuffTest or UnitDebuff
     local index = 1;
@@ -1041,8 +1115,11 @@ hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
     while ( frameNum <= maxDebuffs ) do
         local debuffName, _,_,_,_,_,_,_,_, id = UnitDebuff(frame.displayedUnit, index, filter);
         if ( debuffName ) then
-            if BigDebuffs.test or (( CompactUnitFrame_UtilShouldDisplayDebuff(frame.displayedUnit, index, filter) and not CompactUnitFrame_UtilIsBossAura(frame.displayedUnit, index, filter, false) and
-                not CompactUnitFrame_UtilIsPriorityDebuff(frame.displayedUnit, index, filter) and not IsPriorityDebuff(id))) then
+            if BigDebuffs.test or (( CompactUnitFrame_UtilShouldDisplayDebuff(frame.displayedUnit, index, filter) and
+                not CompactUnitFrame_UtilIsBossAura(frame.displayedUnit, index, filter, false) and
+                not CompactUnitFrame_UtilIsPriorityDebuff(frame.displayedUnit, index, filter) and
+                not IsPriorityDebuff(id)))
+            then
                 local debuffFrame = frame.debuffFrames[frameNum];
                 CompactUnitFrame_UtilSetDebuff(debuffFrame, frame.displayedUnit, index, filter, false, false, test);
                 frameNum = frameNum + 1;
@@ -1069,7 +1146,11 @@ function BigDebuffs:IsPriorityBigDebuff(id)
 end
 
 function BigDebuffs:UNIT_AURA(unit)
-    if not self.db.profile.unitFrames.enabled or not self.db.profile.unitFrames[unit:gsub("%d", "")].enabled then return end
+    if not self.db.profile.unitFrames.enabled or
+        not self.db.profile.unitFrames[unit:gsub("%d", "")].enabled
+    then
+        return
+    end
 
     self:AttachUnitFrame(unit)
 
@@ -1103,7 +1184,7 @@ function BigDebuffs:UNIT_AURA(unit)
         end
 
         -- Check buffs
-        local _, n, _,_, d, e, _,_,_, id = UnitBuff(unit, i)
+        _, n, _,_, d, e, _,_,_, id = UnitBuff(unit, i)
         if id then
             if self.Spells[id] then
                 local p = self:GetAuraPriority(id)
@@ -1219,7 +1300,9 @@ hooksecurefunc("CompactUnitFrame_UpdateBuffs", function(frame)
     while ( frameNum <= MAX_BUFFS ) do
         local buffName = UnitBuff(frame.displayedUnit, index, filter);
         if ( buffName ) then
-            if ( CompactUnitFrame_UtilShouldDisplayBuff(frame.displayedUnit, index, filter) and not CompactUnitFrame_UtilIsBossAura(frame.displayedUnit, index, filter, true) ) then
+            if ( CompactUnitFrame_UtilShouldDisplayBuff(frame.displayedUnit, index, filter) and
+                not CompactUnitFrame_UtilIsBossAura(frame.displayedUnit, index, filter, true) )
+            then
                 local buffFrame = frame.buffFrames[frameNum];
                 CompactUnitFrame_UtilSetBuff(buffFrame, frame.displayedUnit, index, filter);
                 frameNum = frameNum + 1;
@@ -1238,6 +1321,6 @@ end)
 SLASH_BigDebuffs1 = "/bd"
 SLASH_BigDebuffs2 = "/bigdebuffs"
 SlashCmdList.BigDebuffs = function(msg)
-    InterfaceOptionsFrame_OpenToCategory("BigDebuffs")
-    InterfaceOptionsFrame_OpenToCategory("BigDebuffs")
+    InterfaceOptionsFrame_OpenToCategory(addonName)
+    InterfaceOptionsFrame_OpenToCategory(addonName)
 end

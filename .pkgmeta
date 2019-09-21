@@ -15,6 +15,7 @@ externals:
     libs/AceLocale-3.0: https://repos.wowace.com/wow/ace3/trunk/AceLocale-3.0
     libs/LibDualSpec-1.0: https://repos.wowace.com/wow/libdualspec-1-0
     libs/LibSharedMedia-3.0: https://repos.wowace.com/wow/libsharedmedia-3-0/trunk
+    libs/LibClassicDurations: https://repos.curseforge.com/wow/libclassicdurations
 
 manual-changelog:
     filename: README.md
