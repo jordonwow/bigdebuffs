@@ -2,7 +2,7 @@
 -- BigDebuffs by Jordon
 
 BigDebuffs = LibStub("AceAddon-3.0"):NewAddon("BigDebuffs", "AceEvent-3.0", "AceHook-3.0")
-local SM = LibStub("LibSharedMedia-3.0")
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 -- Defaults
 local defaults = {
@@ -807,7 +807,7 @@ function BigDebuffs:Refresh()
         if self.db.profile.unitFrames.cooldownCount then
             local text = frame.cooldown:GetRegions()
             if text then
-                text:SetFont(SM:Fetch("font",BigDebuffs.db.profile.unitFrames.cooldownFont),
+                text:SetFont(LibSharedMedia:Fetch("font", BigDebuffs.db.profile.unitFrames.cooldownFont),
                     self.db.profile.unitFrames.cooldownFontSize, self.db.profile.unitFrames.cooldownFontEffect)
             end
         end
@@ -830,7 +830,7 @@ function BigDebuffs:AttachUnitFrame(unit)
         if self.db.profile.unitFrames.cooldownCount then
             local text = frame.cooldown:GetRegions()
             if text then
-                text:SetFont(SM:Fetch("font",BigDebuffs.db.profile.unitFrames.cooldownFont),
+                text:SetFont(LibSharedMedia:Fetch("font", BigDebuffs.db.profile.unitFrames.cooldownFont),
                     self.db.profile.unitFrames.cooldownFontSize, self.db.profile.unitFrames.cooldownFontEffect)
             end
         end
@@ -1249,7 +1249,7 @@ local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, 
     if enabled then
         local startTime = expirationTime - duration;
         local text = debuffFrame.cooldown:GetRegions();
-        text:SetFont(SM:Fetch("font",BigDebuffs.db.profile.raidFrames.cooldownFont),
+        text:SetFont(LibSharedMedia:Fetch("font", BigDebuffs.db.profile.raidFrames.cooldownFont),
             BigDebuffs.db.profile.raidFrames.cooldownFontSize, BigDebuffs.db.profile.raidFrames.cooldownFontEffect);
 
         CooldownFrame_Set(debuffFrame.cooldown, startTime, duration, true);
