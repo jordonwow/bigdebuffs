@@ -11,6 +11,7 @@
 ## DefaultState: Enabled
 ## SavedVariables: BigDebuffsDB
 ## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibDualSpec-1.0, Adapt, OmniCC
+## X-Curse-Project-ID: 82697
 
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua
