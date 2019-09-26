@@ -1167,6 +1167,13 @@ function BigDebuffs:UNIT_AURA(unit)
         local _, n, _,_, d, e, caster, _,_, id = UnitDebuff(unit, i)
         if id then
             if self.Spells[id] then
+                if LibClassicDurations then
+                    local durationNew, expirationTimeNew = LibClassicDurations:GetAuraDurationByUnit(unit, id, caster)
+                    if d == 0 and durationNew then
+                        d = durationNew
+                        e = expirationTimeNew
+                    end
+                end
                 local reaction = caster and UnitReaction("player", caster) or 0
                 local friendlySmokeBomb = id == 212183 and reaction > 4
                 local p = self:GetAuraPriority(id)
@@ -1184,9 +1191,16 @@ function BigDebuffs:UNIT_AURA(unit)
         end
 
         -- Check buffs
-        _, n, _,_, d, e, _,_,_, id = UnitBuff(unit, i)
+        _, n, _,_, d, e, caster, _,_, id = UnitBuff(unit, i)
         if id then
             if self.Spells[id] then
+                if LibClassicDurations then
+                    local durationNew, expirationTimeNew = LibClassicDurations:GetAuraDurationByUnit(unit, id, caster)
+                    if d == 0 and durationNew then
+                        d = durationNew
+                        e = expirationTimeNew
+                    end
+                end
                 local p = self:GetAuraPriority(id)
                 if p and p >= priority then
                     if p > priority or self:IsPriorityBigDebuff(id) or e == 0 or e - now > left then
