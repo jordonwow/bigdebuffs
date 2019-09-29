@@ -8,6 +8,10 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v8.1
+
+* Fix interrupts not showing
+
 ## v8.0
 
 * Added compatibility for Classic
