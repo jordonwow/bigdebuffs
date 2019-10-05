@@ -8,11 +8,12 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
-## v8.1
+## v8.2
+* Fix Lightning Lasso
 
+## v8.1
 * Fix interrupts not showing
 
 ## v8.0
-
 * Added compatibility for Classic
 * Updated for 8.2.5
