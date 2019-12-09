@@ -8,6 +8,9 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v8.4
+* Add Tracker's Net
+
 ## v8.3
 * Fix Thorns
 
