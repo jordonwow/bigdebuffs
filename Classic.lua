@@ -306,6 +306,9 @@ addon.Spells = {
     [871] = { type = BUFF_DEFENSIVE }, -- Shield Wall
     [12328] = { type = BUFF_OFFENSIVE }, -- Death Wish
     [23694] = { type = ROOT }, -- Improved Hamstring
+    [1715] = { type = ROOT }, -- Hamstring
+        [7372] = { parent = 1715 },
+        [7373] = { parent = 1715 },
     [18499] = { type = BUFF_OFFENSIVE}, -- Berserker Rage
     [20253] = { type = CROWD_CONTROL }, -- Intercept Stun
         [20614] = { parent = 20253 },
