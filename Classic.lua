@@ -196,6 +196,9 @@ addon.Spells = {
     [19185] = { type = ROOT }, -- Entrapment
     [19503] = { type = CROWD_CONTROL }, -- Scatter Shot
     [25999] = { type = ROOT }, -- Boar Charge
+    [3034] = { type = CROWD_CONTROL }, -- Viper Sting
+        [14279] = { parent = 3034 },
+        [14280] = { parent = 3034 },
 
     -- Druid
 
