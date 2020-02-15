@@ -8,6 +8,13 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v8.6
+* Fix display of enemy buffs on classic
+* Add Crippling Poison
+* Add Viper Sting
+* Add Frost Shock
+* Fix Entangling Roots
+
 ## v8.5
 * Update for 1.13.3
 
