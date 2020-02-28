@@ -463,7 +463,7 @@ addon.Spells = {
         [167152] = { type = BUFF_OTHER, parent = 192001 }, -- Refreshment
     [256948] = { type = BUFF_OTHER }, -- Spatial Rift
     [255654] = { type = CROWD_CONTROL }, --Bull Rush
-    [294127] = { type = CROWD_CONTROL }, -- Gladiator's Maledict
+    [305252] = { type = CROWD_CONTROL }, -- Gladiator's Maledict
 
     -- Legacy (may be deprecated)
 
