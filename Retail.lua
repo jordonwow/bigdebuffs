@@ -464,6 +464,7 @@ addon.Spells = {
     [256948] = { type = BUFF_OTHER }, -- Spatial Rift
     [255654] = { type = CROWD_CONTROL }, --Bull Rush
     [305252] = { type = CROWD_CONTROL }, -- Gladiator's Maledict
+    [313148] = { type = CROWD_CONTROL }, -- Forbidden Obsidian Claw
 
     -- Legacy (may be deprecated)
 
