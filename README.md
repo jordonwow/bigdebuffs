@@ -8,6 +8,13 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v8.7
+* Update for Classic 1.13.4
+* Add Silence
+* Fix Entangling Roots from Nature's Grasp
+* Fix Maledict
+* Add Forbidden Obsidian Claw
+
 ## v8.6
 * Fix display of enemy buffs on classic
 * Add Crippling Poison
