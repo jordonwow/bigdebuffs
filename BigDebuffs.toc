@@ -2,7 +2,7 @@
 ## Interface: 80205
 #@end-retail@
 #@non-retail@
-# ## Interface: 11303
+# ## Interface: 11304
 #@end-non-retail@
 ## Title: BigDebuffs
 ## Notes: Increases the debuff size of crowd control effects on the Blizzard raid frames
