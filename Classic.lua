@@ -123,6 +123,7 @@ addon.Spells = {
         [10890] = { parent = 8122 },
     [10060] = { type = BUFF_OFFENSIVE }, -- Power Infusion
     [15269] = { type = CROWD_CONTROL }, -- Blackout
+    [15487] = { type = CROWD_CONTROL }, -- Silence
 
     -- Warlock
 
