@@ -212,6 +212,12 @@ addon.Spells = {
         [5196] = { parent = 339 },
         [9852] = { parent = 339 },
         [9853] = { parent = 339 },
+        [19970] = { parent = 339 }, -- Nature's Grasp Rank 6
+        [19971] = { parent = 339 }, -- Nature's Grasp Rank 5
+        [19972] = { parent = 339 }, -- Nature's Grasp Rank 4
+        [19973] = { parent = 339 }, -- Nature's Grasp Rank 3
+        [19974] = { parent = 339 }, -- Nature's Grasp Rank 2
+        [19975] = { parent = 339 }, -- Nature's Grasp Rank 1
     [2637] = { type = CROWD_CONTROL }, -- Hibernate
         [18657] = { parent = 2637 },
         [18658] = { parent = 2637 },
