@@ -71,6 +71,13 @@ local defaults = {
                 anchor = "auto",
                 size = 50,
             },
+			nameplates = {
+                enabled = true,
+                anchor = "RIGHT",
+                size = 30,
+				x = 0,
+				y = 0,
+            },
             cc = true,
             interrupts = true,
             immunities = true,
@@ -368,6 +375,7 @@ function BigDebuffs:OnInitialize()
     self.db.RegisterCallback(self, "OnProfileReset", "Refresh")
     self.frames = {}
     self.UnitFrames = {}
+	self.Nameplates = {}
     self:SetupOptions()
 end
 
@@ -384,6 +392,20 @@ function BigDebuffs:Refresh()
         if frame and frame.BigDebuffs then self:AddBigDebuffs(frame) end
     end
     for unit, frame in pairs(self.UnitFrames) do
+        frame:Hide()
+        frame.current = nil
+        if self.db.profile.unitFrames.cooldownCount then
+            local text = frame.cooldown:GetRegions()
+            if text then
+                text:SetFont(LibSharedMedia:Fetch("font", BigDebuffs.db.profile.unitFrames.cooldownFont),
+                    self.db.profile.unitFrames.cooldownFontSize, self.db.profile.unitFrames.cooldownFontEffect)
+            end
+        end
+        frame.cooldown:SetHideCountdownNumbers(not self.db.profile.unitFrames.cooldownCount)
+        frame.cooldown.noCooldownCount = not self.db.profile.unitFrames.cooldownCount
+        self:UNIT_AURA(unit)
+    end
+	for unit, frame in pairs(self.Nameplates) do
         frame:Hide()
         frame.current = nil
         if self.db.profile.unitFrames.cooldownCount then
@@ -501,7 +523,36 @@ function BigDebuffs:AttachUnitFrame(unit)
 
         frame:SetSize(config.size, config.size)
     end
+end
 
+function BigDebuffs:AttachNameplate(unit)
+	if InCombatLockdown() then return end
+
+    local frame = self.Nameplates[unit]
+
+	local config = self.db.profile.unitFrames.nameplates
+
+	if self.db.profile.unitFrames.cooldownCount then
+		local text = frame.cooldown:GetRegions()
+		if text then
+			text:SetFont(LibSharedMedia:Fetch("font", self.db.profile.unitFrames.cooldownFont),
+				self.db.profile.unitFrames.cooldownFontSize, self.db.profile.unitFrames.cooldownFontEffect)
+		end
+	end
+	frame.cooldown:SetHideCountdownNumbers(not self.db.profile.unitFrames.cooldownCount)
+	frame.cooldown.noCooldownCount = not self.db.profile.unitFrames.cooldownCount
+
+	frame:ClearAllPoints()
+	if config.anchor == "RIGHT" then
+		frame:SetPoint("LEFT", frame.anchor, "RIGHT", config.x, config.y)
+	elseif config.anchor == "TOP" then
+		frame:SetPoint("BOTTOM", frame.anchor, "TOP", config.x, config.y)
+	elseif config.anchor == "LEFT" then
+		frame:SetPoint("RIGHT", frame.anchor, "LEFT", config.x, config.y)
+	elseif config.anchor == "BOTTOM" then
+		frame:SetPoint("TOP", frame.anchor, "BOTTOM", config.x, config.y)
+	end
+	frame:SetSize(config.size, config.size)
 end
 
 function BigDebuffs:SaveUnitFramePosition(frame)
@@ -533,6 +584,9 @@ function BigDebuffs:OnEnable()
     self:RegisterEvent("UNIT_PET")
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
     self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+
+	self:RegisterEvent("NAME_PLATE_CREATED")
+    self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 
     if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
         self:RegisterEvent("PLAYER_TALENT_UPDATE")
@@ -1387,15 +1441,20 @@ function BigDebuffs:IsPriorityBigDebuff(id)
 end
 
 function BigDebuffs:UNIT_AURA(unit)
-    if not self.db.profile.unitFrames.enabled or
-        not self.db.profile.unitFrames[unit:gsub("%d", "")].enabled
+	if not self.db.profile.unitFrames.enabled or
+        (not unit:find("nameplate") and not self.db.profile.unitFrames[unit:gsub("%d", "")].enabled) or
+		(unit:find("nameplate") and not self.db.profile.unitFrames.nameplates.enabled)
     then
         return
     end
 
-    self:AttachUnitFrame(unit)
+	if not unit:find("nameplate") then
+    	self:AttachUnitFrame(unit)
+	else
+		self:AttachNameplate(unit)
+	end
 
-    local frame = self.UnitFrames[unit]
+    local frame = self.UnitFrames[unit] or self.Nameplates[unit]
     if not frame then return end
 
     local UnitDebuff = BigDebuffs.test and UnitDebuffTest or UnitDebuff
@@ -1526,6 +1585,60 @@ end
 
 function BigDebuffs:UNIT_PET()
     self:UNIT_AURA("pet")
+end
+
+function BigDebuffs:NAME_PLATE_CREATED(_, namePlate)
+	local frame = namePlate.UnitFrame
+	if ( frame:IsForbidden() ) then return end
+
+	frame.BigDebuffs = CreateFrame("Frame", "$parent.BigDebuffs", frame)
+	frame.BigDebuffs:SetFrameLevel(frame:GetFrameLevel())
+
+	frame.BigDebuffs.icon = frame.BigDebuffs:CreateTexture(nil, "OVERLAY", nil, 3)
+	frame.BigDebuffs.icon:SetAllPoints(frame.BigDebuffs)
+
+	frame.BigDebuffs.cooldown = CreateFrame("Cooldown", nil, frame.BigDebuffs, "CooldownFrameTemplate")
+	frame.BigDebuffs.cooldown:SetAllPoints(frame.BigDebuffs)
+	frame.BigDebuffs.cooldown:SetDrawEdge(false)
+	frame.BigDebuffs.cooldown:SetAlpha(1)
+	frame.BigDebuffs.cooldown:SetDrawBling(false)
+	frame.BigDebuffs.cooldown:SetDrawSwipe(true)
+	frame.BigDebuffs.cooldown:SetReverse(true)
+
+	frame.BigDebuffs:SetScript("OnEnter", function(self)
+		if ( BigDebuffs.db.profile.unitFrames.tooltips ) then
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
+			if self.interrupt then
+				GameTooltip:SetSpellByID(self.interrupt)
+			elseif self.buff then
+				GameTooltip:SetUnitBuff(self.unit, self:GetID());
+			else
+				GameTooltip:SetUnitDebuff(self.unit, self:GetID());
+			end
+		elseif GameTooltip:IsOwned(self) then
+			GameTooltip:Hide();
+		end
+	end)
+
+	frame.BigDebuffs:SetScript("OnLeave", function()
+		GameTooltip:Hide()
+	end)
+
+	frame.BigDebuffs.anchor = frame.healthBar
+end
+
+function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
+	local namePlate = C_NamePlate.GetNamePlateForUnit(unit)
+	local frame = namePlate.UnitFrame
+
+	if ( frame:IsForbidden() ) then return end
+
+	self.Nameplates[unit] = frame.BigDebuffs
+
+	self:UNIT_AURA(unit)
+	frame.BigDebuffs.unit = unit
+	frame.BigDebuffs:RegisterUnitEvent("UNIT_AURA", unit)
+	frame.BigDebuffs:SetScript("OnEvent", function() self:UNIT_AURA(unit) end)
 end
 
 function BigDebuffs:ShowInRaids()

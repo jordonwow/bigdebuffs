@@ -771,6 +771,86 @@ function BigDebuffs:SetupOptions()
                         desc = L["Enable BigDebuffs on the party frames"],
                         order = 5,
                     },
+					nameplates = {
+                        type = "group",
+                        disabled = function(info)
+                            return not self.db.profile[info[1]].enabled or
+                                (info[3] and not self.db.profile.unitFrames[info[2]].enabled)
+                        end,
+                        get = function(info)
+                            local name = info[#info]
+                            return self.db.profile.unitFrames.nameplates[name]
+                        end,
+                        set = function(info, value)
+                            local name = info[#info]
+                            self.db.profile.unitFrames.nameplates[name] = value
+                            self:Refresh()
+                        end,
+                        args = {
+                            enabled = {
+                                type = "toggle",
+                                disabled = function(info) return not self.db.profile[info[1]].enabled end,
+                                name = L["Enabled"],
+                                order = 1,
+                                width = "full",
+                                desc = L["Enable BigDebuffs on the nameplates"],
+                            },
+                            anchor = {
+                                name = L["Anchor"],
+                                desc = L["Anchor to attach the BigDebuffs frames"],
+                                type = "select",
+                                values = {
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["TOP"] = L["TOP"],
+									["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                },
+                                order = 2,
+                            },
+                            size = {
+                                type = "range",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled
+                                end,
+                                name = L["Size"],
+                                desc = L["Set the size of the frame"],
+                                min = 8,
+                                max = 100,
+                                step = 1,
+                                order = 3,
+                            },
+							x = {
+                                type = "range",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled
+                                end,
+                                name = L["X offset"],
+                                desc = L["X offset"],
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                order = 4,
+                            },
+							y = {
+                                type = "range",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled
+                                end,
+                                name = L["Y offset"],
+                                desc = L["Y offset"],
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                order = 4,
+                            },
+                        },
+                        name = L["Nameplates"],
+                        desc = L["Enable BigDebuffs on the nameplates"],
+                        order = 8,
+                    },
                     spells = {
                         order = 20,
                         name = L["Spells"],
