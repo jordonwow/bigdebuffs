@@ -1449,7 +1449,7 @@ function BigDebuffs:UNIT_AURA(unit)
     end
 
 	if not unit:find("nameplate") then
-    	self:AttachUnitFrame(unit)
+		self:AttachUnitFrame(unit)
 	else
 		self:AttachNameplate(unit)
 	end
