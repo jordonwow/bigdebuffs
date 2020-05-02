@@ -1776,7 +1776,7 @@ function BigDebuffs:NAME_PLATE_CREATED(_, namePlate)
 
 	frame.BigDebuffs:SetScript("OnEnter", function(self)
 		local NamePlateTooltip = _G["NamePlateTooltip"]
-		
+
 		if ( BigDebuffs.db.profile.nameplates.tooltips ) then
 			NamePlateTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
 			if self.interrupt then
@@ -1792,6 +1792,8 @@ function BigDebuffs:NAME_PLATE_CREATED(_, namePlate)
 	end)
 
 	frame.BigDebuffs:SetScript("OnLeave", function()
+		local NamePlateTooltip = _G["NamePlateTooltip"]
+
 		NamePlateTooltip:Hide()
 	end)
 
