@@ -333,21 +333,21 @@ local GetNameplateAnchor = {
 local nameplatesAnchors = {
 	[1] = {
         used = function()
-			local ElvUI = ElvUI
+			local ElvUI = _G["ElvUI"]
 			return ElvUI and ElvUI[1].NamePlates and ElvUI[1].NamePlates.Initialized
 		end,
         func = GetNameplateAnchor.ElvUINameplates,
     },
 	[2] = {
         used = function()
-			local KuiNameplates = KuiNameplates
+			local KuiNameplates = _G["KuiNameplates"]
 			return KuiNameplates ~= nil
 		end,
         func = GetNameplateAnchor.KuiNameplate,
     },
 	[3] = {
         used = function()
-			local Plater = Plater
+			local Plater = _G["Plater"]
 			return Plater ~= nil
 		end,
         func = GetNameplateAnchor.Plater,
