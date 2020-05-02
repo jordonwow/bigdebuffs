@@ -1776,21 +1776,21 @@ function BigDebuffs:NAME_PLATE_CREATED(_, namePlate)
 
 	frame.BigDebuffs:SetScript("OnEnter", function(self)
 		if ( BigDebuffs.db.profile.nameplates.tooltips ) then
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
+			NamePlateTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
 			if self.interrupt then
-				GameTooltip:SetSpellByID(self.interrupt)
+				NamePlateTooltip:SetSpellByID(self.interrupt)
 			elseif self.buff then
-				GameTooltip:SetUnitBuff(self.unit, self:GetID());
+				NamePlateTooltip:SetUnitBuff(self.unit, self:GetID());
 			else
-				GameTooltip:SetUnitDebuff(self.unit, self:GetID());
+				NamePlateTooltip:SetUnitDebuff(self.unit, self:GetID());
 			end
-		elseif GameTooltip:IsOwned(self) then
-			GameTooltip:Hide();
+		elseif NamePlateTooltip:IsOwned(self) then
+			NamePlateTooltip:Hide();
 		end
 	end)
 
 	frame.BigDebuffs:SetScript("OnLeave", function()
-		GameTooltip:Hide()
+		NamePlateTooltip:Hide()
 	end)
 
 	frame.BigDebuffs.anchor = frame.healthBar
