@@ -71,13 +71,6 @@ local defaults = {
                 anchor = "auto",
                 size = 50,
             },
-			nameplates = {
-                enabled = true,
-                anchor = "RIGHT",
-                size = 30,
-				x = 0,
-				y = 0,
-            },
             cc = true,
             interrupts = true,
             immunities = true,
@@ -87,6 +80,29 @@ local defaults = {
             buffs_other = true,
             roots = true,
         },
+		nameplates = {
+			enabled = true,
+			cooldownCount = true,
+            cooldownFontSize = 16,
+            cooldownFontEffect = "OUTLINE",
+            cooldownFont = "Friz Quadrata TT",
+            tooltips = true,
+			enemy = true,
+			friendly = true,
+			npc = true,
+			anchor = "RIGHT",
+			size = 40,
+			x = 0,
+			y = 0,
+			cc = true,
+            interrupts = true,
+            immunities = true,
+            immunities_spells = true,
+            buffs_defensive = true,
+            buffs_offensive = true,
+            buffs_other = true,
+            roots = true,
+		},
         priority = {
             immunities = 80,
             immunities_spells = 70,
@@ -417,7 +433,7 @@ function BigDebuffs:Refresh()
         end
         frame.cooldown:SetHideCountdownNumbers(not self.db.profile.unitFrames.cooldownCount)
         frame.cooldown.noCooldownCount = not self.db.profile.unitFrames.cooldownCount
-        self:UNIT_AURA(unit)
+        self:UNIT_AURA_NAMEPLATE(unit)
     end
 end
 
@@ -530,17 +546,19 @@ function BigDebuffs:AttachNameplate(unit)
 
     local frame = self.Nameplates[unit]
 
-	local config = self.db.profile.unitFrames.nameplates
+	local config = self.db.profile.nameplates
 
-	if self.db.profile.unitFrames.cooldownCount then
+	if config.cooldownCount then
 		local text = frame.cooldown:GetRegions()
 		if text then
-			text:SetFont(LibSharedMedia:Fetch("font", self.db.profile.unitFrames.cooldownFont),
-				self.db.profile.unitFrames.cooldownFontSize, self.db.profile.unitFrames.cooldownFontEffect)
+			text:SetFont(LibSharedMedia:Fetch("font", config.cooldownFont),
+				config.cooldownFontSize, config.cooldownFontEffect)
 		end
 	end
-	frame.cooldown:SetHideCountdownNumbers(not self.db.profile.unitFrames.cooldownCount)
-	frame.cooldown.noCooldownCount = not self.db.profile.unitFrames.cooldownCount
+	frame.cooldown:SetHideCountdownNumbers(not config.cooldownCount)
+	frame.cooldown.noCooldownCount = not config.cooldownCount
+
+	frame:EnableMouse(config.tooltips)
 
 	frame:ClearAllPoints()
 	if config.anchor == "RIGHT" then
@@ -552,6 +570,7 @@ function BigDebuffs:AttachNameplate(unit)
 	elseif config.anchor == "BOTTOM" then
 		frame:SetPoint("TOP", frame.anchor, "BOTTOM", config.x, config.y)
 	end
+
 	frame:SetSize(config.size, config.size)
 end
 
@@ -587,6 +606,7 @@ function BigDebuffs:OnEnable()
 
 	self:RegisterEvent("NAME_PLATE_CREATED")
     self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+	self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
 
     if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
         self:RegisterEvent("PLAYER_TALENT_UPDATE")
@@ -614,8 +634,10 @@ function BigDebuffs:OnEnable()
 
     InsertTestDebuff(339, "Magic") -- Entangling Roots
     InsertTestDebuff(589, "Magic") -- Shadow Word: Pain
+	InsertTestDebuff(589, "Magic") -- Shadow Word: Pain
+	InsertTestDebuff(589, "Magic") -- Shadow Word: Pain
+	InsertTestDebuff(589, "Magic") -- Shadow Word: Pain
     InsertTestDebuff(772, nil) -- Rend
-
 end
 
 function BigDebuffs:PLAYER_ENTERING_WORLD()
@@ -685,9 +707,13 @@ function BigDebuffs:UNIT_AURA_ALL_UNITS()
             self:ShowBigDebuffs(self.AttachedFrames[unit])
         end
 
-        if not unit:match("^raid") then
+        if not unit:match("^raid") and not unit:find("nameplate") then
             self:UNIT_AURA(unit)
         end
+
+		if unit:find("nameplate") then
+			self:UNIT_AURA_NAMEPLATE(unit)
+		end
     end
 end
 
@@ -723,7 +749,13 @@ function BigDebuffs:AddBigDebuffs(frame)
         big:ClearAllPoints()
         if i > 1 then
             if self.db.profile.raidFrames.anchor == "INNER" then
-                big:SetPoint("BOTTOMLEFT", frame.BigDebuffs[i-1], "BOTTOMRIGHT", 0, 0)
+				if i < 4 then
+                	big:SetPoint("BOTTOMLEFT", frame.BigDebuffs[i-1], "BOTTOMRIGHT", 0, 0)
+				elseif i == 4 then
+					big:SetPoint("BOTTOMRIGHT", frame.debuffFrames[1], "BOTTOMLEFT", -2, 0)
+				elseif i > 4 then
+					big:SetPoint("BOTTOMRIGHT", frame.BigDebuffs[i-1], "BOTTOMLEFT", 0, 0)
+				end
             elseif self.db.profile.raidFrames.anchor == "LEFT" then
                 big:SetPoint("BOTTOMRIGHT", frame.BigDebuffs[i-1], "BOTTOMLEFT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "RIGHT" then
@@ -731,7 +763,7 @@ function BigDebuffs:AddBigDebuffs(frame)
             end
         else
             if self.db.profile.raidFrames.anchor == "INNER" then
-                big:SetPoint("BOTTOMLEFT", frame.debuffFrames[1], "BOTTOMLEFT", 0, 0)
+                big:SetPoint("BOTTOMLEFT", frame.debuffFrames[1], "BOTTOMLEFT", -2, 0)
             elseif self.db.profile.raidFrames.anchor == "LEFT" then
                 big:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", 0, 1)
             elseif self.db.profile.raidFrames.anchor == "RIGHT" then
@@ -871,6 +903,29 @@ function BigDebuffs:GetAuraPriority(id)
 
     if self.Spells[id].nounitFrames and
         (not self.db.profile.spells[id] or not self.db.profile.spells[id].unitFrames)
+    then
+        return
+    end
+
+    return self.db.profile.priority[self.Spells[id].type] or 0
+end
+
+-- For nameplates
+function BigDebuffs:GetNameplatesPriority(id)
+    if not self.Spells[id] then return end
+    id = self.Spells[id].parent or id -- Check for parent spellID
+
+    -- Make sure category is enabled
+    if not self.db.profile.nameplates[self.Spells[id].type] then return end
+
+    -- Check for user set
+    if self.db.profile.spells[id] then
+        if self.db.profile.spells[id].nameplates and self.db.profile.spells[id].nameplates == 0 then return end
+        if self.db.profile.spells[id].priority then return self.db.profile.spells[id].priority end
+    end
+
+    if self.Spells[id].nounitFrames and
+        (not self.db.profile.spells[id] or not self.db.profile.spells[id].nameplates)
     then
         return
     end
@@ -1441,20 +1496,15 @@ function BigDebuffs:IsPriorityBigDebuff(id)
 end
 
 function BigDebuffs:UNIT_AURA(unit)
-	if not self.db.profile.unitFrames.enabled or
-        (not unit:find("nameplate") and not self.db.profile.unitFrames[unit:gsub("%d", "")].enabled) or
-		(unit:find("nameplate") and not self.db.profile.unitFrames.nameplates.enabled)
+    if not self.db.profile.unitFrames.enabled or
+        not self.db.profile.unitFrames[unit:gsub("%d", "")].enabled
     then
         return
     end
 
-	if not unit:find("nameplate") then
-		self:AttachUnitFrame(unit)
-	else
-		self:AttachNameplate(unit)
-	end
+    self:AttachUnitFrame(unit)
 
-    local frame = self.UnitFrames[unit] or self.Nameplates[unit]
+    local frame = self.UnitFrames[unit]
     if not frame then return end
 
     local UnitDebuff = BigDebuffs.test and UnitDebuffTest or UnitDebuff
@@ -1575,6 +1625,125 @@ function BigDebuffs:UNIT_AURA(unit)
     end
 end
 
+function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
+    if not self.db.profile.nameplates.enabled
+		or not unit:find("nameplate")
+		or (not UnitCanAttack("player", unit) and not self.db.profile.nameplates.friendly)
+		or (UnitCanAttack("player", unit) and not self.db.profile.nameplates.enemy)
+		or (not UnitIsPlayer(unit) and not self.db.profile.nameplates.npc)
+		or (UnitIsUnit("player", unit))
+    then
+        return
+    end
+
+	self:AttachNameplate(unit)
+
+    local frame = self.Nameplates[unit]
+    if not frame then return end
+
+    local UnitDebuff = BigDebuffs.test and UnitDebuffTest or UnitDebuff
+
+    local now = GetTime()
+    local left, priority, duration, expires, icon, debuff, buff, interrupt = 0, 0
+
+    for i = 1, 40 do
+        -- Check debuffs
+        local _, n, _,_, d, e, caster, _,_, id = UnitDebuff(unit, i)
+        if id then
+            if self.Spells[id] then
+                if LibClassicDurations then
+                    local durationNew, expirationTimeNew = LibClassicDurations:GetAuraDurationByUnit(unit, id, caster)
+                    if d == 0 and durationNew then
+                        d = durationNew
+                        e = expirationTimeNew
+                    end
+                end
+                local reaction = caster and UnitReaction("player", caster) or 0
+                local friendlySmokeBomb = id == 212183 and reaction > 4
+                local p = self:GetNameplatesPriority(id)
+                if p and p >= priority and not friendlySmokeBomb then
+                    if p > priority or self:IsPriorityBigDebuff(id) or e == 0 or e - now > left then
+                        left = e - now
+                        duration = d
+                        debuff = i
+                        priority = p
+                        expires = e
+                        icon = n
+                    end
+                end
+            end
+        end
+
+        -- Check buffs
+        if LibClassicDurations then
+            _, n, _,_, d, e, caster, _,_, id = LibClassicDurations:UnitAura(unit, i, "HELPFUL")
+        else
+            _, n, _,_, d, e, caster, _,_, id = UnitBuff(unit, i)
+        end
+        if id then
+            if self.Spells[id] then
+                if LibClassicDurations then
+                    local durationNew, expirationTimeNew = LibClassicDurations:GetAuraDurationByUnit(unit, id, caster)
+                    if d == 0 and durationNew then
+                        d = durationNew
+                        e = expirationTimeNew
+                    end
+                end
+                local p = self:GetNameplatesPriority(id)
+                if p and p >= priority then
+                    if p > priority or self:IsPriorityBigDebuff(id) or e == 0 or e - now > left then
+                        left = e - now
+                        duration = d
+                        debuff = i
+                        priority = p
+                        expires = e
+                        icon = n
+                        buff = true
+                    end
+                end
+            end
+        end
+    end
+
+    -- Check for interrupt
+    local guid = UnitGUID(unit)
+    if guid and self.units[guid] and self.units[guid].expires and self.units[guid].expires > GetTime() then
+        local spell = self.units[guid]
+        local spellId = spell.spellId
+        local p = self:GetNameplatesPriority(spellId)
+        if p and p >= priority then
+            left = spell.expires - now
+            duration = self.Spells[spellId].duration
+            debuff = spellId
+            expires = spell.expires
+            icon = GetSpellTexture(spellId)
+            interrupt = spellId
+        end
+    end
+
+
+    if debuff then
+        if duration < 1 then duration = 1 end -- auras like Solar Beam don't have a duration
+
+        if frame.current ~= icon then
+            frame.icon:SetTexture(icon)
+        end
+
+        frame.cooldown:SetCooldown(expires - duration, duration)
+        frame:Show()
+        frame.cooldown:SetSwipeColor(0, 0, 0, 1)
+
+        -- set for tooltips
+        frame:SetID(debuff)
+        frame.buff = buff
+        frame.interrupt = interrupt
+        frame.current = icon
+    else
+        frame:Hide()
+        frame.current = nil
+    end
+end
+
 function BigDebuffs:PLAYER_FOCUS_CHANGED()
     self:UNIT_AURA("focus")
 end
@@ -1594,10 +1763,10 @@ function BigDebuffs:NAME_PLATE_CREATED(_, namePlate)
 	frame.BigDebuffs = CreateFrame("Frame", "$parent.BigDebuffs", frame)
 	frame.BigDebuffs:SetFrameLevel(frame:GetFrameLevel())
 
-	frame.BigDebuffs.icon = frame.BigDebuffs:CreateTexture(nil, "OVERLAY", nil, 3)
+	frame.BigDebuffs.icon = frame.BigDebuffs:CreateTexture("$parent.Icon", "OVERLAY", nil, 3)
 	frame.BigDebuffs.icon:SetAllPoints(frame.BigDebuffs)
 
-	frame.BigDebuffs.cooldown = CreateFrame("Cooldown", nil, frame.BigDebuffs, "CooldownFrameTemplate")
+	frame.BigDebuffs.cooldown = CreateFrame("Cooldown", "$parent.Cooldown", frame.BigDebuffs, "CooldownFrameTemplate")
 	frame.BigDebuffs.cooldown:SetAllPoints(frame.BigDebuffs)
 	frame.BigDebuffs.cooldown:SetDrawEdge(false)
 	frame.BigDebuffs.cooldown:SetAlpha(1)
@@ -1606,7 +1775,7 @@ function BigDebuffs:NAME_PLATE_CREATED(_, namePlate)
 	frame.BigDebuffs.cooldown:SetReverse(true)
 
 	frame.BigDebuffs:SetScript("OnEnter", function(self)
-		if ( BigDebuffs.db.profile.unitFrames.tooltips ) then
+		if ( BigDebuffs.db.profile.nameplates.tooltips ) then
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
 			if self.interrupt then
 				GameTooltip:SetSpellByID(self.interrupt)
@@ -1635,10 +1804,23 @@ function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
 
 	self.Nameplates[unit] = frame.BigDebuffs
 
-	self:UNIT_AURA(unit)
+	self:UNIT_AURA_NAMEPLATE(unit)
+
 	frame.BigDebuffs.unit = unit
 	frame.BigDebuffs:RegisterUnitEvent("UNIT_AURA", unit)
-	frame.BigDebuffs:SetScript("OnEvent", function() self:UNIT_AURA(unit) end)
+	frame.BigDebuffs:SetScript("OnEvent", function()
+		self:UNIT_AURA_NAMEPLATE(unit)
+	end)
+
+	table.insert(unitsWithRaid, unit)
+end
+
+function BigDebuffs:NAME_PLATE_UNIT_REMOVED(_, unit)
+	for i = 1, #unitsWithRaid do
+		if (unitsWithRaid[i] == unit) then
+			table.remove(unitsWithRaid, i)
+		end
+	end
 end
 
 function BigDebuffs:ShowInRaids()
