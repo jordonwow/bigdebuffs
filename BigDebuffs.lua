@@ -293,6 +293,56 @@ local GetAnchor = {
     end,
 }
 
+local GetNameplateAnchor = {
+	ElvUINameplates = function(frame)
+        if frame.unitFrame and frame.unitFrame.Health and frame.unitFrame.Health:IsShown() then
+            return frame.unitFrame.Health, frame.unitFrame
+        elseif frame.unitFrame then
+            return frame.unitFrame, frame.unitFrame
+        end
+    end,
+    KuiNameplate = function(frame)
+        if frame.kui and frame.kui.HealthBar and frame.kui.HealthBar:IsShown() then
+            return frame.kui.HealthBar, frame.kui
+		elseif frame.kui and frame.kui.NameText and frame.kui.NameText:IsShown() then
+			return frame.kui.NameText, frame.kui
+		elseif frame.kui then
+            return frame.kui, frame.kui
+        end
+    end,
+	Plater = function(frame)
+        return frame.unitFrame, frame.unitFrame
+    end,
+	Blizzard = function(frame)
+        if frame.UnitFrame and frame.UnitFrame.healthBar and frame.UnitFrame.healthBar:IsShown() then
+            return frame.UnitFrame.healthBar, frame.UnitFrame
+		elseif frame.UnitFrame and frame.UnitFrame.name and frame.UnitFrame.name:IsShown() then
+            return frame.UnitFrame.name, frame.UnitFrame
+        elseif frame.UnitFrame then
+            return frame.UnitFrame, frame.UnitFrame
+        end
+    end,
+}
+
+local nameplatesAnchors = {
+	[1] = {
+        used = function() return ElvUI and ElvUI[1].NamePlates and ElvUI[1].NamePlates.Initialized end,
+        func = GetNameplateAnchor.ElvUINameplates,
+    },
+	[2] = {
+        used = function() return KuiNameplates ~= nil end,
+        func = GetNameplateAnchor.KuiNameplate,
+    },
+	[3] = {
+        used = function() return Plater ~= nil end,
+        func = GetNameplateAnchor.Plater,
+    },
+	[4] = {
+        used = function(frame) return frame.UnitFrame ~= nil end,
+        func = GetNameplateAnchor.Blizzard,
+    },
+}
+
 local anchors = {
     ["ElvUI"] = {
         noPortait = true,
@@ -604,7 +654,6 @@ function BigDebuffs:OnEnable()
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
     self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
-	self:RegisterEvent("NAME_PLATE_CREATED")
     self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 	self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
 
@@ -749,13 +798,7 @@ function BigDebuffs:AddBigDebuffs(frame)
         big:ClearAllPoints()
         if i > 1 then
             if self.db.profile.raidFrames.anchor == "INNER" then
-				if i < 4 then
-					big:SetPoint("BOTTOMLEFT", frame.BigDebuffs[i-1], "BOTTOMRIGHT", 0, 0)
-				elseif i == 4 then
-					big:SetPoint("BOTTOMRIGHT", frame.debuffFrames[1], "BOTTOMLEFT", -2, 0)
-				elseif i > 4 then
-					big:SetPoint("BOTTOMRIGHT", frame.BigDebuffs[i-1], "BOTTOMLEFT", 0, 0)
-				end
+				big:SetPoint("BOTTOMLEFT", frame.BigDebuffs[i-1], "BOTTOMRIGHT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "LEFT" then
                 big:SetPoint("BOTTOMRIGHT", frame.BigDebuffs[i-1], "BOTTOMLEFT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "RIGHT" then
@@ -763,7 +806,7 @@ function BigDebuffs:AddBigDebuffs(frame)
             end
         else
             if self.db.profile.raidFrames.anchor == "INNER" then
-                big:SetPoint("BOTTOMLEFT", frame.debuffFrames[1], "BOTTOMLEFT", -2, 0)
+                big:SetPoint("BOTTOMLEFT", frame.debuffFrames[1], "BOTTOMLEFT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "LEFT" then
                 big:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", 0, 1)
             elseif self.db.profile.raidFrames.anchor == "RIGHT" then
@@ -1731,7 +1774,7 @@ function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
 
         frame.cooldown:SetCooldown(expires - duration, duration)
         frame:Show()
-        frame.cooldown:SetSwipeColor(0, 0, 0, 1)
+        frame.cooldown:SetSwipeColor(0, 0, 0, 0.6)
 
         -- set for tooltips
         frame:SetID(debuff)
@@ -1756,65 +1799,72 @@ function BigDebuffs:UNIT_PET()
     self:UNIT_AURA("pet")
 end
 
-function BigDebuffs:NAME_PLATE_CREATED(_, namePlate)
-	local frame = namePlate.UnitFrame
-	if ( frame:IsForbidden() ) then return end
-
-	frame.BigDebuffs = CreateFrame("Frame", "$parent.BigDebuffs", frame)
-	frame.BigDebuffs:SetFrameLevel(frame:GetFrameLevel())
-
-	frame.BigDebuffs.icon = frame.BigDebuffs:CreateTexture("$parent.Icon", "OVERLAY", nil, 3)
-	frame.BigDebuffs.icon:SetAllPoints(frame.BigDebuffs)
-
-	frame.BigDebuffs.cooldown = CreateFrame("Cooldown", "$parent.Cooldown", frame.BigDebuffs, "CooldownFrameTemplate")
-	frame.BigDebuffs.cooldown:SetAllPoints(frame.BigDebuffs)
-	frame.BigDebuffs.cooldown:SetDrawEdge(false)
-	frame.BigDebuffs.cooldown:SetAlpha(1)
-	frame.BigDebuffs.cooldown:SetDrawBling(false)
-	frame.BigDebuffs.cooldown:SetDrawSwipe(true)
-	frame.BigDebuffs.cooldown:SetReverse(true)
-
-	frame.BigDebuffs:SetScript("OnEnter", function(self)
-		local NamePlateTooltip = _G["NamePlateTooltip"]
-
-		if ( BigDebuffs.db.profile.nameplates.tooltips ) then
-			NamePlateTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
-			if self.interrupt then
-				NamePlateTooltip:SetSpellByID(self.interrupt)
-			elseif self.buff then
-				NamePlateTooltip:SetUnitBuff(self.unit, self:GetID());
-			else
-				NamePlateTooltip:SetUnitDebuff(self.unit, self:GetID());
-			end
-		elseif NamePlateTooltip:IsOwned(self) then
-			NamePlateTooltip:Hide();
-		end
-	end)
-
-	frame.BigDebuffs:SetScript("OnLeave", function()
-		local NamePlateTooltip = _G["NamePlateTooltip"]
-
-		NamePlateTooltip:Hide()
-	end)
-
-	frame.BigDebuffs.anchor = frame.healthBar
-end
-
 function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
 	local namePlate = C_NamePlate.GetNamePlateForUnit(unit)
-	local frame = namePlate.UnitFrame
 
-	if ( frame:IsForbidden() ) then return end
+	if namePlate:IsForbidden() then return end
+
+	local anchor, frame
+
+	for k, v in ipairs(nameplatesAnchors) do
+		if v.used(namePlate) then
+			anchor, frame = v.func(namePlate)
+			break
+		end
+	end
+
+	if not frame or not anchor or frame:IsForbidden() then return end
+
+	if not frame.BigDebuffs then
+		frame.BigDebuffs = CreateFrame("Frame", "$parent.BigDebuffs", frame)
+		frame.BigDebuffs:SetFrameLevel(frame:GetFrameLevel())
+
+		frame.BigDebuffs.icon = frame.BigDebuffs:CreateTexture("$parent.Icon", "OVERLAY", nil, 3)
+		frame.BigDebuffs.icon:SetAllPoints(frame.BigDebuffs)
+
+		frame.BigDebuffs.cooldown = CreateFrame("Cooldown", "$parent.Cooldown", frame.BigDebuffs, "CooldownFrameTemplate")
+		frame.BigDebuffs.cooldown:SetAllPoints(frame.BigDebuffs)
+		frame.BigDebuffs.cooldown:SetDrawEdge(false)
+		frame.BigDebuffs.cooldown:SetAlpha(1)
+		frame.BigDebuffs.cooldown:SetDrawBling(false)
+		frame.BigDebuffs.cooldown:SetDrawSwipe(true)
+		frame.BigDebuffs.cooldown:SetReverse(true)
+
+		frame.BigDebuffs:SetScript("OnEnter", function(self)
+			local NamePlateTooltip = _G["NamePlateTooltip"]
+
+			if ( BigDebuffs.db.profile.nameplates.tooltips ) then
+				NamePlateTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
+				if self.interrupt then
+					NamePlateTooltip:SetSpellByID(self.interrupt)
+				elseif self.buff then
+					NamePlateTooltip:SetUnitBuff(self.unit, self:GetID());
+				else
+					NamePlateTooltip:SetUnitDebuff(self.unit, self:GetID());
+				end
+			elseif NamePlateTooltip:IsOwned(self) then
+				NamePlateTooltip:Hide();
+			end
+		end)
+
+		frame.BigDebuffs:SetScript("OnLeave", function()
+			local NamePlateTooltip = _G["NamePlateTooltip"]
+
+			NamePlateTooltip:Hide()
+		end)
+	end
+
+	frame.BigDebuffs.anchor = anchor
 
 	self.Nameplates[unit] = frame.BigDebuffs
-
-	self:UNIT_AURA_NAMEPLATE(unit)
 
 	frame.BigDebuffs.unit = unit
 	frame.BigDebuffs:RegisterUnitEvent("UNIT_AURA", unit)
 	frame.BigDebuffs:SetScript("OnEvent", function()
 		self:UNIT_AURA_NAMEPLATE(unit)
 	end)
+
+	self:UNIT_AURA_NAMEPLATE(unit)
 
 	table.insert(unitsWithRaid, unit)
 end
