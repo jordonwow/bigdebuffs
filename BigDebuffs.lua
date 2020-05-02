@@ -311,7 +311,13 @@ local GetNameplateAnchor = {
         end
     end,
 	Plater = function(frame)
-        return frame.unitFrame, frame.unitFrame
+		if frame.unitFrame and frame.unitFrame.healthBar and frame.unitFrame.healthBar:IsShown() then
+			return frame.unitFrame.healthBar, frame.unitFrame
+		elseif frame.unitFrame and frame.unitFrame.ActorNameSpecial and frame.unitFrame.ActorNameSpecial:IsShown() then
+			return frame.unitFrame.ActorNameSpecial, frame.unitFrame
+		elseif frame.unitFrame then
+			return frame.unitFrame, frame.unitFrame
+		end
     end,
 	Blizzard = function(frame)
         if frame.UnitFrame and frame.UnitFrame.healthBar and frame.UnitFrame.healthBar:IsShown() then
@@ -326,15 +332,24 @@ local GetNameplateAnchor = {
 
 local nameplatesAnchors = {
 	[1] = {
-        used = function() return ElvUI and ElvUI[1].NamePlates and ElvUI[1].NamePlates.Initialized end,
+        used = function()
+			local ElvUI = ElvUI
+			return ElvUI and ElvUI[1].NamePlates and ElvUI[1].NamePlates.Initialized
+		end,
         func = GetNameplateAnchor.ElvUINameplates,
     },
 	[2] = {
-        used = function() return KuiNameplates ~= nil end,
+        used = function()
+			local KuiNameplates = KuiNameplates
+			return KuiNameplates ~= nil
+		end,
         func = GetNameplateAnchor.KuiNameplate,
     },
 	[3] = {
-        used = function() return Plater ~= nil end,
+        used = function()
+			local Plater = Plater
+			return Plater ~= nil
+		end,
         func = GetNameplateAnchor.Plater,
     },
 	[4] = {
