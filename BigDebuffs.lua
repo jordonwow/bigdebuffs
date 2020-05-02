@@ -750,7 +750,7 @@ function BigDebuffs:AddBigDebuffs(frame)
         if i > 1 then
             if self.db.profile.raidFrames.anchor == "INNER" then
 				if i < 4 then
-                	big:SetPoint("BOTTOMLEFT", frame.BigDebuffs[i-1], "BOTTOMRIGHT", 0, 0)
+					big:SetPoint("BOTTOMLEFT", frame.BigDebuffs[i-1], "BOTTOMRIGHT", 0, 0)
 				elseif i == 4 then
 					big:SetPoint("BOTTOMRIGHT", frame.debuffFrames[1], "BOTTOMLEFT", -2, 0)
 				elseif i > 4 then
