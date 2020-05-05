@@ -333,21 +333,18 @@ local GetNameplateAnchor = {
 local nameplatesAnchors = {
 	[1] = {
         used = function()
-			local ElvUI = _G["ElvUI"]
 			return ElvUI and ElvUI[1].NamePlates and ElvUI[1].NamePlates.Initialized
 		end,
         func = GetNameplateAnchor.ElvUINameplates,
     },
 	[2] = {
         used = function()
-			local KuiNameplates = _G["KuiNameplates"]
 			return KuiNameplates ~= nil
 		end,
         func = GetNameplateAnchor.KuiNameplate,
     },
 	[3] = {
         used = function()
-			local Plater = _G["Plater"]
 			return Plater ~= nil
 		end,
         func = GetNameplateAnchor.Plater,
@@ -1846,8 +1843,6 @@ function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
 		frame.BigDebuffs.cooldown:SetReverse(true)
 
 		frame.BigDebuffs:SetScript("OnEnter", function(self)
-			local NamePlateTooltip = _G["NamePlateTooltip"]
-
 			if ( BigDebuffs.db.profile.nameplates.tooltips ) then
 				NamePlateTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
 				if self.interrupt then
@@ -1863,8 +1858,6 @@ function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
 		end)
 
 		frame.BigDebuffs:SetScript("OnLeave", function()
-			local NamePlateTooltip = _G["NamePlateTooltip"]
-
 			NamePlateTooltip:Hide()
 		end)
 	end
@@ -1885,6 +1878,9 @@ function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
 end
 
 function BigDebuffs:NAME_PLATE_UNIT_REMOVED(_, unit)
+	local frame = self.Nameplates[unit]
+
+	frame:UnregisterEvent("UNIT_AURA")
 	for i = 1, #unitsWithRaid do
 		if (unitsWithRaid[i] == unit) then
 			table.remove(unitsWithRaid, i)
