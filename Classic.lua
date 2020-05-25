@@ -77,6 +77,7 @@ addon.Spells = {
     [13141] = { type = BUFF_OFFENSIVE }, -- Gnomish Rocket Boots
     [8892] = { type = BUFF_OFFENSIVE }, -- Goblin Rocket Boots
     [9774] = { type = BUFF_OFFENSIVE }, -- Spider Belt & Ornate Mithril Boots
+    [18798] = { type = CROWD_CONTROL }, -- Freezing Band
     [22734] = { type = BUFF_OTHER }, -- Drink
 
     -- Interrupts
