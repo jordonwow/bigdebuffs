@@ -118,3 +118,5 @@ L["Group Size"] = true
 L["Hides BigDebuffs for groups larger than group size"] = true
 L["X offset"] = true
 L["Y offset"] = true
+L["Show All Class Buffs"] = true
+L["Show all the buffs our class can apply"] = true

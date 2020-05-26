@@ -19,6 +19,7 @@ local defaults = {
             cooldownFontSize = 10,
             cooldownFontEffect = "OUTLINE",
             cooldownFont = "Friz Quadrata TT",
+            showAllClassBuffs = true,
             hideBliz = true,
             redirectBliz = false,
             increaseBuffs = false,
@@ -1089,12 +1090,40 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
     local Default_CompactUnitFrame_UtilIsPriorityDebuff = CompactUnitFrame_UtilIsPriorityDebuff
 
     local function CompactUnitFrame_UtilIsPriorityDebuff(...)
-        local default = Default_CompactUnitFrame_UtilIsPriorityDebuff(...)
         local _,_,_,_,_,_,_,_,_, spellId = UnitDebuff(...)
-        return BigDebuffs:IsPriorityBigDebuff(spellId) or default
+        return BigDebuffs:IsPriorityBigDebuff(spellId) or Default_CompactUnitFrame_UtilIsPriorityDebuff(...)
     end
 
-    local Default_CompactUnitFrame_UpdateDebuffs = CompactUnitFrame_UpdateDebuffs
+    local Default_SpellGetVisibilityInfo = SpellGetVisibilityInfo
+
+    local function CompactUnitFrame_UtilShouldDisplayBuff(unit, index, filter)
+        local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura = UnitBuff(unit, index, filter);
+
+        local hasCustom, alwaysShowMine, showForMySpec = SpellGetVisibilityInfo(spellId, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
+
+        local showAllClassBuffs = BigDebuffs.db.profile.raidFrames.showAllClassBuffs and canApplyAura
+
+        if ( hasCustom ) then
+            return showForMySpec or (alwaysShowMine and (showAllClassBuffs or unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle"));
+        else
+            return (showAllClassBuffs or unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle") and canApplyAura and not SpellIsSelfBuff(spellId);
+        end
+    end
+
+    local function CompactUnitFrame_UtilShouldDisplayDebuff(unit, index, filter)
+        local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura, isBossAura = UnitDebuff(unit, index, filter);
+
+        local hasCustom, alwaysShowMine, showForMySpec = SpellGetVisibilityInfo(spellId, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
+
+        local showAllClassBuffs = BigDebuffs.db.profile.raidFrames.showAllClassBuffs and canApplyAura
+
+        if ( hasCustom ) then
+            return showForMySpec or (alwaysShowMine and (showAllClassBuffs or unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle") );   --Would only be "mine" in the case of something like forbearance.
+        else
+            return true;
+        end
+    end
+
     hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
         if ( not frame.debuffFrames or not frame.optionTable.displayDebuffs ) then
             CompactUnitFrame_HideAllDebuffs(frame);

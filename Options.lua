@@ -285,25 +285,32 @@ function BigDebuffs:SetupOptions()
                         desc = L["Redirects other debuffs to the BigDebuffs anchor"],
                         order = 3,
                     },
+                    showAllClassBuffs = {
+                        type = "toggle",
+                        width = "normal",
+                        name = L["Show All Class Buffs"],
+                        desc = L["Show all the buffs our class can apply"],
+                        order = 4,
+                    },
                     increaseBuffs = {
                         type = "toggle",
-                        width = "double",
+                        width = "normal",
                         name = L["Increase Maximum Buffs"],
                         desc = L["Sets the maximum buffs to 6"],
-                        order = 4,
+                        order = 5,
                     },
                     cooldownCount = {
                         type = "toggle",
                         width = "normal",
                         name = L["Cooldown Count"],
                         desc = L["Allow Blizzard and other addons to display countdown text on the icons"],
-                        order = 5,
+                        order = 6,
                     },
                     cooldownFont = {
                         type = "select",
                         name = L["Font"],
                         desc = L["Select font for cd timers"],
-                        order = 6,
+                        order = 7,
                         values = function()
                             local fonts, newFonts = LibSharedMedia:List("font"), {}
                             for k, v in pairs(fonts) do
@@ -319,7 +326,7 @@ function BigDebuffs:SetupOptions()
                         min = 1,
                         max = 30,
                         step = 1,
-                        order = 7,
+                        order = 8,
                     },
                     cooldownFontEffect = {
                         type = "select",
@@ -331,7 +338,7 @@ function BigDebuffs:SetupOptions()
                             ["THICKOUTLINE"] = "THICKOUTLINE",
                             [""] = "NONE",
                         },
-                        order = 7,
+                        order = 9,
                     },
                     maxDebuffs = {
                         type = "range",
