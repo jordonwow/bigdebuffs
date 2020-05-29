@@ -91,7 +91,7 @@ local defaults = {
 			enemy = true,
 			friendly = true,
 			npc = true,
-			anchor = "RIGHT",
+			anchor = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and "TOP" or "RIGHT",
 			size = 40,
 			x = 0,
 			y = 0,
@@ -321,6 +321,9 @@ local GetNameplateAnchor = {
 		end
     end,
 	Blizzard = function(frame)
+        if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
+            return frame.UnitFrame, frame.UnitFrame
+        end
         if frame.UnitFrame and frame.UnitFrame.healthBar and frame.UnitFrame.healthBar:IsShown() then
             return frame.UnitFrame.healthBar, frame.UnitFrame
 		elseif frame.UnitFrame and frame.UnitFrame.name and frame.UnitFrame.name:IsShown() then
@@ -447,6 +450,10 @@ function BigDebuffs:OnInitialize()
                 anchor = "auto",
             }
         end
+    end
+
+    if self.db.profile.raidFrames.showAllClassBuffs == nil then
+        self.db.profile.raidFrames.showAllClassBuffs = true
     end
 
     self.db.RegisterCallback(self, "OnProfileChanged", "Refresh")
