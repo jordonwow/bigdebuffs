@@ -8,6 +8,12 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.0
+* Add nameplate support (Thanks solaldunkel)
+* Add Drink
+* Add Freezing Band
+* Add option to show buffs from other players of your class (Power Word: Fortitude, Weakened Soul, etc.)
+
 ## v8.7
 * Update for Classic 1.13.4
 * Add Silence
