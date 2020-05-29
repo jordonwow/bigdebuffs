@@ -1685,6 +1685,10 @@ function BigDebuffs:UNIT_AURA(unit)
         if frame.current ~= icon then
             if frame.blizzard then
                 -- Blizzard Frame
+
+                -- fix Obsidian Claw icon
+                icon = icon == 611425 and 1508487 or icon
+
                 SetPortraitToTexture(frame.icon, icon)
 
                 -- Adapt
