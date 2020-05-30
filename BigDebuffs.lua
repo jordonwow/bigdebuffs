@@ -1246,7 +1246,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
         local index = 1;
         local frameNum = 1;
         local filter = nil;
-        while ( frameNum <= 6 ) do
+        while ( frameNum <= MAX_BUFFS ) do
             local buffName = UnitBuff(frame.displayedUnit, index, filter);
             if ( buffName ) then
                 if ( CompactUnitFrame_UtilShouldDisplayBuff(frame.displayedUnit, index, filter) and
@@ -1261,7 +1261,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
             end
             index = index + 1;
         end
-        for i=frameNum, 6 do
+        for i=frameNum, MAX_BUFFS do
             local buffFrame = frame.buffFrames[i];
             if buffFrame then buffFrame:Hide() end
         end
