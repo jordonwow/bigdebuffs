@@ -1232,7 +1232,11 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
             return
         end
 
-        if not BigDebuffs.db.profile.raidFrames.increaseBuffs then return end
+        if (not BigDebuffs.db.profile.raidFrames.increaseBuffs) and
+           (not BigDebuffs.db.profile.raidFrames.showAllClassBuffs)
+        then
+            return
+        end
 
         if ( not frame.optionTable.displayBuffs ) then
             CompactUnitFrame_HideAllBuffs(frame);
