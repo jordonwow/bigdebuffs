@@ -864,7 +864,7 @@ function BigDebuffs:PLAYER_REGEN_ENABLED()
     end
 end
 
-local function IsPriorityDebuff(id)
+function BigDebuffs:IsPriorityDebuff(id)
     for i = 1, #BigDebuffs.PriorityDebuffs do
         if id == BigDebuffs.PriorityDebuffs[i] then
             return true
@@ -1088,7 +1088,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
 
     local function CompactUnitFrame_UtilIsPriorityDebuff(...)
         local _,_,_,_,_,_,_,_,_, spellId = UnitDebuff(...)
-        return BigDebuffs:IsPriorityBigDebuff(spellId) or Default_CompactUnitFrame_UtilIsPriorityDebuff(...)
+        return BigDebuffs:IsPriorityDebuff(spellId) or Default_CompactUnitFrame_UtilIsPriorityDebuff(...)
     end
 
     local Default_SpellGetVisibilityInfo = SpellGetVisibilityInfo
