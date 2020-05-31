@@ -1684,11 +1684,6 @@ function BigDebuffs:UNIT_AURA(unit)
                 icon = icon == 611425 and 1508487 or icon
 
                 SetPortraitToTexture(frame.icon, icon)
-
-                -- Adapt
-                -- if frame.anchor and Adapt and Adapt.portraits[frame.anchor] then
-                --  Adapt.portraits[frame.anchor].modelLayer:SetFrameStrata("BACKGROUND")
-                -- end
             else
                 frame.icon:SetTexture(icon)
             end
@@ -1704,11 +1699,6 @@ function BigDebuffs:UNIT_AURA(unit)
         frame.interrupt = interrupt
         frame.current = icon
     else
-        -- Adapt
-        -- if frame.anchor and frame.blizzard and Adapt and Adapt.portraits[frame.anchor] then
-        --  Adapt.portraits[frame.anchor].modelLayer:SetFrameStrata("LOW")
-        -- end
-
         frame:Hide()
         frame.current = nil
     end
