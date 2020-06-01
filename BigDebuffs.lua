@@ -1218,6 +1218,11 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
     -- Show extra buffs
     local MAX_BUFFS = 6
     hooksecurefunc("CompactUnitFrame_UpdateBuffs", function(frame)
+        if ( not frame.buffFrames or not frame.optionTable.displayBuffs ) then
+            CompactUnitFrame_HideAllBuffs(frame);
+            return;
+        end
+
         if not UnitIsPlayer(frame.displayedUnit) then
             return
         end
@@ -1226,11 +1231,6 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
            (not BigDebuffs.db.profile.raidFrames.showAllClassBuffs)
         then
             return
-        end
-
-        if ( not frame.optionTable.displayBuffs ) then
-            CompactUnitFrame_HideAllBuffs(frame);
-            return;
         end
 
         local index = 1;
