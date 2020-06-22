@@ -791,7 +791,8 @@ BigDebuffs.AttachedFrames = {}
 local MAX_BUFFS = 6
 
 function BigDebuffs:AddBigDebuffs(frame)
-    if not frame or not frame.displayedUnit or not UnitIsPlayer(frame.displayedUnit) then return end
+    if not frame or not frame.displayedUnit then return end
+    if not (UnitIsPlayer(frame.displayedUnit) or string.find(frame.displayedUnit, "pet")) then return end
     local frameName = frame:GetName()
     if self.db.profile.raidFrames.increaseBuffs then
         for i = 4, MAX_BUFFS do
@@ -826,7 +827,7 @@ function BigDebuffs:AddBigDebuffs(frame)
             end
         else
             if self.db.profile.raidFrames.anchor == "INNER" then
-                big:SetPoint("BOTTOMLEFT", frame.debuffFrames[1], "BOTTOMLEFT", 0, 0)
+                big:SetPoint("BOTTOMLEFT", frame.healthBar, "BOTTOMLEFT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "LEFT" then
                 big:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", 0, 1)
             elseif self.db.profile.raidFrames.anchor == "RIGHT" then
@@ -1228,7 +1229,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
     -- Show extra buffs
     local MAX_BUFFS = 6
     hooksecurefunc("CompactUnitFrame_UpdateBuffs", function(frame)
-        if not UnitIsPlayer(frame.displayedUnit) then
+        if not (UnitIsPlayer(frame.displayedUnit) or string.find(frame.displayedUnit, "pet")) then
             return
         end
 
@@ -1305,7 +1306,7 @@ else
 
     local MAX_BUFFS = 6
     hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame)
-        if not UnitIsPlayer(frame.displayedUnit) then
+        if not (UnitIsPlayer(frame.displayedUnit) or string.find(frame.displayedUnit, "pet")) then
             return
         end
 
@@ -1471,7 +1472,7 @@ function BigDebuffs:ShowBigDebuffs(frame)
         (not frame.debuffFrames) or
         (not frame.BigDebuffs) or
         (not self:ShowInRaids()) or
-        (not UnitIsPlayer(frame.displayedUnit))
+        (not (UnitIsPlayer(frame.displayedUnit) or string.find(frame.displayedUnit, "pet")))
     then
         return
     end
@@ -1575,6 +1576,9 @@ function BigDebuffs:ShowBigDebuffs(frame)
             if index <= self.db.profile.raidFrames.maxDebuffs or debuffs[i][1] == warning then
                 if not frame.BigDebuffs[index] then break end
                 frame.BigDebuffs[index].baseSize = frame:GetHeight() * debuffs[i][2] * 0.01
+                if string.find(frame.displayedUnit, "pet") then
+                    frame.BigDebuffs[index].baseSize = frame.BigDebuffs[index].baseSize * 1.5
+                end
                 CompactUnitFrame_UtilSetDebuff(frame.BigDebuffs[index],
                     frame.displayedUnit, debuffs[i][1], nil, false, false)
                 frame.BigDebuffs[index].cooldown:SetSwipeColor(0, 0, 0, 0.7)
