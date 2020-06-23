@@ -68,6 +68,7 @@ addon.Spells = {
     [91802] = { type = INTERRUPT, duration = 2 }, -- Shambling Rush (Death Knight)
     [96231] = { type = INTERRUPT, duration = 4 }, -- Rebuke (Paladin)
     [106839] = { type = INTERRUPT, duration = 4 }, -- Skull Bash (Feral)
+		[93985] = { type = INTERRUPT, duration = 4, parent = 106839}, -- Skull Bash (Feral)
 	[115781] = { type = INTERRUPT, duration = 6 }, -- Optical Blast (Warlock)
     [116705] = { type = INTERRUPT, duration = 4 }, -- Spear Hand Strike (Monk)
     [132409] = { type = INTERRUPT, duration = 6 }, -- Spell Lock (Warlock)
