@@ -417,6 +417,7 @@ addon.Spells = {
     [196364] = { type = CROWD_CONTROL }, -- Unstable Affliction (Silence)
     [212284] = { type = BUFF_OFFENSIVE }, -- Firestone
     [212295] = { type = IMMUNITY_SPELL }, -- Nether Ward
+    [233582] = { type = ROOT }, -- Entrenched in Flame
 
 
     -- Warrior
