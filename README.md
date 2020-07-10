@@ -8,6 +8,12 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.4
+* Update for Classic 1.13.5
+* Add compatibility with NeatPlates
+* Fix for Feral Interrupt
+* Add Entrenched in Flame
+
 ## v9.3
 * Minor bug fixes
 
