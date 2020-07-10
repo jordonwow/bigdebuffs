@@ -320,6 +320,11 @@ local GetNameplateAnchor = {
 			return frame.unitFrame, frame.unitFrame
 		end
     end,
+    NeatPlates = function(frame)
+        if frame.carrier and frame.extended and frame.extended.bars and frame.carrier:IsShown() then
+            return frame.extended.bars.healthbar, frame.extended
+        end
+    end,
 	Blizzard = function(frame)
         if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
             return frame.UnitFrame, frame.UnitFrame
@@ -353,7 +358,13 @@ local nameplatesAnchors = {
 		end,
         func = GetNameplateAnchor.Plater,
     },
-	[4] = {
+    [4] = {
+        used = function()
+            return NeatPlates ~= nil -- or TidyPlates ~= nil -- Should be the same but haven't confirmed
+        end,
+        func = GetNameplateAnchor.NeatPlates,
+    },
+	[5] = {
         used = function(frame) return frame.UnitFrame ~= nil end,
         func = GetNameplateAnchor.Blizzard,
     },
