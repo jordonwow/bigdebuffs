@@ -23,6 +23,9 @@ addon.Units = {
 -- Make sure we always see these debuffs, but don't make them bigger
 addon.PriorityDebuffs = {
     770, -- Faerie Fire
+    778, -- Faerie Fire
+    9749, -- Faerie Fire
+    9907, -- Faerie Fire
     12294, -- Mortal Strike
     21551, -- Mortal Strike
     21552, -- Mortal Strike
@@ -82,6 +85,7 @@ addon.Spells = {
     [13494] = { type = BUFF_OFFENSIVE }, -- Manual Crowd Pummeler Haste buff
 
     -- Interrupts
+
     [15752] = { type = INTERRUPT, duration = 10 }, -- Linken's Boomerang Disarm
     [19244] = { type = INTERRUPT, duration = 6 }, -- Spell Lock - Rank 1 (Warlock)
         [19647] = { parent = 19244, duration = 8 }, -- Spell Lock - Rank 2 (Warlock)
@@ -179,6 +183,8 @@ addon.Spells = {
     [1044] = { type = BUFF_DEFENSIVE }, -- Blessing of Freedom
     [20066] = { type = CROWD_CONTROL }, -- Repentance
     [20170] = { type = CROWD_CONTROL }, -- Seal of Justice stun
+    [6940] = { type = BUFF_DEFENSIVE }, -- Blessing of Sacrifice
+        [20729] = { parent = 6940 },
 
     -- Hunter
 
@@ -244,6 +250,10 @@ addon.Spells = {
         [16812] = { parent = 16689 },
         [16813] = { parent = 16689 },
         [17329] = { parent = 16689 },
+    [770] = { type = BUFF_OTHER }, -- Faerie Fire
+        [778] = { parent = 770 },
+        [9749] = { parent = 770 },
+        [9907] = { parent = 770 },
 
     -- Mage
 
