@@ -79,6 +79,7 @@ addon.Spells = {
     [9774] = { type = BUFF_OFFENSIVE }, -- Spider Belt & Ornate Mithril Boots
     [18798] = { type = CROWD_CONTROL }, -- Freezing Band
     [22734] = { type = BUFF_OTHER }, -- Drink
+    [13494] = { type = BUFF_OFFENSIVE }, -- Manual Crowd Pummeler Haste buff
 
     -- Interrupts
     [15752] = { type = INTERRUPT, duration = 10 }, -- Linken's Boomerang Disarm
