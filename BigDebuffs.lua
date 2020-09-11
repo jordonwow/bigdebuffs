@@ -1918,7 +1918,8 @@ end
 function BigDebuffs:NAME_PLATE_UNIT_REMOVED(_, unit)
 	local frame = self.Nameplates[unit]
 
-	frame:UnregisterEvent("UNIT_AURA")
+	if frame then frame:UnregisterEvent("UNIT_AURA") end
+
 	for i = 1, #unitsWithRaid do
 		if (unitsWithRaid[i] == unit) then
 			table.remove(unitsWithRaid, i)
