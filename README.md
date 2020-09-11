@@ -8,6 +8,14 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.5
+* Add Manual Crowd Pummeler
+* Add Inspiration
+* Add Blessing of Sacrifice
+* Add Faerie Fire
+* Fix ElvUI automatic anchor
+* Minor bug fix
+
 ## v9.4
 * Update for Classic 1.13.5
 * Add compatibility with NeatPlates
