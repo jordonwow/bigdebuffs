@@ -160,6 +160,8 @@ addon.Spells = {
         [19442] = { parent = 7812 },
         [19443] = { parent = 7812 },
     [18093] = { type = CROWD_CONTROL }, -- Pyroclasm
+    [11719] = { type = CROWD_CONTROL }, -- Curse of Tongues
+        [1714] = { parent = 11719 },
 
     -- Shaman
 
