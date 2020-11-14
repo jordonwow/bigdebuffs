@@ -155,7 +155,8 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
             Magic = function() return IsUsableSpell(GetSpellInfo(19736)) or IsUsableSpell(GetSpellInfo(19476)) end,
         },
     }
-    BigDebuffs.dispelTypes = classDispel[select(2, UnitClass("player"))] or {}
+    local _, class = UnitClass(PLAYER)
+    BigDebuffs.dispelTypes = classDispel[class]
 else
     defaults.profile.unitFrames.focus = {
         enabled = true,
@@ -909,7 +910,7 @@ hooksecurefunc("CompactUnitFrame_HideAllDebuffs", HideBigDebuffs)
 function BigDebuffs:IsDispellable(unit, dispelType)
     if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
         -- if stoneform is usable and it's on player
-        if not dispelType then return end
+        if (not dispelType) or (not self.dispelTypes) then return end
         if type(self.dispelTypes[dispelType]) == "function" then return self.dispelTypes[dispelType]() end
 
         -- dwarves can use Stoneform to remove diseases and poisons
