@@ -162,6 +162,13 @@ addon.Spells = {
         [19442] = { parent = 7812 },
         [19443] = { parent = 7812 },
     [18093] = { type = CROWD_CONTROL }, -- Pyroclasm
+    [18223] = { type = ROOT }, -- Curse of Exhaustion
+        [18310] = { parent = 18223 },
+        [18310] = { parent = 18311 },
+        [18310] = { parent = 18312 },
+        [18313] = { parent = 18223 },
+    [1714] = { type = ROOT }, -- Curse of Tongues
+        [11719] = { parent =  1714 },
 
     -- Shaman
 
