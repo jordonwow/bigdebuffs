@@ -37,6 +37,7 @@ globals = {
     "ElvUI",
     "KuiNameplates",
     "NamePlateTooltip",
+    "TidyPlatesThreat",
     "NeatPlates",
     "CombatLogGetCurrentEventInfo",
     "CompactUnitFrame_UtilShouldDisplayBuff",
