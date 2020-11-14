@@ -8,6 +8,15 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.6
+* Update for Retail 9.0.1
+* Add Curse of Tongues
+* Add Curse of Exhaustion
+* Add Spell Vulnerability
+* Add support for Threat Plates
+* Add Nightfall
+* Minor bug fixes
+
 ## v9.5
 * Add Manual Crowd Pummeler
 * Add Inspiration
