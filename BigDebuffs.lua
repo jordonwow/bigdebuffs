@@ -274,6 +274,15 @@ end
 local UnitDebuff, UnitBuff = UnitDebuff, UnitBuff
 
 local GetAnchor = {
+	ElvUnitFrames = function(anchor)
+        local frame = _G[anchor]
+        local playerIsShown = _G.ElvUF_Party.db.showPlayer or false
+        if playerIsShown and anchor:match("Party") then 
+            local anchorNo = anchor:sub(string.len(anchor))
+            frame = _G[anchor:sub(1,string.len(anchor)-1)..(anchorNo+1)]
+        end
+        return frame, frame, true
+    end,
     ShadowedUnitFrames = function(anchor)
         local frame = _G[anchor]
         if not frame then return end
@@ -394,6 +403,7 @@ local nameplatesAnchors = {
 
 local anchors = {
     ["ElvUI"] = {
+		func = GetAnchor.ElvUnitFrames,
         noPortait = true,
         units = {
             player = "ElvUF_Player",
