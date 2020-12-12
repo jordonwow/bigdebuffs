@@ -122,14 +122,11 @@ addon.Spells = {
     [206649] = { type = BUFF_OTHER }, -- Eye of Leotheras
     [207685] = { type = CROWD_CONTROL }, -- Sigil of Misery
     [207810] = { type = BUFF_DEFENSIVE }, -- Nether Bond
-    [211048] = { type = BUFF_OFFENSIVE }, -- Chaos Blades
     [211881] = { type = CROWD_CONTROL }, -- Fel Eruption
     [212800] = { type = BUFF_DEFENSIVE }, -- Blur
         [196555] = { type = BUFF_DEFENSIVE }, -- Netherwalk
-    [218256] = { type = BUFF_DEFENSIVE }, -- Empower Wards
     [221527] = { type = CROWD_CONTROL }, -- Imprison (Detainment Honor Talent)
         [217832] = { type = CROWD_CONTROL, parent = 221527 }, -- Imprison (Baseline Undispellable)
-    [227225] = { type = BUFF_DEFENSIVE }, -- Soul Barrier
 
     -- Druid
 
@@ -168,8 +165,7 @@ addon.Spells = {
         [305484] = { parent = 204437 },
         [305485] = { parent = 204437 },
     [209749] = { type = CROWD_CONTROL }, -- Faerie Swarm (Slow/Disarm)
-    [209753] = { type = CROWD_CONTROL, priority = true }, -- Cyclone
-        [33786] = { type = CROWD_CONTROL, parent = 209753 }, -- Cyclone
+    [33786] = { type = CROWD_CONTROL, priority = true }, -- Cyclone
     [22570] = { type = CROWD_CONTROL }, -- Maim
         [203123] = { type = CROWD_CONTROL, parent = 22570 }, -- Maim
         [236025] = { type = CROWD_CONTROL, parent = 22570 }, -- Enraged Maim (Feral Honor Talent)
@@ -194,7 +190,6 @@ addon.Spells = {
     [186289] = { type = BUFF_OFFENSIVE }, -- Aspect of the Eagle
     [238559] = { type = CROWD_CONTROL }, -- Bursting Shot
         [186387] = { type = CROWD_CONTROL, parent = 238559 }, -- Bursting Shot
-    [193526] = { type = BUFF_OFFENSIVE }, -- Trueshot
     [193530] = { type = BUFF_OFFENSIVE }, -- Aspect of the Wild
     [199483] = { type = BUFF_DEFENSIVE }, -- Camouflage
     [202914] = { type = CROWD_CONTROL }, -- Spider Sting (Armed)
@@ -261,11 +256,9 @@ addon.Spells = {
     [122783] = { type = BUFF_DEFENSIVE }, -- Diffuse Magic
     [137639] = { type = BUFF_DEFENSIVE }, -- Storm, Earth, and Fire
     [198909] = { type = CROWD_CONTROL }, -- Song of Chi-Ji
-    [201325] = { type = BUFF_DEFENSIVE }, -- Zen Meditation
-        [115176] = { type = BUFF_DEFENSIVE, parent = 201325 }, -- Zen Meditation
+    [115176] = { type = BUFF_DEFENSIVE }, -- Zen Meditation
     [202162] = { type = BUFF_DEFENSIVE }, -- Guard
     [202274] = { type = CROWD_CONTROL }, -- Incendiary Brew
-    [216113] = { type = BUFF_DEFENSIVE }, -- Way of the Crane
     [232055] = { type = CROWD_CONTROL }, -- Fists of Fury
         [120086] = { type = CROWD_CONTROL, parent = 232055 }, -- Fists of Fury
     [233759] = { type = CROWD_CONTROL }, -- Grapple Weapon
@@ -296,7 +289,6 @@ addon.Spells = {
         [105421] = { type = CROWD_CONTROL, parent = 115750 }, -- Blinding Light
     [152262] = { type = BUFF_OFFENSIVE }, -- Seraphim
     [184662] = { type = BUFF_DEFENSIVE }, -- Shield of Vengeance
-    [204150] = { type = BUFF_DEFENSIVE }, -- Aegis of Light
     [205191] = { type = BUFF_DEFENSIVE }, -- Eye for an Eye
     [210256] = { type = BUFF_DEFENSIVE }, -- Blessing of Sanctuary
     [210294] = { type = IMMUNITY_SPELL }, -- Divine Favor
