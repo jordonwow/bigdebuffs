@@ -236,8 +236,8 @@ addon.Spells = {
     [80353] = { type = BUFF_OFFENSIVE }, -- Time Warp
     [82691] = { type = CROWD_CONTROL }, -- Ring of Frost
     [108839] = { type = BUFF_OFFENSIVE }, -- Ice Floes
-    [108978] = { type = BUFF_DEFENSIVE }, --Alter Time
-        [342246] = { type = BUFF_DEFENSIVE, parent = 108978 }, --Alter Time
+    [342246] = { type = BUFF_DEFENSIVE }, --Alter Time (Arcane)
+        [110909] = { type = BUFF_DEFENSIVE, parent = 108978 }, --Alter Time (Fire/Frost)
     [157997] = { type = ROOT }, -- Ice Nova
     [190319] = { type = BUFF_OFFENSIVE }, -- Combustion
     [198111] = { type = BUFF_DEFENSIVE }, -- Temporal Shield
@@ -266,7 +266,7 @@ addon.Spells = {
     [198909] = { type = CROWD_CONTROL }, -- Song of Chi-Ji
     [202162] = { type = BUFF_DEFENSIVE }, -- Guard
     [202274] = { type = CROWD_CONTROL }, -- Incendiary Brew
-	[209584] = { type = BUFF_DEFENSIVE }, -- Zen Focus Tea
+    [209584] = { type = BUFF_DEFENSIVE }, -- Zen Focus Tea
     [233759] = { type = CROWD_CONTROL }, -- Grapple Weapon
     [247483] = { type = BUFF_OFFENSIVE }, -- Tigereye Brew
 
