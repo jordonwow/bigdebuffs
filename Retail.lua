@@ -37,7 +37,7 @@ addon.WarningDebuffs = {
     233498, -- Unstable Affliction
     233499, -- Unstable Affliction
     34914, -- Vampiric Touch
-	323673, -- Mindgames
+    323673, -- Mindgames
 }
 
 -- Make sure we always see these debuffs, but don't make them bigger
@@ -54,7 +54,7 @@ addon.PriorityDebuffs = {
     208997, -- Counterstrike Totem
     770, -- Faerie Fire
     130736, -- Soul Reaper (Unholy)
-	323673, -- Mindgames
+    323673, -- Mindgames
 }
 
 addon.Spells = {
@@ -143,7 +143,7 @@ addon.Spells = {
     [22812] = { type = BUFF_DEFENSIVE }, -- Barkskin
     [22842] = { type = BUFF_DEFENSIVE }, -- Frenzied Regeneration
     [29166] = { type = BUFF_OFFENSIVE }, -- Innervate
-	[33786] = { type = CROWD_CONTROL }, -- Cyclone
+    [33786] = { type = CROWD_CONTROL }, -- Cyclone
     [33891] = { type = BUFF_OFFENSIVE }, -- Incarnation: Tree of Life
     [45334] = { type = ROOT }, -- Wild Charge
     [61336] = { type = BUFF_DEFENSIVE }, -- Survival Instincts
@@ -207,7 +207,7 @@ addon.Spells = {
     -- Mage
 
     [66] = { type = BUFF_OFFENSIVE }, -- Invisibility
-		[32612] = { type = BUFF_OFFENSIVE, parent = 66 }, -- Invisibility
+        [32612] = { type = BUFF_OFFENSIVE, parent = 66 }, -- Invisibility
         [110960] = { type = BUFF_OFFENSIVE, parent = 66 }, -- Greater Invisibility
     [118] = { type = CROWD_CONTROL }, -- Polymorph
         [28271] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Turtle
@@ -236,8 +236,8 @@ addon.Spells = {
     [80353] = { type = BUFF_OFFENSIVE }, -- Time Warp
     [82691] = { type = CROWD_CONTROL }, -- Ring of Frost
     [108839] = { type = BUFF_OFFENSIVE }, -- Ice Floes
-	[108978] = { type = BUFF_DEFENSIVE }, --Alter Time
-		[342246] = { type = BUFF_DEFENSIVE, parent = 108978 }, --Alter Time
+    [108978] = { type = BUFF_DEFENSIVE }, --Alter Time
+        [342246] = { type = BUFF_DEFENSIVE, parent = 108978 }, --Alter Time
     [157997] = { type = ROOT }, -- Ice Nova
     [190319] = { type = BUFF_OFFENSIVE }, -- Combustion
     [198111] = { type = BUFF_DEFENSIVE }, -- Temporal Shield
@@ -251,7 +251,7 @@ addon.Spells = {
 
     [115078] = { type = CROWD_CONTROL }, -- Paralysis
     [115080] = { type = BUFF_OFFENSIVE }, -- Touch of Death
-	[115176] = { type = BUFF_DEFENSIVE }, -- Zen Meditation
+    [115176] = { type = BUFF_DEFENSIVE }, -- Zen Meditation
     [115203] = { type = BUFF_DEFENSIVE }, -- Fortifying Brew (Brewmaster)
         [201318] = { type = BUFF_DEFENSIVE, parent = 115203 }, -- Fortifying Brew (Windwalker Honor Talent)
         [243435] = { type = BUFF_DEFENSIVE, parent = 115203 }, -- Fortifying Brew (Mistweaver)
@@ -260,7 +260,7 @@ addon.Spells = {
     [119381] = { type = CROWD_CONTROL }, -- Leg Sweep
     [122278] = { type = BUFF_DEFENSIVE }, -- Dampen Harm
     [122470] = { type = BUFF_DEFENSIVE }, -- Touch of Karma (Debuff)
-		[125174] = { type = BUFF_DEFENSIVE, parent = 125174 }, -- Touch of Karma (Buff)
+        [125174] = { type = BUFF_DEFENSIVE, parent = 125174 }, -- Touch of Karma (Buff)
     [122783] = { type = BUFF_DEFENSIVE }, -- Diffuse Magic
     [137639] = { type = BUFF_DEFENSIVE }, -- Storm, Earth, and Fire
     [198909] = { type = CROWD_CONTROL }, -- Song of Chi-Ji
@@ -268,7 +268,7 @@ addon.Spells = {
     [202274] = { type = CROWD_CONTROL }, -- Incendiary Brew
 	[209584] = { type = BUFF_DEFENSIVE }, -- Zen Focus Tea
     [233759] = { type = CROWD_CONTROL }, -- Grapple Weapon
-	[247483] = { type = BUFF_OFFENSIVE }, -- Tigereye Brew
+    [247483] = { type = BUFF_OFFENSIVE }, -- Tigereye Brew
 
     -- Paladin
 
@@ -314,7 +314,7 @@ addon.Spells = {
     [15487] = { type = CROWD_CONTROL }, -- Silence
     [33206] = { type = BUFF_DEFENSIVE }, -- Pain Suppression
     [47536] = { type = BUFF_DEFENSIVE }, -- Rapture
-		[109964] = { type = BUFF_DEFENSIVE, parent = 47536 }, -- Spirit Shell
+        [109964] = { type = BUFF_DEFENSIVE, parent = 47536 }, -- Spirit Shell
     [47585] = { type = BUFF_DEFENSIVE }, -- Dispersion
     [47788] = { type = BUFF_DEFENSIVE }, -- Guardian Spirit
     [64044] = { type = CROWD_CONTROL }, -- Psychic Horror
@@ -335,11 +335,11 @@ addon.Spells = {
     [215769] = { type = BUFF_DEFENSIVE }, -- Spirit of Redemption
     [289655] = { type = BUFF_DEFENSIVE }, -- Holy Word: Concentration
     [319952] = { type = BUFF_OFFENSIVE }, -- Surrender to Madness
-	[322431] = { type = BUFF_OFFENSIVE }, -- Thoughtsteal (Buff)
-		[323716] = { type = BUFF_OFFENSIVE, parent = 322431 }, -- Thoughtsteal (Debuff)
-	[323673] = { type = BUFF_OTHER }, -- Mindgames
-	[329543] = { type = BUFF_DEFENSIVE }, -- Divine Ascension
-		[328530] = { type = IMMUNITY, parent = 329543 }, -- Divine Ascension
+    [322431] = { type = BUFF_OFFENSIVE }, -- Thoughtsteal (Buff)
+        [323716] = { type = BUFF_OFFENSIVE, parent = 322431 }, -- Thoughtsteal (Debuff)
+    [323673] = { type = BUFF_OTHER }, -- Mindgames
+    [329543] = { type = BUFF_DEFENSIVE }, -- Divine Ascension
+        [328530] = { type = IMMUNITY, parent = 329543 }, -- Divine Ascension
 
     -- Rogue
 
@@ -450,7 +450,7 @@ addon.Spells = {
         [236236] = { type = CROWD_CONTROL, parent = 236077 }, -- Disarm
 
     -- Other
-	
+
     [20549] = { type = CROWD_CONTROL }, -- War Stomp
     [107079] = { type = CROWD_CONTROL }, -- Quaking Palm
     [129597] = { type = CROWD_CONTROL }, -- Arcane Torrent
@@ -469,7 +469,7 @@ addon.Spells = {
     [255654] = { type = CROWD_CONTROL }, --Bull Rush
     [305252] = { type = CROWD_CONTROL }, -- Gladiator's Maledict
     [313148] = { type = CROWD_CONTROL }, -- Forbidden Obsidian Claw
-	[331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr Door of Shadows)
+    [331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr Door of Shadows)
 
     -- Legacy (may be deprecated)
 
