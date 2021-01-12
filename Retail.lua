@@ -207,7 +207,8 @@ addon.Spells = {
     -- Mage
 
     [66] = { type = BUFF_OFFENSIVE }, -- Invisibility
-        [110959] = { type = BUFF_OFFENSIVE, parent = 66 }, -- Greater Invisibility
+		[32612] = { type = BUFF_OFFENSIVE, parent = 66 }, -- Invisibility
+        [110960] = { type = BUFF_OFFENSIVE, parent = 66 }, -- Greater Invisibility
     [118] = { type = CROWD_CONTROL }, -- Polymorph
         [28271] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Turtle
         [28272] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Pig
@@ -236,7 +237,7 @@ addon.Spells = {
     [82691] = { type = CROWD_CONTROL }, -- Ring of Frost
     [108839] = { type = BUFF_OFFENSIVE }, -- Ice Floes
 	[108978] = { type = BUFF_DEFENSIVE }, --Alter Time
-		[342245] = { type = BUFF_DEFENSIVE, parent = 108978 }, --Alter Time
+		[342246] = { type = BUFF_DEFENSIVE, parent = 108978 }, --Alter Time
     [157997] = { type = ROOT }, -- Ice Nova
     [190319] = { type = BUFF_OFFENSIVE }, -- Combustion
     [198111] = { type = BUFF_DEFENSIVE }, -- Temporal Shield
@@ -258,15 +259,16 @@ addon.Spells = {
     [116849] = { type = BUFF_DEFENSIVE }, -- Life Cocoon
     [119381] = { type = CROWD_CONTROL }, -- Leg Sweep
     [122278] = { type = BUFF_DEFENSIVE }, -- Dampen Harm
-    [122470] = { type = BUFF_DEFENSIVE }, -- Touch of Karma
+    [122470] = { type = BUFF_DEFENSIVE }, -- Touch of Karma (Debuff)
+		[125174] = { type = BUFF_DEFENSIVE, parent = 125174 }, -- Touch of Karma (Buff)
     [122783] = { type = BUFF_DEFENSIVE }, -- Diffuse Magic
     [137639] = { type = BUFF_DEFENSIVE }, -- Storm, Earth, and Fire
     [198909] = { type = CROWD_CONTROL }, -- Song of Chi-Ji
     [202162] = { type = BUFF_DEFENSIVE }, -- Guard
     [202274] = { type = CROWD_CONTROL }, -- Incendiary Brew
-    [232055] = { type = CROWD_CONTROL }, -- Fists of Fury
-        [120086] = { type = CROWD_CONTROL, parent = 232055 }, -- Fists of Fury
+	[209584] = { type = BUFF_DEFENSIVE }, -- Zen Focus Tea
     [233759] = { type = CROWD_CONTROL }, -- Grapple Weapon
+	[247483] = { type = BUFF_OFFENSIVE }, -- Tigereye Brew
 
     -- Paladin
 
@@ -310,20 +312,18 @@ addon.Spells = {
     [9484] = { type = CROWD_CONTROL }, -- Shackle Undead
     [10060] = { type = BUFF_OFFENSIVE }, -- Power Infusion
     [15487] = { type = CROWD_CONTROL }, -- Silence
-        [199683] = { type = CROWD_CONTROL, parent = 15487 }, -- Last Word
     [33206] = { type = BUFF_DEFENSIVE }, -- Pain Suppression
     [47536] = { type = BUFF_DEFENSIVE }, -- Rapture
+		[109964] = { type = BUFF_DEFENSIVE, parent = 47536 }, -- Spirit Shell
     [47585] = { type = BUFF_DEFENSIVE }, -- Dispersion
     [47788] = { type = BUFF_DEFENSIVE }, -- Guardian Spirit
     [64044] = { type = CROWD_CONTROL }, -- Psychic Horror
     [64843] = { type = BUFF_DEFENSIVE }, -- Divine Hymn
     [81782] = { type = BUFF_DEFENSIVE }, -- Power Word: Barrier
-        [271466] = { type = BUFF_DEFENSIVE, parent = 81782 }, -- Luminous Barrier (Disc Talent)
     [87204] = { type = CROWD_CONTROL }, -- Sin and Punishment
-    [193223] = { type = BUFF_OFFENSIVE }, -- Surrender to Madness
     [194249] = { type = BUFF_OFFENSIVE }, -- Voidform
     [196762] = { type = BUFF_DEFENSIVE }, -- Inner Focus
-    [197268] = { type = BUFF_DEFENSIVE }, -- Ray of Hope
+    [232707] = { type = BUFF_DEFENSIVE }, -- Ray of Hope
     [197862] = { type = BUFF_DEFENSIVE }, -- Archangel
     [197871] = { type = BUFF_OFFENSIVE }, -- Dark Archangel
     [200183] = { type = BUFF_DEFENSIVE }, -- Apotheosis
@@ -333,8 +333,13 @@ addon.Spells = {
         [226943] = { type = CROWD_CONTROL, parent = 205369 }, -- Mind Bomb (Disorient)
     [213610] = { type = BUFF_DEFENSIVE }, -- Holy Ward
     [215769] = { type = BUFF_DEFENSIVE }, -- Spirit of Redemption
-    [221660] = { type = IMMUNITY_SPELL }, -- Holy Concentration
+    [289655] = { type = BUFF_DEFENSIVE }, -- Holy Word: Concentration
+    [319952] = { type = BUFF_OFFENSIVE }, -- Surrender to Madness
+	[322431] = { type = BUFF_OFFENSIVE }, -- Thoughtsteal (Buff)
+		[323716] = { type = BUFF_OFFENSIVE, parent = 322431 }, -- Thoughtsteal (Debuff)
 	[323673] = { type = BUFF_OTHER }, -- Mindgames
+	[329543] = { type = BUFF_DEFENSIVE }, -- Divine Ascension
+		[328530] = { type = IMMUNITY, parent = 329543 }, -- Divine Ascension
 
     -- Rogue
 
@@ -427,9 +432,9 @@ addon.Spells = {
     [18499] = { type = BUFF_OTHER }, -- Berserker Rage
     [23920] = { type = IMMUNITY_SPELL }, -- Spell Reflection
         [213915] = { type = IMMUNITY_SPELL, parent = 23920 }, -- Mass Spell Reflection
-        [216890] = { type = IMMUNITY_SPELL, parent = 23920 }, -- Spell Reflection (Arms, Fury)
+        [330279] = { type = IMMUNITY_SPELL, parent = 23920 }, -- Overwatch (Intervene Reflect)
     [46968] = { type = CROWD_CONTROL }, -- Shockwave
-    [97462] = { type = BUFF_DEFENSIVE }, -- Rallying Cry
+    [97463] = { type = BUFF_DEFENSIVE }, -- Rallying Cry
     [105771] = { type = ROOT }, -- Charge (Warrior)
     [107574] = { type = BUFF_OFFENSIVE }, -- Avatar
     [118038] = { type = BUFF_DEFENSIVE }, -- Die by the Sword
