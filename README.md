@@ -8,6 +8,9 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.7
+* Spell updates from Domzae
+
 ## v9.6
 * Update for Retail 9.0.1
 * Add Curse of Tongues
