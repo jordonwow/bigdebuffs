@@ -428,6 +428,7 @@ addon.Spells = {
     [871] = { type = BUFF_DEFENSIVE }, -- Shield Wall
     [1719] = { type = BUFF_OFFENSIVE }, -- Recklessness
     [5246] = { type = CROWD_CONTROL }, -- Intimidating Shout
+    [3411] = { type = BUFF_DEFENSIVE }, -- Intervene
     [12975] = { type = BUFF_DEFENSIVE }, -- Last Stand
     [18499] = { type = BUFF_OTHER }, -- Berserker Rage
     [23920] = { type = IMMUNITY_SPELL }, -- Spell Reflection
