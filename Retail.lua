@@ -357,6 +357,7 @@ addon.Spells = {
     [79140] = { type = BUFF_OFFENSIVE }, -- Vendetta
     [121471] = { type = BUFF_OFFENSIVE }, -- Shadow Blades
     [207736] = { type = BUFF_OFFENSIVE }, -- Shadowy Duel
+    [207777] = { type = CROWD_CONTROL }, -- Dismantle
     [212183] = { type = CROWD_CONTROL }, -- Smoke Bomb
 
     -- Shaman
