@@ -237,7 +237,7 @@ addon.Spells = {
     [82691] = { type = CROWD_CONTROL }, -- Ring of Frost
     [108839] = { type = BUFF_OFFENSIVE }, -- Ice Floes
     [342246] = { type = BUFF_DEFENSIVE }, --Alter Time (Arcane)
-        [110909] = { type = BUFF_DEFENSIVE, parent = 108978 }, --Alter Time (Fire/Frost)
+        [110909] = { type = BUFF_DEFENSIVE, parent = 342246 }, --Alter Time (Fire/Frost)
     [157997] = { type = ROOT }, -- Ice Nova
     [190319] = { type = BUFF_OFFENSIVE }, -- Combustion
     [198111] = { type = BUFF_DEFENSIVE }, -- Temporal Shield
