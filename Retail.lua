@@ -112,7 +112,8 @@ addon.Spells = {
     [212552] = { type = BUFF_DEFENSIVE }, -- Wraith Walk
     [219809] = { type = BUFF_DEFENSIVE }, -- Tombstone
     [223929] = { type = BUFF_OTHER }, -- Necrotic Wound
-
+	[334693] = { type = CROWD_CONTROL }, -- Absolute Zero
+    
     -- Demon Hunter
 
     [179057] = { type = CROWD_CONTROL }, -- Chaos Nova
@@ -358,6 +359,7 @@ addon.Spells = {
     [79140] = { type = BUFF_OFFENSIVE }, -- Vendetta
     [121471] = { type = BUFF_OFFENSIVE }, -- Shadow Blades
     [207736] = { type = BUFF_OFFENSIVE }, -- Shadowy Duel
+    [207777] = { type = CROWD_CONTROL }, -- Dismantle
     [212183] = { type = CROWD_CONTROL }, -- Smoke Bomb
 
     -- Shaman
