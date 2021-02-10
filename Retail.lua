@@ -373,6 +373,7 @@ addon.Spells = {
         [269352] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Skeletal Hatchling)
         [277778] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Zandalari Tendonripper)
         [277784] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Wicker Mongrel)
+        [309328] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Living Honey)
     [79206] = { type = BUFF_DEFENSIVE }, -- Spiritwalker's Grace 60 * OTHER
     [108281] = { type = BUFF_DEFENSIVE }, -- Ancestral Guidance
     [16166] = { type = BUFF_OFFENSIVE }, -- Elemental Mastery
