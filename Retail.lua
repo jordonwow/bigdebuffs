@@ -112,8 +112,8 @@ addon.Spells = {
     [212552] = { type = BUFF_DEFENSIVE }, -- Wraith Walk
     [219809] = { type = BUFF_DEFENSIVE }, -- Tombstone
     [223929] = { type = BUFF_OTHER }, -- Necrotic Wound
-	[334693] = { type = CROWD_CONTROL }, -- Absolute Zero
-    
+    [334693] = { type = CROWD_CONTROL }, -- Absolute Zero
+
     -- Demon Hunter
 
     [179057] = { type = CROWD_CONTROL }, -- Chaos Nova
@@ -174,22 +174,25 @@ addon.Spells = {
         [203123] = { type = CROWD_CONTROL, parent = 22570 }, -- Maim
         [236025] = { type = CROWD_CONTROL, parent = 22570 }, -- Enraged Maim (Feral Honor Talent)
     [236696] = { type = BUFF_DEFENSIVE }, -- Thorns (PvP Talent)
-        [305497] = { parent = 236696 },
+        [305497] = { type = BUFF_DEFENSIVE, parent = 236696 },
 
     -- Hunter
 
     [136] = { type = BUFF_DEFENSIVE }, -- Mend Pet
+    [1513] = { type = CROWD_CONTROL }, -- Scare Beast
     [3355] = { type = CROWD_CONTROL }, -- Freezing Trap
-        [203340] = { type ="cc" }, -- Diamond Ice (Survival Honor Talent)
+        [203337] = { type = CROWD_CONTROL, parent = 3355 }, -- Diamond Ice (Survival Honor Talent)
     [5384] = { type = BUFF_DEFENSIVE }, -- Feign Death
     [19386] = { type = CROWD_CONTROL }, -- Wyvern Sting
     [19574] = { type = BUFF_OFFENSIVE }, -- Bestial Wrath
     [19577] = { type = CROWD_CONTROL }, -- Intimidation
         [24394] = { type = CROWD_CONTROL, parent = 19577 }, -- Intimidation
     [53480] = { type = BUFF_DEFENSIVE }, -- Roar of Sacrifice (Hunter Pet Skill)
+    [54216] = { type = BUFF_DEFENSIVE }, -- Master's Call
     [117526] = { type = ROOT }, -- Binding Shot
     [131894] = { type = BUFF_OFFENSIVE }, -- A Murder of Crows (Beast Mastery, Marksmanship)
         [206505] = { type = BUFF_OFFENSIVE, parent = 131894 }, -- A Murder of Crows (Survival)
+    [162480] = { type = ROOT }, -- Steel Trap
     [186265] = { type = BUFF_DEFENSIVE }, -- Aspect of the Turtle
     [186289] = { type = BUFF_OFFENSIVE }, -- Aspect of the Eagle
     [238559] = { type = CROWD_CONTROL }, -- Bursting Shot
@@ -203,7 +206,8 @@ addon.Spells = {
     [209997] = { type = BUFF_DEFENSIVE }, -- Play Dead
     [212638] = { type = ROOT }, -- Tracker's Net
     [213691] = { type = CROWD_CONTROL }, -- Scatter Shot
-    [272682] = { type = BUFF_DEFENSIVE }, -- Master's Call
+    [260402] = { type = BUFF_OFFENSIVE }, -- Double Tap
+    [266779] = { type = BUFF_OFFENSIVE }, -- Coordinated Assault
     [288613] = { type = BUFF_OFFENSIVE }, -- Trueshot
 
     -- Mage
@@ -298,6 +302,7 @@ addon.Spells = {
         [105421] = { type = CROWD_CONTROL, parent = 115750 }, -- Blinding Light
     [152262] = { type = BUFF_OFFENSIVE }, -- Seraphim
     [184662] = { type = BUFF_DEFENSIVE }, -- Shield of Vengeance
+    [199545] = { type = BUFF_DEFENSIVE }, -- Steed of Glory (Protection Honor Talent)
     [204150] = { type = BUFF_DEFENSIVE }, -- Aegis of Light
     [205191] = { type = BUFF_DEFENSIVE }, -- Eye for an Eye
     [210256] = { type = BUFF_DEFENSIVE }, -- Blessing of Sanctuary
@@ -353,11 +358,13 @@ addon.Spells = {
     [2094] = { type = CROWD_CONTROL }, -- Blind
     [5277] = { type = BUFF_DEFENSIVE }, -- Evasion
     [6770] = { type = CROWD_CONTROL }, -- Sap
+    [11327] = { type = BUFF_DEFENSIVE }, -- Vanish
     [13750] = { type = BUFF_OFFENSIVE }, -- Adrenaline Rush
     [31224] = { type = IMMUNITY_SPELL }, -- Cloak of Shadows
     [51690] = { type = BUFF_OFFENSIVE }, -- Killing Spree
     [79140] = { type = BUFF_OFFENSIVE }, -- Vendetta
     [121471] = { type = BUFF_OFFENSIVE }, -- Shadow Blades
+    [185422] = { type = BUFF_OFFENSIVE }, -- Shadow Dance
     [207736] = { type = BUFF_OFFENSIVE }, -- Shadowy Duel
     [207777] = { type = CROWD_CONTROL }, -- Dismantle
     [212183] = { type = CROWD_CONTROL }, -- Smoke Bomb
@@ -378,7 +385,6 @@ addon.Spells = {
         [309328] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Living Honey)
     [79206] = { type = BUFF_DEFENSIVE }, -- Spiritwalker's Grace 60 * OTHER
     [108281] = { type = BUFF_DEFENSIVE }, -- Ancestral Guidance
-    [16166] = { type = BUFF_OFFENSIVE }, -- Elemental Mastery
     [64695] = { type = ROOT }, -- Earthgrab Totem
     [77505] = { type = CROWD_CONTROL }, -- Earthquake (Stun)
     [98008] = { type = BUFF_DEFENSIVE }, -- Spirit Link Totem
@@ -398,6 +404,7 @@ addon.Spells = {
         [255016] = { type = IMMUNITY_SPELL, parent = 8178 }, -- Grounding
         [204336] = { type = IMMUNITY_SPELL, parent = 8178 }, -- Grounding
         [34079] = { type = IMMUNITY_SPELL, parent = 8178 }, -- Grounding
+    [320125] = { type = BUFF_OFFENSIVE }, -- Echoing Shock
 
     -- Warlock
 
@@ -419,11 +426,8 @@ addon.Spells = {
     [118699] = { type = CROWD_CONTROL }, -- Fear
         [130616] = { type = CROWD_CONTROL, parent = 118699 }, -- Fear (Glyph of Fear)
     [171017] = { type = CROWD_CONTROL }, -- Meteor Strike
-    [196098] = { type = BUFF_OFFENSIVE }, -- Soul Harvest
     [196364] = { type = CROWD_CONTROL }, -- Unstable Affliction (Silence)
-    [212284] = { type = BUFF_OFFENSIVE }, -- Firestone
     [212295] = { type = IMMUNITY_SPELL }, -- Nether Ward
-    [233582] = { type = ROOT }, -- Entrenched in Flame
 
 
     -- Warrior
@@ -457,27 +461,20 @@ addon.Spells = {
 
     [20549] = { type = CROWD_CONTROL }, -- War Stomp
     [107079] = { type = CROWD_CONTROL }, -- Quaking Palm
-    [129597] = { type = CROWD_CONTROL }, -- Arcane Torrent
-        [25046] = { type = CROWD_CONTROL, parent = 129597 }, -- Arcane Torrent
-        [28730] = { type = CROWD_CONTROL, parent = 129597 }, -- Arcane Torrent
-        [50613] = { type = CROWD_CONTROL, parent = 129597 }, -- Arcane Torrent
-        [69179] = { type = CROWD_CONTROL, parent = 129597 }, -- Arcane Torrent
-        [80483] = { type = CROWD_CONTROL, parent = 129597 }, -- Arcane Torrent
-        [155145] = { type = CROWD_CONTROL, parent = 129597 }, -- Arcane Torrent
-        [202719] = { type = CROWD_CONTROL, parent = 129597 }, -- Arcane Torrent
-        [202719] = { type = CROWD_CONTROL, parent = 129597 }, -- Arcane Torrent
-        [232633] = { type = CROWD_CONTROL, parent = 129597 }, -- Arcane Torrent
     [192001] = { type = BUFF_OTHER }, -- Drink
         [167152] = { type = BUFF_OTHER, parent = 192001 }, -- Refreshment
     [256948] = { type = BUFF_OTHER }, -- Spatial Rift
     [255654] = { type = CROWD_CONTROL }, --Bull Rush
-    [305252] = { type = CROWD_CONTROL }, -- Gladiator's Maledict
-    [313148] = { type = CROWD_CONTROL }, -- Forbidden Obsidian Claw
+    [287712] = { type = CROWD_CONTROL }, -- Haymaker
+    [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord Fleshcraft)
     [331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr Door of Shadows)
+    [332505] = { type = BUFF_DEFENSIVE }, -- Soulsteel Clamps (Kyrian>Mikanikos Trait)
 
     -- Legacy (may be deprecated)
 
     [178858] = { type = BUFF_DEFENSIVE }, -- Contender (Draenor Garrison Ability)
+    [305252] = { type = CROWD_CONTROL }, -- Gladiator's Maledict
+    [313148] = { type = CROWD_CONTROL }, -- Forbidden Obsidian Claw
 
     -- Special
     --[6788] = { type = "special", nounitFrames = true, noraidFrames = true }, -- Weakened Soul
