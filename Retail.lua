@@ -251,6 +251,7 @@ addon.Spells = {
         [198065] = { type = BUFF_DEFENSIVE, parent = 198064 }, -- Prismatic Cloak
     [205025] = { type = BUFF_OFFENSIVE }, -- Presence of Mind
     [228600] = { type = ROOT }, -- Glacial Spike Root
+    [317589] = { type = BUFF_OTHER }, -- Tormenting Backlash (Venthyr Ability)
 
     -- Monk
 
@@ -362,6 +363,7 @@ addon.Spells = {
     [11327] = { type = BUFF_DEFENSIVE }, -- Vanish
     [13750] = { type = BUFF_OFFENSIVE }, -- Adrenaline Rush
     [31224] = { type = IMMUNITY_SPELL }, -- Cloak of Shadows
+    [45182] = { type = BUFF_DEFENSIVE }, -- Cheating Death
     [51690] = { type = BUFF_OFFENSIVE }, -- Killing Spree
     [79140] = { type = BUFF_OFFENSIVE }, -- Vendetta
     [121471] = { type = BUFF_OFFENSIVE }, -- Shadow Blades
@@ -476,6 +478,7 @@ addon.Spells = {
     [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord Fleshcraft)
     [331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr Door of Shadows)
     [332505] = { type = BUFF_DEFENSIVE }, -- Soulsteel Clamps (Kyrian>Mikanikos Trait)
+    [345231] = { type = BUFF_DEFENSIVE }, -- Gladiator's Emblem
 
     -- Legacy (may be deprecated)
 
