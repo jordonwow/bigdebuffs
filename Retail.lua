@@ -165,10 +165,6 @@ addon.Spells = {
     [200851] = { type = BUFF_DEFENSIVE }, -- Rage of the Sleeper
     [202425] = { type = BUFF_OFFENSIVE }, -- Warrior of Elune
     [204399] = { type = CROWD_CONTROL }, -- Earthfury
-    [204437] = { type = CROWD_CONTROL }, -- Lightning Lasso
-        [305483] = { parent = 204437 },
-        [305484] = { parent = 204437 },
-        [305485] = { parent = 204437 },
     [209749] = { type = CROWD_CONTROL }, -- Faerie Swarm (Slow/Disarm)
     [22570] = { type = CROWD_CONTROL }, -- Maim
         [203123] = { type = CROWD_CONTROL, parent = 22570 }, -- Maim
@@ -373,6 +369,7 @@ addon.Spells = {
 
     [2825] = { type = BUFF_OFFENSIVE }, -- Bloodlust
         [32182] = { type = BUFF_OFFENSIVE, parent = 2825 }, -- Heroism
+    [8178] = { type = IMMUNITY_SPELL }, -- Grounding Totem
     [51514] = { type = CROWD_CONTROL }, -- Hex
         [196932] = { type = CROWD_CONTROL, parent = 51514 }, -- Voodoo Totem
         [210873] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Compy)
@@ -401,10 +398,7 @@ addon.Spells = {
     [204366] = { type = BUFF_OFFENSIVE }, -- Thundercharge
     [204945] = { type = BUFF_OFFENSIVE }, -- Doom Winds
     [260878] = { type = BUFF_DEFENSIVE }, -- Spirit Wolf
-    [8178] = { type = IMMUNITY_SPELL }, -- Grounding
-        [255016] = { type = IMMUNITY_SPELL, parent = 8178 }, -- Grounding
-        [204336] = { type = IMMUNITY_SPELL, parent = 8178 }, -- Grounding
-        [34079] = { type = IMMUNITY_SPELL, parent = 8178 }, -- Grounding
+    [305484] = { type = CROWD_CONTROL }, -- Lightning Lasso
     [320125] = { type = BUFF_OFFENSIVE }, -- Echoing Shock
     [325174] = { type = BUFF_DEFENSIVE }, -- Spirit Link Totem
 
