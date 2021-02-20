@@ -396,7 +396,8 @@ addon.Spells = {
     [118345] = { type = CROWD_CONTROL }, -- Pulverize
     [118905] = { type = CROWD_CONTROL }, -- Static Charge
     [197214] = { type = CROWD_CONTROL }, -- Sundering
-    [204293] = { type = BUFF_DEFENSIVE }, -- Spirit Link
+    [201633] = { type = BUFF_DEFENSIVE }, -- Earthen Wall Totem
+    [204293] = { type = BUFF_DEFENSIVE }, -- Spirit Link (Honor Talent)
     [204366] = { type = BUFF_OFFENSIVE }, -- Thundercharge
     [204945] = { type = BUFF_OFFENSIVE }, -- Doom Winds
     [260878] = { type = BUFF_DEFENSIVE }, -- Spirit Wolf
@@ -405,6 +406,7 @@ addon.Spells = {
         [204336] = { type = IMMUNITY_SPELL, parent = 8178 }, -- Grounding
         [34079] = { type = IMMUNITY_SPELL, parent = 8178 }, -- Grounding
     [320125] = { type = BUFF_OFFENSIVE }, -- Echoing Shock
+    [325174] = { type = BUFF_DEFENSIVE }, -- Spirit Link Totem
 
     -- Warlock
 
