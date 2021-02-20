@@ -76,7 +76,7 @@ addon.Spells = {
     [132409] = { type = INTERRUPT, duration = 6 }, -- Spell Lock (Warlock)
     [147362] = { type = INTERRUPT, duration = 3 }, -- Countershot (Hunter)
     [171138] = { type = INTERRUPT, duration = 6 }, -- Shadow Lock (Warlock)
-    [183752] = { type = INTERRUPT, duration = 3 }, -- Consume Magic (Demon Hunter)
+    [183752] = { type = INTERRUPT, duration = 3 }, -- Disrupt (Demon Hunter)
     [187707] = { type = INTERRUPT, duration = 3 }, -- Muzzle (Hunter)
     [212619] = { type = INTERRUPT, duration = 6 }, -- Call Felhunter (Warlock)
     [231665] = { type = INTERRUPT, duration = 3 }, -- Avengers Shield (Paladin)
@@ -112,6 +112,7 @@ addon.Spells = {
     [212552] = { type = BUFF_DEFENSIVE }, -- Wraith Walk
     [219809] = { type = BUFF_DEFENSIVE }, -- Tombstone
     [223929] = { type = BUFF_OTHER }, -- Necrotic Wound
+    [321995] = { type = BUFF_OFFENSIVE }, -- Hypothermic Presence
     [334693] = { type = CROWD_CONTROL }, -- Absolute Zero
 
     -- Demon Hunter
@@ -124,8 +125,10 @@ addon.Spells = {
     [205629] = { type = BUFF_DEFENSIVE }, -- Demonic Trample
     [205630] = { type = CROWD_CONTROL }, -- Illidan's Grasp
     [206649] = { type = BUFF_OTHER }, -- Eye of Leotheras
+    [206804] = { type = BUFF_OFFENSIVE }, -- Rain from Above
     [207685] = { type = CROWD_CONTROL }, -- Sigil of Misery
     [207810] = { type = BUFF_DEFENSIVE }, -- Nether Bond
+    [209426] = { type = BUFF_DEFENSIVE }, -- Darkness
     [211881] = { type = CROWD_CONTROL }, -- Fel Eruption
     [212800] = { type = BUFF_DEFENSIVE }, -- Blur
         [196555] = { type = BUFF_DEFENSIVE }, -- Netherwalk
@@ -264,7 +267,8 @@ addon.Spells = {
     [122470] = { type = BUFF_DEFENSIVE }, -- Touch of Karma (Debuff)
         [125174] = { type = BUFF_DEFENSIVE, parent = 122470 }, -- Touch of Karma (Buff)
     [122783] = { type = BUFF_DEFENSIVE }, -- Diffuse Magic
-    [137639] = { type = BUFF_DEFENSIVE }, -- Storm, Earth, and Fire
+    [137639] = { type = BUFF_OFFENSIVE }, -- Storm, Earth, and Fire
+    [152173] = { type = BUFF_OFFENSIVE }, -- Serenity
     [198909] = { type = CROWD_CONTROL }, -- Song of Chi-Ji
     [202162] = { type = BUFF_DEFENSIVE }, -- Guard
     [202274] = { type = CROWD_CONTROL }, -- Incendiary Brew
@@ -292,7 +296,7 @@ addon.Spells = {
     [31935] = { type = CROWD_CONTROL }, -- Avenger's Shield
     [86659] = { type = BUFF_DEFENSIVE }, -- Guardian of Ancient Kings
         [212641] = { type = BUFF_DEFENSIVE }, -- Guardian of Ancient Kings (Glyphed)
-        [228049] = { type = BUFF_DEFENSIVE }, -- Guardian of the Forgotten Queen
+        [228049] = { type = IMMUNITY }, -- Guardian of the Forgotten Queen
     [105809] = { type = BUFF_OFFENSIVE }, -- Holy Avenger
     [115750] = { type = CROWD_CONTROL }, -- Blinding Light
         [105421] = { type = CROWD_CONTROL, parent = 115750 }, -- Blinding Light
@@ -303,7 +307,8 @@ addon.Spells = {
     [205191] = { type = BUFF_DEFENSIVE }, -- Eye for an Eye
     [210256] = { type = BUFF_DEFENSIVE }, -- Blessing of Sanctuary
     [210294] = { type = IMMUNITY_SPELL }, -- Divine Favor
-    [215652] = { type = BUFF_OFFENSIVE }, -- Shield of Virtue
+    [215652] = { type = BUFF_OFFENSIVE }, -- Shield of Virtue (Buff)
+        [217824] = { type = CROWD_CONTROL, parent = 215652 }, -- Shield of Virtue (Debuff)
 
 
     -- Priest
@@ -380,7 +385,7 @@ addon.Spells = {
         [277778] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Zandalari Tendonripper)
         [277784] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Wicker Mongrel)
         [309328] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Living Honey)
-    [79206] = { type = BUFF_DEFENSIVE }, -- Spiritwalker's Grace 60 * OTHER
+    [79206] = { type = BUFF_OTHER }, -- Spiritwalker's Grace
     [108281] = { type = BUFF_DEFENSIVE }, -- Ancestral Guidance
     [64695] = { type = ROOT }, -- Earthgrab Totem
     [77505] = { type = CROWD_CONTROL }, -- Earthquake (Stun)
@@ -392,12 +397,14 @@ addon.Spells = {
         [114052] = { type = BUFF_DEFENSIVE, parent = 114050 }, -- Ascendance (Restoration)
     [118345] = { type = CROWD_CONTROL }, -- Pulverize
     [118905] = { type = CROWD_CONTROL }, -- Static Charge
+    [191634] = { type = BUFF_OFFENSIVE }, -- Stormkeeper
     [197214] = { type = CROWD_CONTROL }, -- Sundering
     [201633] = { type = BUFF_DEFENSIVE }, -- Earthen Wall Totem
     [204293] = { type = BUFF_DEFENSIVE }, -- Spirit Link (Honor Talent)
     [204366] = { type = BUFF_OFFENSIVE }, -- Thundercharge
     [204945] = { type = BUFF_OFFENSIVE }, -- Doom Winds
     [260878] = { type = BUFF_DEFENSIVE }, -- Spirit Wolf
+    [290641] = { type = BUFF_DEFENSIVE }, -- Ancestral Gift
     [305484] = { type = CROWD_CONTROL }, -- Lightning Lasso
     [320125] = { type = BUFF_OFFENSIVE }, -- Echoing Shock
     [325174] = { type = BUFF_DEFENSIVE }, -- Spirit Link Totem
@@ -445,6 +452,7 @@ addon.Spells = {
     [147833] = { type = BUFF_DEFENSIVE }, -- Intervene
     [184364] = { type = BUFF_DEFENSIVE }, -- Enraged Regeneration
     [197690] = { type = BUFF_DEFENSIVE }, -- Defensive Stance
+    [199261] = { type = BUFF_OFFENSIVE }, -- Death Wish
     [213871] = { type = BUFF_DEFENSIVE }, -- Bodyguard
     [227847] = { type = IMMUNITY }, -- Bladestorm (Arms)
         [46924] = { type = IMMUNITY, parent = 227847 }, -- Bladestorm (Fury)
@@ -452,6 +460,9 @@ addon.Spells = {
     [228920] = { type = BUFF_DEFENSIVE }, -- Ravager
     [236077] = { type = CROWD_CONTROL }, -- Disarm
         [236236] = { type = CROWD_CONTROL, parent = 236077 }, -- Disarm
+    [236273] = { type = BUFF_DEFENSIVE }, -- Duel
+    [236321] = { type = BUFF_DEFENSIVE }, -- War Banner
+    [262228] = { type = BUFF_OFFENSIVE }, -- Deadly Calm
 
     -- Other
 
@@ -460,7 +471,7 @@ addon.Spells = {
     [192001] = { type = BUFF_OTHER }, -- Drink
         [167152] = { type = BUFF_OTHER, parent = 192001 }, -- Refreshment
     [256948] = { type = BUFF_OTHER }, -- Spatial Rift
-    [255654] = { type = CROWD_CONTROL }, --Bull Rush
+    [255654] = { type = CROWD_CONTROL }, -- Bull Rush
     [287712] = { type = CROWD_CONTROL }, -- Haymaker
     [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord Fleshcraft)
     [331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr Door of Shadows)
