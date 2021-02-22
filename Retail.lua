@@ -5,6 +5,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then return end
 local BUFF_DEFENSIVE = "buffs_defensive"
 local BUFF_OFFENSIVE = "buffs_offensive"
 local BUFF_OTHER = "buffs_other"
+local BUFF_SPEED_BOOST = "buffs_speed_boost"
 local INTERRUPT = "interrupts"
 local CROWD_CONTROL = "cc"
 local ROOT = "roots"
@@ -76,7 +77,6 @@ addon.Spells = {
     [115781] = { type = INTERRUPT, duration = 6 }, -- Optical Blast (Warlock)
     [116705] = { type = INTERRUPT, duration = 4 }, -- Spear Hand Strike (Monk)
     [147362] = { type = INTERRUPT, duration = 3 }, -- Countershot (Hunter)
-    [171138] = { type = INTERRUPT, duration = 6 }, -- Shadow Lock (Warlock)
     [183752] = { type = INTERRUPT, duration = 3 }, -- Disrupt (Demon Hunter)
     [187707] = { type = INTERRUPT, duration = 3 }, -- Muzzle (Hunter)
     [212619] = { type = INTERRUPT, duration = 6 }, -- Call Felhunter (Warlock)
@@ -110,7 +110,7 @@ addon.Spells = {
     [207319] = { type = BUFF_DEFENSIVE }, -- Corpse Shield
     [212332] = { type = CROWD_CONTROL }, -- Smash
         [212337] = { type = CROWD_CONTROL, parent = 212332 }, -- Powerful Smash
-    [212552] = { type = BUFF_DEFENSIVE }, -- Wraith Walk
+    [212552] = { type = BUFF_SPEED_BOOST }, -- Wraith Walk
     [219809] = { type = BUFF_DEFENSIVE }, -- Tombstone
     [223929] = { type = BUFF_OTHER }, -- Necrotic Wound
     [321995] = { type = BUFF_OFFENSIVE }, -- Hypothermic Presence
@@ -142,8 +142,8 @@ addon.Spells = {
     [339] = { type = ROOT }, -- Entangling Roots
         [170855] = { type = ROOT, parent = 339 }, -- Entangling Roots
     [740] = { type = BUFF_DEFENSIVE }, -- Tranquility
-    [1850] = { type = BUFF_OTHER }, -- Dash
-        [252216] = { type = BUFF_OTHER, parent = 1850 }, -- Tiger Dash
+    [1850] = { type = BUFF_SPEED_BOOST }, -- Dash
+        [252216] = { type = BUFF_SPEED_BOOST, parent = 1850 }, -- Tiger Dash
     [2637] = { type = CROWD_CONTROL }, -- Hibernate
     [5211] = { type = CROWD_CONTROL }, -- Mighty Bash
     [5217] = { type = BUFF_OFFENSIVE }, -- Tiger's Fury
@@ -191,9 +191,11 @@ addon.Spells = {
     [53480] = { type = BUFF_DEFENSIVE }, -- Roar of Sacrifice (Hunter Pet Skill)
     [54216] = { type = BUFF_DEFENSIVE }, -- Master's Call
     [117526] = { type = ROOT }, -- Binding Shot
+    [118922] = { type = BUFF_SPEED_BOOST }, -- Posthaste
     [131894] = { type = BUFF_OFFENSIVE }, -- A Murder of Crows (Beast Mastery, Marksmanship)
         [206505] = { type = BUFF_OFFENSIVE, parent = 131894 }, -- A Murder of Crows (Survival)
     [162480] = { type = ROOT }, -- Steel Trap
+    [186257] = { type = BUFF_SPEED_BOOST }, -- Aspect of the Cheetah
     [186265] = { type = BUFF_DEFENSIVE }, -- Aspect of the Turtle
     [186289] = { type = BUFF_OFFENSIVE }, -- Aspect of the Eagle
     [238559] = { type = CROWD_CONTROL }, -- Bursting Shot
@@ -265,6 +267,7 @@ addon.Spells = {
         [201318] = { type = BUFF_DEFENSIVE, parent = 115203 }, -- Fortifying Brew (Windwalker Honor Talent)
         [243435] = { type = BUFF_DEFENSIVE, parent = 115203 }, -- Fortifying Brew (Mistweaver)
     [116706] = { type = ROOT }, -- Disable
+    [116841] = { type = BUFF_SPEED_BOOST }, -- Tiger's Lust
     [116849] = { type = BUFF_DEFENSIVE }, -- Life Cocoon
     [119381] = { type = CROWD_CONTROL }, -- Leg Sweep
     [122278] = { type = BUFF_DEFENSIVE }, -- Dampen Harm
@@ -314,7 +317,16 @@ addon.Spells = {
     [210294] = { type = IMMUNITY_SPELL }, -- Divine Favor
     [215652] = { type = BUFF_OFFENSIVE }, -- Shield of Virtue (Buff)
         [217824] = { type = CROWD_CONTROL, parent = 215652 }, -- Shield of Virtue (Debuff)
-
+    [221883] = { type = BUFF_SPEED_BOOST }, -- Divine Steed (Human?) (Each race has its own buff, pulled from wowhead - some might be incorrect)
+        [221885] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (Tauren?)
+        [221886] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (Blood Elf?)
+        [221887] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (Lightforged Draenei)
+        [254471] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (?)
+        [254472] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (?)
+        [254473] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (?)
+        [254474] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (?)
+        [276111] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (Dwarf?)
+        [276112] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (Dark Iron Dwarf?)
 
     -- Priest
 
@@ -362,6 +374,7 @@ addon.Spells = {
     [1833] = { type = CROWD_CONTROL }, -- Cheap Shot
     [1966] = { type = BUFF_DEFENSIVE }, -- Feint
     [2094] = { type = CROWD_CONTROL }, -- Blind
+    [2983] = { type = BUFF_SPEED_BOOST }, -- Sprint
     [5277] = { type = BUFF_DEFENSIVE }, -- Evasion
     [6770] = { type = CROWD_CONTROL }, -- Sap
     [11327] = { type = BUFF_DEFENSIVE }, -- Vanish
@@ -378,6 +391,7 @@ addon.Spells = {
 
     -- Shaman
 
+    [2645] = { type = BUFF_SPEED_BOOST }, -- Ghost Wolf
     [2825] = { type = BUFF_OFFENSIVE }, -- Bloodlust
         [32182] = { type = BUFF_OFFENSIVE, parent = 2825 }, -- Heroism
     [8178] = { type = IMMUNITY_SPELL }, -- Grounding Totem
@@ -391,6 +405,7 @@ addon.Spells = {
         [277778] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Zandalari Tendonripper)
         [277784] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Wicker Mongrel)
         [309328] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Living Honey)
+    [58875] = { type = BUFF_SPEED_BOOST }, -- Spirit Walk
     [79206] = { type = BUFF_OTHER }, -- Spiritwalker's Grace
     [108281] = { type = BUFF_DEFENSIVE }, -- Ancestral Guidance
     [64695] = { type = ROOT }, -- Earthgrab Totem
@@ -429,6 +444,7 @@ addon.Spells = {
     [89766] = { type = CROWD_CONTROL }, -- Axe Toss
     [104773] = { type = IMMUNITY_SPELL }, -- Unending Resolve
     [108416] = { type = BUFF_DEFENSIVE }, -- Dark Pact
+    [111400] = { type = BUFF_SPEED_BOOST }, -- Burning Rush
     [113860] = { type = BUFF_OFFENSIVE }, -- Dark Soul: Misery (Affliction)
     [113858] = { type = BUFF_OFFENSIVE }, -- Dark Soul: Instability (Demonology)
     [118699] = { type = CROWD_CONTROL }, -- Fear
@@ -479,7 +495,8 @@ addon.Spells = {
     [256948] = { type = BUFF_OTHER }, -- Spatial Rift
     [255654] = { type = CROWD_CONTROL }, -- Bull Rush
     [287712] = { type = CROWD_CONTROL }, -- Haymaker
-    [310143] = { type = BUFF_OTHER }, -- Soulshape
+    [310143] = { type = BUFF_SPEED_BOOST }, -- Soulshape
+    [320224] = { type = BUFF_DEFENSIVE }, -- Podtender
     [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord Fleshcraft)
     [331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr Door of Shadows)
     [332505] = { type = BUFF_DEFENSIVE }, -- Soulsteel Clamps (Kyrian>Mikanikos Trait)
