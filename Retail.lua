@@ -65,6 +65,7 @@ addon.Spells = {
     [2139] = { type = INTERRUPT, duration = 6 }, -- Counterspell (Mage)
     [6552] = { type = INTERRUPT, duration = 4 }, -- Pummel (Warrior)
     [19647] = { type = INTERRUPT, duration = 6 }, -- Spell Lock (Warlock)
+        [171138] = { type = INTERRUPT, duration = 6, parent = 19647 }, -- Shadow Lock (Warlock)
     [47528] = { type = INTERRUPT, duration = 3 }, -- Mind Freeze (Death Knight)
     [57994] = { type = INTERRUPT, duration = 3 }, -- Wind Shear (Shaman)
     [91802] = { type = INTERRUPT, duration = 2 }, -- Shambling Rush (Death Knight)
@@ -139,6 +140,7 @@ addon.Spells = {
 
     [99] = { type = CROWD_CONTROL }, -- Incapacitating Roar
     [339] = { type = ROOT }, -- Entangling Roots
+        [170855] = { type = ROOT, parent = 339 }, -- Entangling Roots
     [740] = { type = BUFF_DEFENSIVE }, -- Tranquility
     [1850] = { type = BUFF_OTHER }, -- Dash
         [252216] = { type = BUFF_OTHER, parent = 1850 }, -- Tiger Dash
@@ -160,10 +162,10 @@ addon.Spells = {
     [102558] = { type = BUFF_OFFENSIVE }, -- Incarnation: Guardian of Ursoc
     [102560] = { type = BUFF_OFFENSIVE }, -- Incarnation: Chosen of Elune
     [106951] = { type = BUFF_OFFENSIVE }, -- Berserk
+    [132158] = { type = BUFF_OFFENSIVE }, -- Nature's Swiftness
     [155835] = { type = BUFF_DEFENSIVE }, -- Bristling Fur
     [192081] = { type = BUFF_DEFENSIVE }, -- Ironfur
     [163505] = { type = CROWD_CONTROL }, -- Rake
-    [170855] = { type = ROOT }, -- Entangling Roots
     [194223] = { type = BUFF_OFFENSIVE }, -- Celestial Alignment
     [200851] = { type = BUFF_DEFENSIVE }, -- Rage of the Sleeper
     [202425] = { type = BUFF_OFFENSIVE }, -- Warrior of Elune
@@ -240,6 +242,7 @@ addon.Spells = {
         [41425] = { type = BUFF_OTHER }, -- Hypothermia
     [80353] = { type = BUFF_OFFENSIVE }, -- Time Warp
     [82691] = { type = CROWD_CONTROL }, -- Ring of Frost
+    [87023] = { type = BUFF_OTHER }, -- Cauterize
     [108839] = { type = BUFF_OFFENSIVE }, -- Ice Floes
     [342246] = { type = BUFF_DEFENSIVE }, --Alter Time (Arcane)
         [110909] = { type = BUFF_DEFENSIVE, parent = 342246 }, --Alter Time (Fire/Frost)
@@ -287,7 +290,9 @@ addon.Spells = {
     [1044] = { type = BUFF_DEFENSIVE }, -- Blessing of Freedom
     [6940] = { type = BUFF_DEFENSIVE }, -- Blessing of Sacrifice
         [199448] = { type = BUFF_DEFENSIVE, parent = 6940 }, -- Blessing of Sacrifice (Ultimate Sacrifice Honor Talent)
+        [199450] = { type = BUFF_DEFENSIVE, parent = 6940 }, -- Blessing of Sacrifice (Ultimate Sacrifice Damage)
     [20066] = { type = CROWD_CONTROL }, -- Repentance
+    [25771] = { type = BUFF_OTHER }, -- Forbearance
     [31821] = { type = BUFF_DEFENSIVE }, -- Aura Mastery
     [31850] = { type = BUFF_DEFENSIVE }, -- Ardent Defender
     [31884] = { type = BUFF_OFFENSIVE }, -- Avenging Wrath (Protection/Retribution)
@@ -296,7 +301,7 @@ addon.Spells = {
         [231895] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Crusade (Retribution Talent)
     [31935] = { type = CROWD_CONTROL }, -- Avenger's Shield
     [86659] = { type = BUFF_DEFENSIVE }, -- Guardian of Ancient Kings
-        [212641] = { type = BUFF_DEFENSIVE }, -- Guardian of Ancient Kings (Glyphed)
+        [212641] = { type = BUFF_DEFENSIVE, parent = 86659 }, -- Guardian of Ancient Kings (Glyphed)
         [228049] = { type = IMMUNITY }, -- Guardian of the Forgotten Queen
     [105809] = { type = BUFF_OFFENSIVE }, -- Holy Avenger
     [115750] = { type = CROWD_CONTROL }, -- Blinding Light
@@ -304,7 +309,6 @@ addon.Spells = {
     [152262] = { type = BUFF_OFFENSIVE }, -- Seraphim
     [184662] = { type = BUFF_DEFENSIVE }, -- Shield of Vengeance
     [199545] = { type = BUFF_DEFENSIVE }, -- Steed of Glory (Protection Honor Talent)
-    [204150] = { type = BUFF_DEFENSIVE }, -- Aegis of Light
     [205191] = { type = BUFF_DEFENSIVE }, -- Eye for an Eye
     [210256] = { type = BUFF_DEFENSIVE }, -- Blessing of Sanctuary
     [210294] = { type = IMMUNITY_SPELL }, -- Divine Favor
@@ -391,7 +395,8 @@ addon.Spells = {
     [108281] = { type = BUFF_DEFENSIVE }, -- Ancestral Guidance
     [64695] = { type = ROOT }, -- Earthgrab Totem
     [77505] = { type = CROWD_CONTROL }, -- Earthquake (Stun)
-    [98008] = { type = BUFF_DEFENSIVE }, -- Spirit Link Totem
+    [325174] = { type = BUFF_DEFENSIVE }, -- Spirit Link Totem
+        [204293] = { type = BUFF_DEFENSIVE, parent = 325174 }, -- Spirit Link (Honor Talent)
     [108271] = { type = BUFF_DEFENSIVE }, -- Astral Shift
         [210918] = { type = BUFF_DEFENSIVE, parent = 108271 }, -- Ethereal Form
     [114050] = { type = BUFF_DEFENSIVE }, -- Ascendance (Elemental)
@@ -402,14 +407,12 @@ addon.Spells = {
     [191634] = { type = BUFF_OFFENSIVE }, -- Stormkeeper
     [197214] = { type = CROWD_CONTROL }, -- Sundering
     [201633] = { type = BUFF_DEFENSIVE }, -- Earthen Wall Totem
-    [204293] = { type = BUFF_DEFENSIVE }, -- Spirit Link (Honor Talent)
     [204366] = { type = BUFF_OFFENSIVE }, -- Thundercharge
     [204945] = { type = BUFF_OFFENSIVE }, -- Doom Winds
     [260878] = { type = BUFF_DEFENSIVE }, -- Spirit Wolf
     [290641] = { type = BUFF_DEFENSIVE }, -- Ancestral Gift
     [305484] = { type = CROWD_CONTROL }, -- Lightning Lasso
     [320125] = { type = BUFF_OFFENSIVE }, -- Echoing Shock
-    [325174] = { type = BUFF_DEFENSIVE }, -- Spirit Link Totem
 
     -- Warlock
 
@@ -469,12 +472,14 @@ addon.Spells = {
     -- Other
 
     [20549] = { type = CROWD_CONTROL }, -- War Stomp
+    [34709] = { type = BUFF_OTHER }, -- Shadow Sight
     [107079] = { type = CROWD_CONTROL }, -- Quaking Palm
     [192001] = { type = BUFF_OTHER }, -- Drink
         [167152] = { type = BUFF_OTHER, parent = 192001 }, -- Refreshment
     [256948] = { type = BUFF_OTHER }, -- Spatial Rift
     [255654] = { type = CROWD_CONTROL }, -- Bull Rush
     [287712] = { type = CROWD_CONTROL }, -- Haymaker
+    [310143] = { type = BUFF_OTHER }, -- Soulshape
     [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord Fleshcraft)
     [331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr Door of Shadows)
     [332505] = { type = BUFF_DEFENSIVE }, -- Soulsteel Clamps (Kyrian>Mikanikos Trait)
