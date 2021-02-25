@@ -88,7 +88,7 @@ addon.Spells = {
     [48707] = { type = IMMUNITY_SPELL }, -- Anti-Magic Shell
     [48265] = { type = BUFF_DEFENSIVE }, -- Death's Advance
     [48792] = { type = BUFF_DEFENSIVE }, -- Icebound Fortitude
-	[49039] = { type = BUFF_OTHER }, -- Lichborne
+    [49039] = { type = BUFF_OTHER }, -- Lichborne
     [81256] = { type = BUFF_DEFENSIVE }, -- Dancing Rune Weapon
     [51271] = { type = BUFF_OFFENSIVE }, -- Pillar of Frost
     [55233] = { type = BUFF_DEFENSIVE }, -- Vampiric Blood
@@ -175,7 +175,7 @@ addon.Spells = {
         [203123] = { type = CROWD_CONTROL, parent = 22570 }, -- Maim
         [236025] = { type = CROWD_CONTROL, parent = 22570 }, -- Enraged Maim (Feral Honor Talent)
     [236696] = { type = BUFF_DEFENSIVE }, -- Thorns (PvP Talent)
-        [305497] = { type = BUFF_DEFENSIVE, parent = 236696 },
+        [305497] = { type = BUFF_DEFENSIVE, parent = 236696 }, -- Thorns (PvP Talent)
 
     -- Hunter
 
@@ -246,8 +246,8 @@ addon.Spells = {
     [82691] = { type = CROWD_CONTROL }, -- Ring of Frost
     [87023] = { type = BUFF_OTHER }, -- Cauterize
     [108839] = { type = BUFF_OFFENSIVE }, -- Ice Floes
-    [342246] = { type = BUFF_DEFENSIVE }, --Alter Time (Arcane)
-        [110909] = { type = BUFF_DEFENSIVE, parent = 342246 }, --Alter Time (Fire/Frost)
+    [342246] = { type = BUFF_DEFENSIVE }, -- Alter Time (Arcane)
+        [110909] = { type = BUFF_DEFENSIVE, parent = 342246 }, -- Alter Time (Fire/Frost)
     [157997] = { type = ROOT }, -- Ice Nova
     [190319] = { type = BUFF_OFFENSIVE }, -- Combustion
     [198111] = { type = BUFF_DEFENSIVE }, -- Temporal Shield
@@ -331,7 +331,7 @@ addon.Spells = {
     -- Priest
 
     [586] = { type = BUFF_DEFENSIVE }, -- Fade
-        [213602] = { type = BUFF_DEFENSIVE }, -- Greater Fade
+    [213602] = { type = BUFF_DEFENSIVE }, -- Greater Fade
     [605] = { type = CROWD_CONTROL, priority = true }, -- Mind Control
     [8122] = { type = CROWD_CONTROL }, -- Psychic Scream
     [9484] = { type = CROWD_CONTROL }, -- Shackle Undead
@@ -361,8 +361,16 @@ addon.Spells = {
     [289655] = { type = BUFF_DEFENSIVE }, -- Holy Word: Concentration
     [319952] = { type = BUFF_OFFENSIVE }, -- Surrender to Madness
     [322431] = { type = BUFF_OFFENSIVE }, -- Thoughtsteal (Buff)
-        [323716] = { type = BUFF_OFFENSIVE, parent = 322431 }, -- Thoughtsteal (Debuff)
-    [323673] = { type = BUFF_OTHER }, -- Mindgames
+    [322459] = { type = BUFF_OFFENSIVE }, -- Thoughtstolen (Shaman)
+        [322464] = { type = BUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Mage)
+        [322442] = { type = BUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Druid)
+        [322462] = { type = BUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Priest - Holy)
+        [322457] = { type = BUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Paladin)
+        [322463] = { type = BUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Warlock)
+        [322461] = { type = BUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Priest - Discipline)
+        [322458] = { type = BUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Monk)
+        [322460] = { type = BUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Priest - Shadow) 
+        [323673] = { type = BUFF_OTHER }, -- Mindgames
     [329543] = { type = BUFF_DEFENSIVE }, -- Divine Ascension
         [328530] = { type = IMMUNITY, parent = 329543 }, -- Divine Ascension
 
@@ -499,7 +507,7 @@ addon.Spells = {
     [320224] = { type = BUFF_DEFENSIVE }, -- Podtender
     [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord Fleshcraft)
     [331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr Door of Shadows)
-    [332505] = { type = BUFF_DEFENSIVE }, -- Soulsteel Clamps (Kyrian>Mikanikos Trait)
+    [332505] = { type = BUFF_DEFENSIVE }, -- Soulsteel Clamps (Kyrian - Mikanikos Trait)
     [345231] = { type = BUFF_DEFENSIVE }, -- Gladiator's Emblem
 
     -- Legacy (may be deprecated)
