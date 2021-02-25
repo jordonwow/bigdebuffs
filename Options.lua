@@ -26,9 +26,10 @@ local order = {
     cc = 3,
     buffs_defensive = 4,
     buffs_offensive = 5,
-    buffs_other = 6,
-    roots = 7,
-    buffs_speed_boost = 8,
+    debuffs_offensive = 6,
+    buffs_other = 7,
+    roots = 8,
+    buffs_speed_boost = 9,
 }
 local SpellNames = {}
 local SpellIcons = {}
@@ -45,7 +46,8 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
         local raidFrames = spell.type == "cc" or
             spell.type == "roots" or
             spell.type == "special" or
-            spell.type == "interrupts"
+            spell.type == "interrupts" or
+            spell.type == "debuffs_offensive"
         Spells[spell.type].args[key] = {
             type = "group",
             get = function(info)
@@ -434,6 +436,16 @@ function BigDebuffs:SetupOptions()
                                 step = 0.01,
                                 order = 5,
                             },
+                            debuffs_offensive = {
+                                type = "range",
+                                isPercent = true,
+                                name = L["Offensive Debuffs"],
+                                desc = L["Set the size of offensive debuffs"],
+                                min = 0,
+                                max = 1,
+                                step = 0.01,
+                                order = 7,
+                            },
                             default = {
                                 type = "range",
                                 isPercent = true,
@@ -442,7 +454,7 @@ function BigDebuffs:SetupOptions()
                                 min = 0,
                                 max = 1,
                                 step = 0.01,
-                                order = 7,
+                                order = 8,
                             },
                             pve = {
                                 type = "range",
@@ -462,7 +474,7 @@ function BigDebuffs:SetupOptions()
                                 min = 0,
                                 max = 1,
                                 step = 0.01,
-                                order = 8,
+                                order = 9,
                             },
                         },
                     },
@@ -834,26 +846,33 @@ function BigDebuffs:SetupOptions()
                                 desc = L["Show Offensive Buffs on the unit frames"],
                                 order = 6,
                             },
+                            debuffs_offensive = {
+                                type = "toggle",
+                                width = "normal",
+                                name = L["debuffs_offensive"],
+                                desc = L["Show Offensive Debuffs on the unit frames"],
+                                order = 7,
+                            },
                             buffs_other = {
                                 type = "toggle",
                                 width = "normal",
                                 name = L["buffs_other"],
                                 desc = L["Show Other Buffs on the unit frames"],
-                                order = 7,
+                                order = 8,
                             },
                             roots = {
                                 type = "toggle",
                                 width = "normal",
                                 name = L["roots"],
                                 desc = L["Show Roots on the unit frames"],
-                                order = 8,
+                                order = 9,
                             },
                             buffs_speed_boost = {
                                 type = "toggle",
                                 width = "normal",
                                 name = L["buffs_speed_boost"],
                                 desc = L["Show Speed Boosts on the unit frames"],
-                                order = 9,
+                                order = 10,
                             },
                         },
                     },
@@ -992,26 +1011,33 @@ function BigDebuffs:SetupOptions()
                                 desc = L["Show Offensive Buffs on nameplates"],
                                 order = 6,
                             },
+                            debuffs_offensive = {
+                                type = "toggle",
+                                width = "normal",
+                                name = L["debuffs_offensive"],
+                                desc = L["Show Offensive Debuffs on nameplates"],
+                                order = 7,
+                            },
                             buffs_other = {
                                 type = "toggle",
                                 width = "normal",
                                 name = L["buffs_other"],
                                 desc = L["Show Other Buffs on nameplates"],
-                                order = 7,
+                                order = 8,
                             },
                             roots = {
                                 type = "toggle",
                                 width = "normal",
                                 name = L["roots"],
                                 desc = L["Show Roots on nameplates"],
-                                order = 8,
+                                order = 9,
                             },
                             buffs_speed_boost = {
                                 type = "toggle",
                                 width = "normal",
                                 name = L["buffs_speed_boost"],
                                 desc = L["Show Speed Boosts on nameplates"],
-                                order = 9,
+                                order = 10,
                             },
                         },
                     },
@@ -1274,6 +1300,16 @@ function BigDebuffs:SetupOptions()
                 step = 1,
                 order = 15,
             },
+            debuffs_offensive = {
+                type = "range",
+                width = "double",
+                name = L["debuffs_offensive"],
+                desc = L["Higher priority spells will take precedence regardless of duration"],
+                min = 1,
+                max = 100,
+                step = 1,
+                order = 16,
+            },
             buffs_other = {
                 type = "range",
                 width = "double",
@@ -1282,7 +1318,7 @@ function BigDebuffs:SetupOptions()
                 min = 1,
                 max = 100,
                 step = 1,
-                order = 16,
+                order = 17,
             },
             roots = {
                 type = "range",
@@ -1292,7 +1328,7 @@ function BigDebuffs:SetupOptions()
                 min = 1,
                 max = 100,
                 step = 1,
-                order = 17,
+                order = 18,
             },
             buffs_speed_boost = {
                 type = "range",
@@ -1302,7 +1338,7 @@ function BigDebuffs:SetupOptions()
                 min = 1,
                 max = 100,
                 step = 1,
-                order = 18,
+                order = 19,
             },
         },
     }

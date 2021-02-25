@@ -31,6 +31,7 @@ local defaults = {
             interrupts = 55,
             roots = 40,
             warning = 40,
+            debuffs_offensive = 35,
             default = 30,
             special = 30,
             pve = 50,
@@ -79,6 +80,7 @@ local defaults = {
             buffs_defensive = true,
             buffs_offensive = true,
             buffs_other = true,
+            debuffs_offensive = true,
             roots = true,
             buffs_speed_boost = true,
         },
@@ -103,6 +105,7 @@ local defaults = {
             buffs_defensive = true,
             buffs_offensive = true,
             buffs_other = true,
+            debuffs_offensive = true,
             roots = true,
             buffs_speed_boost = true,
 		},
@@ -113,6 +116,7 @@ local defaults = {
             interrupts = 55,
             buffs_defensive = 50,
             buffs_offensive = 40,
+            debuffs_offensive = 35,
             buffs_other = 30,
             roots = 20,
             special = 19,
@@ -477,6 +481,7 @@ function BigDebuffs:OnInitialize()
             cc = self.db.profile.raidFrames.dispellable,
             roots = self.db.profile.raidFrames.roots
         }
+        debuffs_offensive = self.db.profile.raidFrames.debuffs_offensive
     end
     for i = 1, #units do
         local key = units[i]:gsub("%d", "")
@@ -1013,7 +1018,7 @@ function BigDebuffs:GetNameplatesPriority(id)
         if self.db.profile.spells[id].priority then return self.db.profile.spells[id].priority end
     end
 
-    if self.Spells[id].nounitFrames and
+    if self.Spells[id].nonameplates and
         (not self.db.profile.spells[id] or not self.db.profile.spells[id].nameplates)
     then
         return
