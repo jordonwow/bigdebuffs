@@ -256,7 +256,6 @@ addon.Spells = {
     -- Monk
 
     [115078] = { type = CROWD_CONTROL }, -- Paralysis
-    [115080] = { type = BUFF_OFFENSIVE }, -- Touch of Death
     [115176] = { type = BUFF_DEFENSIVE }, -- Zen Meditation
     [115203] = { type = BUFF_DEFENSIVE }, -- Fortifying Brew (Brewmaster)
         [201318] = { type = BUFF_DEFENSIVE, parent = 115203 }, -- Fortifying Brew (Windwalker Honor Talent)
@@ -357,6 +356,7 @@ addon.Spells = {
     [215769] = { type = BUFF_DEFENSIVE }, -- Spirit of Redemption
     [289655] = { type = BUFF_DEFENSIVE }, -- Holy Word: Concentration
     [319952] = { type = BUFF_OFFENSIVE }, -- Surrender to Madness
+
     [322431] = { type = BUFF_OFFENSIVE, nounitFrames = true, noraidFrames = true, nonameplates = true }, -- Thoughtsteal (Buff)
     [322459] = { type = DEBUFF_OFFENSIVE }, -- Thoughtstolen (Shaman)
         [322464] = { type = DEBUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Mage)
