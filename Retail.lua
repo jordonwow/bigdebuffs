@@ -261,7 +261,6 @@ addon.Spells = {
     -- Monk
 
     [115078] = { type = CROWD_CONTROL }, -- Paralysis
-    [115080] = { type = BUFF_OFFENSIVE }, -- Touch of Death
     [115176] = { type = BUFF_DEFENSIVE }, -- Zen Meditation
     [115203] = { type = BUFF_DEFENSIVE }, -- Fortifying Brew (Brewmaster)
         [201318] = { type = BUFF_DEFENSIVE, parent = 115203 }, -- Fortifying Brew (Windwalker Honor Talent)
