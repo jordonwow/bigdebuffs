@@ -343,6 +343,11 @@ local GetNameplateAnchor = {
       end
     end
   end,
+  TidyPlates = function(frame)
+    if frame.carrier and frame.extended and frame.extended.bars and frame.carrier:IsShown() then
+        return frame.extended.bars.healthbar, frame.extended
+    end
+  end,
 	Blizzard = function(frame)
         if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
             return frame.UnitFrame, frame.UnitFrame
@@ -378,7 +383,7 @@ local nameplatesAnchors = {
     },
     [4] = {
         used = function()
-            return NeatPlates ~= nil -- or TidyPlates ~= nil -- Should be the same but haven't confirmed
+            return NeatPlates ~= nil
         end,
         func = GetNameplateAnchor.NeatPlates,
     },
@@ -389,7 +394,12 @@ local nameplatesAnchors = {
       end,
       func = GetNameplateAnchor.ThreatPlates,
     },
-  [6] = {
+    [6] = {
+        used = function()
+            return TidyPlates ~= nil
+        end,
+        func = GetNameplateAnchor.TidyPlates,
+  [7] = {
       used = function(frame) return frame.UnitFrame ~= nil end,
       func = GetNameplateAnchor.Blizzard,
   },
