@@ -277,6 +277,31 @@ end
 local UnitDebuff, UnitBuff = UnitDebuff, UnitBuff
 
 local GetAnchor = {
+    ElvUIFrames = function(anchor)
+        local anchors, unit = BigDebuffs.anchors
+
+        for u,configAnchor in pairs(anchors.ElvUI.units) do
+            if anchor == configAnchor then
+                unit = u
+                break
+            end
+        end
+
+        if unit and ( unit:match("party") or unit:match("player") ) then
+            local unitGUID = UnitGUID(unit)
+            for i = 1,5,1 do
+                local elvUIFrame = _G["ElvUF_PartyGroup1UnitButton"..i]
+                if elvUIFrame and elvUIFrame:IsVisible() and elvUIFrame.unit then
+                    if unitGUID == UnitGUID(elvUIFrame.unit) then
+                        return elvUIFrame
+                    end
+                end
+            end
+            return
+        end
+
+        return _G[anchor]
+    end,
     ShadowedUnitFrames = function(anchor)
         local frame = _G[anchor]
         if not frame then return end
@@ -408,6 +433,7 @@ local nameplatesAnchors = {
 
 local anchors = {
     ["ElvUI"] = {
+        func = GetAnchor.ElvUIFrames,
         noPortait = true,
         units = {
             player = "ElvUF_Player",
@@ -478,6 +504,8 @@ local anchors = {
         },
     },
 }
+
+BigDebuffs.anchors = anchors
 
 function BigDebuffs:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("BigDebuffsDB", defaults, true)
