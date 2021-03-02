@@ -387,22 +387,23 @@ local nameplatesAnchors = {
         end,
         func = GetNameplateAnchor.NeatPlates,
     },
-  [5] = {
-      used = function()
-          -- IsAddOnLoaded("TidyPlates_ThreatPlates") should be better
-          return TidyPlatesThreat ~= nil
-      end,
-      func = GetNameplateAnchor.ThreatPlates,
+    [5] = {
+        used = function()
+            -- IsAddOnLoaded("TidyPlates_ThreatPlates") should be better
+            return TidyPlatesThreat ~= nil
+        end,
+        func = GetNameplateAnchor.ThreatPlates,
     },
     [6] = {
         used = function()
             return TidyPlates ~= nil
         end,
         func = GetNameplateAnchor.TidyPlates,
-  [7] = {
-      used = function(frame) return frame.UnitFrame ~= nil end,
-      func = GetNameplateAnchor.Blizzard,
-  },
+    },
+    [7] = {
+        used = function(frame) return frame.UnitFrame ~= nil end,
+        func = GetNameplateAnchor.Blizzard,
+    },
 }
 
 local anchors = {
