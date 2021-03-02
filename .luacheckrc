@@ -59,6 +59,7 @@ globals = {
     "CompactUnitFrame_Util_IsBossAura",
     "CompactUnitFrame_UtilSetDispelDebuff",
     "CompactUnitFrame_HideAllDispelDebuffs",
+    "TidyPlates",
 
     -- framexml misc
     "C_Timer",

@@ -281,6 +281,31 @@ end
 local UnitDebuff, UnitBuff = UnitDebuff, UnitBuff
 
 local GetAnchor = {
+    ElvUIFrames = function(anchor)
+        local anchors, unit = BigDebuffs.anchors
+
+        for u,configAnchor in pairs(anchors.ElvUI.units) do
+            if anchor == configAnchor then
+                unit = u
+                break
+            end
+        end
+
+        if unit and ( unit:match("party") or unit:match("player") ) then
+            local unitGUID = UnitGUID(unit)
+            for i = 1,5,1 do
+                local elvUIFrame = _G["ElvUF_PartyGroup1UnitButton"..i]
+                if elvUIFrame and elvUIFrame:IsVisible() and elvUIFrame.unit then
+                    if unitGUID == UnitGUID(elvUIFrame.unit) then
+                        return elvUIFrame
+                    end
+                end
+            end
+            return
+        end
+
+        return _G[anchor]
+    end,
     ShadowedUnitFrames = function(anchor)
         local frame = _G[anchor]
         if not frame then return end
@@ -347,6 +372,11 @@ local GetNameplateAnchor = {
       end
     end
   end,
+  TidyPlates = function(frame)
+    if frame.carrier and frame.extended and frame.extended.bars and frame.carrier:IsShown() then
+        return frame.extended.bars.healthbar, frame.extended
+    end
+  end,
 	Blizzard = function(frame)
         if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
             return frame.UnitFrame, frame.UnitFrame
@@ -382,25 +412,32 @@ local nameplatesAnchors = {
     },
     [4] = {
         used = function()
-            return NeatPlates ~= nil -- or TidyPlates ~= nil -- Should be the same but haven't confirmed
+            return NeatPlates ~= nil
         end,
         func = GetNameplateAnchor.NeatPlates,
     },
-  [5] = {
-      used = function()
-          -- IsAddOnLoaded("TidyPlates_ThreatPlates") should be better
-          return TidyPlatesThreat ~= nil
-      end,
-      func = GetNameplateAnchor.ThreatPlates,
+    [5] = {
+        used = function()
+            -- IsAddOnLoaded("TidyPlates_ThreatPlates") should be better
+            return TidyPlatesThreat ~= nil
+        end,
+        func = GetNameplateAnchor.ThreatPlates,
     },
-  [6] = {
-      used = function(frame) return frame.UnitFrame ~= nil end,
-      func = GetNameplateAnchor.Blizzard,
-  },
+    [6] = {
+        used = function()
+            return TidyPlates ~= nil
+        end,
+        func = GetNameplateAnchor.TidyPlates,
+    },
+    [7] = {
+        used = function(frame) return frame.UnitFrame ~= nil end,
+        func = GetNameplateAnchor.Blizzard,
+    },
 }
 
 local anchors = {
     ["ElvUI"] = {
+        func = GetAnchor.ElvUIFrames,
         noPortait = true,
         units = {
             player = "ElvUF_Player",
@@ -471,6 +508,8 @@ local anchors = {
         },
     },
 }
+
+BigDebuffs.anchors = anchors
 
 function BigDebuffs:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("BigDebuffsDB", defaults, true)
