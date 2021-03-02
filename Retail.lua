@@ -433,7 +433,10 @@ addon.Spells = {
     [204945] = { type = BUFF_OFFENSIVE }, -- Doom Winds
     [260878] = { type = BUFF_DEFENSIVE }, -- Spirit Wolf
     [290641] = { type = BUFF_DEFENSIVE }, -- Ancestral Gift
-    [305484] = { type = CROWD_CONTROL }, -- Lightning Lasso
+    [204437] = { type = CROWD_CONTROL }, -- Lightning Lasso
+          [305483] = { parent = 204437 },
+          [305484] = { parent = 204437 },
+          [305485] = { parent = 204437 },
     [320125] = { type = BUFF_OFFENSIVE }, -- Echoing Shock
 
     -- Warlock
