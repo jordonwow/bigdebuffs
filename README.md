@@ -8,6 +8,9 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.12
+* Fix ElvUI Party/Player frames missplased icons
+
 ## v9.11
 * TidyPlates support
 * Fix Lightning Lasso
