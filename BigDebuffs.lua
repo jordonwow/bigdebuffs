@@ -38,7 +38,8 @@ local defaults = {
             warningList = {
                 [212183] = true, -- Smoke Bomb
                 [81261] = true, -- Solar Beam
-                [233490] = true, -- Unstable Affliction
+                [316099] = true, -- Unstable Affliction
+                [342938] = true, -- Unstable Affliction
                 [34914] = true, -- Vampiric Touch
             },
             inRaid = {

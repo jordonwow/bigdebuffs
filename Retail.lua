@@ -187,8 +187,8 @@ addon.Spells = {
     [54216] = { type = BUFF_DEFENSIVE }, -- Master's Call
     [117526] = { type = ROOT }, -- Binding Shot
     [118922] = { type = BUFF_SPEED_BOOST }, -- Posthaste
-    [131894] = { type = DEBUFF_OFFENSIVE }, -- A Murder of Crows (Beast Mastery, Marksmanship)
-        [206505] = { type = DEBUFF_OFFENSIVE, parent = 131894 }, -- A Murder of Crows (Survival)
+    [131894] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- A Murder of Crows (Beast Mastery, Marksmanship)
+        [206505] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true, parent = 131894 }, -- A Murder of Crows (Survival)
     [162480] = { type = ROOT }, -- Steel Trap
     [186257] = { type = BUFF_SPEED_BOOST }, -- Aspect of the Cheetah
     [186265] = { type = BUFF_DEFENSIVE }, -- Aspect of the Turtle
@@ -205,6 +205,7 @@ addon.Spells = {
     [212638] = { type = ROOT }, -- Tracker's Net
     [213691] = { type = CROWD_CONTROL }, -- Scatter Shot
     [260402] = { type = BUFF_OFFENSIVE }, -- Double Tap
+    [264667] = { type = BUFF_OFFENSIVE }, -- Primal Rage
     [266779] = { type = BUFF_OFFENSIVE }, -- Coordinated Assault
     [288613] = { type = BUFF_OFFENSIVE }, -- Trueshot
 
@@ -369,7 +370,7 @@ addon.Spells = {
     [323673] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mindgames
     [329543] = { type = BUFF_DEFENSIVE }, -- Divine Ascension
         [328530] = { type = IMMUNITY, parent = 329543 }, -- Divine Ascension
-    [335467] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, noraidFrames = true, nonameplates = true }, -- Devouring Plague
+    [335467] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Devouring Plague
 
     -- Rogue
 
@@ -396,7 +397,7 @@ addon.Spells = {
 
     -- Shaman
 
-    [2645] = { type = BUFF_SPEED_BOOST, nounitFrames = true, noraidFrames = true, nonameplates = true }, -- Ghost Wolf
+    [2645] = { type = BUFF_SPEED_BOOST, nounitFrames = true, nonameplates = true }, -- Ghost Wolf
     [2825] = { type = BUFF_OFFENSIVE }, -- Bloodlust
         [32182] = { type = BUFF_OFFENSIVE, parent = 2825 }, -- Heroism
     [8178] = { type = IMMUNITY_SPELL }, -- Grounding Totem
@@ -508,7 +509,8 @@ addon.Spells = {
     [320224] = { type = BUFF_DEFENSIVE }, -- Podtender
     [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord Fleshcraft)
     [324263] = { type = CROWD_CONTROL }, -- Sulfuric Emission (Necrolord - Emeni Trait)
-    [327140] = { type = BUFF_OTHER }, -- Forgeborne Reveries (Necrolord -   Trait)
+    [327140] = { type = BUFF_OTHER }, -- Forgeborne Reveries (Necrolord - Bonesmith Heirmir Trait)
+    [329776] = { type = BUFF_DEFENSIVE }, -- Ascendant Phial (Kyrian - Kleia Trait)
     [331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr Door of Shadows)
     [332505] = { type = BUFF_DEFENSIVE }, -- Soulsteel Clamps (Kyrian - Mikanikos Trait)
     [345231] = { type = BUFF_DEFENSIVE }, -- Gladiator's Emblem
@@ -520,7 +522,6 @@ addon.Spells = {
     [313148] = { type = CROWD_CONTROL }, -- Forbidden Obsidian Claw
 
     -- Special
-    [342938] = { type = CROWD_CONTROL, nounitFrames = true, noraidFrames = true, nonameplates = true }, --test
     --[6788] = { type = "special", nounitFrames = true, noraidFrames = true }, -- Weakened Soul
 
 }

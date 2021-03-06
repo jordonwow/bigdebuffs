@@ -70,6 +70,12 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                 SpellIcons[spellID] = icon
                 return icon
             end,
+            desc = function()
+                local s = Spell:CreateFromSpellID(spellID)
+                local spellDesc = s:GetSpellDescription() or ""
+                local extra = "\n\n|cffffd700 "..L["Spell ID"].."|r "..spellID
+                return spellDesc..extra
+            end,
             args = {
                 visibility = {
                     order = 1,
