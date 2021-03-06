@@ -15,7 +15,15 @@ if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
                 BigDebuffs.db.profile[key].warningList[id] = value BigDebuffs:Refresh()
             end,
             name = name,
-            desc = L["Show this debuff if present while BigDebuffs are displayed"],
+            desc = function()
+                local s = Spell:CreateFromSpellID(id)
+                local spellDesc = s:GetSpellDescription() or ""
+                local extra = 
+                "\n\n|cffffd700"..L["Spell ID"].."|r "..id..
+                "\n------------------\n"..
+                L["Show this debuff if present while BigDebuffs are displayed"]
+                return spellDesc..extra
+            end,
         }
     end
 end
@@ -73,7 +81,7 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
             desc = function()
                 local s = Spell:CreateFromSpellID(spellID)
                 local spellDesc = s:GetSpellDescription() or ""
-                local extra = "\n\n|cffffd700 "..L["Spell ID"].."|r "..spellID
+                local extra = "\n\n|cffffd700"..L["Spell ID"].."|r "..spellID
                 return spellDesc..extra
             end,
             args = {
