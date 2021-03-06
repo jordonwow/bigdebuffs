@@ -310,7 +310,7 @@ addon.Spells = {
     [199545] = { type = BUFF_DEFENSIVE }, -- Steed of Glory (Protection Honor Talent)
     [205191] = { type = BUFF_DEFENSIVE }, -- Eye for an Eye
     [210256] = { type = BUFF_DEFENSIVE }, -- Blessing of Sanctuary
-    [210294] = { type = IMMUNITY_SPELL }, -- Divine Favor
+    [210294] = { type = BUFF_DEFENSIVE }, -- Divine Favor
     [215652] = { type = BUFF_OFFENSIVE }, -- Shield of Virtue (Buff)
         [217824] = { type = CROWD_CONTROL, parent = 215652 }, -- Shield of Virtue (Debuff)
     [221883] = { type = BUFF_SPEED_BOOST }, -- Divine Steed (Human?) (Each race has its own buff, pulled from wowhead - some might be incorrect)
@@ -451,7 +451,7 @@ addon.Spells = {
     [89751] = { type = BUFF_OFFENSIVE }, -- Felstorm
         [115831] = { type = BUFF_OFFENSIVE, parent = 89751 }, -- Wrathstorm
     [89766] = { type = CROWD_CONTROL }, -- Axe Toss
-    [104773] = { type = IMMUNITY_SPELL }, -- Unending Resolve
+    [104773] = { type = BUFF_DEFENSIVE }, -- Unending Resolve
     [108416] = { type = BUFF_DEFENSIVE }, -- Dark Pact
     [111400] = { type = BUFF_SPEED_BOOST }, -- Burning Rush
     [113860] = { type = BUFF_OFFENSIVE }, -- Dark Soul: Misery (Affliction)

@@ -766,10 +766,12 @@ function BigDebuffs:OnEnable()
 
     InsertTestDebuff(8122, "Magic") -- Psychic Scream
     InsertTestDebuff(408, nil) -- Kidney Shot
+    InsertTestDebuff(1766, nil) -- Kick
 
     if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
-        InsertTestDebuff(233490, "Magic") -- Unstable Affliction
-        InsertTestDebuff(114404, nil) -- Void Tendrils
+        InsertTestDebuff(51514, "Curse") -- Hex
+        InsertTestDebuff(316099, "Magic") -- Unstable Affliction
+        InsertTestDebuff(208086, nil) -- Colossus Smash
     end
 
     InsertTestDebuff(339, "Magic") -- Entangling Roots
