@@ -31,13 +31,15 @@ local defaults = {
             interrupts = 55,
             roots = 40,
             warning = 40,
+            debuffs_offensive = 35,
             default = 30,
             special = 30,
             pve = 50,
             warningList = {
                 [212183] = true, -- Smoke Bomb
                 [81261] = true, -- Solar Beam
-                [233490] = true, -- Unstable Affliction
+                [316099] = true, -- Unstable Affliction
+                [342938] = true, -- Unstable Affliction
                 [34914] = true, -- Vampiric Touch
             },
             inRaid = {
@@ -79,6 +81,7 @@ local defaults = {
             buffs_defensive = true,
             buffs_offensive = true,
             buffs_other = true,
+            debuffs_offensive = true,
             roots = true,
             buffs_speed_boost = true,
         },
@@ -103,6 +106,7 @@ local defaults = {
             buffs_defensive = true,
             buffs_offensive = true,
             buffs_other = true,
+            debuffs_offensive = true,
             roots = true,
             buffs_speed_boost = true,
 		},
@@ -113,6 +117,7 @@ local defaults = {
             interrupts = 55,
             buffs_defensive = 50,
             buffs_offensive = 40,
+            debuffs_offensive = 35,
             buffs_other = 30,
             roots = 20,
             special = 19,
@@ -516,6 +521,7 @@ function BigDebuffs:OnInitialize()
             cc = self.db.profile.raidFrames.dispellable,
             roots = self.db.profile.raidFrames.roots
         }
+        debuffs_offensive = self.db.profile.raidFrames.debuffs_offensive
     end
     for i = 1, #units do
         local key = units[i]:gsub("%d", "")
@@ -760,10 +766,12 @@ function BigDebuffs:OnEnable()
 
     InsertTestDebuff(8122, "Magic") -- Psychic Scream
     InsertTestDebuff(408, nil) -- Kidney Shot
+    InsertTestDebuff(1766, nil) -- Kick
 
     if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
-        InsertTestDebuff(233490, "Magic") -- Unstable Affliction
-        InsertTestDebuff(114404, nil) -- Void Tendrils
+        InsertTestDebuff(51514, "Curse") -- Hex
+        InsertTestDebuff(316099, "Magic") -- Unstable Affliction
+        InsertTestDebuff(208086, nil) -- Colossus Smash
     end
 
     InsertTestDebuff(339, "Magic") -- Entangling Roots
@@ -1052,7 +1060,7 @@ function BigDebuffs:GetNameplatesPriority(id)
         if self.db.profile.spells[id].priority then return self.db.profile.spells[id].priority end
     end
 
-    if self.Spells[id].nounitFrames and
+    if self.Spells[id].nonameplates and
         (not self.db.profile.spells[id] or not self.db.profile.spells[id].nameplates)
     then
         return
