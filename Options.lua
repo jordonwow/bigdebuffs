@@ -18,7 +18,7 @@ if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
             desc = function()
                 local s = Spell:CreateFromSpellID(id)
                 local spellDesc = s:GetSpellDescription() or ""
-                local extra = 
+                local extra =
                 "\n\n|cffffd700"..L["Spell ID"].."|r "..id..
                 "\n------------------\n"..
                 L["Show this debuff if present while BigDebuffs are displayed"]

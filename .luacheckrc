@@ -60,6 +60,7 @@ globals = {
     "CompactUnitFrame_UtilSetDispelDebuff",
     "CompactUnitFrame_HideAllDispelDebuffs",
     "TidyPlates",
+    "Spell",
 
     -- framexml misc
     "C_Timer",

@@ -521,7 +521,6 @@ function BigDebuffs:OnInitialize()
             cc = self.db.profile.raidFrames.dispellable,
             roots = self.db.profile.raidFrames.roots
         }
-        debuffs_offensive = self.db.profile.raidFrames.debuffs_offensive
     end
     for i = 1, #units do
         local key = units[i]:gsub("%d", "")
