@@ -8,6 +8,20 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.13
+* Added Offensive Debuffs category (e.g. Colossus Smash, Dark Simulacrum, Devouring Plague) (#233)
+Abilities that are used rotationally in PvE will by default not show on unitFrames & nameplates, this can easily be overwritten in options
+
+* Added tooltips to Spells (#243)
+A few spells will not give proper tooltips (such as Grounding Totem)
+Needs to be moused-over at least once before it will load the tooltip
+
+* Updated test debuffs
+Added a few categories
+
+* Spell Updates
+Recategorized some spells, added some soulbind traits
+
 ## v9.12
 * Fix ElvUI Party/Player frames missplased icons
 
