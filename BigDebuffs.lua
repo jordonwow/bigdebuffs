@@ -1790,15 +1790,7 @@ function BigDebuffs:UNIT_AURA(unit)
 end
 
 function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
-    if not self.db.profile.nameplates.enabled
-		or not unit:find("nameplate")
-		or (not UnitCanAttack("player", unit) and not self.db.profile.nameplates.friendly)
-		or (UnitCanAttack("player", unit) and not self.db.profile.nameplates.enemy)
-		or (not UnitIsPlayer(unit) and not self.db.profile.nameplates.npc)
-		or (UnitIsUnit("player", unit))
-    then
-        return
-    end
+    if not self.db.profile.nameplates.enabled then return end
 
 	self:AttachNameplate(unit)
 
@@ -1903,6 +1895,17 @@ function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
         frame.interrupt = interrupt
         frame.current = icon
     else
+        frame:Hide()
+        frame.current = nil
+    end
+
+    --Hide/Disable auras which shouldn't be shown. Seems to fix false icons from appearing and getting stuck.
+    if frame.current ~= nil and (not unit:find("nameplate")
+        or (not UnitCanAttack("player", unit) and not self.db.profile.nameplates.friendly)
+        or (UnitCanAttack("player", unit) and not self.db.profile.nameplates.enemy)
+        or (not UnitIsPlayer(unit) and not self.db.profile.nameplates.npc)
+        or (UnitIsUnit("player", unit)))
+    then
         frame:Hide()
         frame.current = nil
     end
