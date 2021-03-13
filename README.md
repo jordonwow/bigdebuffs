@@ -8,6 +8,9 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.14
+* Fix for false icons sticking to nameplates
+
 ## v9.13
 * Added Offensive Debuffs category (e.g. Colossus Smash, Dark Simulacrum, Devouring Plague) (#233)
 Abilities that are used rotationally in PvE will by default not show on unitFrames & nameplates, this can easily be overwritten in options
