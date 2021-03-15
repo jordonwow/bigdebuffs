@@ -8,6 +8,9 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.15
+* Add support for GladiusEx frames
+
 ## v9.14
 * Fix for false icons sticking to nameplates
 
