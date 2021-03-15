@@ -633,21 +633,77 @@ function BigDebuffs:SetupOptions()
                                     ["auto"] = L["Automatic"],
                                     ["manual"] = L["Manual"],
                                 },
+                                width = "full",
                                 order = 2,
+                            },
+                            anchorPoint = {
+                                name = L["Anchor Point"],
+                                desc = L["Anchor point to attach the BigDebuffs frames"],
+                                type = "select",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                                end,
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["TOP"] = L["TOP"],
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                    ["TOPRIGHT"] = L["TOPRIGHT"],
+                                    ["TOPLEFT"] = L["TOPLEFT"],
+                                    ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                                    ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                                    ["CENTER"] = L["CENTER"],
+                                },
+                                order = 3,
+                            },
+                            relativePoint = {
+                                name = L["Relative Point"],
+                                desc = L["Relative point to attach the BigDebuffs frames"],
+                                type = "select",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["TOP"] = L["TOP"],
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                    ["TOPRIGHT"] = L["TOPRIGHT"],
+                                    ["TOPLEFT"] = L["TOPLEFT"],
+                                    ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                                    ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                                    ["CENTER"] = L["CENTER"],
+                                },
+                                order = 4,
+                            },
+                            matchFrameHeight = {
+                                name = L["Match Frame Height"],
+                                desc = L["Match the height of the frame"],
+                                type = "toggle",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                                end,
+                                order = 5,
                             },
                             size = {
                                 type = "range",
                                 disabled = function(info)
                                     local name = info[2]
                                     return not self.db.profile.unitFrames[name].enabled or
-                                        self.db.profile.unitFrames[name].anchor == "auto"
+                                        (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                                 end,
                                 name = L["Size"],
                                 desc = L["Set the size of the frame"],
                                 min = 8,
                                 max = 512,
                                 step = 1,
-                                order = 3,
+                                order = 6,
                             },
                         },
                         name = L["Player Frame"],
@@ -685,21 +741,77 @@ function BigDebuffs:SetupOptions()
                                     ["auto"] = L["Automatic"],
                                     ["manual"] = L["Manual"],
                                 },
+                                width = "full",
                                 order = 2,
+                            },
+                            anchorPoint = {
+                                name = L["Anchor Point"],
+                                desc = L["Anchor point to attach the BigDebuffs frames"],
+                                type = "select",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                                end,
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["TOP"] = L["TOP"],
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                    ["TOPRIGHT"] = L["TOPRIGHT"],
+                                    ["TOPLEFT"] = L["TOPLEFT"],
+                                    ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                                    ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                                    ["CENTER"] = L["CENTER"],
+                                },
+                                order = 3,
+                            },
+                            relativePoint = {
+                                name = L["Relative Point"],
+                                desc = L["Relative point to attach the BigDebuffs frames"],
+                                type = "select",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["TOP"] = L["TOP"],
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                    ["TOPRIGHT"] = L["TOPRIGHT"],
+                                    ["TOPLEFT"] = L["TOPLEFT"],
+                                    ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                                    ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                                    ["CENTER"] = L["CENTER"],
+                                },
+                                order = 4,
+                            },
+                            matchFrameHeight = {
+                                name = L["Match Frame Height"],
+                                desc = L["Match the height of the frame"],
+                                type = "toggle",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                                end,
+                                order = 5,
                             },
                             size = {
                                 type = "range",
                                 disabled = function(info)
                                     local name = info[2]
                                     return not self.db.profile.unitFrames[name].enabled or
-                                        self.db.profile.unitFrames[name].anchor == "auto"
+                                        (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                                 end,
                                 name = L["Size"],
                                 desc = L["Set the size of the frame"],
                                 min = 8,
                                 max = 512,
                                 step = 1,
-                                order = 3,
+                                order = 6,
                             },
                         },
                         name = L["Target Frame"],
@@ -738,21 +850,77 @@ function BigDebuffs:SetupOptions()
                                     ["auto"] = L["Automatic"],
                                     ["manual"] = L["Manual"],
                                 },
+                                width = "full",
                                 order = 2,
+                            },
+                            anchorPoint = {
+                                name = L["Anchor Point"],
+                                desc = L["Anchor point to attach the BigDebuffs frames"],
+                                type = "select",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                                end,
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["TOP"] = L["TOP"],
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                    ["TOPRIGHT"] = L["TOPRIGHT"],
+                                    ["TOPLEFT"] = L["TOPLEFT"],
+                                    ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                                    ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                                    ["CENTER"] = L["CENTER"],
+                                },
+                                order = 3,
+                            },
+                            relativePoint = {
+                                name = L["Relative Point"],
+                                desc = L["Relative point to attach the BigDebuffs frames"],
+                                type = "select",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["TOP"] = L["TOP"],
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                    ["TOPRIGHT"] = L["TOPRIGHT"],
+                                    ["TOPLEFT"] = L["TOPLEFT"],
+                                    ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                                    ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                                    ["CENTER"] = L["CENTER"],
+                                },
+                                order = 4,
+                            },
+                            matchFrameHeight = {
+                                name = L["Match Frame Height"],
+                                desc = L["Match the height of the frame"],
+                                type = "toggle",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                                end,
+                                order = 5,
                             },
                             size = {
                                 type = "range",
                                 disabled = function(info)
                                     local name = info[2]
                                     return not self.db.profile.unitFrames[name].enabled or
-                                        self.db.profile.unitFrames[name].anchor == "auto"
+                                        (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                                 end,
                                 name = L["Size"],
                                 desc = L["Set the size of the frame"],
                                 min = 8,
                                 max = 512,
                                 step = 1,
-                                order = 3,
+                                order = 6,
                             },
                         },
                         name = L["Pet Frame"],
@@ -791,21 +959,77 @@ function BigDebuffs:SetupOptions()
                                     ["auto"] = L["Automatic"],
                                     ["manual"] = L["Manual"],
                                 },
+                                width = "full",
                                 order = 2,
+                            },
+                            anchorPoint = {
+                                name = L["Anchor Point"],
+                                desc = L["Anchor point to attach the BigDebuffs frames"],
+                                type = "select",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                                end,
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["TOP"] = L["TOP"],
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                    ["TOPRIGHT"] = L["TOPRIGHT"],
+                                    ["TOPLEFT"] = L["TOPLEFT"],
+                                    ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                                    ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                                    ["CENTER"] = L["CENTER"],
+                                },
+                                order = 3,
+                            },
+                            relativePoint = {
+                                name = L["Relative Point"],
+                                desc = L["Relative point to attach the BigDebuffs frames"],
+                                type = "select",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["TOP"] = L["TOP"],
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                    ["TOPRIGHT"] = L["TOPRIGHT"],
+                                    ["TOPLEFT"] = L["TOPLEFT"],
+                                    ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                                    ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                                    ["CENTER"] = L["CENTER"],
+                                },
+                                order = 4,
+                            },
+                            matchFrameHeight = {
+                                name = L["Match Frame Height"],
+                                desc = L["Match the height of the frame"],
+                                type = "toggle",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                                end,
+                                order = 5,
                             },
                             size = {
                                 type = "range",
                                 disabled = function(info)
                                     local name = info[2]
                                     return not self.db.profile.unitFrames[name].enabled or
-                                        self.db.profile.unitFrames[name].anchor == "auto"
+                                        (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                                 end,
                                 name = L["Size"],
                                 desc = L["Set the size of the frame"],
                                 min = 8,
                                 max = 512,
                                 step = 1,
-                                order = 3,
+                                order = 6,
                             },
                         },
                         name = L["Party Frames"],
@@ -1170,21 +1394,77 @@ function BigDebuffs:SetupOptions()
                         ["auto"] = L["Automatic"],
                         ["manual"] = L["Manual"],
                     },
+                    width = "full",
                     order = 2,
+                },
+                anchorPoint = {
+                    name = L["Anchor Point"],
+                    desc = L["Anchor point to attach the BigDebuffs frames"],
+                    type = "select",
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                    end,
+                    values = {
+                        ["auto"] = L["Automatic"],
+                        ["TOP"] = L["TOP"],
+                        ["RIGHT"] = L["RIGHT"],
+                        ["BOTTOM"] = L["BOTTOM"],
+                        ["LEFT"] = L["LEFT"],
+                        ["TOPRIGHT"] = L["TOPRIGHT"],
+                        ["TOPLEFT"] = L["TOPLEFT"],
+                        ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                        ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                        ["CENTER"] = L["CENTER"],
+                    },
+                    order = 3,
+                },
+                relativePoint = {
+                    name = L["Relative Point"],
+                    desc = L["Relative point to attach the BigDebuffs frames"],
+                    type = "select",
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                            self.db.profile.unitFrames[name].anchorPoint == "auto"
+                    end,
+                    values = {
+                        ["auto"] = L["Automatic"],
+                        ["TOP"] = L["TOP"],
+                        ["RIGHT"] = L["RIGHT"],
+                        ["BOTTOM"] = L["BOTTOM"],
+                        ["LEFT"] = L["LEFT"],
+                        ["TOPRIGHT"] = L["TOPRIGHT"],
+                        ["TOPLEFT"] = L["TOPLEFT"],
+                        ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                        ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                        ["CENTER"] = L["CENTER"],
+                    },
+                    order = 4,
+                },
+                matchFrameHeight = {
+                    name = L["Match Frame Height"],
+                    desc = L["Match the height of the frame"],
+                    type = "toggle",
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                    end,
+                    order = 5,
                 },
                 size = {
                     type = "range",
                     disabled = function(info)
                         local name = info[2]
                         return not self.db.profile.unitFrames[name].enabled or
-                            self.db.profile.unitFrames[name].anchor == "auto"
+                            (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                     end,
                     name = L["Size"],
                     desc = L["Set the size of the frame"],
                     min = 8,
                     max = 512,
                     step = 1,
-                    order = 3,
+                    order = 6,
                 },
             },
             name = L["Focus Frame"],
@@ -1224,21 +1504,77 @@ function BigDebuffs:SetupOptions()
                         ["auto"] = L["Automatic"],
                         ["manual"] = L["Manual"],
                     },
+                    width = "full",
                     order = 2,
+                },
+                anchorPoint = {
+                    name = L["Anchor Point"],
+                    desc = L["Anchor point to attach the BigDebuffs frames"],
+                    type = "select",
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                    end,
+                    values = {
+                        ["auto"] = L["Automatic"],
+                        ["TOP"] = L["TOP"],
+                        ["RIGHT"] = L["RIGHT"],
+                        ["BOTTOM"] = L["BOTTOM"],
+                        ["LEFT"] = L["LEFT"],
+                        ["TOPRIGHT"] = L["TOPRIGHT"],
+                        ["TOPLEFT"] = L["TOPLEFT"],
+                        ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                        ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                        ["CENTER"] = L["CENTER"],
+                    },
+                    order = 3,
+                },
+                relativePoint = {
+                    name = L["Relative Point"],
+                    desc = L["Relative point to attach the BigDebuffs frames"],
+                    type = "select",
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                            self.db.profile.unitFrames[name].anchorPoint == "auto"
+                    end,
+                    values = {
+                        ["auto"] = L["Automatic"],
+                        ["TOP"] = L["TOP"],
+                        ["RIGHT"] = L["RIGHT"],
+                        ["BOTTOM"] = L["BOTTOM"],
+                        ["LEFT"] = L["LEFT"],
+                        ["TOPRIGHT"] = L["TOPRIGHT"],
+                        ["TOPLEFT"] = L["TOPLEFT"],
+                        ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                        ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                        ["CENTER"] = L["CENTER"],
+                    },
+                    order = 4,
+                },
+                matchFrameHeight = {
+                    name = L["Match Frame Height"],
+                    desc = L["Match the height of the frame"],
+                    type = "toggle",
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                    end,
+                    order = 5,
                 },
                 size = {
                     type = "range",
                     disabled = function(info)
                         local name = info[2]
                         return not self.db.profile.unitFrames[name].enabled or
-                        self.db.profile.unitFrames[name].anchor == "auto"
+                            (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                     end,
                     name = L["Size"],
                     desc = L["Set the size of the frame"],
                     min = 8,
                     max = 512,
                     step = 1,
-                    order = 3,
+                    order = 6,
                 },
             },
             name = L["Arena Frames"],

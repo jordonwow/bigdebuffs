@@ -57,21 +57,33 @@ local defaults = {
             player = {
                 enabled = true,
                 anchor = "auto",
+                anchorPoint = "auto",
+                relativePoint = "auto",
+                matchFrameHeight = true,
                 size = 50,
             },
             target = {
                 enabled = true,
                 anchor = "auto",
+                anchorPoint = "auto",
+                relativePoint = "auto",
+                matchFrameHeight = true,
                 size = 50,
             },
             pet = {
                 enabled = true,
                 anchor = "auto",
+                anchorPoint = "auto",
+                relativePoint = "auto",
+                matchFrameHeight = true,
                 size = 50,
             },
             party = {
                 enabled = true,
                 anchor = "auto",
+                anchorPoint = "auto",
+                relativePoint = "auto",
+                matchFrameHeight = true,
                 size = 50,
             },
             cc = true,
@@ -169,12 +181,18 @@ else
     defaults.profile.unitFrames.focus = {
         enabled = true,
         anchor = "auto",
+        anchorPoint = "auto",
+        relativePoint = "auto",
+        matchFrameHeight = true,
         size = 50,
     }
 
     defaults.profile.unitFrames.arena = {
         enabled = true,
         anchor = "auto",
+        anchorPoint = "auto",
+        relativePoint = "auto",
+        matchFrameHeight = true,
         size = 50,
     }
 
@@ -548,7 +566,23 @@ function BigDebuffs:OnInitialize()
             self.db.profile.unitFrames[key] = {
                 enabled = self.db.profile.unitFrames[key],
                 anchor = "auto",
+                anchorPoint = "auto",
+                relativePoint = "auto",
+                matchFrameHeight = true,
+                size = 50
             }
+        else
+            if type(self.db.profile.unitFrames[key].anchorPoint ~= "string") then
+                self.db.profile.unitFrames[key].anchorPoint = "auto"
+            end
+
+            if type(self.db.profile.unitFrames[key].relativePoint ~= "string") then
+                self.db.profile.unitFrames[key].relativePoint = "auto"
+            end
+
+            if type(self.db.profile.unitFrames[key].matchFrameHeight ~= "boolean") then
+                self.db.profile.unitFrames[key].matchFrameHeight = true
+            end
         end
     end
 
@@ -679,15 +713,46 @@ function BigDebuffs:AttachUnitFrame(unit)
 
         frame:ClearAllPoints()
 
-        if frame.noPortait then
-            -- No portrait, so attach to the side
-            if frame.alignLeft then
-                frame:SetPoint("TOPRIGHT", frame.anchor, "TOPLEFT")
+        if config.anchorPoint ~= "auto" or frame.noPortait then
+            if config.anchorPoint == "auto" then
+                -- No portrait, so attach to the side
+                if frame.alignLeft then
+                    frame:SetPoint("TOPRIGHT", frame.anchor, "TOPLEFT")
+                else
+                    frame:SetPoint("TOPLEFT", frame.anchor, "TOPRIGHT")
+                end
             else
-                frame:SetPoint("TOPLEFT", frame.anchor, "TOPRIGHT")
+                if config.relativePoint == "auto" then
+                    if config.anchorPoint == "BOTTOM" then
+                        frame:SetPoint("TOP", frame.anchor, config.anchorPoint)
+                    elseif config.anchorPoint == "BOTTOMLEFT" then
+                        frame:SetPoint("BOTTOMRIGHT", frame.anchor, config.anchorPoint)
+                    elseif config.anchorPoint == "BOTTOMRIGHT" then
+                        frame:SetPoint("BOTTOMLEFT", frame.anchor, config.anchorPoint)
+                    elseif config.anchorPoint == "CENTER" then
+                        frame:SetPoint("CENTER", frame.anchor, config.anchorPoint)
+                    elseif config.anchorPoint == "LEFT" then
+                        frame:SetPoint("RIGHT", frame.anchor, config.anchorPoint)
+                    elseif config.anchorPoint == "RIGHT" then
+                        frame:SetPoint("LEFT", frame.anchor, config.anchorPoint)
+                    elseif config.anchorPoint == "TOP" then
+                        frame:SetPoint("BOTTOM", frame.anchor, config.anchorPoint)
+                    elseif config.anchorPoint == "TOPLEFT" then
+                        frame:SetPoint("TOPRIGHT", frame.anchor, config.anchorPoint)
+                    elseif config.anchorPoint == "TOPRIGHT" then
+                        frame:SetPoint("TOPLEFT", frame.anchor, config.anchorPoint)
+                    end
+                else
+                    frame:SetPoint(config.relativePoint, frame.anchor, config.anchorPoint)
+                end
             end
-            local height = frame.anchor:GetHeight()
-            frame:SetSize(height, height)
+
+            if not config.matchFrameHeight then
+                frame:SetSize(config.size, config.size)
+            else
+                local height = frame.anchor:GetHeight()
+                frame:SetSize(height, height)
+            end
         else
             frame:SetAllPoints(frame.anchor)
         end
