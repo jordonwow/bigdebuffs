@@ -681,6 +681,36 @@ function BigDebuffs:SetupOptions()
                                 },
                                 order = 4,
                             },
+                            x = {
+                                type = "range",
+                                name = L["X offset"],
+                                desc = L["Set the X offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                order = 5,
+                            },
+                            y = {
+                                type = "range",
+                                name = L["Y offset"],
+                                desc = L["Set the Y offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                order = 6,
+                            },
                             matchFrameHeight = {
                                 name = L["Match Frame Height"],
                                 desc = L["Match the height of the frame"],
@@ -689,7 +719,7 @@ function BigDebuffs:SetupOptions()
                                     local name = info[2]
                                     return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
                                 end,
-                                order = 5,
+                                order = 7,
                             },
                             size = {
                                 type = "range",
@@ -704,7 +734,7 @@ function BigDebuffs:SetupOptions()
                                 min = 8,
                                 max = 512,
                                 step = 1,
-                                order = 6,
+                                order = 8,
                             },
                         },
                         name = L["Player Frame"],
@@ -790,6 +820,36 @@ function BigDebuffs:SetupOptions()
                                 },
                                 order = 4,
                             },
+                            x = {
+                                type = "range",
+                                name = L["X offset"],
+                                desc = L["Set the X offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                order = 5,
+                            },
+                            y = {
+                                type = "range",
+                                name = L["Y offset"],
+                                desc = L["Set the Y offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                order = 6,
+                            },
                             matchFrameHeight = {
                                 name = L["Match Frame Height"],
                                 desc = L["Match the height of the frame"],
@@ -798,7 +858,7 @@ function BigDebuffs:SetupOptions()
                                     local name = info[2]
                                     return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
                                 end,
-                                order = 5,
+                                order = 7,
                             },
                             size = {
                                 type = "range",
@@ -813,7 +873,7 @@ function BigDebuffs:SetupOptions()
                                 min = 8,
                                 max = 512,
                                 step = 1,
-                                order = 6,
+                                order = 8,
                             },
                         },
                         name = L["Target Frame"],
@@ -900,6 +960,36 @@ function BigDebuffs:SetupOptions()
                                 },
                                 order = 4,
                             },
+                            x = {
+                                type = "range",
+                                name = L["X offset"],
+                                desc = L["Set the X offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                order = 5,
+                            },
+                            y = {
+                                type = "range",
+                                name = L["Y offset"],
+                                desc = L["Set the Y offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                order = 6,
+                            },
                             matchFrameHeight = {
                                 name = L["Match Frame Height"],
                                 desc = L["Match the height of the frame"],
@@ -908,7 +998,7 @@ function BigDebuffs:SetupOptions()
                                     local name = info[2]
                                     return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
                                 end,
-                                order = 5,
+                                order = 7,
                             },
                             size = {
                                 type = "range",
@@ -923,7 +1013,7 @@ function BigDebuffs:SetupOptions()
                                 min = 8,
                                 max = 512,
                                 step = 1,
-                                order = 6,
+                                order = 8,
                             },
                         },
                         name = L["Pet Frame"],
@@ -1010,6 +1100,36 @@ function BigDebuffs:SetupOptions()
                                 },
                                 order = 4,
                             },
+                            x = {
+                                type = "range",
+                                name = L["X offset"],
+                                desc = L["Set the X offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                order = 5,
+                            },
+                            y = {
+                                type = "range",
+                                name = L["Y offset"],
+                                desc = L["Set the Y offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                order = 6,
+                            },
                             matchFrameHeight = {
                                 name = L["Match Frame Height"],
                                 desc = L["Match the height of the frame"],
@@ -1018,7 +1138,7 @@ function BigDebuffs:SetupOptions()
                                     local name = info[2]
                                     return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
                                 end,
-                                order = 5,
+                                order = 7,
                             },
                             size = {
                                 type = "range",
@@ -1033,7 +1153,7 @@ function BigDebuffs:SetupOptions()
                                 min = 8,
                                 max = 512,
                                 step = 1,
-                                order = 6,
+                                order = 8,
                             },
                         },
                         name = L["Party Frames"],
@@ -1540,6 +1660,36 @@ function BigDebuffs:SetupOptions()
                     },
                     order = 4,
                 },
+                x = {
+                    type = "range",
+                    name = L["X offset"],
+                    desc = L["Set the X offset"],
+                    width = 1.5,
+                    min = -100,
+                    max = 100,
+                    step = 1,
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                            self.db.profile.unitFrames[name].anchorPoint == "auto"
+                    end,
+                    order = 5,
+                },
+                y = {
+                    type = "range",
+                    name = L["Y offset"],
+                    desc = L["Set the Y offset"],
+                    width = 1.5,
+                    min = -100,
+                    max = 100,
+                    step = 1,
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                            self.db.profile.unitFrames[name].anchorPoint == "auto"
+                    end,
+                    order = 6,
+                },
                 matchFrameHeight = {
                     name = L["Match Frame Height"],
                     desc = L["Match the height of the frame"],
@@ -1548,7 +1698,7 @@ function BigDebuffs:SetupOptions()
                         local name = info[2]
                         return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
                     end,
-                    order = 5,
+                    order = 7,
                 },
                 size = {
                     type = "range",
@@ -1563,7 +1713,7 @@ function BigDebuffs:SetupOptions()
                     min = 8,
                     max = 512,
                     step = 1,
-                    order = 6,
+                    order = 8,
                 },
             },
             name = L["Focus Frame"],
@@ -1651,6 +1801,36 @@ function BigDebuffs:SetupOptions()
                     },
                     order = 4,
                 },
+                x = {
+                    type = "range",
+                    name = L["X offset"],
+                    desc = L["Set the X offset"],
+                    width = 1.5,
+                    min = -100,
+                    max = 100,
+                    step = 1,
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                            self.db.profile.unitFrames[name].anchorPoint == "auto"
+                    end,
+                    order = 5,
+                },
+                y = {
+                    type = "range",
+                    name = L["Y offset"],
+                    desc = L["Set the Y offset"],
+                    width = 1.5,
+                    min = -100,
+                    max = 100,
+                    step = 1,
+                    disabled = function(info)
+                        local name = info[2]
+                        return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                            self.db.profile.unitFrames[name].anchorPoint == "auto"
+                    end,
+                    order = 6,
+                },
                 matchFrameHeight = {
                     name = L["Match Frame Height"],
                     desc = L["Match the height of the frame"],
@@ -1659,7 +1839,7 @@ function BigDebuffs:SetupOptions()
                         local name = info[2]
                         return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
                     end,
-                    order = 5,
+                    order = 7,
                 },
                 size = {
                     type = "range",
@@ -1674,7 +1854,7 @@ function BigDebuffs:SetupOptions()
                     min = 8,
                     max = 512,
                     step = 1,
-                    order = 6,
+                    order = 8,
                 },
             },
             name = L["Arena Frames"],
