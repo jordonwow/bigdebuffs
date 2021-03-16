@@ -107,10 +107,19 @@ local defaults = {
 			enemy = true,
 			friendly = true,
 			npc = true,
-			anchor = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and "TOP" or "RIGHT",
-			size = 40,
-			x = 0,
-			y = 0,
+            enemyAnchor = {
+                anchor = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and "TOP" or "RIGHT",
+                size = 40,
+                x = 0,
+                y = 0,
+            },
+            friendlyAnchor = {
+                friendlyAnchorEnabled = false,
+                anchor = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and "TOP" or "RIGHT",
+                size = 40,
+                x = x,
+                y = y,
+            },
 			cc = true,
             interrupts = true,
             immunities = true,
@@ -795,18 +804,23 @@ function BigDebuffs:AttachNameplate(unit)
 
 	frame:EnableMouse(config.tooltips)
 
+    local anchorStyle = "enemyAnchor"
+    if (not UnitCanAttack("player", unit) and config["friendlyAnchor"].friendlyAnchorEnabled == true) then
+        anchorStyle = "friendlyAnchor"
+    end
+
 	frame:ClearAllPoints()
-	if config.anchor == "RIGHT" then
-		frame:SetPoint("LEFT", frame.anchor, "RIGHT", config.x, config.y)
-	elseif config.anchor == "TOP" then
-		frame:SetPoint("BOTTOM", frame.anchor, "TOP", config.x, config.y)
-	elseif config.anchor == "LEFT" then
-		frame:SetPoint("RIGHT", frame.anchor, "LEFT", config.x, config.y)
-	elseif config.anchor == "BOTTOM" then
-		frame:SetPoint("TOP", frame.anchor, "BOTTOM", config.x, config.y)
+	if config[anchorStyle].anchor == "RIGHT" then
+		frame:SetPoint("LEFT", frame.anchor, "RIGHT", config[anchorStyle].x, config[anchorStyle].y)
+	elseif config[anchorStyle].anchor == "TOP" then
+		frame:SetPoint("BOTTOM", frame.anchor, "TOP", config[anchorStyle].x, config[anchorStyle].y)
+	elseif config[anchorStyle].anchor == "LEFT" then
+		frame:SetPoint("RIGHT", frame.anchor, "LEFT", config[anchorStyle].x, config[anchorStyle].y)
+	elseif config[anchorStyle].anchor == "BOTTOM" then
+		frame:SetPoint("TOP", frame.anchor, "BOTTOM", config[anchorStyle].x, config[anchorStyle].y)
 	end
 
-	frame:SetSize(config.size, config.size)
+	frame:SetSize(config[anchorStyle].size, config[anchorStyle].size)
 end
 
 function BigDebuffs:SaveUnitFramePosition(frame)

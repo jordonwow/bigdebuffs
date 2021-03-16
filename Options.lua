@@ -548,23 +548,30 @@ function BigDebuffs:SetupOptions()
                     enabled = {
                         type = "toggle",
                         disabled = false,
-                        width = "full",
+                        width = "normal",
                         name = L["Enabled"],
                         desc = L["Enable BigDebuffs on unit frames"],
                         order = 1,
                     },
                     cooldownCount = {
                         type = "toggle",
-                        width = "full",
+                        width = "normal",
                         name = L["Cooldown Count"],
                         desc = L["Allow Blizzard and other addons to display countdown text on the icons"],
                         order = 2,
+                    },
+                    tooltips = {
+                        type = "toggle",
+                        width = "normal",
+                        name = L["Show Tooltips"],
+                        desc = L["Show spell information when mousing over the icon"],
+                        order = 3,
                     },
                     cooldownFont = {
                         type = "select",
                         name = L["Font"],
                         desc = L["Select font for cd timers"],
-                        order = 3,
+                        order = 4,
                         values = function()
                             local fonts, newFonts = LibSharedMedia:List("font"), {}
                             for k, v in pairs(fonts) do
@@ -580,7 +587,7 @@ function BigDebuffs:SetupOptions()
                         min = 1,
                         max = 30,
                         step = 1,
-                        order = 4,
+                        order = 5,
                     },
                     cooldownFontEffect = {
                         type = "select",
@@ -592,13 +599,6 @@ function BigDebuffs:SetupOptions()
                             ["THICKOUTLINE"] = "THICKOUTLINE",
                             [""] = "NONE",
                         },
-                        order = 5,
-                    },
-                    tooltips = {
-                        type = "toggle",
-                        width = "full",
-                        name = L["Show Tooltips"],
-                        desc = L["Show spell information when mousing over the icon"],
                         order = 6,
                     },
                     player = {
@@ -633,7 +633,7 @@ function BigDebuffs:SetupOptions()
                                     ["auto"] = L["Automatic"],
                                     ["manual"] = L["Manual"],
                                 },
-                                width = "full",
+                                width = "normal",
                                 order = 2,
                             },
                             anchorPoint = {
@@ -699,6 +699,7 @@ function BigDebuffs:SetupOptions()
                                         (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                                 end,
                                 name = L["Size"],
+                                width = "double",
                                 desc = L["Set the size of the frame"],
                                 min = 8,
                                 max = 512,
@@ -741,7 +742,7 @@ function BigDebuffs:SetupOptions()
                                     ["auto"] = L["Automatic"],
                                     ["manual"] = L["Manual"],
                                 },
-                                width = "full",
+                                width = "normal",
                                 order = 2,
                             },
                             anchorPoint = {
@@ -807,6 +808,7 @@ function BigDebuffs:SetupOptions()
                                         (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                                 end,
                                 name = L["Size"],
+                                width = "double",
                                 desc = L["Set the size of the frame"],
                                 min = 8,
                                 max = 512,
@@ -850,7 +852,7 @@ function BigDebuffs:SetupOptions()
                                     ["auto"] = L["Automatic"],
                                     ["manual"] = L["Manual"],
                                 },
-                                width = "full",
+                                width = "normal",
                                 order = 2,
                             },
                             anchorPoint = {
@@ -916,6 +918,7 @@ function BigDebuffs:SetupOptions()
                                         (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                                 end,
                                 name = L["Size"],
+                                width = "double",
                                 desc = L["Set the size of the frame"],
                                 min = 8,
                                 max = 512,
@@ -959,7 +962,7 @@ function BigDebuffs:SetupOptions()
                                     ["auto"] = L["Automatic"],
                                     ["manual"] = L["Manual"],
                                 },
-                                width = "full",
+                                width = "normal",
                                 order = 2,
                             },
                             anchorPoint = {
@@ -1025,6 +1028,7 @@ function BigDebuffs:SetupOptions()
                                         (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                                 end,
                                 name = L["Size"],
+                                width = "double",
                                 desc = L["Set the size of the frame"],
                                 min = 8,
                                 max = 512,
@@ -1150,7 +1154,7 @@ function BigDebuffs:SetupOptions()
 						type = "toggle",
 						name = "NPC Nameplates",
 						order = 1,
-						width = "double",
+						width = "normal",
 						desc = L["Enable BigDebuffs on non-player nameplates"],
 					},
 					cooldownCount = {
@@ -1158,6 +1162,13 @@ function BigDebuffs:SetupOptions()
                         width = "normal",
                         name = L["Cooldown Count"],
                         desc = L["Allow Blizzard and other addons to display countdown text on the icons"],
+                        order = 2,
+                    },
+                    tooltips = {
+                        type = "toggle",
+                        width = "normal",
+                        name = L["Show Tooltips"],
+                        desc = L["Show spell information when mousing over the icon"],
                         order = 2,
                     },
                     cooldownFont = {
@@ -1193,13 +1204,6 @@ function BigDebuffs:SetupOptions()
                             [""] = "NONE",
                         },
                         order = 5,
-                    },
-                    tooltips = {
-                        type = "toggle",
-                        width = "full",
-                        name = L["Show Tooltips"],
-                        desc = L["Show spell information when mousing over the icon"],
-                        order = 6,
                     },
 					spells = {
                         order = 7,
@@ -1279,53 +1283,147 @@ function BigDebuffs:SetupOptions()
                             },
                         },
                     },
-					anchor = {
-						name = L["Anchor"],
-						desc = L["Anchor to attach the BigDebuffs frames"],
-						type = "select",
-						values = {
-							["RIGHT"] = L["RIGHT"],
-							["TOP"] = L["TOP"],
-							["BOTTOM"] = L["BOTTOM"],
-							["LEFT"] = L["LEFT"],
-						},
-						order = 10,
+                    enemyAnchor = {
+                        type = "group",
+                        name = L["Anchor"],
+                        get = function(info)
+                            local name = info[#info]
+                            return self.db.profile.nameplates.enemyAnchor[name]
+                        end,
+                        set = function(info, value)
+                            local name = info[#info]
+                            self.db.profile.nameplates.enemyAnchor[name] = value
+                            self:Refresh()
+                        end,
+                        order = 9,
+                        args = {
+                            anchor = {
+                                name = L["Anchor"],
+                                desc = L["Anchor to attach the BigDebuffs frames"],
+                                width = "normal",
+                                type = "select",
+                                values = {
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["TOP"] = L["TOP"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                },
+                                order = 1,
+                            },
+                            size = {
+                                type = "range",
+                                name = L["Size"],
+                                desc = L["Set the size of the frame"],
+                                width = "double",
+                                min = 8,
+                                max = 100,
+                                step = 1,
+                                order = 2,
+                            },
+                            x = {
+                                type = "range",
+                                name = L["X offset"],
+                                desc = L["Set the X offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                order = 3,
+                            },
+                            y = {
+                                type = "range",
+                                name = L["Y offset"],
+                                desc = L["Set the Y offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                order = 4,
+                            },
+                        },
 					},
-					scale = {
-						name = L["Size"],
-						type = "group",
-						inline = true,
-						order = 11,
-						args = {
-							size = {
-								type = "range",
-								name = L["Size"],
-								desc = L["Set the size of the frame"],
-								min = 8,
-								max = 100,
-								step = 1,
-								order = 8,
-							},
-							x = {
-								type = "range",
-								name = L["X offset"],
-								desc = L["Set the X offset"],
-								min = -100,
-								max = 100,
-								step = 1,
-								order = 9,
-							},
-							y = {
-								type = "range",
-								name = L["Y offset"],
-								desc = L["Set the Y offset"],
-								min = -100,
-								max = 100,
-								step = 1,
-								order = 10,
-							},
-						},
-					},
+                    friendlyAnchor = {
+                        type = "group",
+                        name = L["Friendly Anchor"],
+                        get = function(info)
+                            local name = info[#info]
+                            return self.db.profile.nameplates.friendlyAnchor[name]
+                        end,
+                        set = function(info, value)
+                            local name = info[#info]
+                            self.db.profile.nameplates.friendlyAnchor[name] = value
+                            self:Refresh()
+                        end,
+                        order = 9,
+                        args = {
+                            friendlyAnchorEnabled = {
+                                name = L["Enable Friendly Anchor"],
+                                desc = "Use a separate anchor for friendly nameplates. If disabled, will use the primary anchor settings instead",
+                                type = "toggle",
+                                width = "full",
+                                order = 1,
+                            },
+                            anchor = {
+                                name = L["Anchor"],
+                                desc = L["Anchor to attach the BigDebuffs frames"],
+                                type = "select",
+                                width = "normal",
+                                values = {
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["TOP"] = L["TOP"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                },
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.nameplates[name].friendlyAnchorEnabled
+                                end,
+                                order = 2,
+                            },
+                            size = {
+                                type = "range",
+                                name = L["Size"],
+                                desc = L["Set the size of the frame"],
+                                width = "double",
+                                min = 8,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.nameplates[name].friendlyAnchorEnabled
+                                end,
+                                order = 3,
+                            },
+                            x = {
+                                type = "range",
+                                name = L["X offset"],
+                                desc = L["Set the X offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.nameplates[name].friendlyAnchorEnabled
+                                end,
+                                order = 4,
+                            },
+                            y = {
+                                type = "range",
+                                name = L["Y offset"],
+                                desc = L["Set the Y offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.nameplates[name].friendlyAnchorEnabled
+                                end,
+                                order = 5,
+                            },
+                        },
+					}, 
 				},
 				name = L["Nameplates"],
 				desc = L["Enable BigDebuffs on the nameplates"],
@@ -1394,7 +1492,7 @@ function BigDebuffs:SetupOptions()
                         ["auto"] = L["Automatic"],
                         ["manual"] = L["Manual"],
                     },
-                    width = "full",
+                    width = "normal",
                     order = 2,
                 },
                 anchorPoint = {
@@ -1460,6 +1558,7 @@ function BigDebuffs:SetupOptions()
                             (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                     end,
                     name = L["Size"],
+                    width = "double",
                     desc = L["Set the size of the frame"],
                     min = 8,
                     max = 512,
@@ -1504,7 +1603,7 @@ function BigDebuffs:SetupOptions()
                         ["auto"] = L["Automatic"],
                         ["manual"] = L["Manual"],
                     },
-                    width = "full",
+                    width = "normal",
                     order = 2,
                 },
                 anchorPoint = {
@@ -1570,6 +1669,7 @@ function BigDebuffs:SetupOptions()
                             (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
                     end,
                     name = L["Size"],
+                    width = "double",
                     desc = L["Set the size of the frame"],
                     min = 8,
                     max = 512,
