@@ -1423,7 +1423,7 @@ function BigDebuffs:SetupOptions()
                                 order = 5,
                             },
                         },
-					}, 
+					},
 				},
 				name = L["Nameplates"],
 				desc = L["Enable BigDebuffs on the nameplates"],
