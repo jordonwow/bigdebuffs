@@ -8,6 +8,9 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.16
+* Add option to adjust anchor point
+
 ## v9.15
 * Add support for GladiusEx frames
 
