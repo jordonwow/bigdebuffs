@@ -59,6 +59,8 @@ local defaults = {
                 anchor = "auto",
                 anchorPoint = "auto",
                 relativePoint = "auto",
+                x = 0,
+                y = 0,
                 matchFrameHeight = true,
                 size = 50,
             },
@@ -67,6 +69,8 @@ local defaults = {
                 anchor = "auto",
                 anchorPoint = "auto",
                 relativePoint = "auto",
+                x = 0,
+                y = 0,
                 matchFrameHeight = true,
                 size = 50,
             },
@@ -75,6 +79,8 @@ local defaults = {
                 anchor = "auto",
                 anchorPoint = "auto",
                 relativePoint = "auto",
+                x = 0,
+                y = 0,
                 matchFrameHeight = true,
                 size = 50,
             },
@@ -83,6 +89,8 @@ local defaults = {
                 anchor = "auto",
                 anchorPoint = "auto",
                 relativePoint = "auto",
+                x = 0,
+                y = 0,
                 matchFrameHeight = true,
                 size = 50,
             },
@@ -192,6 +200,8 @@ else
         anchor = "auto",
         anchorPoint = "auto",
         relativePoint = "auto",
+        x = 0,
+        y = 0,
         matchFrameHeight = true,
         size = 50,
     }
@@ -201,6 +211,8 @@ else
         anchor = "auto",
         anchorPoint = "auto",
         relativePoint = "auto",
+        x = 0,
+        y = 0,
         matchFrameHeight = true,
         size = 50,
     }
@@ -577,6 +589,8 @@ function BigDebuffs:OnInitialize()
                 anchor = "auto",
                 anchorPoint = "auto",
                 relativePoint = "auto",
+                x = 0,
+                y = 0,
                 matchFrameHeight = true,
                 size = 50
             }
@@ -587,6 +601,14 @@ function BigDebuffs:OnInitialize()
 
             if type(self.db.profile.unitFrames[key].relativePoint ~= "string") then
                 self.db.profile.unitFrames[key].relativePoint = "auto"
+            end
+
+            if type(self.db.profile.unitFrames[key].x ~= "number") then
+                self.db.profile.unitFrames[key].x = 0
+            end
+
+            if type(self.db.profile.unitFrames[key].y ~= "number") then
+                self.db.profile.unitFrames[key].y = 0
             end
 
             if type(self.db.profile.unitFrames[key].matchFrameHeight ~= "boolean") then
@@ -733,26 +755,26 @@ function BigDebuffs:AttachUnitFrame(unit)
             else
                 if config.relativePoint == "auto" then
                     if config.anchorPoint == "BOTTOM" then
-                        frame:SetPoint("TOP", frame.anchor, config.anchorPoint)
+                        frame:SetPoint("TOP", frame.anchor, config.anchorPoint, config.x, config.y)
                     elseif config.anchorPoint == "BOTTOMLEFT" then
-                        frame:SetPoint("BOTTOMRIGHT", frame.anchor, config.anchorPoint)
+                        frame:SetPoint("BOTTOMRIGHT", frame.anchor, config.anchorPoint, config.x, config.y)
                     elseif config.anchorPoint == "BOTTOMRIGHT" then
-                        frame:SetPoint("BOTTOMLEFT", frame.anchor, config.anchorPoint)
+                        frame:SetPoint("BOTTOMLEFT", frame.anchor, config.anchorPoint, config.x, config.y)
                     elseif config.anchorPoint == "CENTER" then
-                        frame:SetPoint("CENTER", frame.anchor, config.anchorPoint)
+                        frame:SetPoint("CENTER", frame.anchor, config.anchorPoint, config.x, config.y)
                     elseif config.anchorPoint == "LEFT" then
-                        frame:SetPoint("RIGHT", frame.anchor, config.anchorPoint)
+                        frame:SetPoint("RIGHT", frame.anchor, config.anchorPoint, config.x, config.y)
                     elseif config.anchorPoint == "RIGHT" then
-                        frame:SetPoint("LEFT", frame.anchor, config.anchorPoint)
+                        frame:SetPoint("LEFT", frame.anchor, config.anchorPoint, config.x, config.y)
                     elseif config.anchorPoint == "TOP" then
-                        frame:SetPoint("BOTTOM", frame.anchor, config.anchorPoint)
+                        frame:SetPoint("BOTTOM", frame.anchor, config.anchorPoint, config.x, config.y)
                     elseif config.anchorPoint == "TOPLEFT" then
-                        frame:SetPoint("TOPRIGHT", frame.anchor, config.anchorPoint)
+                        frame:SetPoint("TOPRIGHT", frame.anchor, config.anchorPoint, config.x, config.y)
                     elseif config.anchorPoint == "TOPRIGHT" then
-                        frame:SetPoint("TOPLEFT", frame.anchor, config.anchorPoint)
+                        frame:SetPoint("TOPLEFT", frame.anchor, config.anchorPoint, config.x, config.y)
                     end
                 else
-                    frame:SetPoint(config.relativePoint, frame.anchor, config.anchorPoint)
+                    frame:SetPoint(config.relativePoint, frame.anchor, config.anchorPoint, config.x, config.y)
                 end
             end
 
