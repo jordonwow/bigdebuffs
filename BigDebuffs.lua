@@ -595,23 +595,23 @@ function BigDebuffs:OnInitialize()
                 size = 50
             }
         else
-            if type(self.db.profile.unitFrames[key].anchorPoint ~= "string") then
+            if type(self.db.profile.unitFrames[key].anchorPoint) ~= "string" then
                 self.db.profile.unitFrames[key].anchorPoint = "auto"
             end
 
-            if type(self.db.profile.unitFrames[key].relativePoint ~= "string") then
+            if type(self.db.profile.unitFrames[key].relativePoint) ~= "string" then
                 self.db.profile.unitFrames[key].relativePoint = "auto"
             end
 
-            if type(self.db.profile.unitFrames[key].x ~= "number") then
+            if type(self.db.profile.unitFrames[key].x) ~= "number" then
                 self.db.profile.unitFrames[key].x = 0
             end
 
-            if type(self.db.profile.unitFrames[key].y ~= "number") then
+            if type(self.db.profile.unitFrames[key].y) ~= "number" then
                 self.db.profile.unitFrames[key].y = 0
             end
 
-            if type(self.db.profile.unitFrames[key].matchFrameHeight ~= "boolean") then
+            if type(self.db.profile.unitFrames[key].matchFrameHeight) ~= "boolean" then
                 self.db.profile.unitFrames[key].matchFrameHeight = true
             end
         end
