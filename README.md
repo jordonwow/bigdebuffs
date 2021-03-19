@@ -8,6 +8,9 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.18
+* Minor bug fix
+
 ## v9.17
 * Add offset options
 
