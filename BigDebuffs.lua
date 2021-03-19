@@ -31,13 +31,15 @@ local defaults = {
             interrupts = 55,
             roots = 40,
             warning = 40,
+            debuffs_offensive = 35,
             default = 30,
             special = 30,
             pve = 50,
             warningList = {
                 [212183] = true, -- Smoke Bomb
                 [81261] = true, -- Solar Beam
-                [233490] = true, -- Unstable Affliction
+                [316099] = true, -- Unstable Affliction
+                [342938] = true, -- Unstable Affliction
                 [34914] = true, -- Vampiric Touch
             },
             inRaid = {
@@ -55,21 +57,41 @@ local defaults = {
             player = {
                 enabled = true,
                 anchor = "auto",
+                anchorPoint = "auto",
+                relativePoint = "auto",
+                x = 0,
+                y = 0,
+                matchFrameHeight = true,
                 size = 50,
             },
             target = {
                 enabled = true,
                 anchor = "auto",
+                anchorPoint = "auto",
+                relativePoint = "auto",
+                x = 0,
+                y = 0,
+                matchFrameHeight = true,
                 size = 50,
             },
             pet = {
                 enabled = true,
                 anchor = "auto",
+                anchorPoint = "auto",
+                relativePoint = "auto",
+                x = 0,
+                y = 0,
+                matchFrameHeight = true,
                 size = 50,
             },
             party = {
                 enabled = true,
                 anchor = "auto",
+                anchorPoint = "auto",
+                relativePoint = "auto",
+                x = 0,
+                y = 0,
+                matchFrameHeight = true,
                 size = 50,
             },
             cc = true,
@@ -79,7 +101,9 @@ local defaults = {
             buffs_defensive = true,
             buffs_offensive = true,
             buffs_other = true,
+            debuffs_offensive = true,
             roots = true,
+            buffs_speed_boost = true,
         },
 		nameplates = {
 			enabled = true,
@@ -91,10 +115,19 @@ local defaults = {
 			enemy = true,
 			friendly = true,
 			npc = true,
-			anchor = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and "TOP" or "RIGHT",
-			size = 40,
-			x = 0,
-			y = 0,
+            enemyAnchor = {
+                anchor = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and "TOP" or "RIGHT",
+                size = 40,
+                x = 0,
+                y = 0,
+            },
+            friendlyAnchor = {
+                friendlyAnchorEnabled = false,
+                anchor = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and "TOP" or "RIGHT",
+                size = 40,
+                x = 0,
+                y = 0,
+            },
 			cc = true,
             interrupts = true,
             immunities = true,
@@ -102,7 +135,9 @@ local defaults = {
             buffs_defensive = true,
             buffs_offensive = true,
             buffs_other = true,
+            debuffs_offensive = true,
             roots = true,
+            buffs_speed_boost = true,
 		},
         priority = {
             immunities = 80,
@@ -111,9 +146,11 @@ local defaults = {
             interrupts = 55,
             buffs_defensive = 50,
             buffs_offensive = 40,
+            debuffs_offensive = 35,
             buffs_other = 30,
             roots = 20,
             special = 19,
+            buffs_speed_boost = 10,
         },
         spells = {},
     }
@@ -161,12 +198,22 @@ else
     defaults.profile.unitFrames.focus = {
         enabled = true,
         anchor = "auto",
+        anchorPoint = "auto",
+        relativePoint = "auto",
+        x = 0,
+        y = 0,
+        matchFrameHeight = true,
         size = 50,
     }
 
     defaults.profile.unitFrames.arena = {
         enabled = true,
         anchor = "auto",
+        anchorPoint = "auto",
+        relativePoint = "auto",
+        x = 0,
+        y = 0,
+        matchFrameHeight = true,
         size = 50,
     }
 
@@ -276,14 +323,14 @@ local UnitDebuff, UnitBuff = UnitDebuff, UnitBuff
 local GetAnchor = {
     ElvUIFrames = function(anchor)
         local anchors, unit = BigDebuffs.anchors
-    
+
         for u,configAnchor in pairs(anchors.ElvUI.units) do
             if anchor == configAnchor then
                 unit = u
                 break
             end
         end
-    
+
         if unit and ( unit:match("party") or unit:match("player") ) then
             local unitGUID = UnitGUID(unit)
             for i = 1,5,1 do
@@ -296,7 +343,7 @@ local GetAnchor = {
             end
             return
         end
-        
+
         return _G[anchor]
     end,
     ShadowedUnitFrames = function(anchor)
@@ -365,6 +412,11 @@ local GetNameplateAnchor = {
       end
     end
   end,
+  TidyPlates = function(frame)
+    if frame.carrier and frame.extended and frame.extended.bars and frame.carrier:IsShown() then
+        return frame.extended.bars.healthbar, frame.extended
+    end
+  end,
 	Blizzard = function(frame)
         if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
             return frame.UnitFrame, frame.UnitFrame
@@ -400,24 +452,50 @@ local nameplatesAnchors = {
     },
     [4] = {
         used = function()
-            return NeatPlates ~= nil -- or TidyPlates ~= nil -- Should be the same but haven't confirmed
+            return NeatPlates ~= nil
         end,
         func = GetNameplateAnchor.NeatPlates,
     },
-  [5] = {
-      used = function()
-          -- IsAddOnLoaded("TidyPlates_ThreatPlates") should be better
-          return TidyPlatesThreat ~= nil
-      end,
-      func = GetNameplateAnchor.ThreatPlates,
+    [5] = {
+        used = function()
+            -- IsAddOnLoaded("TidyPlates_ThreatPlates") should be better
+            return TidyPlatesThreat ~= nil
+        end,
+        func = GetNameplateAnchor.ThreatPlates,
     },
-  [6] = {
-      used = function(frame) return frame.UnitFrame ~= nil end,
-      func = GetNameplateAnchor.Blizzard,
-  },
+    [6] = {
+        used = function()
+            return TidyPlates ~= nil
+        end,
+        func = GetNameplateAnchor.TidyPlates,
+    },
+    [7] = {
+        used = function(frame) return frame.UnitFrame ~= nil end,
+        func = GetNameplateAnchor.Blizzard,
+    },
 }
 
 local anchors = {
+    ["GladiusExParty"] = {
+        noPortait = true,
+        units = {
+            party1 = "GladiusExButtonFrameparty1",
+            party2 = "GladiusExButtonFrameparty2",
+            party3 = "GladiusExButtonFrameparty3",
+            party4 = "GladiusExButtonFrameparty4"
+        }
+    },
+    ["GladiusExArena"] = {
+        noPortait = true,
+        alignLeft = true,
+        units = {
+            arena1 = "GladiusExButtonFramearena1",
+            arena2 = "GladiusExButtonFramearena2",
+            arena3 = "GladiusExButtonFramearena3",
+            arena4 = "GladiusExButtonFramearena4",
+            arena5 = "GladiusExButtonFramearena5",
+        }
+    },
     ["ElvUI"] = {
         func = GetAnchor.ElvUIFrames,
         noPortait = true,
@@ -509,7 +587,33 @@ function BigDebuffs:OnInitialize()
             self.db.profile.unitFrames[key] = {
                 enabled = self.db.profile.unitFrames[key],
                 anchor = "auto",
+                anchorPoint = "auto",
+                relativePoint = "auto",
+                x = 0,
+                y = 0,
+                matchFrameHeight = true,
+                size = 50
             }
+        else
+            if type(self.db.profile.unitFrames[key].anchorPoint) ~= "string" then
+                self.db.profile.unitFrames[key].anchorPoint = "auto"
+            end
+
+            if type(self.db.profile.unitFrames[key].relativePoint) ~= "string" then
+                self.db.profile.unitFrames[key].relativePoint = "auto"
+            end
+
+            if type(self.db.profile.unitFrames[key].x) ~= "number" then
+                self.db.profile.unitFrames[key].x = 0
+            end
+
+            if type(self.db.profile.unitFrames[key].y) ~= "number" then
+                self.db.profile.unitFrames[key].y = 0
+            end
+
+            if type(self.db.profile.unitFrames[key].matchFrameHeight) ~= "boolean" then
+                self.db.profile.unitFrames[key].matchFrameHeight = true
+            end
         end
     end
 
@@ -640,15 +744,46 @@ function BigDebuffs:AttachUnitFrame(unit)
 
         frame:ClearAllPoints()
 
-        if frame.noPortait then
-            -- No portrait, so attach to the side
-            if frame.alignLeft then
-                frame:SetPoint("TOPRIGHT", frame.anchor, "TOPLEFT")
+        if config.anchorPoint ~= "auto" or frame.noPortait then
+            if config.anchorPoint == "auto" then
+                -- No portrait, so attach to the side
+                if frame.alignLeft then
+                    frame:SetPoint("TOPRIGHT", frame.anchor, "TOPLEFT")
+                else
+                    frame:SetPoint("TOPLEFT", frame.anchor, "TOPRIGHT")
+                end
             else
-                frame:SetPoint("TOPLEFT", frame.anchor, "TOPRIGHT")
+                if config.relativePoint == "auto" then
+                    if config.anchorPoint == "BOTTOM" then
+                        frame:SetPoint("TOP", frame.anchor, config.anchorPoint, config.x, config.y)
+                    elseif config.anchorPoint == "BOTTOMLEFT" then
+                        frame:SetPoint("BOTTOMRIGHT", frame.anchor, config.anchorPoint, config.x, config.y)
+                    elseif config.anchorPoint == "BOTTOMRIGHT" then
+                        frame:SetPoint("BOTTOMLEFT", frame.anchor, config.anchorPoint, config.x, config.y)
+                    elseif config.anchorPoint == "CENTER" then
+                        frame:SetPoint("CENTER", frame.anchor, config.anchorPoint, config.x, config.y)
+                    elseif config.anchorPoint == "LEFT" then
+                        frame:SetPoint("RIGHT", frame.anchor, config.anchorPoint, config.x, config.y)
+                    elseif config.anchorPoint == "RIGHT" then
+                        frame:SetPoint("LEFT", frame.anchor, config.anchorPoint, config.x, config.y)
+                    elseif config.anchorPoint == "TOP" then
+                        frame:SetPoint("BOTTOM", frame.anchor, config.anchorPoint, config.x, config.y)
+                    elseif config.anchorPoint == "TOPLEFT" then
+                        frame:SetPoint("TOPRIGHT", frame.anchor, config.anchorPoint, config.x, config.y)
+                    elseif config.anchorPoint == "TOPRIGHT" then
+                        frame:SetPoint("TOPLEFT", frame.anchor, config.anchorPoint, config.x, config.y)
+                    end
+                else
+                    frame:SetPoint(config.relativePoint, frame.anchor, config.anchorPoint, config.x, config.y)
+                end
             end
-            local height = frame.anchor:GetHeight()
-            frame:SetSize(height, height)
+
+            if not config.matchFrameHeight then
+                frame:SetSize(config.size, config.size)
+            else
+                local height = frame.anchor:GetHeight()
+                frame:SetSize(height, height)
+            end
         else
             frame:SetAllPoints(frame.anchor)
         end
@@ -691,18 +826,23 @@ function BigDebuffs:AttachNameplate(unit)
 
 	frame:EnableMouse(config.tooltips)
 
+    local anchorStyle = "enemyAnchor"
+    if (not UnitCanAttack("player", unit) and config["friendlyAnchor"].friendlyAnchorEnabled == true) then
+        anchorStyle = "friendlyAnchor"
+    end
+
 	frame:ClearAllPoints()
-	if config.anchor == "RIGHT" then
-		frame:SetPoint("LEFT", frame.anchor, "RIGHT", config.x, config.y)
-	elseif config.anchor == "TOP" then
-		frame:SetPoint("BOTTOM", frame.anchor, "TOP", config.x, config.y)
-	elseif config.anchor == "LEFT" then
-		frame:SetPoint("RIGHT", frame.anchor, "LEFT", config.x, config.y)
-	elseif config.anchor == "BOTTOM" then
-		frame:SetPoint("TOP", frame.anchor, "BOTTOM", config.x, config.y)
+	if config[anchorStyle].anchor == "RIGHT" then
+		frame:SetPoint("LEFT", frame.anchor, "RIGHT", config[anchorStyle].x, config[anchorStyle].y)
+	elseif config[anchorStyle].anchor == "TOP" then
+		frame:SetPoint("BOTTOM", frame.anchor, "TOP", config[anchorStyle].x, config[anchorStyle].y)
+	elseif config[anchorStyle].anchor == "LEFT" then
+		frame:SetPoint("RIGHT", frame.anchor, "LEFT", config[anchorStyle].x, config[anchorStyle].y)
+	elseif config[anchorStyle].anchor == "BOTTOM" then
+		frame:SetPoint("TOP", frame.anchor, "BOTTOM", config[anchorStyle].x, config[anchorStyle].y)
 	end
 
-	frame:SetSize(config.size, config.size)
+	frame:SetSize(config[anchorStyle].size, config[anchorStyle].size)
 end
 
 function BigDebuffs:SaveUnitFramePosition(frame)
@@ -746,10 +886,12 @@ function BigDebuffs:OnEnable()
 
     InsertTestDebuff(8122, "Magic") -- Psychic Scream
     InsertTestDebuff(408, nil) -- Kidney Shot
+    InsertTestDebuff(1766, nil) -- Kick
 
     if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
-        InsertTestDebuff(233490, "Magic") -- Unstable Affliction
-        InsertTestDebuff(114404, nil) -- Void Tendrils
+        InsertTestDebuff(51514, "Curse") -- Hex
+        InsertTestDebuff(316099, "Magic") -- Unstable Affliction
+        InsertTestDebuff(208086, nil) -- Colossus Smash
     end
 
     InsertTestDebuff(339, "Magic") -- Entangling Roots
@@ -1038,7 +1180,7 @@ function BigDebuffs:GetNameplatesPriority(id)
         if self.db.profile.spells[id].priority then return self.db.profile.spells[id].priority end
     end
 
-    if self.Spells[id].nounitFrames and
+    if self.Spells[id].nonameplates and
         (not self.db.profile.spells[id] or not self.db.profile.spells[id].nameplates)
     then
         return
@@ -1769,15 +1911,7 @@ function BigDebuffs:UNIT_AURA(unit)
 end
 
 function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
-    if not self.db.profile.nameplates.enabled
-		or not unit:find("nameplate")
-		or (not UnitCanAttack("player", unit) and not self.db.profile.nameplates.friendly)
-		or (UnitCanAttack("player", unit) and not self.db.profile.nameplates.enemy)
-		or (not UnitIsPlayer(unit) and not self.db.profile.nameplates.npc)
-		or (UnitIsUnit("player", unit))
-    then
-        return
-    end
+    if not self.db.profile.nameplates.enabled then return end
 
 	self:AttachNameplate(unit)
 
@@ -1882,6 +2016,17 @@ function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
         frame.interrupt = interrupt
         frame.current = icon
     else
+        frame:Hide()
+        frame.current = nil
+    end
+
+    --Hide/Disable auras which shouldn't be shown. Seems to fix false icons from appearing and getting stuck.
+    if frame.current ~= nil and (not unit:find("nameplate")
+        or (not UnitCanAttack("player", unit) and not self.db.profile.nameplates.friendly)
+        or (UnitCanAttack("player", unit) and not self.db.profile.nameplates.enemy)
+        or (not UnitIsPlayer(unit) and not self.db.profile.nameplates.npc)
+        or (UnitIsUnit("player", unit)))
+    then
         frame:Hide()
         frame.current = nil
     end
