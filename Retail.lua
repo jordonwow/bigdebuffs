@@ -399,7 +399,7 @@ addon.Spells = {
     [329543] = { type = BUFF_DEFENSIVE }, -- Divine Ascension
         [328530] = { type = IMMUNITY, parent = 329543 }, -- Divine Ascension
     [335467] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Devouring Plague
-    [453] = { type = CROWD_CONTROL }, -- Mind Soothe
+    [453] = { type = DEBUFF_OFFENSIVE, noraidFrames = true }, -- Mind Soothe
     [15286] = { type = BUFF_DEFENSIVE }, -- Vampiric Embrace
     [19236] = { type = BUFF_DEFENSIVE }, -- Desperate Prayer
     [111759] = { type = BUFF_OTHER }, -- Levitate
@@ -558,7 +558,7 @@ addon.Spells = {
     [314646] = { type = BUFF_OTHER }, -- Drink (40k mana vendor item)
         [348436] = { type = BUFF_OTHER, parent = 314646 }, -- (20k mana vendor item)
         [167152] = { type = BUFF_OTHER, parent = 314646 }, -- Refreshment (mage food)
-
+    -- Racials
     [20549] = { type = CROWD_CONTROL }, -- War Stomp
     [107079] = { type = CROWD_CONTROL }, -- Quaking Palm
     [255654] = { type = CROWD_CONTROL }, -- Bull Rush
@@ -567,7 +567,7 @@ addon.Spells = {
     [65116] = { type = BUFF_DEFENSIVE }, -- Stoneform
     [265221] = { type = BUFF_DEFENSIVE }, -- Fireblood
     [58984] = { type = BUFF_DEFENSIVE }, -- Shadowmeld
-
+    -- Shadowlands: Covenant/Soulbind
     [310143] = { type = BUFF_SPEED_BOOST }, -- Soulshape
     [320224] = { type = BUFF_DEFENSIVE }, -- Podtender (Night Fae - Dreamweaver Trait)
     [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord - Marileth Trait)
