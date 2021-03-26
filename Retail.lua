@@ -435,7 +435,7 @@ addon.Spells = {
     [199027] = { type = BUFF_DEFENSIVE }, -- Veil of Midnight (Subtlety PvP Talent)
     [197003] = { type = BUFF_DEFENSIVE }, -- Maneuverability (PvP Talent)
     [1784] = { type = BUFF_OTHER }, -- Stealth
-        [115191] = { type = BUFF_OTHER }, -- Stealth (with Subterfuge talented)
+        [115191] = { type = BUFF_OTHER, parent = 1784 }, -- Stealth (with Subterfuge talented)
 
     -- Shaman
 
