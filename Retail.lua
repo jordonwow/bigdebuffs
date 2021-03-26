@@ -548,6 +548,7 @@ addon.Spells = {
     [262228] = { type = BUFF_OFFENSIVE }, -- Deadly Calm
     [199085] = { type = CROWD_CONTROL }, -- Warpath (Prot PvP Talent)
     [198817] = { type = BUFF_OFFENSIVE }, -- Sharpen Blade
+        [198819] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Strike when applied with Sharpen Blade (50% healing reduc)
 
     -- Other
 
