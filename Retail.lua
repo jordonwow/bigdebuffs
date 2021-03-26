@@ -476,9 +476,9 @@ addon.Spells = {
     [260878] = { type = BUFF_DEFENSIVE }, -- Spirit Wolf
     [290641] = { type = BUFF_DEFENSIVE }, -- Ancestral Gift
     [204437] = { type = CROWD_CONTROL }, -- Lightning Lasso
-          [305483] = { parent = 204437 },
-          [305484] = { parent = 204437 },
-          [305485] = { parent = 204437 },
+          [305483] = { type = CROWD_CONTROL, parent = 204437 },
+          [305484] = { type = CROWD_CONTROL, parent = 204437 },
+          [305485] = { type = CROWD_CONTROL, parent = 204437 },
     [320125] = { type = BUFF_OFFENSIVE }, -- Echoing Shock
     [546] = { type = BUFF_OTHER }, -- Water Walking
     [333957] = { type = BUFF_OFFENSIVE }, -- Feral Spirit
