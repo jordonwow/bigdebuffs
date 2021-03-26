@@ -551,30 +551,32 @@ addon.Spells = {
 
     -- Other
 
-    [20549] = { type = CROWD_CONTROL }, -- War Stomp
+    [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Wounds
+
     [34709] = { type = BUFF_OTHER }, -- Shadow Sight
-    [107079] = { type = CROWD_CONTROL }, -- Quaking Palm
+    [345231] = { type = BUFF_DEFENSIVE }, -- Gladiator's Emblem
     [314646] = { type = BUFF_OTHER }, -- Drink (40k mana vendor item)
         [348436] = { type = BUFF_OTHER, parent = 314646 }, -- (20k mana vendor item)
         [167152] = { type = BUFF_OTHER, parent = 314646 }, -- Refreshment (mage food)
-    [256948] = { type = BUFF_OTHER }, -- Spatial Rift
+
+    [20549] = { type = CROWD_CONTROL }, -- War Stomp
+    [107079] = { type = CROWD_CONTROL }, -- Quaking Palm
     [255654] = { type = CROWD_CONTROL }, -- Bull Rush
     [287712] = { type = CROWD_CONTROL }, -- Haymaker
-    [310143] = { type = BUFF_SPEED_BOOST }, -- Soulshape
-    [320224] = { type = BUFF_DEFENSIVE }, -- Podtender
-    [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord Fleshcraft)
-    [324263] = { type = CROWD_CONTROL }, -- Sulfuric Emission (Necrolord - Emeni Trait)
-    [327140] = { type = BUFF_OTHER }, -- Forgeborne Reveries (Necrolord - Bonesmith Heirmir Trait)
-    [329776] = { type = BUFF_DEFENSIVE }, -- Ascendant Phial (Kyrian - Kleia Trait)
-    [331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr Door of Shadows)
-    [332505] = { type = BUFF_DEFENSIVE }, -- Soulsteel Clamps (Kyrian - Mikanikos Trait)
-    [345231] = { type = BUFF_DEFENSIVE }, -- Gladiator's Emblem
-    [332423] = { type = CROWD_CONTROL }, -- Sparkling Driftglobe Core (Kyrian - Mikanikos Trait)
+    [256948] = { type = BUFF_OTHER }, -- Spatial Rift
     [65116] = { type = BUFF_DEFENSIVE }, -- Stoneform
     [265221] = { type = BUFF_DEFENSIVE }, -- Fireblood
     [58984] = { type = BUFF_DEFENSIVE }, -- Shadowmeld
 
-    [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Wounds
+    [310143] = { type = BUFF_SPEED_BOOST }, -- Soulshape
+    [320224] = { type = BUFF_DEFENSIVE }, -- Podtender (Night Fae - Dreamweaver Trait)
+    [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord - Marileth Trait)
+    [324263] = { type = CROWD_CONTROL }, -- Sulfuric Emission (Necrolord - Emeni Trait)
+    [327140] = { type = BUFF_OTHER }, -- Forgeborne Reveries (Necrolord - Bonesmith Heirmir Trait)
+    [329776] = { type = BUFF_DEFENSIVE }, -- Ascendant Phial (Kyrian - Kleia Trait)
+    [331866] = { type = CROWD_CONTROL }, -- Agent of Chaos (Venthyr - Nadjia Trait)
+    [332505] = { type = BUFF_DEFENSIVE }, -- Soulsteel Clamps (Kyrian - Mikanikos Trait)
+    [332423] = { type = CROWD_CONTROL }, -- Sparkling Driftglobe Core (Kyrian - Mikanikos Trait)
 
     -- Legacy (may be deprecated)
 
