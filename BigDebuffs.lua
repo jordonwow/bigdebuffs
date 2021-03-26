@@ -1793,7 +1793,8 @@ end
 
 function BigDebuffs:UNIT_AURA(unit)
     if not self.db.profile.unitFrames.enabled or
-        not self.db.profile.unitFrames[unit:gsub("%d", "")].enabled
+        not self.db.profile.unitFrames[unit:gsub("%d", "")].enabled or
+        (GetNumGroupMembers() > 5 and unit:match("party"))
     then
         return
     end
