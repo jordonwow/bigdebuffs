@@ -108,7 +108,7 @@ addon.Spells = {
     [334693] = { type = CROWD_CONTROL }, -- Absolute Zero
     [91807] = { type = ROOT }, -- Shambling Rush
     [210141] = { type = CROWD_CONTROL}, -- Zombie Explosion (Reanimation Unholy PvP Talent)
-    [288849] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Crypt Fever (Necromancer's Bargain Unholy PvP Talent)
+    [288849] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Crypt Fever (Necromancer's Bargain Unholy PvP Talent)
     [3714] = { type = BUFF_OTHER }, -- Path of Frost
     [315443] = { type = BUFF_OFFENSIVE }, -- Abomination Limb
 
@@ -173,7 +173,7 @@ addon.Spells = {
     [236696] = { type = BUFF_DEFENSIVE }, -- Thorns (PvP Talent)
         [305497] = { type = BUFF_DEFENSIVE, parent = 236696 }, -- Thorns (PvP Talent)
     [50334] = { type = BUFF_DEFENSIVE }, -- Berserk (Guardian)
-    [127797] = { type = CROWD_CONTROL }, -- Ursol's Vortex
+    [127797] = { type = CROWD_CONTROL, nounitFrames = true, nonameplates = true }, -- Ursol's Vortex
     [202244] = { type = CROWD_CONTROL }, -- Overrun (Guardian PvP Talent)
     [247563] = { type = BUFF_DEFENSIVE }, -- Nature's Grasp (Resto Entangling Bark PvP Talent)
     [106898] = { type = BUFF_SPEED_BOOST }, -- Stampeding Roar (from Human Form)
@@ -503,8 +503,8 @@ addon.Spells = {
     [212295] = { type = IMMUNITY_SPELL }, -- Nether Ward
     [1098] = { type = CROWD_CONTROL }, -- Subjugate Demon
     [234877] = { type = DEBUFF_OFFENSIVE }, -- Bane of Shadows (Affliction PvP Talent)
-    [30213] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Legion Strike
-    [200587] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Fel Fissure
+    [30213] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Legion Strike
+    [200587] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Fel Fissure
     [212580] = { type = DEBUFF_OFFENSIVE }, -- Eye of the Observer
     [221705] = { type = BUFF_DEFENSIVE }, -- Casting Circle
     [333889] = { type = BUFF_DEFENSIVE }, -- Fel Domination
@@ -569,7 +569,7 @@ addon.Spells = {
     [65116] = { type = BUFF_DEFENSIVE }, -- Stoneform
     [265221] = { type = BUFF_DEFENSIVE }, -- Fireblood
 
-    [115804] = { type = DEBUFF_OFFENSIVE, nonameplates = true}, -- Mortal Wounds
+    [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true}, -- Mortal Wounds
 
     -- Legacy (may be deprecated)
 
