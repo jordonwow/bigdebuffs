@@ -405,6 +405,7 @@ addon.Spells = {
     [325013] = { type = BUFF_OFFENSIVE }, -- Boon of the Ascended (Kyrian)
     [65081] = { type = BUFF_SPEED_BOOST }, -- Body and Soul
     [121557] = { type = BUFF_SPEED_BOOST }, -- Angelic Feather
+    [199845] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Psyflay (Psyfiend) debuff
 
     -- Rogue
 
