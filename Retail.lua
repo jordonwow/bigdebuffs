@@ -184,6 +184,7 @@ addon.Spells = {
         [108292] = { type = BUFF_OFFENSIVE, parent = 319454 }, -- with Feral Affinity
         [108293] = { type = BUFF_OFFENSIVE, parent = 319454 }, -- with Guardian Affinity
         [108294] = { type = BUFF_OFFENSIVE, parent = 319454 }, -- with Resto Affinity
+    [5215] = { type = BUFF_OTHER }, -- Prowl
 
     -- Hunter
 
@@ -433,6 +434,8 @@ addon.Spells = {
     [197091] = { type = CROWD_CONTROL }, -- Neurotoxin (Assa PvP Talent)
     [199027] = { type = BUFF_DEFENSIVE }, -- Veil of Midnight (Subtlety PvP Talent)
     [197003] = { type = BUFF_DEFENSIVE }, -- Maneuverability (PvP Talent)
+    [1784] = { type = BUFF_OTHER }, -- Stealth
+        [115191] = { type = BUFF_OTHER }, -- Stealth (with Subterfuge talented)
 
     -- Shaman
 
@@ -569,6 +572,7 @@ addon.Spells = {
     [332423] = { type = CROWD_CONTROL }, -- Sparkling Driftglobe Core (Kyrian - Mikanikos Trait)
     [65116] = { type = BUFF_DEFENSIVE }, -- Stoneform
     [265221] = { type = BUFF_DEFENSIVE }, -- Fireblood
+    [58984] = { type = BUFF_DEFENSIVE }, -- Shadowmeld
 
     [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true}, -- Mortal Wounds
 
