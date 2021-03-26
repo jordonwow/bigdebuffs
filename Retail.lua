@@ -67,7 +67,7 @@ addon.Spells = {
     [91802] = { type = INTERRUPT, duration = 2 }, -- Shambling Rush (Death Knight)
     [96231] = { type = INTERRUPT, duration = 4 }, -- Rebuke (Paladin)
     [106839] = { type = INTERRUPT, duration = 4 }, -- Skull Bash (Feral)
-        [93985] = { type = INTERRUPT, duration = 4, parent = 106839}, -- Skull Bash (Feral)
+        [93985] = { type = INTERRUPT, duration = 4, parent = 106839 }, -- Skull Bash (Feral)
     [115781] = { type = INTERRUPT, duration = 6 }, -- Optical Blast (Warlock)
     [116705] = { type = INTERRUPT, duration = 4 }, -- Spear Hand Strike (Monk)
     [147362] = { type = INTERRUPT, duration = 3 }, -- Countershot (Hunter)
@@ -205,7 +205,7 @@ addon.Spells = {
     [131894] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- A Murder of Crows
     [162480] = { type = ROOT }, -- Steel Trap
     [186257] = { type = BUFF_SPEED_BOOST }, -- Aspect of the Cheetah
-        [203233] = { type = BUFF_SPEED_BOOST, parent = 186257}, -- Hunting Pack PvP Talent
+        [203233] = { type = BUFF_SPEED_BOOST, parent = 186257 }, -- Hunting Pack PvP Talent
     [186265] = { type = BUFF_DEFENSIVE }, -- Aspect of the Turtle
     [186289] = { type = BUFF_OFFENSIVE }, -- Aspect of the Eagle
     [238559] = { type = CROWD_CONTROL }, -- Bursting Shot
@@ -338,15 +338,15 @@ addon.Spells = {
     [215652] = { type = BUFF_OFFENSIVE }, -- Shield of Virtue (Buff)
         [217824] = { type = CROWD_CONTROL, parent = 215652 }, -- Shield of Virtue (Debuff)
     [221883] = { type = BUFF_SPEED_BOOST }, -- Divine Steed (Human?) (Each race has its own buff, pulled from wowhead - some might be incorrect)
-        [221885] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (Tauren?)
-        [221886] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (Blood Elf?)
-        [221887] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (Lightforged Draenei)
-        [254471] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (?)
-        [254472] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (?)
-        [254473] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (?)
-        [254474] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (?)
-        [276111] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (Dwarf?)
-        [276112] = { type = BUFF_SPEED_BOOST, parent =  221883}, -- Divine Steed (Dark Iron Dwarf?)
+        [221885] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (Tauren?)
+        [221886] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (Blood Elf?)
+        [221887] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (Lightforged Draenei)
+        [254471] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (?)
+        [254472] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (?)
+        [254473] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (?)
+        [254474] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (?)
+        [276111] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (Dwarf?)
+        [276112] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (Dark Iron Dwarf?)
     [343721] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Final Reckoning
     [255941] = { type = CROWD_CONTROL }, -- Wake of Ashes stun
     [157128] = { type = BUFF_DEFENSIVE }, -- Saved by the Light
@@ -484,7 +484,7 @@ addon.Spells = {
     [333957] = { type = BUFF_OFFENSIVE }, -- Feral Spirit
     [204361] = { type = BUFF_OFFENSIVE }, -- Bloodlust (Enhancement PvP Talent)
         [204362] = { type = BUFF_OFFENSIVE, parent = 204361 }, -- Heroism (Enhancement PvP Talent)
-    [192082] = {type = BUFF_SPEED_BOOST }, -- Windrush Totem
+    [192082] = { type = BUFF_SPEED_BOOST }, -- Windrush Totem
 
     -- Warlock
 
@@ -547,7 +547,7 @@ addon.Spells = {
     [236321] = { type = BUFF_DEFENSIVE }, -- War Banner
     [262228] = { type = BUFF_OFFENSIVE }, -- Deadly Calm
     [199085] = { type = CROWD_CONTROL }, -- Warpath (Prot PvP Talent)
-    [198817] = { type = BUFF_OFFENSIVE}, -- Sharpen Blade
+    [198817] = { type = BUFF_OFFENSIVE }, -- Sharpen Blade
 
     -- Other
 
@@ -555,7 +555,7 @@ addon.Spells = {
     [34709] = { type = BUFF_OTHER }, -- Shadow Sight
     [107079] = { type = CROWD_CONTROL }, -- Quaking Palm
     [314646] = { type = BUFF_OTHER }, -- Drink (40k mana vendor item)
-        [348436] = {type = BUFF_OTHER, parent = 314646 }, -- (20k mana vendor item)
+        [348436] = { type = BUFF_OTHER, parent = 314646 }, -- (20k mana vendor item)
         [167152] = { type = BUFF_OTHER, parent = 314646 }, -- Refreshment (mage food)
     [256948] = { type = BUFF_OTHER }, -- Spatial Rift
     [255654] = { type = CROWD_CONTROL }, -- Bull Rush
@@ -574,7 +574,7 @@ addon.Spells = {
     [265221] = { type = BUFF_DEFENSIVE }, -- Fireblood
     [58984] = { type = BUFF_DEFENSIVE }, -- Shadowmeld
 
-    [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true}, -- Mortal Wounds
+    [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Wounds
 
     -- Legacy (may be deprecated)
 
