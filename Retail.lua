@@ -559,9 +559,9 @@ addon.Spells = {
     [314646] = { type = BUFF_OTHER }, -- Drink (40k mana vendor item)
         [348436] = { type = BUFF_OTHER, parent = 314646 }, -- (20k mana vendor item)
         [167152] = { type = BUFF_OTHER, parent = 314646 }, -- Refreshment (mage food)
-    
+
     -- Racials
-    
+
     [20549] = { type = CROWD_CONTROL }, -- War Stomp
     [107079] = { type = CROWD_CONTROL }, -- Quaking Palm
     [255654] = { type = CROWD_CONTROL }, -- Bull Rush
@@ -570,9 +570,9 @@ addon.Spells = {
     [65116] = { type = BUFF_DEFENSIVE }, -- Stoneform
     [265221] = { type = BUFF_DEFENSIVE }, -- Fireblood
     [58984] = { type = BUFF_DEFENSIVE }, -- Shadowmeld
-    
+
     -- Shadowlands: Covenant/Soulbind
-    
+
     [310143] = { type = BUFF_SPEED_BOOST }, -- Soulshape
     [320224] = { type = BUFF_DEFENSIVE }, -- Podtender (Night Fae - Dreamweaver Trait)
     [323524] = { type = IMMUNITY }, -- Ultimate Form (Necrolord - Marileth Trait)
