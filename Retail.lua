@@ -247,7 +247,7 @@ addon.Spells = {
         [277792] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Bumblebee
     [122] = { type = ROOT }, -- Frost Nova
     [33395] = { type = ROOT }, -- Freeze
-    --[11426] = { type = BUFF_DEFENSIVE }, -- Ice Barrier (covers up combustion, doesn't provide much information) 
+    --[11426] = { type = BUFF_DEFENSIVE }, -- Ice Barrier (covers up combustion, doesn't provide much information)
     [12042] = { type = BUFF_OFFENSIVE }, -- Arcane Power
     [12051] = { type = BUFF_OFFENSIVE }, -- Evocation
     [12472] = { type = BUFF_OFFENSIVE }, -- Icy Veins
