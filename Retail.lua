@@ -247,7 +247,7 @@ addon.Spells = {
         [277792] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Bumblebee
     [122] = { type = ROOT }, -- Frost Nova
     [33395] = { type = ROOT }, -- Freeze
-    [11426] = { type = BUFF_DEFENSIVE }, -- Ice Barrier
+    --[11426] = { type = BUFF_DEFENSIVE }, -- Ice Barrier (covers up combustion, doesn't provide much information) 
     [12042] = { type = BUFF_OFFENSIVE }, -- Arcane Power
     [12051] = { type = BUFF_OFFENSIVE }, -- Evocation
     [12472] = { type = BUFF_OFFENSIVE }, -- Icy Veins
@@ -373,7 +373,7 @@ addon.Spells = {
     [232707] = { type = BUFF_DEFENSIVE }, -- Ray of Hope
     [197862] = { type = BUFF_DEFENSIVE }, -- Archangel
     [197871] = { type = BUFF_OFFENSIVE }, -- Dark Archangel (on the priest)
-        --[197874] = { type = BUFF_OFFENSIVE, parent = 197871 }, -- Dark Archangel (on others), might make it harder to see other offensives being used
+    [197874] = { type = BUFF_OFFENSIVE }, -- Dark Archangel (on others)
     [200183] = { type = BUFF_DEFENSIVE }, -- Apotheosis
     [200196] = { type = CROWD_CONTROL }, -- Holy Word: Chastise
         [200200] = { type = CROWD_CONTROL, parent = 200196 }, -- Holy Word: Chastise (Stun)
