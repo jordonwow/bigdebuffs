@@ -8,6 +8,9 @@ https://github.com/jordonwow/bigdebuffs/issues
 Submit a pull request:
 https://github.com/jordonwow/bigdebuffs/pulls
 
+## v9.20
+* Spell updates
+
 ## v9.19
 * Spell updates
 * Manually anchored party frames should no longer show while in a raid group larger than 5 players
