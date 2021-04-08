@@ -344,6 +344,19 @@ local GetAnchor = {
             return
         end
 
+        if unit and ( unit:match("arena") or unit:match("arena") ) then
+            local unitGUID = UnitGUID(unit)
+            for i = 1,5,1 do
+                local elvUIFrame = _G["ElvUF_Arena"..i]
+                if elvUIFrame and elvUIFrame:IsVisible() and elvUIFrame.unit then
+                    if unitGUID == UnitGUID(elvUIFrame.unit) then
+                        return elvUIFrame
+                    end
+                end
+            end
+            return
+        end
+
         return _G[anchor]
     end,
     ShadowedUnitFrames = function(anchor)
