@@ -1437,7 +1437,6 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
     end)
 
     -- Show extra buffs
-    local MAX_BUFFS = 6
     hooksecurefunc("CompactUnitFrame_UpdateBuffs", function(frame)
         if ( not frame.buffFrames or not frame.optionTable.displayBuffs ) then
             CompactUnitFrame_HideAllBuffs(frame);

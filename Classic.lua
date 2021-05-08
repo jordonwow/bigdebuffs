@@ -164,8 +164,6 @@ addon.Spells = {
     [18093] = { type = CROWD_CONTROL }, -- Pyroclasm
     [18223] = { type = ROOT }, -- Curse of Exhaustion
         [18310] = { parent = 18223 },
-        [18310] = { parent = 18311 },
-        [18310] = { parent = 18312 },
         [18313] = { parent = 18223 },
     [1714] = { type = ROOT }, -- Curse of Tongues
         [11719] = { parent =  1714 },
@@ -226,7 +224,6 @@ addon.Spells = {
     -- Druid
 
     [22812] = { type = BUFF_DEFENSIVE }, -- Barkskin
-    [19975] = { type = ROOT }, -- Nature's Grasp
     [339] = { type = ROOT }, -- Entangling Roots
         [1062] = { parent = 339 },
         [5195] = { parent = 339 },
@@ -250,7 +247,7 @@ addon.Spells = {
     [5211] = { type = CROWD_CONTROL}, -- Bash
         [6798] = { parent = 5211 },
         [8983] = { parent = 5211 },
-    [16979] = { type = ROOT }, -- Feral Charge
+    -- [16979] = { type = ROOT }, -- Feral Charge TODO: invalid spellId, root effect must be different than the interrupt
     [1850] = { type = BUFF_OFFENSIVE }, -- Dash
         [9821] = { parent = 1850 },
     [16689] = { type = BUFF_OFFENSIVE }, -- Nature's Grasp Buff
@@ -322,7 +319,6 @@ addon.Spells = {
     [5277] = { type = BUFF_DEFENSIVE }, -- Evasion
     [1776] = { type = CROWD_CONTROL }, -- Gouge
         [1777] = { parent = 1776 },
-        [8629] = { parent = 1776 },
         [8629] = { parent = 1776 },
         [11285] = { parent = 1776 },
         [11286] = { parent = 1776 },
