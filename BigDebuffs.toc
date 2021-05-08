@@ -10,6 +10,7 @@
 ## SavedVariables: BigDebuffsDB
 ## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, LibDualSpec-1.0
 ## X-Curse-Project-ID: 82697
+## X-Wago-ID: WYK98e6L
 
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua
