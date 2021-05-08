@@ -1,9 +1,7 @@
-#@retail@
 ## Interface: 90005
-#@end-retail@
-#@non-retail@
-# ## Interface: 11306
-#@end-non-retail@
+## Interface-Retail: 90005
+## Interface-Classic: 11307
+## Interface-BC: 20501
 ## Title: BigDebuffs
 ## Notes: Increases the debuff size of crowd control effects on the Blizzard raid frames
 ## Version: @project-version@
@@ -32,6 +30,7 @@ Libs\LibClassicDurations\LibClassicDurations.xml
 Locales\Locales.xml
 BigDebuffs.xml
 Retail.lua
+BurningCrusade.lua
 Classic.lua
 BigDebuffs.lua
 Options.lua
