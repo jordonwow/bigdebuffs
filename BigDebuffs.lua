@@ -116,14 +116,14 @@ local defaults = {
 			friendly = true,
 			npc = true,
             enemyAnchor = {
-                anchor = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and "TOP" or "RIGHT",
+                anchor = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and "RIGHT" or "TOP",
                 size = 40,
                 x = 0,
                 y = 0,
             },
             friendlyAnchor = {
                 friendlyAnchorEnabled = false,
-                anchor = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and "TOP" or "RIGHT",
+                anchor = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and "RIGHT" or "TOP",
                 size = 40,
                 x = 0,
                 y = 0,
@@ -192,7 +192,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
             Magic = function() return IsUsableSpell(GetSpellInfo(19736)) or IsUsableSpell(GetSpellInfo(19476)) end,
         },
     }
-    local _, class = UnitClass(PLAYER)
+    local _, class = UnitClass("player")
     BigDebuffs.dispelTypes = classDispel[class]
 else
     defaults.profile.unitFrames.focus = {
