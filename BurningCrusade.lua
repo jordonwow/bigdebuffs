@@ -286,6 +286,9 @@ addon.Spells = {
     [34490] = { type = CROWD_CONTROL }, -- Silencing Shot
     [34471] = { type = IMMUNITY_SPELL }, -- The Beast Within
     [5384] = { type = BUFF_DEFENSIVE }, -- Feign Death
+    [24394] = { type = CROWD_CONTROL }, -- Intimidation
+    [19577] = { type = BUFF_OFFENSIVE, parent = 24394 }, -- Intimidation (Buff)
+
 
     -- Druid
 
