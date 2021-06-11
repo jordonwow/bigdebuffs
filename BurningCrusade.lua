@@ -135,6 +135,10 @@ addon.Spells = {
     -- Priest
 
     [17] = { type = BUFF_DEFENSIVE }, -- Power Word: Shield
+    [453] = { type = BUFF_OTHER }, -- Mind Soothe
+        [8192] = { parent = 453 },
+        [10953] = { parent = 453 },
+        [25596] = { parent = 453 },
     [592] = { parent = 17 }, -- Power Word: Shield
         [600] = { parent = 17 },
         [3747] = { parent = 17 },
