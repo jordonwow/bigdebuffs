@@ -108,7 +108,7 @@ addon.Spells = {
     [321995] = { type = BUFF_OFFENSIVE }, -- Hypothermic Presence
     [334693] = { type = CROWD_CONTROL }, -- Absolute Zero (Frost Legendary)
     [206961] = { type = CROWD_CONTROL }, -- Tremble Before Me (Phearamones Legendary)
-    [91807] = { type = ROOT }, -- Shambling Rush
+    -- [91807] = { type = ROOT }, -- Shambling Rush (defined as Interrupt)
     [210141] = { type = CROWD_CONTROL}, -- Zombie Explosion (Reanimation Unholy PvP Talent)
     [288849] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Crypt Fever (Necromancer's Bargain Unholy PvP Talent)
     [3714] = { type = BUFF_OTHER }, -- Path of Frost
@@ -324,7 +324,7 @@ addon.Spells = {
     [31884] = { type = BUFF_OFFENSIVE }, -- Avenging Wrath
         [216331] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Avenging Crusader (Holy Talent)
         [231895] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Crusade (Retribution Talent)
-    [31935] = { type = CROWD_CONTROL }, -- Avenger's Shield
+    -- [31935] = { type = CROWD_CONTROL }, -- Avenger's Shield (defined as Interrupt)
     [86659] = { type = BUFF_DEFENSIVE }, -- Guardian of Ancient Kings
         [212641] = { type = BUFF_DEFENSIVE, parent = 86659 }, -- Guardian of Ancient Kings (Glyphed)
     [228050] = { type = IMMUNITY }, -- Guardian of the Forgotten Queen (Protection PvP Talent)
@@ -337,7 +337,7 @@ addon.Spells = {
     [210256] = { type = BUFF_DEFENSIVE }, -- Blessing of Sanctuary (Ret PvP Talent)
     [210294] = { type = BUFF_DEFENSIVE }, -- Divine Favor (Holy PvP Talent)
     [215652] = { type = BUFF_OFFENSIVE }, -- Shield of Virtue (Protection PvP Talent) - "next cast will..." buff
-    [217824] = { type = CROWD_CONTROL }, -- Shield of Virtue (Protection PvP Talent)
+    -- [217824] = { type = CROWD_CONTROL }, -- Shield of Virtue (Protection PvP Talent) (defined as Interrupt)
     [221883] = { type = BUFF_SPEED_BOOST }, -- Divine Steed (Human?) (Each race has its own buff, pulled from wowhead - some might be incorrect)
         [221885] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (Tauren?)
         [221886] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (Blood Elf?)
