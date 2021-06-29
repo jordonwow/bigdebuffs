@@ -119,7 +119,7 @@ addon.Spells = {
         [25454] = { parent = 8042 },
     [13491] = { type = INTERRUPT, duration = 5 }, -- Iron Knuckles
     [16979] = { type = INTERRUPT, duration = 4 }, -- Feral Charge (Druid)
-    [2139] = { type = INTERRUPT, duration = 10 }, -- Counterspell (Mage)
+    [2139] = { type = INTERRUPT, duration = 8 }, -- Counterspell (Mage)
     [1766] = { type = INTERRUPT, duration = 5 }, -- Kick (Rogue)
         [1767] = { parent = 1766 },
         [1768] = { parent = 1766 },
