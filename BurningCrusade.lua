@@ -432,7 +432,7 @@ addon.Spells = {
     [20230] = { type = IMMUNITY }, -- Retaliation
     [1719] = { type = BUFF_OFFENSIVE }, -- Recklessness
     [871] = { type = BUFF_DEFENSIVE }, -- Shield Wall
-    [12328] = { type = BUFF_OFFENSIVE }, -- Death Wish
+    [12292] = { type = BUFF_OFFENSIVE }, -- Death Wish
     [23694] = { type = ROOT }, -- Improved Hamstring
     [18499] = { type = BUFF_OFFENSIVE }, -- Berserker Rage
     [20253] = { type = CROWD_CONTROL }, -- Intercept Stun
