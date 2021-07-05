@@ -1912,7 +1912,15 @@ function BigDebuffs:UNIT_AURA(unit)
                 -- fix Obsidian Claw icon
                 icon = icon == 611425 and 1508487 or icon
 
-                SetPortraitToTexture(frame.icon, icon)
+                frame.icon:SetTexture(icon)
+
+                if not frame.mask then
+                    frame.mask = frame:CreateMaskTexture()
+                    frame.mask:SetAllPoints(frame.icon)
+                    frame.mask:SetTexture("Interface/CHARACTERFRAME/TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+                end
+
+                frame.icon:AddMaskTexture(frame.mask)
             else
                 frame.icon:SetTexture(icon)
             end
