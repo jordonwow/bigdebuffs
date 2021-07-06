@@ -1918,9 +1918,8 @@ function BigDebuffs:UNIT_AURA(unit)
                     frame.mask = frame:CreateMaskTexture()
                     frame.mask:SetAllPoints(frame.icon)
                     frame.mask:SetTexture("Interface/CHARACTERFRAME/TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+                    frame.icon:AddMaskTexture(frame.mask)
                 end
-
-                frame.icon:AddMaskTexture(frame.mask)
             else
                 frame.icon:SetTexture(icon)
             end
