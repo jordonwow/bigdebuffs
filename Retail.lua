@@ -602,6 +602,10 @@ addon.Spells = {
     [332505] = { type = BUFF_OTHER }, -- Soulsteel Clamps (Kyrian - Mikanikos Trait)
         [332506] = { type = BUFF_OTHER, parent = 332505 }, -- Soulsteel Clamps (Kyrian - Mikanikos Trait) - when moving
     [332423] = { type = CROWD_CONTROL }, -- Sparkling Driftglobe Core (Kyrian - Mikanikos Trait)
+    
+    -- Trinkets
+    [356567] = { type = CROWD_CONTROL }, -- Shackles of Malediction
+    [358259] = { type = CROWD_CONTROL }, -- Gladiator's Maledict
 
     -- Legacy (may be deprecated)
 
