@@ -225,6 +225,7 @@ addon.Spells = {
     [190925] = { type = ROOT }, -- Harpoon
     [202748] = { type = BUFF_DEFENSIVE }, -- Survival Tactics (PvP Talent)
     [248519] = { type = IMMUNITY_SPELL }, -- Interlope (BM PvP Talent)
+    [356727] = { type = CROWD_CONTROL }, -- Spider Venom of Chimaeral Sting (Hunter PvP Talent)
 
     -- Mage
 
