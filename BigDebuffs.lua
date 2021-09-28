@@ -362,6 +362,44 @@ local GetAnchor = {
 
         return _G[anchor]
     end,
+    NDuiFrames = function(anchor)
+        local anchors, unit = BigDebuffs.anchors
+
+        for u,configAnchor in pairs(anchors.NDui.units) do
+            if anchor == configAnchor then
+                unit = u
+                break
+            end
+        end
+
+        if unit and ( unit:match("party") or unit:match("player") ) then
+            local unitGUID = UnitGUID(unit)
+            for i = 1,5,1 do
+                local oUFFrame = _G["oUF_PartyGroup1UnitButton"..i]
+                if oUFFrame and oUFFrame:IsVisible() and oUFFrame.unit then
+                    if unitGUID == UnitGUID(oUFFrame.unit) then
+                        return oUFFrame
+                    end
+                end
+            end
+            return
+        end
+
+        if unit and ( unit:match("arena") or unit:match("arena") ) then
+            local unitGUID = UnitGUID(unit)
+            for i = 1,5,1 do
+                local oUFFrame = _G["oUF_Arena"..i]
+                if oUFFrame and oUFFrame:IsVisible() and oUFFrame.unit then
+                    if unitGUID == UnitGUID(oUFFrame.unit) then
+                        return oUFFrame
+                    end
+                end
+            end
+            return
+        end
+
+        return _G[anchor]
+    end,
     ShadowedUnitFrames = function(anchor)
         local frame = _G[anchor]
         if not frame then return end
@@ -414,25 +452,25 @@ local GetNameplateAnchor = {
             return frame.extended.bars.healthbar, frame.extended
         end
     end,
-  ThreatPlates = function(frame)
-    local tp_frame = frame.TPFrame
-    if tp_frame then
-      local visual = tp_frame.visual
-      -- healthbar and name are always defined, so checks are not really needed here.
-      if visual.healthbar and visual.healthbar:IsShown() then
-        return visual.healthbar, tp_frame
-      elseif visual.name and visual.name:IsShown() then
-        return visual.name, tp_frame
-      else
-        return tp_frame, tp_frame
-      end
-    end
-  end,
-  TidyPlates = function(frame)
-    if frame.carrier and frame.extended and frame.extended.bars and frame.carrier:IsShown() then
-        return frame.extended.bars.healthbar, frame.extended
-    end
-  end,
+    ThreatPlates = function(frame)
+        local tp_frame = frame.TPFrame
+        if tp_frame then
+            local visual = tp_frame.visual
+            -- healthbar and name are always defined, so checks are not really needed here.
+            if visual.healthbar and visual.healthbar:IsShown() then
+                return visual.healthbar, tp_frame
+            elseif visual.name and visual.name:IsShown() then
+                return visual.name, tp_frame
+            else
+                return tp_frame, tp_frame
+            end
+        end
+    end,
+    TidyPlates = function(frame)
+        if frame.carrier and frame.extended and frame.extended.bars and frame.carrier:IsShown() then
+            return frame.extended.bars.healthbar, frame.extended
+        end
+    end,
 	Blizzard = function(frame)
         if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
             return frame.UnitFrame, frame.UnitFrame
@@ -456,36 +494,42 @@ local nameplatesAnchors = {
     },
 	[2] = {
         used = function()
+			return NDui and NDui[2].db.Nameplate.Enable
+		end,
+        func = GetNameplateAnchor.ElvUINameplates, -- all by oUF
+    },
+	[3] = {
+        used = function()
 			return KuiNameplates ~= nil
 		end,
         func = GetNameplateAnchor.KuiNameplate,
     },
-	[3] = {
+	[4] = {
         used = function()
 			return Plater ~= nil
 		end,
         func = GetNameplateAnchor.Plater,
     },
-    [4] = {
+    [5] = {
         used = function()
             return NeatPlates ~= nil
         end,
         func = GetNameplateAnchor.NeatPlates,
     },
-    [5] = {
+    [6] = {
         used = function()
             -- IsAddOnLoaded("TidyPlates_ThreatPlates") should be better
             return TidyPlatesThreat ~= nil
         end,
         func = GetNameplateAnchor.ThreatPlates,
     },
-    [6] = {
+    [7] = {
         used = function()
             return TidyPlates ~= nil
         end,
         func = GetNameplateAnchor.TidyPlates,
     },
-    [7] = {
+    [8] = {
         used = function(frame) return frame.UnitFrame ~= nil end,
         func = GetNameplateAnchor.Blizzard,
     },
@@ -529,6 +573,25 @@ local anchors = {
             arena3 = "ElvUF_Arena3",
             arena4 = "ElvUF_Arena4",
             arena5 = "ElvUF_Arena5",
+        },
+    },
+    ["NDui"] = {
+        func = GetAnchor.NDuiFrames,
+        noPortait = true,
+        units = {
+            player = "oUF_Player",
+            pet = "oUF_Pet",
+            target = "oUF_Target",
+            focus = "oUF_Focus",
+            party1 = "oUF_PartyGroup1UnitButton2",
+            party2 = "oUF_PartyGroup1UnitButton3",
+            party3 = "oUF_PartyGroup1UnitButton4",
+            party4 = "oUF_PartyGroup1UnitButton5",
+            arena1 = "oUF_Arena1",
+            arena2 = "oUF_Arena2",
+            arena3 = "oUF_Arena3",
+            arena4 = "oUF_Arena4",
+            arena5 = "oUF_Arena5",
         },
     },
     ["bUnitFrames"] = {
