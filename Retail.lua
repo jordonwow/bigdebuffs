@@ -494,6 +494,8 @@ addon.Spells = {
     [192082] = { type = BUFF_SPEED_BOOST }, -- Windrush Totem
     [338036] = { type = BUFF_SPEED_BOOST }, -- Thunderous Paws (Conduit)
     [327164] = { type = BUFF_OFFENSIVE }, -- Primordial Wave (Necrolord Ability)
+    [207495] = { type = BUFF_DEFENSIVE }, -- Ancestral Protection (Totem)
+    	[207498] = { type = BUFF_DEFENSIVE, parent = 207495 }, -- Ancestral Protection (Player)
 
     -- Warlock
 
