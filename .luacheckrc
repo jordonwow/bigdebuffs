@@ -51,6 +51,7 @@ read_globals = {
     "KuiNameplates",
     "LibStub",
     "LoadAddOn",
+    "NDui",
     "NamePlateTooltip",
     "NeatPlates",
     "PLAYER",
