@@ -892,9 +892,10 @@ function BigDebuffs:AttachUnitFrame(unit)
 end
 
 function BigDebuffs:AttachNameplate(unit)
-    if InCombatLockdown() then return end
-
     local frame = self.Nameplates[unit]
+    if (not frame or frame:IsForbidden()) then
+        return
+    end
 
     local config = self.db.profile.nameplates
 
@@ -1129,6 +1130,8 @@ end
 local pending = {}
 
 hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
+    if not BigDebuffs.db.profile then return end
+    if not BigDebuffs.db.profile.raidFrames then return end
     if not BigDebuffs.db.profile.raidFrames.enabled then return end
     if frame:IsForbidden() then return end
     local name = frame:GetName()
