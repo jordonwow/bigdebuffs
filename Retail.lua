@@ -379,6 +379,7 @@ addon.Spells = {
     [197862] = { type = BUFF_DEFENSIVE }, -- Archangel (Disc PvP Talent)
     [197871] = { type = BUFF_OFFENSIVE }, -- Dark Archangel (Disc PvP Talent) - on the priest
         [197874] = { type = BUFF_OFFENSIVE, parent = 197871 }, -- Dark Archangel (Disc PvP Talent) - on others
+    [199890] = { type = ROOT }, -- Curse of Tongues
     [200183] = { type = BUFF_DEFENSIVE }, -- Apotheosis
     [200196] = { type = CROWD_CONTROL }, -- Holy Word: Chastise
         [200200] = { type = CROWD_CONTROL, parent = 200196 }, -- Holy Word: Chastise (Stun)
@@ -498,7 +499,7 @@ addon.Spells = {
     [338036] = { type = BUFF_SPEED_BOOST }, -- Thunderous Paws (Conduit)
     [327164] = { type = BUFF_OFFENSIVE }, -- Primordial Wave (Necrolord Ability)
     [207495] = { type = BUFF_DEFENSIVE }, -- Ancestral Protection (Totem)
-    	[207498] = { type = BUFF_DEFENSIVE, parent = 207495 }, -- Ancestral Protection (Player)
+        [207498] = { type = BUFF_DEFENSIVE, parent = 207495 }, -- Ancestral Protection (Player)
 
     -- Warlock
 
