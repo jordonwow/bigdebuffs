@@ -190,6 +190,7 @@ addon.Spells = {
     [323546] = { type = BUFF_OFFENSIVE }, -- Ravenous Frenzy (Venthyr Ability)
     [338142] = { type = BUFF_OFFENSIVE }, -- Lone Empowerment (Kyrian Ability)
     [327037] = { type = BUFF_DEFENSIVE }, -- Kindred Protection (Kyrian Ability)
+    [362486] = { type = IMMUNITY }, -- Keeper of the Grove
 
     -- Hunter
 
@@ -219,6 +220,7 @@ addon.Spells = {
     [209997] = { type = BUFF_DEFENSIVE }, -- Play Dead
     [212638] = { type = ROOT }, -- Tracker's Net
     [213691] = { type = CROWD_CONTROL }, -- Scatter Shot
+    [357021] = { type = CROWD_CONTROL }, -- Consecutive Concussion
     [260402] = { type = BUFF_OFFENSIVE }, -- Double Tap
     [266779] = { type = BUFF_OFFENSIVE }, -- Coordinated Assault
     [288613] = { type = BUFF_OFFENSIVE }, -- Trueshot
