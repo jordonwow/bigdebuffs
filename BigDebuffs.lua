@@ -471,6 +471,9 @@ local GetNameplateAnchor = {
             return frame.extended.bars.healthbar, frame.extended
         end
     end,
+	oUF = function(frame)
+        return frame.unitFrame.Health, frame.unitFrame
+    end,
     Blizzard = function(frame)
         if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
             return frame.UnitFrame, frame.UnitFrame
@@ -529,7 +532,13 @@ local nameplatesAnchors = {
         end,
         func = GetNameplateAnchor.TidyPlates,
     },
-    [8] = {
+	[8] = {
+        used = function()
+			return _G.oUF_NamePlateDriver
+		end,
+        func = GetNameplateAnchor.oUF,
+    },
+    [9] = {
         used = function(frame) return frame.UnitFrame ~= nil end,
         func = GetNameplateAnchor.Blizzard,
     },
