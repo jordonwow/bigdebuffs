@@ -613,6 +613,7 @@ addon.Spells = {
     -- Trinkets
     [356567] = { type = CROWD_CONTROL }, -- Shackles of Malediction
     [358259] = { type = CROWD_CONTROL }, -- Gladiator's Maledict
+    [362699] = { type = IMMUNITY_SPELL }, -- Gladiator's Resolve
 
     -- Legacy (may be deprecated)
 
