@@ -359,7 +359,7 @@ addon.Spells = {
     -- Priest
 
     [337661] = { type = BUFF_DEFENSIVE }, -- Translucent Image (Fade defensive Conduit)
-    [213602] = { type = BUFF_DEFENSIVE }, -- Greater Fade (Holy/Shadow PvP Talent)
+    [213602] = { type = IMMUNITY }, -- Greater Fade (Holy/Shadow PvP Talent)
     [605] = { type = CROWD_CONTROL, priority = true }, -- Mind Control
     [8122] = { type = CROWD_CONTROL }, -- Psychic Scream
     [9484] = { type = CROWD_CONTROL }, -- Shackle Undead
