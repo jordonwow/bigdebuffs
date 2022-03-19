@@ -1126,12 +1126,12 @@ function BigDebuffs:AddBigDebuffs(frame)
             CreateFrame("Button", frameName .. "BigDebuffsRaid" .. i, frame, "CompactDebuffTemplate")
         big:ClearAllPoints()
         if i > 1 then
-            if self.db.profile.raidFrames.anchor == "INNER" then
+            if self.db.profile.raidFrames.anchor == "INNER" or self.db.profile.raidFrames.anchor == "RIGHT" or self.db.profile.raidFrames.anchor == "TOP" then
                 big:SetPoint("BOTTOMLEFT", frame.BigDebuffs[i-1], "BOTTOMRIGHT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "LEFT" then
                 big:SetPoint("BOTTOMRIGHT", frame.BigDebuffs[i-1], "BOTTOMLEFT", 0, 0)
-            elseif self.db.profile.raidFrames.anchor == "RIGHT" then
-                big:SetPoint("BOTTOMLEFT", frame.BigDebuffs[i-1], "BOTTOMRIGHT", 0, 0)
+            elseif self.db.profile.raidFrames.anchor == "BOTTOM" then
+                big:SetPoint("TOPLEFT", frame.BigDebuffs[i-1], "TOPRIGHT", 0, 0)
             end
         else
             if self.db.profile.raidFrames.anchor == "INNER" then
@@ -1141,6 +1141,10 @@ function BigDebuffs:AddBigDebuffs(frame)
                 big:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", 0, 1)
             elseif self.db.profile.raidFrames.anchor == "RIGHT" then
                 big:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 0, 1)
+            elseif self.db.profile.raidFrames.anchor == "TOP" then
+                big:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 1)
+            elseif self.db.profile.raidFrames.anchor == "BOTTOM" then
+                big:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 0, 1)
             end
         end
 
