@@ -307,6 +307,7 @@ addon.Spells = {
     [213664] = { type = BUFF_DEFENSIVE }, -- Nimble Brew (Brew PvP Talent)
     [132578] = { type = BUFF_DEFENSIVE }, -- Invoke Niuzao, the Black Ox
     [344021] = { type = DEBUFF_OFFENSIVE }, -- Keefer's Skyreach
+    [353319] = { type = IMMUNITY_SPELL }, -- Peaceweaver
 
     -- Paladin
 
