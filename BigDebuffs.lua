@@ -419,6 +419,15 @@ local GetAnchor = {
             return frame, frame, true
         end
     end,
+    sArena = function(anchor)
+        local frame = _G[anchor]
+        if not frame then return end
+        if frame.ClassIcon then
+            return frame.ClassIcon, frame
+        else
+            return frame, frame, true
+        end
+    end,
 }
 
 local GetNameplateAnchor = {
@@ -643,6 +652,16 @@ local anchors = {
             party4 = "XPerl_party4portraitFrame",
         },
     },
+    ["sArena"] = {
+        func = GetAnchor.sArena,
+        units = {
+            arena1 = "sArenaEnemyFrame1",
+            arena2 = "sArenaEnemyFrame2",
+            arena3 = "sArenaEnemyFrame3",
+            arena4 = "sArenaEnemyFrame4",
+            arena5 = "sArenaEnemyFrame5",
+        },
+    },
     ["Blizzard"] = {
         units = {
             player = "PlayerPortrait",
@@ -815,7 +834,7 @@ function BigDebuffs:AttachUnitFrame(unit)
                     frame.anchor, frame.parent, frame.noPortait = anchor, parent, noPortait
                     if v.noPortait then frame.noPortait = true end
                     frame.alignLeft = v.alignLeft
-                    frame.blizzard = k == "Blizzard"
+                    frame.blizzard = (k == "Blizzard" or k == "sArena")
                     if not frame.blizzard then break end
                 end
             end
