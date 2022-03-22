@@ -63,6 +63,7 @@ addon.Spells = {
     [7744] = { type = BUFF_OFFENSIVE }, -- Will of the Forsaken
     [20549] = { type = CROWD_CONTROL }, -- War Stomp
     [20594] = { type = BUFF_OFFENSIVE }, -- Stoneform
+    [20572] = { type = BUFF_OFFENSIVE }, -- Blood Fury
 
     -- Other
 
