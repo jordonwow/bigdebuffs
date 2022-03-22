@@ -1561,7 +1561,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
                     end
                 end
                 if not doneWithDispelDebuffs then
-                    local debuffType = select(4, ...);
+                    debuffType = select(4, ...);
                     if ( dispellableDebuffTypes[debuffType] and not frame["hasDispel"..debuffType] ) then
                         frame["hasDispel"..debuffType] = true;
                         numUsedDispelDebuffs = numUsedDispelDebuffs + 1;
