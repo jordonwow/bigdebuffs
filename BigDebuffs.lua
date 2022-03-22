@@ -1467,7 +1467,8 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
 
         if not doneWithDebuffs then
             AuraUtil.ForEachAura(frame.displayedUnit, "HARMFUL", batchCount, function(...)
-                if CompactUnitFrame_Util_IsBossAura(...) then
+                local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura, isBossAura = ...;
+                if isBossAura then
                     if not bossDebuffs then
                         bossDebuffs = {};
                     end
@@ -1499,7 +1500,8 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
             index = 1;
             batchCount = math.max(frame.maxDebuffs, maxBuffs);
             AuraUtil.ForEachAura(frame.displayedUnit, "HELPFUL", batchCount, function(...)
-                if CompactUnitFrame_Util_IsBossAura(...) then
+                local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura, isBossAura = ...;
+                if isBossAura then
                     -- Boss Auras are considered Debuffs for our purposes.
                     if not doneWithDebuffs then
                         if not bossBuffs then
@@ -1545,8 +1547,9 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
             batchCount = math.max(frame.maxDebuffs, frame.maxDispelDebuffs);
             index = 1;
             AuraUtil.ForEachAura(frame.displayedUnit, "HARMFUL|RAID", batchCount, function(...)
+                local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura, isBossAura = ...;
                 if not doneWithDebuffs and displayOnlyDispellableDebuffs then
-                    if CompactUnitFrame_Util_ShouldDisplayDebuff(...) and not CompactUnitFrame_Util_IsBossAura(...) and not CompactUnitFrame_Util_IsPriorityDebuff(...) then
+                    if CompactUnitFrame_Util_ShouldDisplayDebuff(...) and not isBossAura and not CompactUnitFrame_Util_IsPriorityDebuff(...) then
                         if not nonBossDebuffs then
                             nonBossDebuffs = {};
                         end
