@@ -616,6 +616,7 @@ addon.Spells = {
     [356567] = { type = CROWD_CONTROL }, -- Shackles of Malediction
     [358259] = { type = CROWD_CONTROL }, -- Gladiator's Maledict
     [362699] = { type = IMMUNITY_SPELL }, -- Gladiator's Resolve
+    [363522] = { type = BUFF_DEFENSIVE }, -- Gladiator's Eternal Aegis
 
     -- Legacy (may be deprecated)
 
