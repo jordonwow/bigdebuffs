@@ -1410,9 +1410,8 @@ end
 
 if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
     local Default_CompactUnitFrame_Util_IsPriorityDebuff = CompactUnitFrame_Util_IsPriorityDebuff
-    local function CompactUnitFrame_Util_IsPriorityDebuff(...)
-        local default = Default_CompactUnitFrame_Util_IsPriorityDebuff(...)
-        local spellId = select(10, ...)
+    local function CompactUnitFrame_Util_IsPriorityDebuff(spellId)
+        local default = Default_CompactUnitFrame_Util_IsPriorityDebuff(spellId)
         return BigDebuffs:IsPriorityBigDebuff(spellId) or default
     end
 
@@ -1478,7 +1477,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
                         doneWithDebuffs = true;
                         return true;
                     end
-                elseif CompactUnitFrame_Util_IsPriorityDebuff(...) then
+                elseif CompactUnitFrame_Util_IsPriorityDebuff(spellId) then
                     if not priorityDebuffs then
                         priorityDebuffs = {};
                     end
@@ -1549,7 +1548,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
             AuraUtil.ForEachAura(frame.displayedUnit, "HARMFUL|RAID", batchCount, function(...)
                 local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura, isBossAura = ...;
                 if not doneWithDebuffs and displayOnlyDispellableDebuffs then
-                    if CompactUnitFrame_Util_ShouldDisplayDebuff(...) and not isBossAura and not CompactUnitFrame_Util_IsPriorityDebuff(...) then
+                    if CompactUnitFrame_Util_ShouldDisplayDebuff(...) and not isBossAura and not CompactUnitFrame_Util_IsPriorityDebuff(spellId) then
                         if not nonBossDebuffs then
                             nonBossDebuffs = {};
                         end
@@ -1611,9 +1610,8 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
 else
     local Default_CompactUnitFrame_UtilIsPriorityDebuff = CompactUnitFrame_UtilIsPriorityDebuff
 
-    local function CompactUnitFrame_UtilIsPriorityDebuff(...)
-        local _,_,_,_,_,_,_,_,_, spellId = UnitDebuff(...)
-        return BigDebuffs:IsPriorityDebuff(spellId) or Default_CompactUnitFrame_UtilIsPriorityDebuff(...)
+    local function CompactUnitFrame_UtilIsPriorityDebuff(spellId)
+        return BigDebuffs:IsPriorityDebuff(spellId) or Default_CompactUnitFrame_UtilIsPriorityDebuff(spellId)
     end
 
     local Default_SpellGetVisibilityInfo = SpellGetVisibilityInfo
@@ -1696,9 +1694,9 @@ else
         --Now we go through the debuffs with a priority (e.g. Weakened Soul and Forbearance)
         index = 1;
         while ( frameNum <= maxDebuffs ) do
-            local debuffName = UnitDebuff(frame.displayedUnit, index, filter);
+            local debuffName, _, _, _, _, _, _, _, _, spellId = UnitDebuff(frame.displayedUnit, index, filter);
             if ( debuffName ) then
-                if ( CompactUnitFrame_UtilIsPriorityDebuff(frame.displayedUnit, index, filter) ) then
+                if ( CompactUnitFrame_UtilIsPriorityDebuff(spellId) ) then
                     local debuffFrame = frame.debuffFrames[frameNum];
                     CompactUnitFrame_UtilSetDebuff(debuffFrame, frame.displayedUnit, index, filter, false, false);
                     frameNum = frameNum + 1;
@@ -1717,10 +1715,10 @@ else
         --Now, we display all normal debuffs.
         if ( frame.optionTable.displayNonBossDebuffs ) then
         while ( frameNum <= maxDebuffs ) do
-            local debuffName = UnitDebuff(frame.displayedUnit, index, filter);
+            local debuffName, _, _, _, _, _, _, _, _, spellId = UnitDebuff(frame.displayedUnit, index, filter);
             if ( debuffName ) then
                 if ( CompactUnitFrame_UtilShouldDisplayDebuff(frame.displayedUnit, index, filter) and not CompactUnitFrame_UtilIsBossAura(frame.displayedUnit, index, filter, false) and
-                    not CompactUnitFrame_UtilIsPriorityDebuff(frame.displayedUnit, index, filter)) then
+                    not CompactUnitFrame_UtilIsPriorityDebuff(spellId)) then
                     local debuffFrame = frame.debuffFrames[frameNum];
                     CompactUnitFrame_UtilSetDebuff(debuffFrame, frame.displayedUnit, index, filter, false, false);
                     frameNum = frameNum + 1;
