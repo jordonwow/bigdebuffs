@@ -1610,9 +1610,9 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
 else
     local Default_CompactUnitFrame_UtilIsPriorityDebuff = CompactUnitFrame_UtilIsPriorityDebuff
 
-    local function CompactUnitFrame_UtilIsPriorityDebuff(...)
-        local _,_,_,_,_,_,_,_,_, spellId = UnitDebuff(...)
-        return BigDebuffs:IsPriorityDebuff(spellId) or Default_CompactUnitFrame_UtilIsPriorityDebuff(spellId)
+    local function CompactUnitFrame_UtilIsPriorityDebuff(unit, index, filter)
+        local _,_,_,_,_,_,_,_,_, spellId = UnitDebuff(unit, index, filter)
+        return BigDebuffs:IsPriorityDebuff(spellId) or Default_CompactUnitFrame_UtilIsPriorityDebuff(unit, index, filter)
     end
 
     local Default_SpellGetVisibilityInfo = SpellGetVisibilityInfo
