@@ -1100,7 +1100,7 @@ BigDebuffs.AttachedFrames = {}
 local MAX_BUFFS = 6
 
 function BigDebuffs:AddBigDebuffs(frame)
-    if not frame or not frame.displayedUnit or not UnitPlayerControlled(frame.displayedUnit) then return end
+    if not frame or not frame.displayedUnit or not UnitIsPlayer(frame.displayedUnit) then return end
     local frameName = frame:GetName()
     if self.db.profile.raidFrames.increaseBuffs then
         for i = 4, MAX_BUFFS do
@@ -1135,8 +1135,7 @@ function BigDebuffs:AddBigDebuffs(frame)
             end
         else
             if self.db.profile.raidFrames.anchor == "INNER" then
-                local powerBarUsedHeight = _G.DefaultCompactUnitFrameSetupOptions.displayPowerBar and 8 or 0
-                big:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 3, 2 + powerBarUsedHeight)
+                big:SetPoint("BOTTOMLEFT", frame.debuffFrames[1], "BOTTOMLEFT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "LEFT" then
                 big:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", 0, 1)
             elseif self.db.profile.raidFrames.anchor == "RIGHT" then
@@ -1445,7 +1444,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
     local dispellableDebuffTypes = { Magic = true, Curse = true, Disease = true, Poison = true};
 
     hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame)
-        if not UnitPlayerControlled(frame.displayedUnit) then
+        if not UnitIsPlayer(frame.displayedUnit) then
             return
         end
 
@@ -1646,7 +1645,7 @@ else
     end
 
     hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
-        if ( not frame.debuffFrames ) then -- or not frame.optionTable.displayDebuffs ) then
+        if ( not frame.debuffFrames or not frame.optionTable.displayDebuffs ) then
             CompactUnitFrame_HideAllDebuffs(frame);
             return;
         end
@@ -1741,12 +1740,12 @@ else
 
     -- Show extra buffs
     hooksecurefunc("CompactUnitFrame_UpdateBuffs", function(frame)
-        if ( not frame.buffFrames ) then -- or not frame.optionTable.displayBuffs ) then
+        if ( not frame.buffFrames or not frame.optionTable.displayBuffs ) then
             CompactUnitFrame_HideAllBuffs(frame);
             return;
         end
 
-        if not UnitPlayerControlled(frame.displayedUnit) then
+        if not UnitIsPlayer(frame.displayedUnit) then
             return
         end
 
@@ -1790,7 +1789,7 @@ function BigDebuffs:ShowBigDebuffs(frame)
         (not frame.debuffFrames) or
         (not frame.BigDebuffs) or
         (not self:ShowInRaids()) or
-        (not UnitPlayerControlled(frame.displayedUnit))
+        (not UnitIsPlayer(frame.displayedUnit))
     then
         return
     end
@@ -2155,7 +2154,7 @@ function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
     if frame.current ~= nil and (not unit:find("nameplate")
         or (not UnitCanAttack("player", unit) and not self.db.profile.nameplates.friendly)
         or (UnitCanAttack("player", unit) and not self.db.profile.nameplates.enemy)
-        or (not UnitPlayerControlled(unit) and not self.db.profile.nameplates.npc)
+        or (not UnitIsPlayer(unit) and not self.db.profile.nameplates.npc)
         or (UnitIsUnit("player", unit)))
     then
         frame:Hide()
