@@ -1410,8 +1410,7 @@ end
 if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
     local Default_CompactUnitFrame_Util_IsPriorityDebuff = CompactUnitFrame_Util_IsPriorityDebuff
     local function CompactUnitFrame_Util_IsPriorityDebuff(spellId)
-        local default = Default_CompactUnitFrame_Util_IsPriorityDebuff(spellId)
-        return BigDebuffs:IsPriorityBigDebuff(spellId) or default
+        return BigDebuffs:IsPriorityBigDebuff(spellId) or Default_CompactUnitFrame_Util_IsPriorityDebuff(spellId)
     end
 
     local function SetDebuffsHelper(debuffFrames, frameNum, maxDebuffs, filter, isBossAura, isBossBuff, auras)
@@ -1424,7 +1423,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
                 local debuffFrame = debuffFrames[frameNum];
                 local index, name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId = aura[1], aura[2], aura[3], aura[4], aura[5], aura[6], aura[7], aura[8], aura[9], aura[10], aura[11];
                 local unit = nil;
-                CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, "HARMFUL", isBossAura, isBossBuff, name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId);
+                CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, isBossAura, isBossBuff, name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId);
                 frameNum = frameNum + 1;
 
                 if isBossAura then
@@ -1443,9 +1442,46 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
 
     local dispellableDebuffTypes = { Magic = true, Curse = true, Disease = true, Poison = true};
 
-    hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame)
-        if not UnitIsPlayer(frame.displayedUnit) then
-            return
+    local function CompactUnitFrame_CouldDisplayAura(auraInfo, ...)
+        local displayOnlyDispellableDebuffs = ...;
+
+        if auraInfo.isNameplateOnly then
+            return false;
+        end
+
+        if auraInfo.isBossAura then
+            return true;
+        end
+
+        if auraInfo.isHarmful and CompactUnitFrame_Util_IsPriorityDebuff(auraInfo.spellId) then
+            return true;
+        end
+
+        if auraInfo.isHarmful and (not displayOnlyDispellableDebuffs) and CompactUnitFrame_Util_ShouldDisplayDebuff(auraInfo.sourceUnit, auraInfo.spellId) then
+            return true;
+        end
+
+        if auraInfo.isHelpful and CompactUnitFrame_UtilShouldDisplayBuff(auraInfo.sourceUnit, auraInfo.spellId, auraInfo.canApplyAura) then
+            return true;
+        end
+
+        local isHarmfulAndRaid = auraInfo.isHarmful and auraInfo.isRaid;
+        if isHarmfulAndRaid and (not auraInfo.isBossAura) and displayOnlyDispellableDebuffs and CompactUnitFrame_Util_ShouldDisplayDebuff(auraInfo.sourceUnit, auraInfo.spellId) and (not CompactUnitFrame_Util_IsPriorityDebuff(auraInfo.spellId)) then
+            return true;
+        end
+
+        if isHarmfulAndRaid and dispellableDebuffTypes[auraInfo.debuffType] ~= nil then
+            return true;
+        end
+
+        return false;
+    end
+
+    hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, isFullUpdate, updatedAuraInfos)
+        local displayOnlyDispellableDebuffs = frame.optionTable.displayOnlyDispellableDebuffs;
+
+        if AuraUtil.ShouldSkipAuraUpdate(isFullUpdate, updatedAuraInfos, CompactUnitFrame_CouldDisplayAura, displayOnlyDispellableDebuffs) then
+            return;
         end
 
         local doneWithBuffs = not frame.buffFrames or not frame.optionTable.displayBuffs or frame.maxBuffs == 0;
@@ -1456,10 +1492,8 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
         local numUsedDebuffs = 0;
         local numUsedDispelDebuffs = 0;
 
-        local displayOnlyDispellableDebuffs = frame.optionTable.displayOnlyDispellableDebuffs;
-
         -- The following is the priority order for debuffs
-        local bossDebuffs, bossBuffs, priorityDebuffs, nonBossDebuffs;
+        local bossDebuffs, bossBuffs, priorityDebuffs, nonBossDebuffs, nonBossRaidDebuffs;
         local index = 1;
         local batchCount = frame.maxDebuffs;
 
@@ -1548,10 +1582,10 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
                 local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura, isBossAura = ...;
                 if not doneWithDebuffs and displayOnlyDispellableDebuffs then
                     if CompactUnitFrame_Util_ShouldDisplayDebuff(unitCaster, spellId) and not isBossAura and not CompactUnitFrame_Util_IsPriorityDebuff(spellId) then
-                        if not nonBossDebuffs then
-                            nonBossDebuffs = {};
+                        if not nonBossRaidDebuffs then
+                            nonBossRaidDebuffs = {};
                         end
-                        tinsert(nonBossDebuffs, {index, ...});
+                        tinsert(nonBossRaidDebuffs, {index, ...});
                         numUsedDebuffs = numUsedDebuffs + 1;
                         if numUsedDebuffs == frame.maxDebuffs then
                             doneWithDebuffs = true;
@@ -1559,7 +1593,6 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
                     end
                 end
                 if not doneWithDispelDebuffs then
-                    debuffType = select(4, ...);
                     if ( dispellableDebuffTypes[debuffType] and not frame["hasDispel"..debuffType] ) then
                         frame["hasDispel"..debuffType] = true;
                         numUsedDispelDebuffs = numUsedDispelDebuffs + 1;
@@ -1596,7 +1629,12 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
         do
             local isBossAura = false;
             local isBossBuff = false;
-            frameNum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, frameNum, maxDebuffs, "HARMFUL|RAID", isBossAura, isBossBuff, nonBossDebuffs);
+            frameNum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, frameNum, maxDebuffs, "HARMFUL|RAID", isBossAura, isBossBuff, nonBossRaidDebuffs);
+        end
+        do
+            local isBossAura = false;
+            local isBossBuff = false;
+            frameNum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, frameNum, maxDebuffs, "HARMFUL", isBossAura, isBossBuff, nonBossDebuffs);
         end
         numUsedDebuffs = frameNum - 1;
 
