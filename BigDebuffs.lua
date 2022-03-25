@@ -1791,6 +1791,8 @@ else
             return
         end
 
+        if (not frame.buffFrames) then return end
+
         local maxBuffs = BigDebuffs.db.profile.raidFrames.increaseBuffs and MAX_BUFFS or frame.maxBuffs
 
         local index = 1;
@@ -1801,7 +1803,9 @@ else
             if ( buffName ) then
                 if ( CompactUnitFrame_UtilShouldDisplayBuff(frame.displayedUnit, index, filter) and not CompactUnitFrame_UtilIsBossAura(frame.displayedUnit, index, filter, true) ) then
                     local buffFrame = frame.buffFrames[frameNum];
-                    CompactUnitFrame_UtilSetBuff(buffFrame, frame.displayedUnit, index, filter);
+                    if buffFrame then
+                        CompactUnitFrame_UtilSetBuff(buffFrame, frame.displayedUnit, index, filter);
+                    end
                     frameNum = frameNum + 1;
                 end
             else
@@ -1811,7 +1815,9 @@ else
         end
         for i=frameNum, maxBuffs do
             local buffFrame = frame.buffFrames[i];
-            buffFrame:Hide();
+            if buffFrame then
+                buffFrame:Hide();
+            end
         end
     end)
 end
