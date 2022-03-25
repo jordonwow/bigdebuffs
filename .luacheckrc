@@ -17,7 +17,6 @@ read_globals = {
     "AuraUtil",
     "BOSS_DEBUFF_SIZE_INCREASE",
     "BUFF_STACKS_OVERFLOW",
-    "BigDebuffs",
     "C_NamePlate",
     "C_Timer",
     "CombatLogGetCurrentEventInfo",

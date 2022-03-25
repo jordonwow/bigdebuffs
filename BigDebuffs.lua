@@ -1652,8 +1652,6 @@ else
         return BigDebuffs:IsPriorityDebuff(spellId) or Default_CompactUnitFrame_UtilIsPriorityDebuff(unit, index, filter)
     end
 
-    local Default_SpellGetVisibilityInfo = SpellGetVisibilityInfo
-
     local function CompactUnitFrame_UtilShouldDisplayBuff(unit, index, filter)
         local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura = UnitBuff(unit, index, filter);
 
@@ -1801,14 +1799,10 @@ else
         while ( frameNum <= maxBuffs ) do
             local buffName = UnitBuff(frame.displayedUnit, index, filter);
             if ( buffName ) then
-                if ( CompactUnitFrame_UtilShouldDisplayBuff(frame.displayedUnit, index, filter) and
-                    not CompactUnitFrame_UtilIsBossAura(frame.displayedUnit, index, filter, true) )
-                then
+                if ( CompactUnitFrame_UtilShouldDisplayBuff(frame.displayedUnit, index, filter) and not CompactUnitFrame_UtilIsBossAura(frame.displayedUnit, index, filter, true) ) then
                     local buffFrame = frame.buffFrames[frameNum];
-                    if buffFrame then
-                       CompactUnitFrame_UtilSetBuff(buffFrame, frame.displayedUnit, index, filter);
-                       frameNum = frameNum + 1;
-                    end
+                    CompactUnitFrame_UtilSetBuff(buffFrame, frame.displayedUnit, index, filter);
+                    frameNum = frameNum + 1;
                 end
             else
                 break;
@@ -1817,7 +1811,7 @@ else
         end
         for i=frameNum, maxBuffs do
             local buffFrame = frame.buffFrames[i];
-            if buffFrame then buffFrame:Hide() end
+            buffFrame:Hide();
         end
     end)
 end
