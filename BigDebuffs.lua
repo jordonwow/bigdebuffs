@@ -1791,8 +1791,6 @@ else
             return
         end
 
-        if (not frame.buffFrames) then return end
-
         local maxBuffs = BigDebuffs.db.profile.raidFrames.increaseBuffs and MAX_BUFFS or frame.maxBuffs
 
         local index = 1;
