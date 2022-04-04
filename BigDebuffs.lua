@@ -1478,6 +1478,11 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
     end
 
     hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, isFullUpdate, updatedAuraInfos)
+
+        if ((not frame) or frame:IsForbidden()) then
+            return
+        end
+
         local displayOnlyDispellableDebuffs = frame.optionTable.displayOnlyDispellableDebuffs;
 
         -- if AuraUtil.ShouldSkipAuraUpdate(isFullUpdate, updatedAuraInfos, CompactUnitFrame_CouldDisplayAura, displayOnlyDispellableDebuffs) then
