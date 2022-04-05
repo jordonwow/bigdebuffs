@@ -302,6 +302,7 @@ addon.Spells = {
     [3034] = { type = ROOT }, -- Viper Sting
         [14279] = { parent = 3034 },
         [14280] = { parent = 3034 },
+        [27018] = { parent = 3034 },
     [34490] = { type = CROWD_CONTROL }, -- Silencing Shot
     [34471] = { type = IMMUNITY_SPELL }, -- The Beast Within
     [5384] = { type = BUFF_DEFENSIVE }, -- Feign Death
