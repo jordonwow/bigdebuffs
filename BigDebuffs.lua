@@ -1479,9 +1479,9 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
 
     hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, isFullUpdate, updatedAuraInfos)
 
-        if ((not frame) or frame:IsForbidden()) then
-            return
-        end
+        if (not frame) or frame:IsForbidden() then return end
+
+        if (not UnitIsPlayer(frame.displayedUnit)) then return end
 
         local displayOnlyDispellableDebuffs = frame.optionTable.displayOnlyDispellableDebuffs;
 
@@ -2247,6 +2247,7 @@ function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
         frame.BigDebuffs.cooldown:SetReverse(true)
 
         frame.BigDebuffs:SetScript("OnEnter", function(self)
+            if NamePlateTooltip:IsForbidden() then return end
             if ( BigDebuffs.db.profile.nameplates.tooltips ) then
                 NamePlateTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
                 if self.interrupt then
@@ -2262,6 +2263,7 @@ function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
         end)
 
         frame.BigDebuffs:SetScript("OnLeave", function()
+            if NamePlateTooltip:IsForbidden() then return end
             NamePlateTooltip:Hide()
         end)
     end
