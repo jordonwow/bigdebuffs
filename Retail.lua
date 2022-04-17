@@ -451,6 +451,7 @@ addon.Spells = {
     [340094] = { type = BUFF_OFFENSIVE }, -- Master Assassin's Mark (Legendary)
     [345569] = { type = BUFF_OFFENSIVE }, -- Flagellation (Venthyr Ability)
     [347037] = { type = BUFF_OFFENSIVE }, -- Sepsis (Night Fae Ability)
+    [347037] = { type = DEBUFF_OFFENSIVE, priority = true}, -- Sepsis (Night Fae Ability)
 
     -- Shaman
 
