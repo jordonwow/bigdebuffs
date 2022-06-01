@@ -1052,10 +1052,25 @@ function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED()
             (UnitChannelInfo and select(7, UnitChannelInfo(unit)) == false))
         then
             local duration = spell.parent and self.Spells[spell.parent].duration or spell.duration
-            local _, class = UnitClass(unit)
 
-            if UnitBuffByName(unit, "Calming Waters") then
+            if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and UnitBuffByName(unit, "Calming Waters") then
                 duration = duration * 0.5
+            end
+
+            if WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC then
+                local _, playerClass = UnitClass("player")
+                if playerClass == "PALADIN" then
+                    local improvedConcAuraRank = select(5, GetTalentInfo(2, 12))
+                    if improvedConcAuraRank > 0 and UnitBuffByName(unit, "Concentration Aura") then
+                        duration = duration * (1.0 - 0.1 * improvedConcAuraRank)
+                    end
+                end
+                if playerClass == "SHAMAN" then
+                    local focusedMindRank = select(5, GetTalentInfo(3, 14))
+                    if focusedMindRank > 0 then
+                        duration = duration * (1.0 - 0.1 * focusedMindRank)
+                    end
+                end
             end
 
             self.units[destGUID] = self.units[destGUID] or {}
