@@ -133,7 +133,7 @@ addon.Spells = {
     [209426] = { type = BUFF_DEFENSIVE }, -- Darkness
     [211881] = { type = CROWD_CONTROL }, -- Fel Eruption
     [212800] = { type = BUFF_DEFENSIVE }, -- Blur
-    [196555] = { type = BUFF_DEFENSIVE }, -- Netherwalk
+    [196555] = { type = IMMUNITY }, -- Netherwalk
     [217832] = { type = CROWD_CONTROL }, -- Imprison
         [221527] = { type = CROWD_CONTROL, parent = 217832 }, -- Imprison (PvP Talent)
     [203704] = { type = DEBUFF_OFFENSIVE }, -- Mana Break
@@ -386,7 +386,7 @@ addon.Spells = {
         [200200] = { type = CROWD_CONTROL, parent = 200196 }, -- Holy Word: Chastise (Stun)
     [205369] = { type = CROWD_CONTROL }, -- Mind Bomb (Countdown)
         [226943] = { type = CROWD_CONTROL, parent = 205369 }, -- Mind Bomb (Disorient)
-    [213610] = { type = BUFF_DEFENSIVE }, -- Holy Ward
+    [213610] = { type = IMMUNITY_SPELL }, -- Holy Ward
     --[27827] = { type = BUFF_DEFENSIVE }, -- Spirit of Redemption
     [215769] = { type = BUFF_DEFENSIVE }, -- Spirit of Redemption (Spirit of the Redeemer Holy PvP Talent)
     [211336] = { type = BUFF_DEFENSIVE }, -- Archbishop Benedictus' Restitution (Resurrection Buff)
