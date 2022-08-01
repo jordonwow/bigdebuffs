@@ -43,6 +43,7 @@ read_globals = {
     "GetSpecializationInfo",
     "GetSpellInfo",
     "GetSpellTexture",
+    "GetTalentInfo",
     "GetTime",
     "InCombatLockdown",
     "InterfaceOptionsFrame_OpenToCategory",
