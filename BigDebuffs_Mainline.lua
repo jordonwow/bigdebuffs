@@ -369,6 +369,7 @@ addon.Spells = {
 
     -- Priest
 
+    [327661] = { type = BUFF_DEFENSIVE }, -- Fae Guardians
     [337661] = { type = BUFF_DEFENSIVE }, -- Translucent Image (Fade defensive Conduit)
     [213602] = { type = IMMUNITY }, -- Greater Fade (Holy/Shadow PvP Talent)
     [605] = { type = CROWD_CONTROL, priority = true }, -- Mind Control
