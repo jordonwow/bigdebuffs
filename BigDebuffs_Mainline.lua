@@ -194,6 +194,8 @@ addon.Spells = {
     [338142] = { type = BUFF_OFFENSIVE }, -- Lone Empowerment (Kyrian Ability)
     [327037] = { type = BUFF_DEFENSIVE }, -- Kindred Protection (Kyrian Ability)
     [362486] = { type = IMMUNITY }, -- Keeper of the Grove
+    [274837] = { type = DEBUFF_OFFENSIVE }, -- Feral Frenzy
+    [363498] = { type = DEBUFF_OFFENSIVE }, -- Sickle of the Lion
 
     -- Hunter
 
