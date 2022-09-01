@@ -294,6 +294,8 @@ else
         SHAMAN = {
             Disease = true,
             Poison = true,
+            -- Shamans 'Cleanse Spirit' restoration talent
+            Curse = function () return IsUsableSpell(GetSpellInfo(51886)) end
         },
         WARLOCK = {
             -- Felhunter's Devour Magic or Doomguard's Dispel Magic
