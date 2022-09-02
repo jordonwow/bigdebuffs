@@ -1,7 +1,5 @@
 local addonName, addon = ...
 
-if WOW_PROJECT_ID ~= WOW_PROJECT_BURNING_CRUSADE_CLASSIC then return end
-
 local BUFF_DEFENSIVE = "buffs_defensive"
 local BUFF_OFFENSIVE = "buffs_offensive"
 local BUFF_OTHER = "buffs_other"
