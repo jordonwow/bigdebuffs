@@ -152,8 +152,7 @@ addon.Spells = {
     [22842] = { type = BUFF_DEFENSIVE }, -- Frenzied Regeneration
     [29166] = { type = BUFF_OFFENSIVE }, -- Innervate
     [33786] = { type = CROWD_CONTROL }, -- Cyclone
-    [319439] = { type = BUFF_OFFENSIVE }, -- Bloodtalons	
-    [274837] = { type = DEBUFF_OFFENSIVE }, -- Feral Frenzy
+    [319439] = { type = BUFF_OFFENSIVE }, -- Bloodtalons
     [33891] = { type = BUFF_OFFENSIVE }, -- Incarnation: Tree of Life (for the menu entry - "Incarnation" tooltip isn't informative)
         [117679] = { type = BUFF_OFFENSIVE, parent = 33891 }, -- Incarnation (grants access to Tree of Life form)
     [45334] = { type = ROOT }, -- Immobilized (Wild Charge in Bear Form)
@@ -200,8 +199,8 @@ addon.Spells = {
     [136] = { type = BUFF_DEFENSIVE }, -- Mend Pet
     [1513] = { type = CROWD_CONTROL }, -- Scare Beast
     [3355] = { type = CROWD_CONTROL }, -- Freezing Trap
-    [356723] = { type = CROWD_CONTROL }, -- Scorpid Venom	
-    [356727] = { type = CROWD_CONTROL }, -- Spider Venom	
+    [356723] = { type = CROWD_CONTROL }, -- Scorpid Venom
+    [356727] = { type = CROWD_CONTROL }, -- Spider Venom
     [324149] = { type = DEBUFF_OFFENSIVE }, -- Flayed Shot
         [203337] = { type = CROWD_CONTROL, parent = 3355 }, -- Diamond Ice (Survival PvP Talent)
     [5384] = { type = BUFF_DEFENSIVE }, -- Feign Death
@@ -233,7 +232,6 @@ addon.Spells = {
     [190925] = { type = ROOT }, -- Harpoon
     [202748] = { type = BUFF_DEFENSIVE }, -- Survival Tactics (PvP Talent)
     [248519] = { type = IMMUNITY_SPELL }, -- Interlope (BM PvP Talent)
-    [356727] = { type = CROWD_CONTROL }, -- Spider Venom of Chimaeral Sting (Hunter PvP Talent)
     [212431] = { type = DEBUFF_OFFENSIVE }, -- Explosive Shot
 
     -- Mage
@@ -443,8 +441,6 @@ addon.Spells = {
     [31224] = { type = IMMUNITY_SPELL }, -- Cloak of Shadows
     [45182] = { type = BUFF_DEFENSIVE }, -- Cheating Death
     [51690] = { type = BUFF_OFFENSIVE }, -- Killing Spree
-    [193359] = { type = BUFF_OFFENSIVE }, -- True Bearing	
-    [193357] = { type = BUFF_OFFENSIVE }, -- Ruthless Precision
     [79140] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Vendetta
     [121471] = { type = BUFF_OFFENSIVE }, -- Shadow Blades
     [185422] = { type = BUFF_OFFENSIVE }, -- Shadow Dance
@@ -517,7 +513,7 @@ addon.Spells = {
 
     -- Warlock
     [325640] = { type = DEBUFF_OFFENSIVE }, -- Soul Rot
-	    [193359] = { type = BUFF_OFFENSIVE }, -- True Bearing	
+    [193359] = { type = BUFF_OFFENSIVE }, -- True Bearing
     [193357] = { type = BUFF_OFFENSIVE }, -- Ruthless Precision
     [710] = { type = CROWD_CONTROL }, -- Banish
     [5484] = { type = CROWD_CONTROL }, -- Howl of Terror
@@ -555,8 +551,8 @@ addon.Spells = {
     -- Warrior
 
     [871] = { type = BUFF_DEFENSIVE }, -- Shield Wall
-    [198817] = { type = DEBUFF_OFFENSIVE }, -- Sharpen Blade	
-    [1719] = { type = BUFF_OFFENSIVE }, -- Recklessness	
+    [198817] = { type = DEBUFF_OFFENSIVE }, -- Sharpen Blade
+    [1719] = { type = BUFF_OFFENSIVE }, -- Recklessness
     [52437] = {type = BUFF_OFFENSIVE }, -- Sudden Impact
     [5246] = { type = CROWD_CONTROL }, -- Intimidating Shout
         [316593] = { type = CROWD_CONTROL, parent = 5246 }, -- Menace (Prot Talent), main target
@@ -585,7 +581,6 @@ addon.Spells = {
     [236321] = { type = BUFF_DEFENSIVE }, -- War Banner (PvP Talent)
     [262228] = { type = BUFF_OFFENSIVE }, -- Deadly Calm
     [199085] = { type = CROWD_CONTROL }, -- Warpath (Prot PvP Talent)
-    [198817] = { type = BUFF_OFFENSIVE }, -- Sharpen Blade (Arms PvP Talent) - "next cast will..." buff
     [198819] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Strike when applied with Sharpen Blade (50% healing reduc)
     [202164] = { type = BUFF_SPEED_BOOST }, -- Bounding Stride
     [325886] = { type = CROWD_CONTROL }, -- Ancient Aftershock (Night Fae Ability)
