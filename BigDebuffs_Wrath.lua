@@ -158,7 +158,7 @@ addon.Spells = {
 
     -- WoTLK
     [20711] = { type = BUFF_DEFENSIVE, },  -- Spirit of Redemption
-    [47585] = { type = BUFF_DEFENSIVE, },  -- Dispersion
+    [47585] = { type = IMMUNITY, },  -- Dispersion
     [47788] = { type = BUFF_DEFENSIVE, },  -- Guardian Spirit
     [48066] = { type = BUFF_OTHER, }, -- Power Word: Shield
     [64044] = { type = CROWD_CONTROL, }, -- Psychic Horror (Horrify)
@@ -338,7 +338,7 @@ addon.Spells = {
         [14326] = { parent = 1513 },
         [14327] = { parent = 1513 },
     [3045] = { type = BUFF_OFFENSIVE }, -- Rapid Fire
-    [19263] = { type = BUFF_DEFENSIVE }, -- Deterrence
+    [19263] = { type = IMMUNITY }, -- Deterrence
     [19574] = { type = BUFF_OFFENSIVE }, -- Bestial Wrath
     [3355] = { type = CROWD_CONTROL }, -- Freezing Trap
         [14308] = { parent = 3355 },
