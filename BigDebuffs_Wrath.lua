@@ -142,6 +142,7 @@ addon.Spells = {
 
     -- Death Knight
 
+    [45524] = { type = ROOT }, -- Chains of Ice
     [47476] = { type = CROWD_CONTROL, },  -- Strangulate
     [47481] = { type = CROWD_CONTROL, },  -- Gnaw
     [47484] = { type = BUFF_DEFENSIVE, }, -- Huddle (Ghoul)
@@ -476,6 +477,8 @@ addon.Spells = {
         [6131] = { parent = 122 },
         [10230] = { parent = 122 },
         [27088] = { parent = 122 },
+        [42917] = { parent = 122 },
+        [55080] = { parent = 122 }, -- Shattered Barrier
     [12042] = { type = BUFF_OFFENSIVE }, -- Arcane Power
     [45438] = { type = IMMUNITY }, -- Ice Block
     [12051] = { type = BUFF_OFFENSIVE }, -- Evocation
