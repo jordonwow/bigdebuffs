@@ -36,9 +36,7 @@ addon.WarningDebuffs = {
 -- Make sure we always see these debuffs, but don't make them bigger
 addon.PriorityDebuffs = {
     770, -- Faerie Fire
-    778, -- Faerie Fire
-    9749, -- Faerie Fire
-    9907, -- Faerie Fire
+    16857, -- Faerie Fire (Feral)
     12294, -- Mortal Strike
     21551, -- Mortal Strike
     21552, -- Mortal Strike
@@ -424,9 +422,7 @@ addon.Spells = {
         [16813] = { parent = 16689 },
         [17329] = { parent = 16689 },
     [770] = { type = BUFF_OTHER }, -- Faerie Fire
-        [778] = { parent = 770 },
-        [9749] = { parent = 770 },
-        [9907] = { parent = 770 },
+        [16857] = { parent = 770 }, -- Faerie Fire (Feral)
     [33786] = { type = CROWD_CONTROL }, -- Cyclone
     [19675] = { type = ROOT }, -- Feral Charge Effect
         [45334] = { parent = 19675 },
