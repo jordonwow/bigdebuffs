@@ -1197,6 +1197,7 @@ hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
     if frame:IsForbidden() then return end
     local name = frame:GetName()
     if not name or not name:match("^Compact") then return end
+    if not frame.unit or not frame.unitExists then return end
 
     --catches very rare frame:SetAttribute() error when frame is not visible yet
     if InCombatLockdown() and not frame:IsVisible() then
