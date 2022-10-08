@@ -4,7 +4,7 @@
 ## Version: v11.2
 ## Author: Jordon
 ## SavedVariables: BigDebuffsDB
-## X-Curse-Project-ID: 82697
+## X-Curse-Project-ID: @project-version@
 ## X-Wago-ID: WYK98e6L
 ## X-WoWI-ID: 26006
 ## OptionalDeps: Masque
