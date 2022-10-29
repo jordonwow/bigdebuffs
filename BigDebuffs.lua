@@ -2128,6 +2128,9 @@ function BigDebuffs:UNIT_AURA(unit)
                     frame.mask = frame:CreateMaskTexture()
                     frame.mask:SetAllPoints(frame.icon)
                     frame.mask:SetTexture("Interface/CHARACTERFRAME/TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+                    if frame.unit == "player" then
+                        frame.mask:SetAtlas("UI-HUD-UnitFrame-Player-Portrait-Mask", _G.TextureKitConstants.UseAtlasSize)
+                    end
                     frame.icon:AddMaskTexture(frame.mask)
                 end
             else
