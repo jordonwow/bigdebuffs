@@ -1569,7 +1569,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
         AuraUtil.ForEachAura(frame.displayedUnit, AuraUtil.CreateFilterString(AuraUtil.AuraFilters.Harmful, AuraUtil.AuraFilters.Raid), batchCount, HandleAura, usePackedAura);
     end
 
-    hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, isFullUpdate, updatedAuraInfos)
+    hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
 
         if (not frame) or frame:IsForbidden() then return end
 
