@@ -849,8 +849,8 @@ function BigDebuffs:AttachUnitFrame(unit)
                 if v.func then
                     anchor, parent, noPortait = v.func(v.units[unit])
                 else
-                    if k == "Blizzard" then
-                        anchor = type(v.units[unit]) == "string" and _G[v.units[unit]] or v.units[unit]
+                    if k == "Blizzard" and type(v.units[unit]) == "table" then
+                        anchor = v.units[unit]
                     else
                         anchor = _G[v.units[unit]]
                     end
