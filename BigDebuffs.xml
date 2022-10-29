@@ -4,11 +4,6 @@
         <Size>
             <AbsDimension x="36" y="36"/>
         </Size>
-        <Anchors>
-            <Anchors>
-                <Anchor point="CENTER"/>
-            </Anchors>
-        </Anchors>
         <NormalTexture name="$parentNormalTexture" parentKey="NormalTexture">
             <Anchors>
                 <Anchor point="TOPLEFT" x="-15" y="15"/>
