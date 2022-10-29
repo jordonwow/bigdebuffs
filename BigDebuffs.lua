@@ -681,24 +681,25 @@ local anchors = {
             arena5 = "ArenaEnemyFrame5ClassPortrait",
         },
     },
-    ["BlizzardRetail"] = {
-        units = {
-            player = "PlayerFrame",
-            pet = "PetPortrait",
-            target = "TargetFrame",
-            focus = "FocusFrame",
-            --party1 = "PartyMemberFrame1Portrait",
-            --party2 = "PartyMemberFrame2Portrait",
-            --party3 = "PartyMemberFrame3Portrait",
-            --party4 = "PartyMemberFrame4Portrait",
-            arena1 = "ArenaEnemyMatchFrame1ClassPortrait",
-            arena2 = "ArenaEnemyMatchFrame2ClassPortrait",
-            arena3 = "ArenaEnemyMatchFrame3ClassPortrait",
-            arena4 = "ArenaEnemyMatchFrame4ClassPortrait",
-            arena5 = "ArenaEnemyMatchFrame5ClassPortrait",
-        },
-    },
 }
+
+if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+    anchors.Blizzard.units = {
+        player = "PlayerFrame",
+        pet = "PetPortrait",
+        target = "TargetFrame",
+        focus = "FocusFrame",
+        arena1 = "ArenaEnemyMatchFrame1ClassPortrait",
+        arena2 = "ArenaEnemyMatchFrame2ClassPortrait",
+        arena3 = "ArenaEnemyMatchFrame3ClassPortrait",
+        arena4 = "ArenaEnemyMatchFrame4ClassPortrait",
+        arena5 = "ArenaEnemyMatchFrame5ClassPortrait",
+    }
+
+    for memberFrame in _G.PartyFrame.PartyMemberFramePool:EnumerateActive() do
+        anchors.Blizzard.units[memberFrame.unit] = memberFrame
+    end
+end
 
 BigDebuffs.anchors = anchors
 
@@ -806,13 +807,6 @@ end
 function BigDebuffs:AttachUnitFrame(unit)
     if InCombatLockdown() then return end
 
-    --remove this once a better way to attach frame to new party container introduced in 10.0
-    if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
-        if (unit == "party1" or unit == "party2" or unit == "party3" or unit == "party4") then
-            return
-        end
-    end
-
     local frame = self.UnitFrames[unit]
     local frameName = addonName .. unit .. "UnitFrame"
 
@@ -855,26 +849,8 @@ function BigDebuffs:AttachUnitFrame(unit)
                 if v.func then
                     anchor, parent, noPortait = v.func(v.units[unit])
                 else
-                    --portraits moved to container in 10.0, not sure how else to handle these containers right now
-                    if k == "BlizzardRetail" and (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-                        if unit == "player" then
-                            anchor = _G[v.units[unit]].PlayerFrameContainer.PlayerPortrait
-                        elseif unit == "target" or unit == "focus" then
-                            anchor = _G[v.units[unit]].TargetFrameContainer.Portrait
-                        --elseif unit == "party1" or unit == "party2" or unit == "party3" or unit == "party4" then
-                            --for memberFrame in _G["PartyFrame"].PartyMemberFramePool:EnumerateActive() do
-                                --local partyUnit = memberFrame:GetUnit()
-                                --if partyUnit and UnitGUID(partyUnit) and UnitIsPlayer(partyUnit) and unit == partyUnit then
-                                --if partyUnit and UnitGUID(partyUnit) and UnitIsPlayer(partyUnit) then
-                                    --anchor = memberFrame
-                                --end
-                            --end
-                        else
-                            --arena[1-5] and pet
-                            anchor = _G[v.units[unit]]
-                        end
-                    elseif k == "BlizzardRetail" then
-                        break
+                    if k == "Blizzard" then
+                        anchor = type(v.units[unit]) == "string" and _G[v.units[unit]] or v.units[unit]
                     else
                         anchor = _G[v.units[unit]]
                     end
@@ -884,7 +860,7 @@ function BigDebuffs:AttachUnitFrame(unit)
                     frame.anchor, frame.parent, frame.noPortait = anchor, parent, noPortait
                     if v.noPortait then frame.noPortait = true end
                     frame.alignLeft = v.alignLeft
-                    frame.blizzard = (k == "Blizzard" or k == "sArena" or k == "BlizzardRetail")
+                    frame.blizzard = (k == "Blizzard" or k == "sArena")
                     if not frame.blizzard then break end
                 end
             end
@@ -894,15 +870,16 @@ function BigDebuffs:AttachUnitFrame(unit)
     if frame.anchor then
         if frame.blizzard then
             -- Blizzard Frame
-            frame:SetParent(frame.anchor:GetParent())
-            frame:SetFrameLevel(frame.anchor:GetParent():GetFrameLevel())
-            frame.cooldown:SetFrameLevel(frame.anchor:GetParent():GetFrameLevel())
-            frame.anchor:SetDrawLayer("BACKGROUND")
+            if frame.anchor.SetDrawLayer then frame.anchor:SetDrawLayer("BACKGROUND") end
+            local parent = frame.anchor.portrait and frame.anchor.portrait:GetParent() or frame.anchor:GetParent()
+            frame:SetParent(parent)
+            frame:SetFrameLevel(parent:GetFrameLevel())
 
-            frame:SetScale(1.2)
-            --frame.IconMask:Show()
-            frame.NormalTexture:Hide()
-
+            if frame.anchor.portrait then
+                frame.anchor.portrait:SetDrawLayer("BACKGROUND")
+            elseif frame.anchor.SetDrawLayer then
+                frame.anchor:SetDrawLayer("BACKGROUND")
+            end
             frame.cooldown:SetSwipeTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMaskSmall")
         else
             frame:SetParent(frame.parent and frame.parent or frame.anchor)
@@ -917,7 +894,11 @@ function BigDebuffs:AttachUnitFrame(unit)
                 if frame.alignLeft then
                     frame:SetPoint("TOPRIGHT", frame.anchor, "TOPLEFT")
                 else
-                    frame:SetPoint("TOPLEFT", frame.anchor, "TOPRIGHT")
+                    if frame.blizzard and frame.anchor.portrait then
+                        frame:SetAllPoints(frame.anchor.portrait:GetParent())
+                    else
+                        frame:SetPoint("TOPLEFT", frame.anchor, "TOPRIGHT")
+                    end
                 end
             else
                 if config.relativePoint == "auto" then
@@ -952,7 +933,13 @@ function BigDebuffs:AttachUnitFrame(unit)
                 frame:SetSize(height, height)
             end
         else
-            frame:SetAllPoints(frame.anchor)
+            if frame.blizzard and frame.anchor.portrait then
+                frame:ClearAllPoints()
+                frame:SetPoint(frame.anchor.portrait:GetPoint())
+                frame:SetSize(frame.anchor.portrait:GetSize())
+            else
+                frame:SetAllPoints(frame.anchor)
+            end
         end
     else
         -- Manual
