@@ -1,6 +1,33 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
     <Button name="BigDebuffsUnitFrameTemplate" inherits="ActionButtonTemplate" parent="UIParent" hidden="true" dontSavePosition="true" virtual="true">
+    <Button name="BigDebuffsDebuffTemplate" inherits="CompactDebuffTemplate" virtual="true">
+        <Scripts>
+            <OnUpdate>
+                if BigDebuffs.test then return end
+                if ( GameTooltip:IsOwned(self) ) then
+                    if ( self.isBossBuff ) then
+                        GameTooltip:SetUnitBuffByAuraInstanceID(self:GetParent().displayedUnit, self.auraInstanceID, self.filter);
+                    else
+                        GameTooltip:SetUnitDebuffByAuraInstanceID(self:GetParent().displayedUnit, self.auraInstanceID, self.filter);
+                    end
+                end
+            </OnUpdate>
+            <OnEnter>
+                if BigDebuffs.test then return end
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
+                    if ( self.isBossBuff ) then
+                        GameTooltip:SetUnitBuffByAuraInstanceID(self:GetParent().displayedUnit, self.auraInstanceID, self.filter);
+                    else
+                        GameTooltip:SetUnitDebuffByAuraInstanceID(self:GetParent().displayedUnit, self.auraInstanceID, self.filter);
+                    end
+            </OnEnter>
+            <OnLeave>
+                GameTooltip:Hide();
+            </OnLeave>
+        </Scripts>
+    </Button>
+    <Button name="BigDebuffsUnitFrameTemplate" parent="UIParent" hidden="true" dontSavePosition="true" virtual="true">
         <Size>
             <AbsDimension x="36" y="36"/>
         </Size>

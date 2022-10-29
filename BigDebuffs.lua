@@ -1205,7 +1205,7 @@ function BigDebuffs:AddBigDebuffs(frame)
     local max = self.db.profile.raidFrames.maxDebuffs + 1 -- add a frame for warning debuffs
     for i = 1, max do
         local big = frame.BigDebuffs[i] or
-            CreateFrame("Button", frameName .. "BigDebuffsRaid" .. i, frame, "CompactDebuffTemplate")
+            CreateFrame("Button", frameName .. "BigDebuffsRaid" .. i, frame, "BigDebuffsDebuffTemplate")
         big:ClearAllPoints()
         if i > 1 then
             if self.db.profile.raidFrames.anchor == "INNER" or self.db.profile.raidFrames.anchor == "RIGHT" or self.db.profile.raidFrames.anchor == "TOP" then
