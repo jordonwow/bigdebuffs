@@ -2122,6 +2122,7 @@ function BigDebuffs:UNIT_AURA(unit)
                 icon = icon == 611425 and 1508487 or icon
 
                 frame.icon:SetTexture(icon)
+                frame.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
                 if not frame.mask then
                     frame.mask = frame:CreateMaskTexture()
