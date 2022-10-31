@@ -1908,14 +1908,14 @@ function BigDebuffs:ShowBigDebuffs(frame)
             if size and not friendlySmokeBomb then
                 big = true
                 local duration = time and time - now or 0
-                tinsert(debuffs, { i, size, duration, self:GetDebuffPriority(id) })
+                tinsert(debuffs, { i, size, duration, self:GetDebuffPriority(id) , id})
             elseif self.db.profile.raidFrames.redirectBliz or
             (self.db.profile.raidFrames.anchor == "INNER" and not self.db.profile.raidFrames.hideBliz) then
                 if not frame.optionTable.displayOnlyDispellableDebuffs or
                     self:IsDispellable(frame.displayedUnit, dispelType)
                 then
                     -- duration 0 to preserve Blizzard order
-                    tinsert(debuffs, { i, self.db.profile.raidFrames.default, 0, 0 })
+                    tinsert(debuffs, { i, self.db.profile.raidFrames.default, 0, 0 , id})
                 end
             end
 
@@ -1944,7 +1944,7 @@ function BigDebuffs:ShowBigDebuffs(frame)
         local size = self:GetDebuffSize(spellId, false)
         if size then
             big = true
-            tinsert(debuffs, { -1, size, 0, self:GetDebuffPriority(spellId) })
+            tinsert(debuffs, { -1, size, 0, self:GetDebuffPriority(spellId), spellId })
         end
     end
 
@@ -1989,6 +1989,7 @@ function BigDebuffs:ShowBigDebuffs(frame)
             if index <= self.db.profile.raidFrames.maxDebuffs or debuffs[i][1] == warning then
                 if not frame.BigDebuffs[index] then break end
                 frame.BigDebuffs[index].baseSize = frame:GetHeight() * debuffs[i][2] * 0.01
+                frame.BigDebuffs[index].spellId = debuffs[i][5];
                 CompactUnitFrame_UtilSetDebuff(frame.BigDebuffs[index],
                     frame.displayedUnit, debuffs[i][1], nil, false, false)
                 frame.BigDebuffs[index].cooldown:SetSwipeColor(0, 0, 0, 0.7)
