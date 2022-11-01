@@ -1172,6 +1172,7 @@ function BigDebuffs:AddBigDebuffs(frame)
     if not frame or not frame.displayedUnit or not UnitIsPlayer(frame.displayedUnit) then return end
     local frameName = frame:GetName()
     if self.db.profile.raidFrames.increaseBuffs then
+        CompactUnitFrame_SetMaxBuffs(frame, 6)
         for i = 4, MAX_BUFFS do
             local buffPrefix = frameName .. "Buff"
             local buffFrame = _G[buffPrefix .. i] or
