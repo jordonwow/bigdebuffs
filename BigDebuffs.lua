@@ -1614,7 +1614,7 @@ else
         --isBossAura says make this look large.
         --isBossBuff looks in HELPFULL auras otherwise it looks in HARMFULL ones
         local name, icon, count, debuffType, duration, expirationTime, unitCaster, _, _, spellId = ...;
-    
+
         if index == -1 then
             -- it's an interrupt
             local spell = BigDebuffs.units[UnitGUID(unit)]
@@ -1639,7 +1639,7 @@ else
                 end
             end
         end
-    
+
         debuffFrame.filter = filter;
         debuffFrame.icon:SetTexture(icon);
         if (count > 1) then
@@ -1653,7 +1653,7 @@ else
             debuffFrame.count:Hide();
         end
         debuffFrame:SetID(index);
-    
+
         if LibClassicDurations then
             local durationNew, expirationTimeNew = LibClassicDurations:GetAuraDurationByUnit(unit, spellId, unitCaster)
             if duration == 0 and durationNew then
@@ -1661,7 +1661,7 @@ else
                 expirationTime = expirationTimeNew
             end
         end
-    
+
         local enabled = expirationTime and expirationTime ~= 0;
         if enabled then
             local startTime = expirationTime - duration;
@@ -1672,10 +1672,10 @@ else
         else
             CooldownFrame_Clear(debuffFrame.cooldown);
         end
-    
+
         local color = DebuffTypeColor[debuffType] or DebuffTypeColor["none"];
         debuffFrame.border:SetVertexColor(color.r, color.g, color.b);
-    
+
         debuffFrame.isBossBuff = isBossBuff;
         if (isBossAura) then
             local size = min(debuffFrame.baseSize + BOSS_DEBUFF_SIZE_INCREASE, debuffFrame.maxHeight);
@@ -1683,7 +1683,7 @@ else
         else
             debuffFrame:SetSize(debuffFrame.baseSize, debuffFrame.baseSize);
         end
-    
+
         debuffFrame:Show();
     end
     local Default_CompactUnitFrame_UtilIsPriorityDebuff = CompactUnitFrame_UtilIsPriorityDebuff
@@ -1941,7 +1941,6 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
         end
 
         if #debuffs > 0 then
-            GTEMP = debuffs;
             -- sort by priority > size > duration > index
             table.sort(debuffs, function(a, b)
                 if a[3] == b[3] then
