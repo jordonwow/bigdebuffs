@@ -530,9 +530,9 @@ local nameplatesAnchors = {
         func = GetNameplateAnchor.NeatPlates,
     },
     [6] = {
-        used = function()
+        used = function(frame)
             -- IsAddOnLoaded("TidyPlates_ThreatPlates") should be better
-            return TidyPlatesThreat ~= nil
+            return TidyPlatesThreat ~= nil and frame.TPFrame:IsShown()
         end,
         func = GetNameplateAnchor.ThreatPlates,
     },
