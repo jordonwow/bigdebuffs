@@ -429,6 +429,27 @@ local GetAnchor = {
             return frame, frame, true
         end
     end,
+    Cell = function(anchor)
+        local anchors, unit = BigDebuffs.anchors
+
+        for u, configAnchor in pairs(anchors.Cell.units) do
+            if anchor == configAnchor then
+                unit = u
+                break
+            end
+        end
+
+        if unit and (unit:match("party") or unit:match("player")) then
+            if Cell then
+                local guid = UnitGUID(unit)
+                local frame = Cell.funcs:GetUnitButtonByGUID(guid)
+                if frame then
+                    return frame, frame, true
+                end
+            end
+            return
+        end
+    end,
 }
 
 local GetNameplateAnchor = {
@@ -661,6 +682,18 @@ local anchors = {
             arena3 = "sArenaEnemyFrame3",
             arena4 = "sArenaEnemyFrame4",
             arena5 = "sArenaEnemyFrame5",
+        },
+    },
+    ["Cell"] = {
+        noPortait = true,
+        alignLeft = true,
+        func = GetAnchor.Cell,
+        units = {
+            player = "CellPartyFrameMember1",
+            party1 = "CellPartyFrameMember2",
+            party2 = "CellPartyFrameMember3",
+            party3 = "CellPartyFrameMember4",
+            party4 = "CellPartyFrameMember5",
         },
     },
     ["Blizzard"] = {
