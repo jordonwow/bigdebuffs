@@ -10,6 +10,8 @@ L["Anchor to attach the BigDebuffs frames"] = "Wo/Wie die BigDebuffs-UI-Elemente
 L["Arena Frames"] = "Arenafenster"
 L["Author"] = "Autor"
 L["Automatic"] = "Automatisch"
+--Translation missing
+-- L["buffs"] = ""
 L["buffs_defensive"] = "Defensive Stärkungszauber"
 L["buffs_offensive"] = "Offensive Stärkungszauber"
 L["buffs_other"] = "Andere Stärkungszauber"
@@ -73,6 +75,8 @@ L["Sets the maximum buffs to 6"] = "Legt die Maximalanzahl der Schwächungszaube
 L["Show Crowd Control on the unit frames"] = "Zeigt Kontrollverlusteffekte auf den Einheitenfenstern"
 L["Show Defensive Buffs on the unit frames"] = "Zeigt defensive Stärkungszauber auf den Einheitenfenstern"
 L["Show Immunities on the unit frames"] = "Zeigt Immunitäten auf den Einheitenfenstern"
+--Translation missing
+-- L["Set the size of buffs"] = ""
 --Translation missing
 -- L["Show Interrupts on the unit frames"] = ""
 L["Show Offensive Buffs on the unit frames"] = "Zeigt offensive Stärkungszauber auf den Einheitenfenstern"

@@ -10,6 +10,8 @@ L["Anchor to attach the BigDebuffs frames"] = "Âncora para prender as molduras 
 L["Arena Frames"] = "Molduras de Arena"
 L["Author"] = "Autor"
 L["Automatic"] = "Automático"
+--Translation missing
+-- L["buffs"] = ""
 L["buffs_defensive"] = "Bônus Defensivos"
 L["buffs_offensive"] = "Bônus Ofensivos"
 L["buffs_other"] = "Outros Bônus"
@@ -69,6 +71,8 @@ L["Set the size of other debuffs"] = "Ajuste o tamanho de outras penalidades"
 L["Set the size of roots"] = "Ajuste o tamanho das raízes"
 L["Set the size of the frame"] = "Ajuste o tamanho do quadro"
 L["Set the size of warning debuffs"] = "Ajuste o tamanho dos alertas de penalidades"
+--Translation missing
+-- L["Set the size of buffs"] = ""
 L["Sets the maximum buffs to 6"] = "Ajuste para 6 o máximo de bônus"
 L["Show Crowd Control on the unit frames"] = "Exibir quadros de unidades do CC"
 L["Show Defensive Buffs on the unit frames"] = "Exibir Bônus de Defesa em quadros de unidade"
