@@ -424,6 +424,7 @@ addon.Spells = {
     [121557] = { type = BUFF_SPEED_BOOST }, -- Angelic Feather
     [199845] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Psyflay (Psyfiend) debuff
     [358861] = { type = CROWD_CONTROL }, -- Void Volley: Horrify (Shadow PvP Talent)
+    [114415] = { type = ROOT }, -- Void Tendrils
 
     -- Rogue
 
