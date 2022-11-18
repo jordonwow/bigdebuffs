@@ -271,6 +271,13 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
         [581] = {
             Magic = function() return GetSpellInfo(205604) end, -- Reverse Magic
         },
+        [1467] = { -- Devastation Evoker
+            Poison = true,
+        },
+        [1468] = { -- Preservation Evoker
+            Magic = true,
+            Poison = true,
+        },
     }
 else
     local classDispel = {
