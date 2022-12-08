@@ -265,6 +265,13 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
             Poison = true,
             Disease = true,
         },
+        [1467] = { -- Devastation Evoker
+            Poison = true,
+        },
+        [1468] = { -- Preservation Evoker
+            Magic = true,
+            Poison = true,
+        },
         [577] = {
             Magic = function() return GetSpellInfo(205604) end, -- Reverse Magic
         },
@@ -299,6 +306,11 @@ else
         WARLOCK = {
             -- Felhunter's Devour Magic or Doomguard's Dispel Magic
             Magic = function() return IsUsableSpell(GetSpellInfo(19736)) or IsUsableSpell(GetSpellInfo(19476)) end,
+        },
+        EVOKER = {
+            Poison = true
+            Disease = function() return IsUsableSpell(GetSpellInfo(374251)) end,
+            Curse = function() return IsUsableSpell(GetSpellInfo(374251)) end,
         },
     }
     local _, class = UnitClass("player")
