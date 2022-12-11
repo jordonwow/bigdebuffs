@@ -429,27 +429,6 @@ local GetAnchor = {
             return frame, frame, true
         end
     end,
-    Cell = function(anchor)
-        local anchors, unit = BigDebuffs.anchors
-
-        for u, configAnchor in pairs(anchors.Cell.units) do
-            if anchor == configAnchor then
-                unit = u
-                break
-            end
-        end
-
-        if unit and (unit:match("party") or unit:match("player")) then
-            if Cell then
-                local guid = UnitGUID(unit)
-                local frame = Cell.funcs:GetUnitButtonByGUID(guid)
-                if frame then
-                    return frame, frame, true
-                end
-            end
-            return
-        end
-    end,
 }
 
 local GetNameplateAnchor = {
@@ -551,9 +530,9 @@ local nameplatesAnchors = {
         func = GetNameplateAnchor.NeatPlates,
     },
     [6] = {
-        used = function(frame)
+        used = function()
             -- IsAddOnLoaded("TidyPlates_ThreatPlates") should be better
-            return TidyPlatesThreat ~= nil and frame.TPFrame:IsShown()
+            return TidyPlatesThreat ~= nil
         end,
         func = GetNameplateAnchor.ThreatPlates,
     },
@@ -682,18 +661,6 @@ local anchors = {
             arena3 = "sArenaEnemyFrame3",
             arena4 = "sArenaEnemyFrame4",
             arena5 = "sArenaEnemyFrame5",
-        },
-    },
-    ["Cell"] = {
-        noPortait = true,
-        alignLeft = true,
-        func = GetAnchor.Cell,
-        units = {
-            player = "CellPartyFrameMember1",
-            party1 = "CellPartyFrameMember2",
-            party2 = "CellPartyFrameMember3",
-            party3 = "CellPartyFrameMember4",
-            party4 = "CellPartyFrameMember5",
         },
     },
     ["Blizzard"] = {
@@ -1261,10 +1228,18 @@ function BigDebuffs:AddBigDebuffs(frame)
     end
     return true
 end
-
+function checkFrame(frame)
+    if not issecurevariable(frame, "action") and not InCombatLockdown() then
+        frame.action = nil
+        frame:SetAttribute("action");
+    end
+end
 local pending = {}
 
 hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
+	for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+		hooksecurefunc(frame, "UpdateAction", checkFrame);
+	end
     if not BigDebuffs.db.profile then return end
     if not BigDebuffs.db.profile.raidFrames then return end
     if not BigDebuffs.db.profile.raidFrames.enabled then return end
@@ -1300,7 +1275,7 @@ function BigDebuffs:IsPriorityDebuff(id)
     end
 end
 
-hooksecurefunc("CompactUnitFrame_HideAllDebuffs", HideBigDebuffs)
+hooksecurefunc("CompactUnitFrame_HideAllDebuffs",HideBigDebuffs)
 
 function BigDebuffs:IsDispellable(unit, dispelType)
     if WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE then
@@ -1415,6 +1390,9 @@ end
 
 if LibClassicDurations then
     hooksecurefunc("CompactUnitFrame_UtilSetBuff", function(buffFrame, unit, index, filter)
+		for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+			hooksecurefunc(frame, "UpdateAction", checkFrame);
+		end
         if not LibClassicDurations then return end
         local name, icon, count, debuffType, duration, expirationTime, unitCaster,
         canStealOrPurge, _, spellId, canApplyAura = UnitBuff(unit, index, filter);
@@ -1489,6 +1467,9 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
     end
 
     hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
+		for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+			hooksecurefunc(frame, "UpdateAction", checkFrame);
+		end		
 
         if (not frame) or frame:IsForbidden() then return end
 
@@ -1757,6 +1738,9 @@ else
     end
 
     hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
+		for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+			hooksecurefunc(frame, "UpdateAction", checkFrame);
+		end
         if (not frame.debuffFrames or not frame.optionTable.displayDebuffs) then
             CompactUnitFrame_HideAllDebuffs(frame);
             return;
@@ -1854,6 +1838,9 @@ else
 
     -- Show extra buffs
     hooksecurefunc("CompactUnitFrame_UpdateBuffs", function(frame)
+		for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+			hooksecurefunc(frame, "UpdateAction", checkFrame);
+		end
         if (not frame.buffFrames or not frame.optionTable.displayBuffs) then
             CompactUnitFrame_HideAllBuffs(frame);
             return;
