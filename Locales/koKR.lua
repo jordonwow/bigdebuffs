@@ -10,6 +10,8 @@ L["Anchor to attach the BigDebuffs frames"] = "BigDebuffs 창을 부착할 고�
 L["Arena Frames"] = "투기장 창"
 L["Author"] = "제작자"
 L["Automatic"] = "자동"
+--Translation missing
+-- L["buffs"] = ""
 L["buffs_defensive"] = "방어적 강화 효과"
 L["buffs_offensive"] = "공격적 강화 효과"
 L["buffs_other"] = "기타 강화 효과"
@@ -69,6 +71,8 @@ L["Set the size of other debuffs"] = "그 밖의 약화 효과의 크기를 설�
 L["Set the size of roots"] = "이동 불가의 크기를 설정합니다"
 L["Set the size of the frame"] = "창의 크기를 설정합니다"
 L["Set the size of warning debuffs"] = "경고 약화 효과의 크기를 설정합니다"
+--Translation missing
+-- L["Set the size of buffs"] = ""
 L["Sets the maximum buffs to 6"] = "최대 강화 효과 수를 6으로 설정합니다"
 L["Show Crowd Control on the unit frames"] = "유닛 창에 군중 제어를 표시합니다"
 L["Show Defensive Buffs on the unit frames"] = "유닛 창에 방어적 강화 효과를 표시합니다"

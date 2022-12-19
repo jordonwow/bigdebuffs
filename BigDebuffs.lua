@@ -36,6 +36,7 @@ local defaults = {
                 roots = 50,
             },
             interrupts = 55,
+            buffs = 25,
             roots = 40,
             warning = 40,
             debuffs_offensive = 35,
@@ -1229,19 +1230,28 @@ end
 
 BigDebuffs.AttachedFrames = {}
 
-local MAX_BUFFS = 6
+local MAX_BUFFS = 3
 
 function BigDebuffs:AddBigDebuffs(frame)
     if not frame or not frame.displayedUnit or not UnitIsPlayer(frame.displayedUnit) then return end
     local frameName = frame:GetName()
+    local buffPrefix = frameName .. "Buff"
+
     if self.db.profile.raidFrames.increaseBuffs then
         CompactUnitFrame_SetMaxBuffs(frame, 6)
-        for i = 4, MAX_BUFFS do
-            local buffPrefix = frameName .. "Buff"
-            local buffFrame = _G[buffPrefix .. i] or
-                CreateFrame("Button", buffPrefix .. i, frame, "CompactBuffTemplate")
+        MAX_BUFFS = 6
+    end
+
+    for i = 1, MAX_BUFFS do
+        local buffFrame = _G[buffPrefix .. i] or
+            CreateFrame("Button", buffPrefix .. i, frame, "CompactBuffTemplate")
+
+        -- set size
+        local size = frame:GetHeight() * self.db.profile.raidFrames.buffs * 0.01
+        buffFrame:SetSize(size, size)
+
+        if i > 3 then
             buffFrame:ClearAllPoints()
-            buffFrame:SetSize(frame.buffFrames[1]:GetSize())
             if math.fmod(i - 1, 3) == 0 then
                 buffFrame:SetPoint("BOTTOMRIGHT", _G[buffPrefix .. i - 3], "TOPRIGHT")
             else
