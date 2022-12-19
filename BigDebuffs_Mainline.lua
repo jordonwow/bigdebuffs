@@ -616,6 +616,11 @@ addon.Spells = {
     [273104] = { type = BUFF_DEFENSIVE }, -- Fireblood
     [58984] = { type = BUFF_DEFENSIVE }, -- Shadowmeld
 
+    -- Dragonflight: Dragonriding
+
+    [388673] = { type = CROWD_CONTROL }, -- Dragonrider's Initiative
+    [388380] = { type = BUFF_SPEED_BOOST }, -- Dragonrider's Compassion
+
     -- Shadowlands: Covenant/Soulbind
 
     [310143] = { type = BUFF_SPEED_BOOST }, -- Soulshape
