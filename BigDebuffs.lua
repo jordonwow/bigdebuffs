@@ -1263,8 +1263,17 @@ function BigDebuffs:AddBigDebuffs(frame)
 end
 
 local pending = {}
+function checkFrame(frame)
+    if not issecurevariable(frame, "action") and not InCombatLockdown() then
+        frame.action = nil
+        frame:SetAttribute("action");
+    end
+end
 
 hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
+   for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+	 hooksecurefunc(frame, "UpdateAction", checkFrame);
+   end
     if not BigDebuffs.db.profile then return end
     if not BigDebuffs.db.profile.raidFrames then return end
     if not BigDebuffs.db.profile.raidFrames.enabled then return end
@@ -1415,6 +1424,9 @@ end
 
 if LibClassicDurations then
     hooksecurefunc("CompactUnitFrame_UtilSetBuff", function(buffFrame, unit, index, filter)
+	    for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+	  	  hooksecurefunc(frame, "UpdateAction", checkFrame);
+	    end	
         if not LibClassicDurations then return end
         local name, icon, count, debuffType, duration, expirationTime, unitCaster,
         canStealOrPurge, _, spellId, canApplyAura = UnitBuff(unit, index, filter);
@@ -1489,6 +1501,9 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
     end
 
     hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
+        for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+	      hooksecurefunc(frame, "UpdateAction", checkFrame);
+        end	
 
         if (not frame) or frame:IsForbidden() then return end
 
@@ -1757,6 +1772,9 @@ else
     end
 
     hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
+	    for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+		  hooksecurefunc(frame, "UpdateAction", checkFrame);
+	     end
         if (not frame.debuffFrames or not frame.optionTable.displayDebuffs) then
             CompactUnitFrame_HideAllDebuffs(frame);
             return;
@@ -1854,6 +1872,9 @@ else
 
     -- Show extra buffs
     hooksecurefunc("CompactUnitFrame_UpdateBuffs", function(frame)
+		for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+		   hooksecurefunc(frame, "UpdateAction", checkFrame);
+		 end
         if (not frame.buffFrames or not frame.optionTable.displayBuffs) then
             CompactUnitFrame_HideAllBuffs(frame);
             return;
