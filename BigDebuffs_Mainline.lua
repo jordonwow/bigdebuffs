@@ -71,6 +71,7 @@ addon.Spells = {
     [212619] = { type = INTERRUPT, duration = 6 }, -- Call Felhunter (Warlock)
     [31935] = { type = INTERRUPT, duration = 3 }, -- Avenger's Shield (Paladin)
     [217824] = { type = INTERRUPT, duration = 4 }, -- Shield of Virtue (Protection PvP Talent)
+    [351338] = { type = INTERRUPT, duration = 4 }, -- Quell (Evoker)
 
     -- Death Knight
 
@@ -594,6 +595,13 @@ addon.Spells = {
     [307871] = { type = CROWD_CONTROL, nounitFrames = true, nonameplates = true }, -- Spear of Bastion (Kyrian Ability)
     [324143] = { type = BUFF_OFFENSIVE }, -- Conqueror's Banner (Necrolord Ability) - on the warrior
         [325862] = { type = BUFF_OFFENSIVE, parent = 324143 }, -- Conqueror's Banner (Necrolord Ability) - on others
+
+    -- Evoker
+
+    [360806] = { type = CROWD_CONTROL } -- Sleep Walk
+    [358385] = { type = ROOT }, -- LandSlide
+    [375087] = { type = BUFF_OFFENSIVE }, -- DragonRage
+
 
     -- Other
 
