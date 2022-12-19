@@ -1,4 +1,4 @@
-local addonName, addon = ...
+ local addonName, addon = ...
 
 local BUFF_DEFENSIVE = "buffs_defensive"
 local BUFF_OFFENSIVE = "buffs_offensive"
@@ -194,10 +194,27 @@ addon.Spells = {
     [362486] = { type = IMMUNITY }, -- Keeper of the Grove
     [274837] = { type = DEBUFF_OFFENSIVE }, -- Feral Frenzy
     [363498] = { type = DEBUFF_OFFENSIVE }, -- Sickle of the Lion
-
+	
+	-- Evoker
+	
+	[375088] = { type = BUFF_OFFENSIVE }, -- Dragonrage
+	[375087] = { type = BUFF_OFFENSIVE }, -- Dragonrage
+	[357170] = { type = BUFF_DEFENSIVE }, -- Time Dilation
+	[363916] = { type = BUFF_DEFENSIVE }, -- Obsidian Scales
+	[374348] = { type = BUFF_DEFENSIVE }, -- Renewing Blaze
+	[360806] = { type = CROWD_CONTROL }, -- Sleep Walk
+	[372048] = { type = DEBUFF_OFFENSIVE }, -- Oppressing Roar
+	[355689] = { type = ROOT }, -- Landslide (Root)
+	[357210] = { type = CROWD_CONTROL }, -- Deep Breath (Maybe? not sure if this one works)
+	[372245] = { type = CROWD_CONTROL }, -- Deep Breath (Stun, should work)
+	[383005] = { type = DEBUFF_OFFENSIVE }, -- Chrono Loop
+	[378464] = { type = IMMUNITY_SPELL }, -- Nullifying Shroud
+	
     -- Hunter
 
     [136] = { type = BUFF_DEFENSIVE }, -- Mend Pet
+	[393456] = { type = ROOT }, -- Entrapment
+	[264735] = { type = BUFF_DEFENSIVE }, -- Survival of the Fittest
     [1513] = { type = CROWD_CONTROL }, -- Scare Beast
     [3355] = { type = CROWD_CONTROL }, -- Freezing Trap
     [356723] = { type = CROWD_CONTROL }, -- Scorpid Venom
@@ -210,7 +227,7 @@ addon.Spells = {
     [24394] = { type = CROWD_CONTROL }, -- Intimidation
     [53480] = { type = BUFF_DEFENSIVE }, -- Roar of Sacrifice (PvP Talent)
     [54216] = { type = BUFF_DEFENSIVE }, -- Master's Call
-    [117526] = { type = ROOT }, -- Binding Shot
+    [117526] = { type = CROWD_CONTROL }, -- Binding Shot
     [117405] = { type = ROOT, nounitFrames = true, nonameplates = true }, -- Binding Shot - aura when you're in the area
     [118922] = { type = BUFF_SPEED_BOOST }, -- Posthaste
     [131894] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- A Murder of Crows
@@ -602,7 +619,8 @@ addon.Spells = {
     -- Other
 
     [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Wounds
-
+    [360952] = { type = BUFF_OFFENSIVE }, -- Coordinated Assault
+	[377360] = { type = IMMUNITY_SPELL }, -- Precognition
     [34709] = { type = BUFF_OTHER }, -- Shadow Sight
     [345231] = { type = BUFF_DEFENSIVE }, -- Gladiator's Emblem
     [314646] = { type = BUFF_OTHER }, -- Drink (40k mana vendor item)
