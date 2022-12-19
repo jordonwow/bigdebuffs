@@ -194,6 +194,12 @@ addon.Spells = {
     [274837] = { type = DEBUFF_OFFENSIVE }, -- Feral Frenzy
     [363498] = { type = DEBUFF_OFFENSIVE }, -- Sickle of the Lion
 
+    
+    -- Evoker
+
+    [360806] = { type = ROOT }, -- Landslide
+    [358385] = { type = CROWD_CONTROL }, -- Sleep Walk
+    
     -- Hunter
 
     [136] = { type = BUFF_DEFENSIVE }, -- Mend Pet
