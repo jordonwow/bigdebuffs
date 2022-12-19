@@ -7,6 +7,14 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibClassicDurations = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and LibStub("LibClassicDurations")
 if LibClassicDurations then LibClassicDurations:Register(addonName) end
 
+-- Adding in Masque support, preparing groups if it is available
+local Masque = LibStub("Masque", true)
+if Masque ~= nil then
+    BigDebuffs.MasqueGroup = {}
+    BigDebuffs.MasqueGroup.UnitFrame = Masque:Group("BigDebuffs", "UnitFrame")
+    BigDebuffs.MasqueGroup.NamePlate = Masque:Group("BigDebuffs", "NamePlate")
+end
+
 -- Defaults
 local defaults = {
     profile = {
@@ -1002,6 +1010,12 @@ function BigDebuffs:AttachUnitFrame(unit)
 
         frame:SetSize(config.size, config.size)
     end
+    -- If Masque is installed then apply skin.
+    if Masque ~= nil then
+        BigDebuffs.MasqueGroup.UnitFrame:AddButton(frame)
+        -- No idea why I need to re-skin, but this fixes the button size...
+        BigDebuffs.MasqueGroup.UnitFrame:ReSkin(frame.Icon)
+    end
 end
 
 function BigDebuffs:AttachNameplate(unit)
@@ -1041,6 +1055,12 @@ function BigDebuffs:AttachNameplate(unit)
     end
 
     frame:SetSize(config[anchorStyle].size, config[anchorStyle].size)
+    -- If Masque is installed then apply skin.
+    if Masque ~= nil then
+        BigDebuffs.MasqueGroup.NamePlate:AddButton(frame)
+        -- No idea why I need to re-skin, but this fixes the size...
+        BigDebuffs.MasqueGroup.NamePlate:ReSkin(frame.Icon)
+    end
 end
 
 function BigDebuffs:SaveUnitFramePosition(frame)
@@ -2444,7 +2464,7 @@ function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
     if not frame or not anchor or frame:IsForbidden() then return end
 
     if not frame.BigDebuffs then
-        frame.BigDebuffs = CreateFrame("Frame", "$parent.BigDebuffs", frame)
+        frame.BigDebuffs = CreateFrame("Button", "$parent.BigDebuffs", frame)
         frame.BigDebuffs:SetFrameLevel(frame:GetFrameLevel())
 
         frame.BigDebuffs.icon = frame.BigDebuffs:CreateTexture("$parent.Icon", "OVERLAY", nil, 3)
@@ -2497,6 +2517,11 @@ end
 
 function BigDebuffs:NAME_PLATE_UNIT_REMOVED(_, unit)
     local frame = self.Nameplates[unit]
+    
+    -- Seems like a good idea to remove old nameplate frames from the group.
+    if Masque ~= nil then
+        BigDebuffs.MasqueGroup.NamePlate:RemoveButton(frame)
+    end
 
     if frame then frame:UnregisterEvent("UNIT_AURA") end
 
