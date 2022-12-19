@@ -317,7 +317,7 @@ else
             Magic = function() return IsUsableSpell(GetSpellInfo(19736)) or IsUsableSpell(GetSpellInfo(19476)) end,
         },
         EVOKER = {
-            Poison = true
+            Poison = true,
             Disease = function() return IsUsableSpell(GetSpellInfo(374251)) end,
             Curse = function() return IsUsableSpell(GetSpellInfo(374251)) end,
         },
@@ -1304,7 +1304,7 @@ function BigDebuffs:AddBigDebuffs(frame)
 end
 
 local pending = {}
-function checkFrame(frame)
+local function checkFrame(frame)
     if not issecurevariable(frame, "action") and not InCombatLockdown() then
         frame.action = nil
         frame:SetAttribute("action");
@@ -1312,9 +1312,9 @@ function checkFrame(frame)
 end
 
 hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
-   for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
-	 hooksecurefunc(frame, "UpdateAction", checkFrame);
-   end
+    for _, f in ipairs(ActionBarButtonEventsFrame.frames) do
+        if f.UpdateAction then hooksecurefunc(f, "UpdateAction", checkFrame) end
+    end
     if not BigDebuffs.db.profile then return end
     if not BigDebuffs.db.profile.raidFrames then return end
     if not BigDebuffs.db.profile.raidFrames.enabled then return end
@@ -1465,9 +1465,9 @@ end
 
 if LibClassicDurations then
     hooksecurefunc("CompactUnitFrame_UtilSetBuff", function(buffFrame, unit, index, filter)
-	    for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
-	  	  hooksecurefunc(frame, "UpdateAction", checkFrame);
-	    end	
+        for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+            if frame.UpdateAction then hooksecurefunc(frame, "UpdateAction", checkFrame) end
+        end
         if not LibClassicDurations then return end
         local name, icon, count, debuffType, duration, expirationTime, unitCaster,
         canStealOrPurge, _, spellId, canApplyAura = UnitBuff(unit, index, filter);
@@ -1489,6 +1489,7 @@ end
 
 --classic and BigDebuffs:ShowBigDebuffs()
 
+local CompactUnitFrame_UtilSetDebuff = CompactUnitFrame_UtilSetDebuff
 
 if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
     local Default_CompactUnitFrame_Util_IsPriorityDebuff = CompactUnitFrame_Util_IsPriorityDebuff
@@ -1542,9 +1543,9 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
     end
 
     hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
-        for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
-	      hooksecurefunc(frame, "UpdateAction", checkFrame);
-        end	
+        for _, f in ipairs(ActionBarButtonEventsFrame.frames) do
+            if f.UpdateAction then hooksecurefunc(f, "UpdateAction", checkFrame) end
+        end
 
         if (not frame) or frame:IsForbidden() then return end
 
@@ -1697,7 +1698,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
         BigDebuffs:ShowBigDebuffs(frame)
     end)
 else
-    local function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, isBossAura, isBossBuff, ...)
+    CompactUnitFrame_UtilSetDebuff = function(debuffFrame, unit, index, filter, isBossAura, isBossBuff, ...)
         local UnitDebuff = BigDebuffs.test and UnitDebuffTest or UnitDebuff
         -- make sure you are using the correct index here!
         --isBossAura says make this look large.
@@ -1813,9 +1814,9 @@ else
     end
 
     hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
-	    for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
-		  hooksecurefunc(frame, "UpdateAction", checkFrame);
-	     end
+        for _, f in ipairs(ActionBarButtonEventsFrame.frames) do
+            if f.UpdateAction then hooksecurefunc(f, "UpdateAction", checkFrame) end
+        end
         if (not frame.debuffFrames or not frame.optionTable.displayDebuffs) then
             CompactUnitFrame_HideAllDebuffs(frame);
             return;
@@ -1913,9 +1914,9 @@ else
 
     -- Show extra buffs
     hooksecurefunc("CompactUnitFrame_UpdateBuffs", function(frame)
-		for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
-		   hooksecurefunc(frame, "UpdateAction", checkFrame);
-		 end
+        for _, f in ipairs(ActionBarButtonEventsFrame.frames) do
+            if f.UpdateAction then hooksecurefunc(f, "UpdateAction", checkFrame) end
+        end
         if (not frame.buffFrames or not frame.optionTable.displayBuffs) then
             CompactUnitFrame_HideAllBuffs(frame);
             return;
@@ -2527,7 +2528,7 @@ end
 
 function BigDebuffs:NAME_PLATE_UNIT_REMOVED(_, unit)
     local frame = self.Nameplates[unit]
-    
+
     -- Seems like a good idea to remove old nameplate frames from the group.
     if Masque ~= nil then
         BigDebuffs.MasqueGroup.NamePlate:RemoveButton(frame)
