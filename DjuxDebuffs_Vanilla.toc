@@ -1,13 +1,11 @@
-## Interface: 30400
+## Interface: 11403
 ## Title: BigDebuffs
 ## Notes: Increases the debuff size of crowd control effects on the Blizzard raid frames
-### Version: @project-version@
-## Version: 1.0.0
-## Author: Jordon
+## Version: @project-version@
+## Author: Djux
 ## SavedVariables: BigDebuffsDB
-## X-Curse-Project-ID: 82697
-## X-Wago-ID: WYK98e6L
-## X-WoWI-ID: 26006
+## X-Curse-Project-ID: 757076
+## X-Wago-ID: VBNBpVKx
 
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua
@@ -26,6 +24,6 @@ Libs\LibClassicDurations\LibClassicDurations.xml
 
 Locales\Locales.xml
 BigDebuffs.xml
-BigDebuffs_Wrath.lua
+BigDebuffs_Vanilla.lua
 BigDebuffs.lua
 Options.lua
