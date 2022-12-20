@@ -609,6 +609,15 @@ addon.Spells = {
     [307871] = { type = CROWD_CONTROL, nounitFrames = true, nonameplates = true }, -- Spear of Bastion (Kyrian Ability)
     [324143] = { type = BUFF_OFFENSIVE }, -- Conqueror's Banner (Necrolord Ability) - on the warrior
         [325862] = { type = BUFF_OFFENSIVE, parent = 324143 }, -- Conqueror's Banner (Necrolord Ability) - on others
+
+    -- Evoker
+
+    [360806] = { type = CROWD_CONTROL }, -- Sleep Walk
+    [355689] = { type = ROOT }, -- Landslide
+    [375087] = { type = BUFF_OFFENSIVE }, -- Dragonrage
+    [378464] = { type = IMMUNITY_SPELL }, -- Nullifying Shroud
+    [363916] = { type = BUFF_DEFENSIVE }, -- Obsidian Scales
+
     -- Other
     [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Wounds
     [360952] = { type = BUFF_OFFENSIVE }, -- Coordinated Assault

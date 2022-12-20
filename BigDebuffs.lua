@@ -1278,21 +1278,23 @@ local function checkFrame(frame)
     end
 end
 
+
+for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
+	hooksecurefunc(frame, "UpdateAction", checkFrame);
+end
 hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
-    for _, f in ipairs(ActionBarButtonEventsFrame.frames) do
-        if f.UpdateAction then hooksecurefunc(f, "UpdateAction", checkFrame) end
-    end
-    if not BigDebuffs.db.profile then return end
-    if not BigDebuffs.db.profile.raidFrames then return end
-    if not BigDebuffs.db.profile.raidFrames.enabled then return end
-    if frame:IsForbidden() then return end
-    local name = frame:GetName()
-    if not name or not name:match("^Compact") then return end
-    if InCombatLockdown() and not frame.BigDebuffs then
-        if not pending[frame] then pending[frame] = true end
-    else
-        BigDebuffs:AddBigDebuffs(frame)
-    end
+	if not BigDebuffs.db.profile then return end
+	if not BigDebuffs.db.profile.raidFrames then return end
+	if not BigDebuffs.db.profile.raidFrames.enabled then return end
+	if frame:IsForbidden() then return end
+	local name = frame:GetName()
+	if not name or not name:match("^Compact") then return end
+	if InCombatLockdown() and not frame.BigDebuffs then
+		if not pending[frame] then pending[frame] = true end
+--	if not IsInGroup() or GetNumGroupMembers() > 5 then return end
+	else
+		BigDebuffs:AddBigDebuffs(frame)
+	end
 end)
 
 if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
@@ -1432,9 +1434,6 @@ end
 
 if LibClassicDurations then
     hooksecurefunc("CompactUnitFrame_UtilSetBuff", function(buffFrame, unit, index, filter)
-        for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
-            if frame.UpdateAction then hooksecurefunc(frame, "UpdateAction", checkFrame) end
-        end
         if not LibClassicDurations then return end
         local name, icon, count, debuffType, duration, expirationTime, unitCaster,
         canStealOrPurge, _, spellId, canApplyAura = UnitBuff(unit, index, filter);
@@ -1510,10 +1509,6 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
     end
 
     hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
-        for _, f in ipairs(ActionBarButtonEventsFrame.frames) do
-            if f.UpdateAction then hooksecurefunc(f, "UpdateAction", checkFrame) end
-        end
-
         if (not frame) or frame:IsForbidden() then return end
 
         if (not UnitIsPlayer(frame.displayedUnit)) then return end
@@ -1781,9 +1776,6 @@ else
     end
 
     hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
-        for _, f in ipairs(ActionBarButtonEventsFrame.frames) do
-            if f.UpdateAction then hooksecurefunc(f, "UpdateAction", checkFrame) end
-        end
         if (not frame.debuffFrames or not frame.optionTable.displayDebuffs) then
             CompactUnitFrame_HideAllDebuffs(frame);
             return;
@@ -1881,9 +1873,6 @@ else
 
     -- Show extra buffs
     hooksecurefunc("CompactUnitFrame_UpdateBuffs", function(frame)
-        for _, f in ipairs(ActionBarButtonEventsFrame.frames) do
-            if f.UpdateAction then hooksecurefunc(f, "UpdateAction", checkFrame) end
-        end
         if (not frame.buffFrames or not frame.optionTable.displayBuffs) then
             CompactUnitFrame_HideAllBuffs(frame);
             return;
