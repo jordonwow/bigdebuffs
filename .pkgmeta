@@ -1,4 +1,4 @@
-package-as: BigDebuffs
+package-as: DjuxDebuffs
 
 externals:
   Libs/LibStub:
