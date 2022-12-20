@@ -2,6 +2,21 @@ A fork of BigDebuffs with some changes/fixes for Dragonflight. At the moment, mo
 
 I plan to maintain this fork for as long as the author of the original BigDebuffs remains inactive. However, please keep in mind that I did not write the original code and need to familiarize myself with it before I can fix bugs quickly or write new features.
 
+# Download & Installation
+
+You can download this addon from [Wago](https://addons.wago.io/addons/djuxdebuffs) or from the [GitHub releases page](https://github.com/nozzlegear/bigdebuffs/releases/latest). Curse/Overwolf is currently not supported, I recommend using [Wago's addon installer](https://addons.wago.io/) or [WowUp](https://wowup.io/). 
+
+If you don't want to use another addon installer, you can always download the zip file from Wago or GitHub and then unzip it into your addons folder. Once unzipped, your file structure should look like this:
+
+```
+Interface
+└── AddOns
+    └── DjuxDebuffs
+        ├── BigDebuffs.lua
+        ├── BigDebuffs.toc
+        └── etc
+```
+
 # BigDebuffs
 BigDebuffs is an _extremely lightweight_ addon that hooks the Blizzard raid frames to increase the debuff size of crowd control effects. Additionally, it replaces unit frame portraits with debuff durations when important debuffs are present.
 
