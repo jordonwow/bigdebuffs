@@ -18,7 +18,7 @@ jobs:
           args: "--no-color -q"
           annotate: warning
 
-      #- run: ./generate_changelog.sh
+      - run: ./generate_changelog.sh
 
       - uses: BigWigsMods/packager@v2
         env:
