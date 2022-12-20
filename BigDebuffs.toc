@@ -7,7 +7,6 @@
 ## SavedVariables: BigDebuffsDB
 ## X-Curse-Project-ID: 82697
 ## X-Wago-ID: WYK98e6L
-## X-WoWI-ID: 26006
 
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua
