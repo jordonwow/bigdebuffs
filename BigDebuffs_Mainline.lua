@@ -194,9 +194,10 @@ addon.Spells = {
     [362486] = { type = IMMUNITY }, -- Keeper of the Grove
     [274837] = { type = DEBUFF_OFFENSIVE }, -- Feral Frenzy
     [363498] = { type = DEBUFF_OFFENSIVE }, -- Sickle of the Lion
-	
-	-- Evoker
-	
+
+    -- Evoker
+
+    [358385] = { type = ROOT }, -- Landslide
 	[375088] = { type = BUFF_OFFENSIVE }, -- Dragonrage
 	[375087] = { type = BUFF_OFFENSIVE }, -- Dragonrage
 	[357170] = { type = BUFF_DEFENSIVE }, -- Time Dilation
@@ -209,7 +210,7 @@ addon.Spells = {
 	[372245] = { type = CROWD_CONTROL }, -- Deep Breath (Stun, should work)
 	[383005] = { type = DEBUFF_OFFENSIVE }, -- Chrono Loop
 	[378464] = { type = IMMUNITY_SPELL }, -- Nullifying Shroud
-	
+
     -- Hunter
 
     [136] = { type = BUFF_DEFENSIVE }, -- Mend Pet
@@ -608,16 +609,7 @@ addon.Spells = {
     [307871] = { type = CROWD_CONTROL, nounitFrames = true, nonameplates = true }, -- Spear of Bastion (Kyrian Ability)
     [324143] = { type = BUFF_OFFENSIVE }, -- Conqueror's Banner (Necrolord Ability) - on the warrior
         [325862] = { type = BUFF_OFFENSIVE, parent = 324143 }, -- Conqueror's Banner (Necrolord Ability) - on others
-
-    -- Evoker
-
-    [360806] = { type = CROWD_CONTROL }, -- Sleep Walk
-    [358385] = { type = ROOT }, -- Landslide
-    [375087] = { type = BUFF_OFFENSIVE }, -- Dragonrage
-
-
     -- Other
-
     [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Wounds
     [360952] = { type = BUFF_OFFENSIVE }, -- Coordinated Assault
 	[377360] = { type = IMMUNITY_SPELL }, -- Precognition
