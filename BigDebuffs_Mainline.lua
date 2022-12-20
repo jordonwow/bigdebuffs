@@ -598,6 +598,7 @@ addon.Spells = {
     [358385] = { type = ROOT }, -- Landslide
     [375087] = { type = BUFF_OFFENSIVE }, -- Dragonrage
     [378464] = { type = IMMUNITY_SPELL }, -- Nullifying Shroud
+    [363916] = { type = BUFF_DEFENSIVE }, -- Obsidian Scales
 
 
     -- Other
