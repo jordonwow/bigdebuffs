@@ -1,6 +1,8 @@
 name: Build
 
 on:
+  workflow_dispatch:
+
   push:
     tags:
       - 'v[0-9]+.[0-9]+'
@@ -16,11 +18,10 @@ jobs:
           args: "--no-color -q"
           annotate: warning
 
-      - run: ./generate_changelog.sh
+      #- run: ./generate_changelog.sh
 
       - uses: BigWigsMods/packager@v2
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
           WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
-          WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
