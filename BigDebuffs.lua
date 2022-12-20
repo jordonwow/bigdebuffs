@@ -1311,10 +1311,10 @@ local function checkFrame(frame)
     end
 end
 
-
 for _, frame in ipairs(ActionBarButtonEventsFrame.frames) do
-	hooksecurefunc(frame, "UpdateAction", checkFrame);
+    if frame.UpdateAction then hooksecurefunc(frame, "UpdateAction", checkFrame) end
 end
+
 hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
 	if not BigDebuffs.db.profile then return end
 	if not BigDebuffs.db.profile.raidFrames then return end
