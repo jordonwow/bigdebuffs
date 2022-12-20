@@ -5,7 +5,7 @@ set dirs "C:/Program Files (x86)/World of Warcraft/_retail_" "$HOME/Games/battle
 
 for d in $dirs
     if test -d "$d"
-        set addonFolder "$d/Interface/AddOns/BigDebuffs"
+        set addonFolder "$d/Interface/AddOns/DjuxDebuffs"
         break
     end
 end
