@@ -197,19 +197,19 @@ addon.Spells = {
 
     -- Evoker
 
-    [358385] = { type = ROOT }, -- Landslide
+    [378464] = { type = IMMUNITY_SPELL }, -- Nullifying Shroud
 	[375088] = { type = BUFF_OFFENSIVE }, -- Dragonrage
 	[375087] = { type = BUFF_OFFENSIVE }, -- Dragonrage
 	[357170] = { type = BUFF_DEFENSIVE }, -- Time Dilation
 	[363916] = { type = BUFF_DEFENSIVE }, -- Obsidian Scales
 	[374348] = { type = BUFF_DEFENSIVE }, -- Renewing Blaze
-	[360806] = { type = CROWD_CONTROL }, -- Sleep Walk
 	[372048] = { type = DEBUFF_OFFENSIVE }, -- Oppressing Roar
+    [358385] = { type = ROOT }, -- Landslide
 	[355689] = { type = ROOT }, -- Landslide (Root)
+	[360806] = { type = CROWD_CONTROL }, -- Sleep Walk
 	[357210] = { type = CROWD_CONTROL }, -- Deep Breath (Maybe? not sure if this one works)
 	[372245] = { type = CROWD_CONTROL }, -- Deep Breath (Stun, should work)
 	[383005] = { type = DEBUFF_OFFENSIVE }, -- Chrono Loop
-	[378464] = { type = IMMUNITY_SPELL }, -- Nullifying Shroud
 
     -- Hunter
 
@@ -609,14 +609,6 @@ addon.Spells = {
     [307871] = { type = CROWD_CONTROL, nounitFrames = true, nonameplates = true }, -- Spear of Bastion (Kyrian Ability)
     [324143] = { type = BUFF_OFFENSIVE }, -- Conqueror's Banner (Necrolord Ability) - on the warrior
         [325862] = { type = BUFF_OFFENSIVE, parent = 324143 }, -- Conqueror's Banner (Necrolord Ability) - on others
-
-    -- Evoker
-
-    [360806] = { type = CROWD_CONTROL }, -- Sleep Walk
-    [355689] = { type = ROOT }, -- Landslide
-    [375087] = { type = BUFF_OFFENSIVE }, -- Dragonrage
-    [378464] = { type = IMMUNITY_SPELL }, -- Nullifying Shroud
-    [363916] = { type = BUFF_DEFENSIVE }, -- Obsidian Scales
 
     -- Other
     [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Wounds
