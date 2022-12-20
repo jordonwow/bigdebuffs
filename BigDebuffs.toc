@@ -5,8 +5,8 @@
 ## Version: 1.0.0
 ## Author: Djux
 ## SavedVariables: BigDebuffsDB
-## X-Curse-Project-ID: 82697
-## X-Wago-ID: WYK98e6L
+## X-Curse-Project-ID: 757076
+## X-Wago-ID: VBNBpVKx
 
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua
