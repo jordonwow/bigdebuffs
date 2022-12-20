@@ -1689,7 +1689,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
 
             CompactUnitFrame_HideAllDispelDebuffs(frame, frameNum);
         end
-		
+
         BigDebuffs:ShowBigDebuffs(frame)
     end)
 else
