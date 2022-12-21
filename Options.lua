@@ -1,5 +1,5 @@
-local BigDebuffs = LibStub("AceAddon-3.0"):GetAddon("BigDebuffs")
-local L = LibStub("AceLocale-3.0"):GetLocale("BigDebuffs")
+local BigDebuffs = LibStub("AceAddon-3.0"):GetAddon("DjuxDebuffs")
+local L = LibStub("AceLocale-3.0"):GetLocale("DjuxDebuffs")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 local WarningDebuffs = {}
@@ -229,7 +229,7 @@ end
 
 function BigDebuffs:SetupOptions()
     self.options = {
-        name = "BigDebuffs",
+        name = "DjuxDebuffs",
         descStyle = "inline",
         type = "group",
         plugins = {},
@@ -238,13 +238,13 @@ function BigDebuffs:SetupOptions()
             vers = {
                 order = 1,
                 type = "description",
-                name = "|cffffd700"..L["Version"].."|r "..GetAddOnMetadata("BigDebuffs", "Version").."\n",
+                name = "|cffffd700"..L["Version"].."|r "..GetAddOnMetadata("DjuxDebuffs", "Version").."\n",
                 cmdHidden = true
             },
             desc = {
                 order = 2,
                 type = "description",
-                name = "|cffffd700 "..L["Author"].."|r Jordon\n",
+                name = "|cffffd700 "..L["Author"].."|r Djux\n",
                 cmdHidden = true
             },
             test = {

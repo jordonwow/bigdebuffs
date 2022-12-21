@@ -1,7 +1,7 @@
 -- BigDebuffs Locale
 -- https://wow.curseforge.com/projects/bigdebuffs/localization
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigDebuffs", "ptBR")
+local L = LibStub("AceLocale-3.0"):NewLocale("DjuxDebuffs", "ptBR")
 if not L then return end
 
 L["Allow Blizzard and other addons to display countdown text on the icons"] = "Permitir que a Blizzard e outros addons exibam contadores nos ícones"

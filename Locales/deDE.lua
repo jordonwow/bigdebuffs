@@ -1,7 +1,7 @@
 -- BigDebuffs Locale
 -- https://wow.curseforge.com/projects/bigdebuffs/localization
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigDebuffs", "deDE")
+local L = LibStub("AceLocale-3.0"):NewLocale("DjuxDebuffs", "deDE")
 if not L then return end
 
 L["Allow Blizzard and other addons to display countdown text on the icons"] = "Ermöglicht es Blizzard oder anderen Addons, die Abklingzeit auf den Symbolen numerisch anzuzeigen"

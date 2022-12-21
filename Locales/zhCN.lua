@@ -1,7 +1,7 @@
 -- BigDebuffs Locale
 -- https://wow.curseforge.com/projects/bigdebuffs/localization
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigDebuffs", "zhCN")
+local L = LibStub("AceLocale-3.0"):NewLocale("DjuxDebuffs", "zhCN")
 if not L then return end
 
 L["Allow Blizzard and other addons to display countdown text on the icons"] = "使暴雪和其他插件图标显示冷却时间"

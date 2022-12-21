@@ -1,7 +1,7 @@
 -- BigDebuffs Locale
 -- https://wow.curseforge.com/projects/bigdebuffs/localization
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigDebuffs", "koKR")
+local L = LibStub("AceLocale-3.0"):NewLocale("DjuxDebuffs", "koKR")
 if not L then return end
 
 L["Allow Blizzard and other addons to display countdown text on the icons"] = "블리자드 및 기타 애드온이 아이콘에 초읽기 문자를 표시하도록 허용합니다"
