@@ -461,6 +461,7 @@ addon.Spells = {
     [345569] = { type = BUFF_OFFENSIVE }, -- Flagellation (Venthyr Ability)
     [347037] = { type = BUFF_OFFENSIVE }, -- Sepsis (Night Fae Ability)
     [328305] = { type = DEBUFF_OFFENSIVE, priority = true}, -- Sepsis (Night Fae Ability)
+    [360194] = { type = DEBUFF_OFFENSIVE, priority = true}, -- Deathmark
 
     -- Shaman
 
