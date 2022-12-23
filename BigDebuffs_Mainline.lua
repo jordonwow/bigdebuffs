@@ -34,7 +34,7 @@ addon.WarningDebuffs = {
     316099, -- Unstable Affliction
     342938, -- Unstable Affliction
     34914, -- Vampiric Touch
-    323673, -- Mindgames
+    375901, -- Mindgames
 }
 
 -- Make sure we always see these debuffs, but don't make them bigger
@@ -47,7 +47,7 @@ addon.PriorityDebuffs = {
     122470, -- Touch of Karma
     208997, -- Counterstrike Totem
     343294, -- Soul Reaper (Unholy)
-    323673, -- Mindgames
+    375901, -- Mindgames
 }
 
 addon.Spells = {
@@ -368,7 +368,6 @@ addon.Spells = {
 
     [327661] = { type = BUFF_DEFENSIVE }, -- Fae Guardians
     [337661] = { type = BUFF_DEFENSIVE }, -- Translucent Image (Fade defensive Conduit)
-    [213602] = { type = IMMUNITY }, -- Greater Fade (Holy/Shadow PvP Talent)
     [605] = { type = CROWD_CONTROL, priority = true }, -- Mind Control
     [8122] = { type = CROWD_CONTROL }, -- Psychic Scream
     [9484] = { type = CROWD_CONTROL }, -- Shackle Undead
@@ -411,7 +410,7 @@ addon.Spells = {
         [322461] = { type = DEBUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Priest - Discipline)
         [322458] = { type = DEBUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Monk)
         [322460] = { type = DEBUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Priest - Shadow)
-    [323673] = { type = DEBUFF_OFFENSIVE }, -- Mindgames
+    [375901] = { type = DEBUFF_OFFENSIVE }, -- Mindgames
     [329543] = { type = BUFF_DEFENSIVE }, -- Divine Ascension (down)
         [328530] = { type = IMMUNITY, parent = 329543 }, -- Divine Ascension (up)
     [335467] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Devouring Plague
