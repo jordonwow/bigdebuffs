@@ -2048,7 +2048,6 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
                     if not debuffFrame.maxHeight then
                         debuffFrame.maxHeight = frameHeight;
                     end
-                    debuffFrame.spellId = debuffs[i][1].spellId;
                     CompactUnitFrame_UtilSetDebuff(debuffFrame, debuffs[i][1])
                     frame.BigDebuffs[index].cooldown:SetSwipeColor(0, 0, 0, 0.7)
                     index = index + 1
