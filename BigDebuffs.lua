@@ -2041,8 +2041,13 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
             for i = 1, #debuffs do -- math.min maybe?
                 if index <= self.db.profile.raidFrames.maxDebuffs then
                     if not frame.BigDebuffs[index] then break end
-                    frame.BigDebuffs[index].baseSize = frame:GetHeight() * debuffs[i][2] * 0.01
+                    local frameHeight = frame:GetHeight()
+                    frame.BigDebuffs[index].baseSize = frameHeight * debuffs[i][2] * 0.01
                     local debuffFrame = frame.BigDebuffs[index];
+                    debuffFrame.spellId = debuffs[i][1].spellId;
+                    if not debuffFrame.maxHeight then
+                        debuffFrame.maxHeight = frameHeight;
+                    end
                     debuffFrame.spellId = debuffs[i][1].spellId;
                     CompactUnitFrame_UtilSetDebuff(debuffFrame, debuffs[i][1])
                     frame.BigDebuffs[index].cooldown:SetSwipeColor(0, 0, 0, 0.7)
