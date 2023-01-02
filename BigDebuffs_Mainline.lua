@@ -207,8 +207,7 @@ addon.Spells = {
     [358385] = { type = ROOT }, -- Landslide
 	[355689] = { type = ROOT }, -- Landslide (Root)
 	[360806] = { type = CROWD_CONTROL }, -- Sleep Walk
-	[357210] = { type = CROWD_CONTROL }, -- Deep Breath (Maybe? not sure if this one works)
-	[372245] = { type = CROWD_CONTROL }, -- Deep Breath (Stun, should work)
+	[353759] = { type = CROWD_CONTROL }, -- Deep Breath (Stun, should work)
 	[383005] = { type = DEBUFF_OFFENSIVE }, -- Chrono Loop
 
     -- Hunter
