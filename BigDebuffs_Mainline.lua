@@ -300,6 +300,8 @@ addon.Spells = {
     [333100] = { type = BUFF_OFFENSIVE }, -- Firestorm (Fire Legendary)
     [324220] = { type = BUFF_OFFENSIVE }, -- Deathborne (Necrolord Ability)
     [228358] = { type = DEBUFF_OFFENSIVE }, -- Winter's Chill
+    [389794] = { type = BUFF_OTHER }, -- Snowdrift
+    [389831] = { type = CROWD_CONTROL }, -- Snowdrift
 
     -- Monk
 
