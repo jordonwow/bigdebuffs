@@ -209,6 +209,7 @@ addon.Spells = {
 	[360806] = { type = CROWD_CONTROL }, -- Sleep Walk
 	[353759] = { type = CROWD_CONTROL }, -- Deep Breath (Stun, should work)
 	[383005] = { type = DEBUFF_OFFENSIVE }, -- Chrono Loop
+	[358267] = { type = BUFF_OTHER }, -- Hover
 
     -- Hunter
 
