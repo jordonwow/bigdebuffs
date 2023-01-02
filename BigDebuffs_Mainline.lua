@@ -302,6 +302,7 @@ addon.Spells = {
     [228358] = { type = DEBUFF_OFFENSIVE }, -- Winter's Chill
     [389794] = { type = BUFF_OTHER }, -- Snowdrift
     [389831] = { type = CROWD_CONTROL }, -- Snowdrift
+    [390612] = { type = DEBUFF_OFFENSIVE }, -- Frost Bomb
 
     -- Monk
 
