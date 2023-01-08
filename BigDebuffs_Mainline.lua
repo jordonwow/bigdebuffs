@@ -296,7 +296,7 @@ addon.Spells = {
     [383874] = { type = BUFF_OFFENSIVE }, -- Hyperthermia    
     [228358] = { type = DEBUFF_OFFENSIVE }, -- Winter's Chill
 	[389831] = { type = CROWD_CONTROL }, -- Snowdrift
-	[307443] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Radiant Spark
+	[376103] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Radiant Spark
 	[210824] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Touch of the Magi
 
     -- Monk
