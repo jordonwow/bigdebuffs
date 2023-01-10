@@ -184,12 +184,12 @@ addon.Spells = {
         [108293] = { type = BUFF_OFFENSIVE, parent = 319454 }, -- with Guardian Affinity
         [108294] = { type = BUFF_OFFENSIVE, parent = 319454 }, -- with Resto Affinity
     [5215] = { type = BUFF_OTHER }, -- Prowl
-    [391528] = { type = BUFF_OFFENSIVE }, -- Convoke the Spirits    
+    [391528] = { type = BUFF_OFFENSIVE }, -- Convoke the Spirits
     [362486] = { type = IMMUNITY }, -- Keeper of the Grove
     [274838] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Feral Frenzy
 	[58180] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Infected Wounds
 	[200851] = { type = IMMUNITY }, -- Rage of the Sleeper
-    
+
     -- Evoker
 
     [363916] = { type = BUFF_DEFENSIVE }, -- Obsidian Scales
@@ -206,7 +206,7 @@ addon.Spells = {
 	[357210] = { type = IMMUNITY, nonameplates = true }, -- Deep Breath (Immune to CC)
 	[359816] = { type = IMMUNITY, nonameplates = true }, -- Dream Flight (Immune to CC)
 	[358267] = { type = BUFF_SPEED_BOOST }, -- Hover
-	
+
     -- Hunter
 
     [136] = { type = BUFF_DEFENSIVE }, -- Mend Pet
@@ -232,7 +232,7 @@ addon.Spells = {
     [186265] = { type = IMMUNITY }, -- Aspect of the Turtle
     [186289] = { type = BUFF_OFFENSIVE }, -- Aspect of the Eagle
     [193530] = { type = BUFF_OFFENSIVE }, -- Aspect of the Wild
-    [199483] = { type = BUFF_OTHER }, -- Camouflage        
+    [199483] = { type = BUFF_OTHER }, -- Camouflage
     [209997] = { type = BUFF_DEFENSIVE }, -- Play Dead
     [212638] = { type = ROOT }, -- Tracker's Net
     [213691] = { type = CROWD_CONTROL }, -- Scatter Shot
@@ -290,10 +290,10 @@ addon.Spells = {
     [198158] = { type = BUFF_OFFENSIVE }, -- Mass Invisibility (Arcane PvP Talent)
     [198065] = { type = BUFF_DEFENSIVE }, -- Prismatic Cloak (PvP Talent)
     [205025] = { type = BUFF_OFFENSIVE }, -- Presence of Mind
-    [228600] = { type = ROOT }, -- Glacial Spike Root    
+    [228600] = { type = ROOT }, -- Glacial Spike Root
     [198121] = { type = ROOT }, -- Frostbite (Frost PvP Talent)
     [130] = { type = BUFF_OTHER }, -- Slow Fall
-    [383874] = { type = BUFF_OFFENSIVE }, -- Hyperthermia    
+    [383874] = { type = BUFF_OFFENSIVE }, -- Hyperthermia
     [228358] = { type = DEBUFF_OFFENSIVE }, -- Winter's Chill
 	[389831] = { type = CROWD_CONTROL }, -- Snowdrift
 	[376103] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Radiant Spark
@@ -382,7 +382,7 @@ addon.Spells = {
     [157128] = { type = BUFF_DEFENSIVE }, -- Saved by the Light
 
     -- Priest
-    
+
     [373447] = { type = BUFF_DEFENSIVE }, -- Translucent Image (Fade)
     [605] = { type = CROWD_CONTROL, priority = true }, -- Mind Control
     [8122] = { type = CROWD_CONTROL }, -- Psychic Scream
@@ -413,7 +413,7 @@ addon.Spells = {
     [215769] = { type = BUFF_DEFENSIVE }, -- Spirit of Redemption (Spirit of the Redeemer Holy PvP Talent)
     [211336] = { type = BUFF_DEFENSIVE }, -- Archbishop Benedictus' Restitution (Resurrection Buff)
     [211319] = { type = BUFF_DEFENSIVE }, -- Archbishop Benedictus' Restitution (Debuff)
-    [289655] = { type = BUFF_DEFENSIVE }, -- Holy Word: Concentration    
+    [289655] = { type = BUFF_DEFENSIVE }, -- Holy Word: Concentration
     [322431] = { type = BUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Thoughtsteal (Buff)
     [322459] = { type = DEBUFF_OFFENSIVE }, -- Thoughtstolen (Shaman)
         [322464] = { type = DEBUFF_OFFENSIVE, parent = 322459 }, -- Thoughtstolen (Mage)
@@ -603,8 +603,8 @@ addon.Spells = {
     [198819] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Strike when applied with Sharpen Blade (50% healing reduc)
     [202164] = { type = BUFF_SPEED_BOOST }, -- Bounding Stride
     [376080] = { type = CROWD_CONTROL, nounitFrames = true, nonameplates = true }, -- Spear of Bastion
-	[354788] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Slaughterhouse	
-    
+	[354788] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Slaughterhouse
+
     -- Other
 
     [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Wounds
