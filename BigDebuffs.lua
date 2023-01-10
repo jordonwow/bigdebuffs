@@ -278,10 +278,14 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
         },
         [1467] = { -- Devastation Evoker
             Poison = true,
+            Disease = function() return IsUsableSpell(GetSpellInfo(374251)) end,
+            Curse = function() return IsUsableSpell(GetSpellInfo(374251)) end,
         },
         [1468] = { -- Preservation Evoker
             Magic = true,
             Poison = true,
+            Disease = function() return IsUsableSpell(GetSpellInfo(374251)) end,
+            Curse = function() return IsUsableSpell(GetSpellInfo(374251)) end,
         },
         [577] = {
             Magic = function() return GetSpellInfo(205604) end, -- Reverse Magic
