@@ -198,6 +198,7 @@ addon.Spells = {
 	[357170] = { type = BUFF_DEFENSIVE }, -- Time Dilation
     [375087] = { type = BUFF_OFFENSIVE }, -- Dragonrage
 	[383005] = { type = DEBUFF_OFFENSIVE }, -- Chrono Loop
+	[372048] = { type = DEBUFF_OFFENSIVE }, -- Oppressing Roar
     [360806] = { type = CROWD_CONTROL }, -- Sleep Walk
 	[372245] = { type = CROWD_CONTROL }, -- Terror of the Skies
 	[355689] = { type = ROOT }, -- Landslide
@@ -531,6 +532,7 @@ addon.Spells = {
         [207498] = { type = BUFF_DEFENSIVE, parent = 207495 }, -- Ancestral Protection (Player)
 	[356738] = { type = ROOT }, -- Earth Unleashed
 	[285515] = { type = ROOT }, -- Surge of Power (Root)
+	[356824] = { type = DEBUFF_OFFENSIVE }, -- Water Unleashed
 
     -- Warlock
     [386997] = { type = DEBUFF_OFFENSIVE }, -- Soul Rot
