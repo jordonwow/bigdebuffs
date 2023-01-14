@@ -49,8 +49,6 @@ addon.PriorityDebuffs = {
     208997, -- Counterstrike Totem
     343294, -- Soul Reaper (Unholy)
     375901, -- Mindgames
-		
-	 
 }
 
 addon.Spells = {
@@ -537,7 +535,6 @@ addon.Spells = {
 	[285515] = { type = ROOT }, -- Surge of Power (Root)
 	[356824] = { type = DEBUFF_OFFENSIVE }, -- Water Unleashed
 	[188389] = { type = DEBUFF_OFFENSIVE }, -- Flame Shock
-			  
 
     -- Warlock
     [386997] = { type = DEBUFF_OFFENSIVE }, -- Soul Rot
@@ -574,7 +571,6 @@ addon.Spells = {
     [199890] = { type = DEBUFF_OFFENSIVE, nounitframes = true, nonameplates = true }, -- Curse of Tongues
     [199954] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Bane of Fragility
 	[702] = { type = DEBUFF_OFFENSIVE }, -- Curse of Weakness
-
 
     -- Warrior
 
