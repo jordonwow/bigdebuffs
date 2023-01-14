@@ -49,6 +49,8 @@ addon.PriorityDebuffs = {
     208997, -- Counterstrike Totem
     343294, -- Soul Reaper (Unholy)
     375901, -- Mindgames
+		
+	 
 }
 
 addon.Spells = {
@@ -479,6 +481,7 @@ addon.Spells = {
 	[193359] = { type = BUFF_OFFENSIVE }, -- True Bearing
     [193357] = { type = BUFF_OFFENSIVE }, -- Ruthless Precision
 	[343142] = { type = BUFF_OFFENSIVE }, -- Dreadblades
+	[319504] = { type = BUFF_OFFENSIVE }, -- Shiv
 
     -- Shaman
 
@@ -533,6 +536,8 @@ addon.Spells = {
 	[356738] = { type = ROOT }, -- Earth Unleashed
 	[285515] = { type = ROOT }, -- Surge of Power (Root)
 	[356824] = { type = DEBUFF_OFFENSIVE }, -- Water Unleashed
+	[188389] = { type = DEBUFF_OFFENSIVE }, -- Flame Shock
+			  
 
     -- Warlock
     [386997] = { type = DEBUFF_OFFENSIVE }, -- Soul Rot
@@ -568,6 +573,8 @@ addon.Spells = {
     [387633] = { type = BUFF_SPEED_BOOST }, -- Demonic Momentum (Soulburn)
     [199890] = { type = DEBUFF_OFFENSIVE, nounitframes = true, nonameplates = true }, -- Curse of Tongues
     [199954] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Bane of Fragility
+	[702] = { type = DEBUFF_OFFENSIVE }, -- Curse of Weakness
+
 
     -- Warrior
 
