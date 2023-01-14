@@ -571,6 +571,7 @@ addon.Spells = {
     [199890] = { type = DEBUFF_OFFENSIVE, nounitframes = true, nonameplates = true }, -- Curse of Tongues
     [199954] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Bane of Fragility
 	[702] = { type = DEBUFF_OFFENSIVE }, -- Curse of Weakness
+	[325640] = { type = DEBUFF_OFFENSIVE }, -- Soul Rot
 
     -- Warrior
 
