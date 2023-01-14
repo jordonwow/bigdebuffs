@@ -479,7 +479,7 @@ addon.Spells = {
 	[193359] = { type = BUFF_OFFENSIVE }, -- True Bearing
     [193357] = { type = BUFF_OFFENSIVE }, -- Ruthless Precision
 	[343142] = { type = BUFF_OFFENSIVE }, -- Dreadblades
-	[319504] = { type = BUFF_OFFENSIVE }, -- Shiv
+	[319504] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Shiv
 
     -- Shaman
 
