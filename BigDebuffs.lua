@@ -931,7 +931,7 @@ function BigDebuffs:AttachUnitFrame(unit)
             if frame.anchor.SetDrawLayer then frame.anchor:SetDrawLayer("BACKGROUND") end
             local parent = frame.anchor.portrait and frame.anchor.portrait:GetParent() or frame.anchor:GetParent()
             frame:SetParent(parent)
-            frame:SetFrameLevel(parent:GetFrameLevel())
+            frame:SetFrameLevel(parent:GetFrameLevel() + 1)
 
             if frame.anchor.portrait then
                 frame.anchor.portrait:SetDrawLayer("BACKGROUND")
