@@ -928,7 +928,6 @@ function BigDebuffs:AttachUnitFrame(unit)
     if frame.anchor then
         if frame.blizzard then
             -- Blizzard Frame
-            if frame.anchor.SetDrawLayer then frame.anchor:SetDrawLayer("BACKGROUND") end
             local parent = frame.anchor.portrait and frame.anchor.portrait:GetParent() or frame.anchor:GetParent()
             frame:SetParent(parent)
             frame:SetFrameLevel(parent:GetFrameLevel())
@@ -938,6 +937,7 @@ function BigDebuffs:AttachUnitFrame(unit)
             elseif frame.anchor.SetDrawLayer then
                 frame.anchor:SetDrawLayer("BACKGROUND")
             end
+
             frame.cooldown:SetSwipeTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMaskSmall")
         else
             frame:SetParent(frame.parent and frame.parent or frame.anchor)

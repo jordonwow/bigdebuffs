@@ -53,10 +53,10 @@
         <HighlightTexture/>
         <PushedTexture/>
         <Layers>
-            <Layer level="BACKGROUND">
+            <Layer level="ARTWORK">
                 <Texture name="$parentIcon" parentKey="icon"/>
             </Layer>
-            <Layer level="ARTWORK" textureSubLevel="2">
+            <Layer level="OVERLAY" textureSubLevel="2">
                 <FontString name="$parentCount" inherits="NumberFontNormal" parentKey="Count" justifyH="RIGHT">
                     <Anchors>
                         <Anchor point="BOTTOMRIGHT" x="-2" y="2"/>
@@ -79,28 +79,6 @@
                         </Anchor>
                     </Anchors>
                 </FontString>
-                <Texture parentKey="flash" hidden="false" alpha="0" alphaMode="ADD" atlas="bags-glow-flash" useAtlasSize="true">
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
-                <Texture parentKey="NewItemTexture" alpha="0" alphaMode="ADD" atlas="bags-glow-blue" useAtlasSize="true">
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
-            </Layer>
-            <Layer level="BACKGROUND" textureSubLevel="-1">
-                <Texture parentKey="TargetTexture" alpha="0" alphaMode="ADD" atlas="bags-glow-purple" useAtlasSize="true">
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
-                <Texture parentKey="FocusTexture" alpha="0" alphaMode="ADD" atlas="bags-glow-white" useAtlasSize="true">
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
             </Layer>
         </Layers>
         <Frames>
