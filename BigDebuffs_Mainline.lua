@@ -539,6 +539,7 @@ addon.Spells = {
 
     -- Warlock
 
+    [113942] = { type = BUFF_OTHER }, -- Demonic Gateway
     [386997] = { type = DEBUFF_OFFENSIVE }, -- Soul Rot
     [710] = { type = CROWD_CONTROL }, -- Banish
     [5484] = { type = CROWD_CONTROL }, -- Howl of Terror

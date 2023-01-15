@@ -278,6 +278,7 @@ addon.Spells = {
     -- Paladin
 
     -- WoTLK
+    [25771] = { type = BUFF_OTHER, }, -- Forbearance
     [31821] = { type = BUFF_DEFENSIVE, },  -- Aura Mastery
     [31852] = { type = BUFF_DEFENSIVE, },  -- Ardent Defender
     [48817] = { type = CROWD_CONTROL, }, -- Holy Wrath
@@ -431,6 +432,7 @@ addon.Spells = {
     -- Mage
 
     -- WoTLK
+    [41425] = { type = BUFF_OTHER, }, -- Hypothermia
     [66] = { type = BUFF_OFFENSIVE, },  -- Invisibility
     [42950] = { type = CROWD_CONTROL, },  -- Dragon's Breath
     [43039] = { type = BUFF_OTHER, },  -- Ice Barrier
