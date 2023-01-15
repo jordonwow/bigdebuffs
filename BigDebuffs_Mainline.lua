@@ -135,6 +135,7 @@ addon.Spells = {
     [390195] = { type = BUFF_OFFENSIVE }, -- Chaos Theory
     [370970] = { type = ROOT }, -- The Hunt (Root)
 	[320338] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Essence Break
+	[354610] = { type = IMMUNITY }, -- Glimpse
 
     -- Druid
 
@@ -537,6 +538,7 @@ addon.Spells = {
 	[188389] = { type = DEBUFF_OFFENSIVE }, -- Flame Shock
 
     -- Warlock
+
     [386997] = { type = DEBUFF_OFFENSIVE }, -- Soul Rot
     [710] = { type = CROWD_CONTROL }, -- Banish
     [5484] = { type = CROWD_CONTROL }, -- Howl of Terror
@@ -583,6 +585,7 @@ addon.Spells = {
         [316595] = { type = CROWD_CONTROL, parent = 5246 }, -- Menace (Prot Talent), other targets
     [12975] = { type = BUFF_DEFENSIVE }, -- Last Stand
     [18499] = { type = BUFF_OTHER }, -- Berserker Rage
+		[384100] = { type = BUFF_OTHER, parent = 18499 }, -- Berserker Shout
     [23920] = { type = IMMUNITY_SPELL }, -- Spell Reflection
         [335255] = { type = IMMUNITY_SPELL, parent = 23920 }, -- Spell Reflection (Misshapen Mirror Legendary)
     [132168] = { type = CROWD_CONTROL }, -- Shockwave
@@ -619,6 +622,7 @@ addon.Spells = {
         [348436] = { type = BUFF_OTHER, parent = 314646 }, -- (20k mana vendor item)
         [167152] = { type = BUFF_OTHER, parent = 314646 }, -- Refreshment (mage food)
 	[377362] = { type = IMMUNITY }, -- Precognition
+	[240559] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Grievous Wound (Mythic Plus Affix)
 
     -- Racials
 
