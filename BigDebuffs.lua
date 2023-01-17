@@ -928,9 +928,14 @@ function BigDebuffs:AttachUnitFrame(unit)
     if frame.anchor then
         if frame.blizzard then
             -- Blizzard Frame
+			if frame.anchor.SetDrawLayer then frame.anchor:SetDrawLayer("BACKGROUND") end
             local parent = frame.anchor.portrait and frame.anchor.portrait:GetParent() or frame.anchor:GetParent()
             frame:SetParent(parent)
-            frame:SetFrameLevel(parent:GetFrameLevel())
+            if unit == "player" then
+				frame:SetFrameLevel(parent:GetFrameLevel())
+			else
+				frame:SetFrameLevel(parent:GetFrameLevel())
+			end
 
             if frame.anchor.portrait then
                 frame.anchor.portrait:SetDrawLayer("BACKGROUND")
