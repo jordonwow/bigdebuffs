@@ -932,7 +932,7 @@ function BigDebuffs:AttachUnitFrame(unit)
             local parent = frame.anchor.portrait and frame.anchor.portrait:GetParent() or frame.anchor:GetParent()
             frame:SetParent(parent)
             if unit == "player" then
-				frame:SetFrameLevel(parent:GetFrameLevel())
+				frame:SetFrameLevel(parent:GetFrameLevel() + 1)
 			else
 				frame:SetFrameLevel(parent:GetFrameLevel())
 			end
