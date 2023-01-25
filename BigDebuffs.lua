@@ -731,7 +731,7 @@ local anchors = {
             party3 = "PitBull4_Groups_PartyUnitButton3",
             party4 = "PitBull4_Groups_PartyUnitButton4",
         },
-    },   
+    },
     ["Cell"] = {
         noPortait = true,
         alignLeft = true,
