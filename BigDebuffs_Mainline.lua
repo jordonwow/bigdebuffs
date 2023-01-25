@@ -239,7 +239,7 @@ addon.Spells = {
     [212638] = { type = ROOT }, -- Tracker's Net
     [213691] = { type = CROWD_CONTROL }, -- Scatter Shot
     [357021] = { type = CROWD_CONTROL }, -- Consecutive Concussion
-    [260402] = { type = BUFF_OFFENSIVE }, -- Double Tap
+    [400456] = { type = BUFF_OFFENSIVE }, -- Salvo
     [266779] = { type = BUFF_OFFENSIVE }, -- Coordinated Assault
 	[360966] = { type = BUFF_OFFENSIVE }, -- Spearhead
     [288613] = { type = BUFF_OFFENSIVE }, -- Trueshot
@@ -436,10 +436,11 @@ addon.Spells = {
     [15286] = { type = BUFF_DEFENSIVE }, -- Vampiric Embrace
     [19236] = { type = BUFF_DEFENSIVE }, -- Desperate Prayer
     [111759] = { type = BUFF_OTHER }, -- Levitate
-    [325013] = { type = BUFF_OFFENSIVE }, -- Boon of the Ascended (Kyrian)
+    [322105] = { type = BUFF_OFFENSIVE }, -- Shadow Covenant
     [65081] = { type = BUFF_SPEED_BOOST }, -- Body and Soul
     [121557] = { type = BUFF_SPEED_BOOST }, -- Angelic Feather
     [199845] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Psyflay (Psyfiend) debuff
+	[214621] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Schism
     [358861] = { type = CROWD_CONTROL }, -- Void Volley: Horrify (Shadow PvP Talent)
     [114404] = { type = ROOT }, -- Void Tendrils
 
@@ -535,7 +536,7 @@ addon.Spells = {
 	[356738] = { type = ROOT }, -- Earth Unleashed
 	[285515] = { type = ROOT }, -- Surge of Power (Root)
 	[356824] = { type = DEBUFF_OFFENSIVE }, -- Water Unleashed
-	[188389] = { type = DEBUFF_OFFENSIVE }, -- Flame Shock
+	[188389] = { type = DEBUFF_OFFENSIVE, nounitframes = true, nonameplates = true }, -- Flame Shock
 
     -- Warlock
 
@@ -573,7 +574,7 @@ addon.Spells = {
     [387633] = { type = BUFF_SPEED_BOOST }, -- Demonic Momentum (Soulburn)
     [199890] = { type = DEBUFF_OFFENSIVE, nounitframes = true, nonameplates = true }, -- Curse of Tongues
     [199954] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Bane of Fragility
-	[702] = { type = DEBUFF_OFFENSIVE }, -- Curse of Weakness
+	[702] = { type = DEBUFF_OFFENSIVE, nounitframes = true, nonameplates = true }, -- Curse of Weakness
 
     -- Warrior
 
