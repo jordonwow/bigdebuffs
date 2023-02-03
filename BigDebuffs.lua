@@ -1263,27 +1263,19 @@ end
 
 BigDebuffs.AttachedFrames = {}
 
-local MAX_BUFFS = 3
+local INCREASED_MAX_BUFFS = 6
 
 function BigDebuffs:AddBigDebuffs(frame)
     if not frame or not frame.displayedUnit or not UnitIsPlayer(frame.displayedUnit) then return end
     local frameName = frame:GetName()
     local buffPrefix = frameName .. "Buff"
 
-    if self.db.profile.raidFrames.increaseBuffs then
-        CompactUnitFrame_SetMaxBuffs(frame, 6)
-        MAX_BUFFS = 6
-    end
+    local maxBuffs = self.db.profile.raidFrames.increaseBuffs and INCREASED_MAX_BUFFS or frame.maxBuffs
 
-    for i = 1, MAX_BUFFS do
-        local buffFrame = _G[buffPrefix .. i] or
-            CreateFrame("Button", buffPrefix .. i, frame, "CompactBuffTemplate")
-
-        -- set size
-        local size = frame:GetHeight() * self.db.profile.raidFrames.buffs * 0.01
-        buffFrame:SetSize(size, size)
-
-        if i > 3 then
+    for i = 1, maxBuffs do
+        if i > frame.maxBuffs then
+            local buffFrame = _G[buffPrefix .. i] or
+                CreateFrame("Button", buffPrefix .. i, frame, "CompactBuffTemplate")
             buffFrame:ClearAllPoints()
             if math.fmod(i - 1, 3) == 0 then
                 buffFrame:SetPoint("BOTTOMRIGHT", _G[buffPrefix .. i - 3], "TOPRIGHT")
@@ -1514,206 +1506,33 @@ end
 local CompactUnitFrame_UtilSetDebuff = CompactUnitFrame_UtilSetDebuff
 
 if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
-    local Default_CompactUnitFrame_Util_IsPriorityDebuff = CompactUnitFrame_Util_IsPriorityDebuff
-    local function CompactUnitFrame_Util_IsPriorityDebuff(spellId)
-        return BigDebuffs:IsPriorityBigDebuff(spellId) or Default_CompactUnitFrame_Util_IsPriorityDebuff(spellId)
-    end
-
-    local function CompactUnitFrame_ParseAllAuras(frame, displayOnlyDispellableDebuffs, ignoreBuffs, ignoreDebuffs,
-                                                  ignoreDispelDebuffs)
-        if frame.debuffs == nil then
-            frame.debuffs = TableUtil.CreatePriorityTable(AuraUtil.UnitFrameDebuffComparator,
-                TableUtil.Constants.AssociativePriorityTable);
-            frame.buffs = TableUtil.CreatePriorityTable(AuraUtil.DefaultAuraCompare,
-                TableUtil.Constants.AssociativePriorityTable);
-            frame.dispels = {};
-            for type, _ in pairs(AuraUtil.DispellableDebuffTypes) do
-                frame.dispels[type] = TableUtil.CreatePriorityTable(AuraUtil.DefaultAuraCompare,
-                    TableUtil.Constants.AssociativePriorityTable);
-            end
-        else
-            frame.debuffs:Clear();
-            frame.buffs:Clear();
-            for type, _ in pairs(AuraUtil.DispellableDebuffTypes) do
-                frame.dispels[type]:Clear();
-            end
-        end
-
-        local batchCount = nil;
-        local usePackedAura = true;
-        local function HandleAura(aura)
-            local type = AuraUtil.ProcessAura(aura, displayOnlyDispellableDebuffs, ignoreBuffs, ignoreDebuffs,
-                ignoreDispelDebuffs);
-
-            if type == AuraUtil.AuraUpdateChangedType.Debuff then
-                frame.debuffs[aura.auraInstanceID] = aura;
-            elseif type == AuraUtil.AuraUpdateChangedType.Buff then
-                frame.buffs[aura.auraInstanceID] = aura;
-            elseif type == AuraUtil.AuraUpdateChangedType.Dispel then
-                frame.debuffs[aura.auraInstanceID] = aura;
-                frame.dispels[aura.dispelName][aura.auraInstanceID] = aura;
-            end
-        end
-
-        AuraUtil.ForEachAura(frame.displayedUnit, AuraUtil.CreateFilterString(AuraUtil.AuraFilters.Harmful), batchCount,
-            HandleAura, usePackedAura);
-        AuraUtil.ForEachAura(frame.displayedUnit, AuraUtil.CreateFilterString(AuraUtil.AuraFilters.Helpful), batchCount,
-            HandleAura, usePackedAura);
-        AuraUtil.ForEachAura(frame.displayedUnit,
-            AuraUtil.CreateFilterString(AuraUtil.AuraFilters.Harmful, AuraUtil.AuraFilters.Raid), batchCount, HandleAura
-            , usePackedAura);
-    end
-
     hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
+        if (not BigDebuffs.db.profile.raidFrames.enabled) then return end
         if (not frame) or frame:IsForbidden() then return end
-
         if (not UnitIsPlayer(frame.displayedUnit)) then return end
-
-        local displayOnlyDispellableDebuffs = frame.optionTable.displayOnlyDispellableDebuffs;
-        local ignoreBuffs = not frame.buffFrames or not frame.optionTable.displayBuffs or frame.maxBuffs == 0;
-        local ignoreDebuffs = not frame.debuffFrames or not frame.optionTable.displayDebuffs or frame.maxDebuffs == 0;
-        local ignoreDispelDebuffs = ignoreDebuffs or not frame.dispelDebuffFrames or
-            not frame.optionTable.displayDispelDebuffs or frame.maxDispelDebuffs == 0;
-
-        local debuffsChanged = false;
-        local buffsChanged = false;
-        local dispelsChanged = false;
-
-        if unitAuraUpdateInfo == nil or unitAuraUpdateInfo.isFullUpdate or frame.debuffs == nil then
-            CompactUnitFrame_ParseAllAuras(frame, displayOnlyDispellableDebuffs, ignoreBuffs, ignoreDebuffs,
-                ignoreDispelDebuffs);
-            debuffsChanged = true;
-            buffsChanged = true;
-            dispelsChanged = true;
-        else
-            if unitAuraUpdateInfo.addedAuras ~= nil then
-                for _, aura in ipairs(unitAuraUpdateInfo.addedAuras) do
-                    local type = AuraUtil.ProcessAura(aura, displayOnlyDispellableDebuffs, ignoreBuffs, ignoreDebuffs,
-                        ignoreDispelDebuffs);
-                    if type == AuraUtil.AuraUpdateChangedType.Debuff then
-                        frame.debuffs[aura.auraInstanceID] = aura;
-                        debuffsChanged = true;
-                    elseif type == AuraUtil.AuraUpdateChangedType.Buff then
-                        frame.buffs[aura.auraInstanceID] = aura;
-                        buffsChanged = true;
-                    elseif type == AuraUtil.AuraUpdateChangedType.Dispel then
-                        frame.debuffs[aura.auraInstanceID] = aura;
-                        debuffsChanged = true;
-                        frame.dispels[aura.dispelName][aura.auraInstanceID] = aura;
-                        dispelsChanged = true;
-                    end
-                end
-            end
-
-            if unitAuraUpdateInfo.updatedAuraInstanceIDs ~= nil then
-                for _, auraInstanceID in ipairs(unitAuraUpdateInfo.updatedAuraInstanceIDs) do
-                    if frame.debuffs[auraInstanceID] ~= nil then
-                        local newAura = C_UnitAuras.GetAuraDataByAuraInstanceID(frame.displayedUnit, auraInstanceID);
-                        local oldDebuffType = frame.debuffs[auraInstanceID].debuffType;
-                        if newAura ~= nil then
-                            newAura.debuffType = oldDebuffType;
-                        end
-                        frame.debuffs[auraInstanceID] = newAura;
-                        debuffsChanged = true;
-
-                        for _, tbl in pairs(frame.dispels) do
-                            if tbl[auraInstanceID] ~= nil then
-                                tbl[auraInstanceID] = C_UnitAuras.GetAuraDataByAuraInstanceID(frame.displayedUnit,
-                                    auraInstanceID);
-                                dispelsChanged = true;
-                                break;
-                            end
-                        end
-                    elseif frame.buffs[auraInstanceID] ~= nil then
-                        local newAura = C_UnitAuras.GetAuraDataByAuraInstanceID(frame.displayedUnit, auraInstanceID);
-                        if newAura ~= nil then
-                            newAura.isBuff = true;
-                        end
-                        frame.buffs[auraInstanceID] = newAura;
-                        buffsChanged = true;
-                    end
-                end
-            end
-
-            if unitAuraUpdateInfo.removedAuraInstanceIDs ~= nil then
-                for _, auraInstanceID in ipairs(unitAuraUpdateInfo.removedAuraInstanceIDs) do
-                    if frame.debuffs[auraInstanceID] ~= nil then
-                        frame.debuffs[auraInstanceID] = nil;
-                        debuffsChanged = true;
-
-                        for _, tbl in pairs(frame.dispels) do
-                            if tbl[auraInstanceID] ~= nil then
-                                tbl[auraInstanceID] = nil;
-                                dispelsChanged = true;
-                                break;
-                            end
-                        end
-                    elseif frame.buffs[auraInstanceID] ~= nil then
-                        frame.buffs[auraInstanceID] = nil;
-                        buffsChanged = true;
-                    end
-                end
-            end
-        end
-
-        if debuffsChanged then
-            local frameNum = 1;
-            local maxDebuffs = frame.maxDebuffs;
-            frame.debuffs:Iterate(function(auraInstanceID, aura)
-                if frameNum > maxDebuffs then
-                    return true;
-                end
-                local debuffFrame = frame.debuffFrames[frameNum];
-                CompactUnitFrame_UtilSetDebuff(debuffFrame, aura);
-                frameNum = frameNum + 1;
-
-                if aura.isBossAura then
-                    -- Boss auras are about twice as big as normal debuffs, so we may need to display fewer buffs
-                    local bossDebuffScale = (debuffFrame.baseSize + BOSS_DEBUFF_SIZE_INCREASE) / debuffFrame.baseSize;
-                    maxDebuffs = maxDebuffs - (bossDebuffScale - 1);
-                end
-
-                return false;
-            end);
-
-            CompactUnitFrame_HideAllDebuffs(frame, frameNum);
-        end
-
-        if buffsChanged then
-            local frameNum = 1;
-            local maxBuffs = frame.maxBuffs;
-            frame.buffs:Iterate(function(auraInstanceID, aura)
-                if frameNum > maxBuffs then
-                    return true;
-                end
-                local buffFrame = frame.buffFrames[frameNum];
-                CompactUnitFrame_UtilSetBuff(buffFrame, aura);
-                frameNum = frameNum + 1;
-
-                return false;
-            end);
-
-            CompactUnitFrame_HideAllBuffs(frame, frameNum);
-        end
-
-        if dispelsChanged then
-            local frameNum = 1;
-            local maxDispelDebuffs = frame.maxDispelDebuffs;
-            for _, auraTbl in pairs(frame.dispels) do
-                if frameNum > maxDispelDebuffs then
-                    break;
-                end
-                if auraTbl:Size() ~= 0 then
-                    local dispellDebuffFrame = frame.dispelDebuffFrames[frameNum];
-                    CompactUnitFrame_UtilSetDispelDebuff(dispellDebuffFrame, auraTbl:GetTop());
-                    frameNum = frameNum + 1;
-                end
-            end
-
-            CompactUnitFrame_HideAllDispelDebuffs(frame, frameNum);
-        end
-
         BigDebuffs:ShowBigDebuffs(frame)
+
+        -- add extra buffs
+        local frameNum = 1
+        local maxBuffs = BigDebuffs.db.profile.raidFrames.increaseBuffs and INCREASED_MAX_BUFFS or frame.maxBuffs
+        frame.buffs:Iterate(function(auraInstanceID, aura)
+            if frameNum > maxBuffs then
+                return true
+            end
+            local buffFrame = frame.buffFrames[frameNum]
+
+            -- set size
+            local size = frame:GetHeight() * BigDebuffs.db.profile.raidFrames.buffs * 0.01
+            buffFrame:SetSize(size, size)
+
+            -- we only need to set extra buffs
+            if frameNum > frame.maxBuffs then
+                CompactUnitFrame_UtilSetBuff(buffFrame, aura)
+            end
+            frameNum = frameNum + 1
+
+            return false
+        end)
     end)
 else
     CompactUnitFrame_UtilSetDebuff = function(debuffFrame, unit, index, filter, isBossAura, isBossBuff, ...)
@@ -1944,7 +1763,7 @@ else
             return
         end
 
-        local maxBuffs = BigDebuffs.db.profile.raidFrames.increaseBuffs and MAX_BUFFS or frame.maxBuffs
+        local maxBuffs = BigDebuffs.db.profile.raidFrames.increaseBuffs and INCREASED_MAX_BUFFS or frame.maxBuffs
 
         local index = 1;
         local frameNum = 1;
