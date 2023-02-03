@@ -102,7 +102,7 @@ addon.Spells = {
     [207289] = { type = BUFF_OFFENSIVE }, -- Unholy Assault
     [212552] = { type = BUFF_SPEED_BOOST }, -- Wraith Walk
     [219809] = { type = BUFF_DEFENSIVE }, -- Tombstone
-    [223929] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Necrotic Wound
+    [356528] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Necrotic Wound
     [343294] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Soul Reaper
     [377048] = { type = CROWD_CONTROL }, -- Absolute Zero
     -- [91807] = { type = ROOT }, -- Shambling Rush (defined as Interrupt)
@@ -293,7 +293,7 @@ addon.Spells = {
     [198065] = { type = BUFF_DEFENSIVE }, -- Prismatic Cloak (PvP Talent)
     [205025] = { type = BUFF_OFFENSIVE }, -- Presence of Mind
     [228600] = { type = ROOT }, -- Glacial Spike Root
-    [198121] = { type = ROOT }, -- Frostbite (Frost PvP Talent)
+    [378760] = { type = ROOT }, -- Frostbite
     [130] = { type = BUFF_OTHER }, -- Slow Fall
     [383874] = { type = BUFF_OFFENSIVE }, -- Hyperthermia
     [228358] = { type = DEBUFF_OFFENSIVE }, -- Winter's Chill
@@ -310,7 +310,7 @@ addon.Spells = {
     [116841] = { type = BUFF_SPEED_BOOST }, -- Tiger's Lust
     [116849] = { type = BUFF_DEFENSIVE }, -- Life Cocoon
     [119381] = { type = CROWD_CONTROL }, -- Leg Sweep
-    [324382] = { type = CROWD_CONTROL }, -- Clash
+    [324382] = { type = ROOT }, -- Clash
     [122278] = { type = BUFF_DEFENSIVE }, -- Dampen Harm
     [125174] = { type = BUFF_DEFENSIVE }, -- Touch of Karma (Buff)
     [122470] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Touch of Karma (Debuff)
@@ -531,7 +531,7 @@ addon.Spells = {
 	[356738] = { type = ROOT }, -- Earth Unleashed
 	[285515] = { type = ROOT }, -- Surge of Power (Root)
 	[356824] = { type = DEBUFF_OFFENSIVE }, -- Water Unleashed
-	[188389] = { type = DEBUFF_OFFENSIVE, nounitframes = true, nonameplates = true }, -- Flame Shock
+	[188389] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Flame Shock
 
     -- Warlock
 
@@ -567,9 +567,9 @@ addon.Spells = {
         [200548] = { type = DEBUFF_OFFENSIVE, parent = 80240 }, -- Bane of Havoc (Destro PvP Talent)
     [213688] = { type = CROWD_CONTROL }, -- Fel Cleave - Fel Lord stun (Demo PvP Talent)
     [387633] = { type = BUFF_SPEED_BOOST }, -- Demonic Momentum (Soulburn)
-    [1714] = { type = DEBUFF_OFFENSIVE, nounitframes = true, nonameplates = true }, -- Curse of Tongues
+    [1714] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Curse of Tongues
     [199954] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Bane of Fragility
-	[702] = { type = DEBUFF_OFFENSIVE, nounitframes = true, nonameplates = true }, -- Curse of Weakness
+	[702] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Curse of Weakness
 
     -- Warrior
 
