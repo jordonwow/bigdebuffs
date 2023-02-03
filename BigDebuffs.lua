@@ -2011,8 +2011,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
             local size = self:GetDebuffSize(aura.spellId, isDispellable)
             if size and not friendlySmokeBomb then
                 tinsert(debuffs, { aura, size, self:GetDebuffPriority(aura.spellId) })
-            elseif self.db.profile.raidFrames.redirectBliz or
-                (self.db.profile.raidFrames.anchor == "INNER" and not self.db.profile.raidFrames.hideBliz) then
+            elseif self.db.profile.raidFrames.redirectBliz then
                 if not frame.optionTable.displayOnlyDispellableDebuffs or isDispellable then
                     tinsert(debuffs, { aura, self.db.profile.raidFrames.default, 0 })
                 end
@@ -2041,40 +2040,40 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
             end
         end
 
-        -- moved it outsdie of the check if there are any debuffs to always function as otherwise it casues a weird feeling that some buffs are appearing all of a sudden
+        if #debuffs < 1 then return end
+
+        -- sort by priority > size > duration > index
+        table.sort(debuffs, function(a, b)
+            if a[3] == b[3] then
+                if a[2] == b[2] then
+                    return a[1].spellId > b[1].spellId
+                end
+                return a[2] > b[2]
+            end
+            return a[3] > b[3]
+        end)
+
+        local index = 1
+
         if self.db.profile.raidFrames.hideBliz or
-            self.db.profile.raidFrames.anchor == "INNER" or
-            self.db.profile.raidFrames.redirectBliz then
+        self.db.profile.raidFrames.anchor == "INNER" or
+        self.db.profile.raidFrames.redirectBliz then
             CompactUnitFrame_HideAllDebuffs(frame)
         end
 
-        if #debuffs > 0 then
-            -- sort by priority > size > duration > index
-            table.sort(debuffs, function(a, b)
-                if a[3] == b[3] then
-                    if a[2] == b[2] then
-                        return a[1].spellId > b[1].spellId
-                    end
-                    return a[2] > b[2]
+        for i = 1, #debuffs do -- math.min maybe?
+            if index <= self.db.profile.raidFrames.maxDebuffs then
+                if not frame.BigDebuffs[index] then break end
+                local frameHeight = frame:GetHeight()
+                frame.BigDebuffs[index].baseSize = frameHeight * debuffs[i][2] * 0.01
+                local debuffFrame = frame.BigDebuffs[index];
+                debuffFrame.spellId = debuffs[i][1].spellId;
+                if not debuffFrame.maxHeight then
+                    debuffFrame.maxHeight = frameHeight;
                 end
-                return a[3] > b[3]
-            end)
-            local index = 1
-
-            for i = 1, #debuffs do -- math.min maybe?
-                if index <= self.db.profile.raidFrames.maxDebuffs then
-                    if not frame.BigDebuffs[index] then break end
-                    local frameHeight = frame:GetHeight()
-                    frame.BigDebuffs[index].baseSize = frameHeight * debuffs[i][2] * 0.01
-                    local debuffFrame = frame.BigDebuffs[index];
-                    debuffFrame.spellId = debuffs[i][1].spellId;
-                    if not debuffFrame.maxHeight then
-                        debuffFrame.maxHeight = frameHeight;
-                    end
-                    CompactUnitFrame_UtilSetDebuff(debuffFrame, debuffs[i][1])
-                    frame.BigDebuffs[index].cooldown:SetSwipeColor(0, 0, 0, 0.7)
-                    index = index + 1
-                end
+                CompactUnitFrame_UtilSetDebuff(debuffFrame, debuffs[i][1])
+                frame.BigDebuffs[index].cooldown:SetSwipeColor(0, 0, 0, 0.7)
+                index = index + 1
             end
         end
     end
