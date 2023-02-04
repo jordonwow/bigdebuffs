@@ -40,6 +40,7 @@ addon.WarningDebuffs = {
 
 -- Make sure we always see these debuffs, but don't make them bigger
 addon.PriorityDebuffs = {
+    360194, -- Deathmark
     316099, -- Unstable Affliction
     342938, -- Unstable Affliction
     34914, -- Vampiric Touch
