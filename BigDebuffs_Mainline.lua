@@ -162,11 +162,13 @@ addon.Spells = {
     [102543] = { type = BUFF_OFFENSIVE }, -- Incarnation: King of the Jungle
     [102558] = { type = BUFF_OFFENSIVE }, -- Incarnation: Guardian of Ursoc
     [102560] = { type = BUFF_OFFENSIVE }, -- Incarnation: Chosen of Elune
+	[390414] = { type = BUFF_OFFENSIVE, parent = 102560 }, -- Incarnation: Chosen of Elune (Orbital Strike)
     [106951] = { type = BUFF_OFFENSIVE }, -- Berserk (Feral)
     [132158] = { type = BUFF_OFFENSIVE }, -- Nature's Swiftness
     [155835] = { type = BUFF_DEFENSIVE }, -- Bristling Fur
     [163505] = { type = CROWD_CONTROL }, -- Rake
     [194223] = { type = BUFF_OFFENSIVE }, -- Celestial Alignment
+	[383410] = { type = BUFF_OFFENSIVE, parent = 194223 }, -- Celestial Alignment (Orbital Strike)
     [202425] = { type = BUFF_OFFENSIVE }, -- Warrior of Elune
     [209749] = { type = CROWD_CONTROL }, -- Faerie Swarm
     [203123] = { type = CROWD_CONTROL }, -- Maim
@@ -578,8 +580,8 @@ addon.Spells = {
     [1719] = { type = BUFF_OFFENSIVE }, -- Recklessness
     [52437] = {type = BUFF_OFFENSIVE }, -- Sudden Death
     [5246] = { type = CROWD_CONTROL }, -- Intimidating Shout
-        [316593] = { type = CROWD_CONTROL, parent = 5246 }, -- Menace (Prot Talent), main target
-        [316595] = { type = CROWD_CONTROL, parent = 5246 }, -- Menace (Prot Talent), other targets
+        [316593] = { type = CROWD_CONTROL, parent = 5246 }, -- Menace (Main target)
+        [316595] = { type = CROWD_CONTROL, parent = 5246 }, -- Menace (Other targets)
     [12975] = { type = BUFF_DEFENSIVE }, -- Last Stand
     [18499] = { type = BUFF_OTHER }, -- Berserker Rage
 		[384100] = { type = BUFF_OTHER, parent = 18499 }, -- Berserker Shout
