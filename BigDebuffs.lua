@@ -1828,6 +1828,10 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
             local friendlySmokeBomb = aura.spellId == 212183 and reaction > 4
             local isDispellable = self:IsDispellable(unitId, aura.dispelName);
             local size = self:GetDebuffSize(aura.spellId, isDispellable)
+            -- make sure certain debuffs aren't dispalyed as boss auras
+            if size then
+                aura.isBossAura = false
+            end
             if size and not friendlySmokeBomb then
                 tinsert(debuffs, { aura, size, self:GetDebuffPriority(aura.spellId) })
             elseif self.db.profile.raidFrames.redirectBliz then
