@@ -337,7 +337,7 @@ addon.Spells = {
     -- Paladin
 
     [498] = { type = BUFF_DEFENSIVE }, -- Divine Protection
-    	[403876] = { type = BUFF_DEFENSIVE, parent = 498 }, -- Divine Protection (Retribution)
+        [403876] = { type = BUFF_DEFENSIVE, parent = 498 }, -- Divine Protection (Retribution)
     [642] = { type = IMMUNITY }, -- Divine Shield
     [853] = { type = CROWD_CONTROL }, -- Hammer of Justice
     [1022] = { type = BUFF_DEFENSIVE }, -- Blessing of Protection
