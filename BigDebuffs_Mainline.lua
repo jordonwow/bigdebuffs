@@ -380,6 +380,7 @@ addon.Spells = {
         [276111] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (Dwarf?)
         [276112] = { type = BUFF_SPEED_BOOST, parent =  221883 }, -- Divine Steed (Dark Iron Dwarf?)
     [343721] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Final Reckoning
+    [343527] = { type = DEBUFF_OFFENSIVE }, -- Execution Sentence
     [255941] = { type = CROWD_CONTROL }, -- Wake of Ashes stun
 	[385149] = { type = CROWD_CONTROL }, -- Exorcism stun
     [157128] = { type = BUFF_DEFENSIVE }, -- Saved by the Light
