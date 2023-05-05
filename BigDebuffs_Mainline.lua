@@ -192,6 +192,8 @@ addon.Spells = {
     [58180] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Infected Wounds
     [200851] = { type = IMMUNITY }, -- Rage of the Sleeper
     [410406] = { type = BUFF_OFFENSIVE }, -- Wild Attunement
+    [410063] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Reactive Resin (Snare for 2 stacks then root/silence at 3)
+    [410065] = { type = CROWD_CONTROL }, -- Reactive Resin (Root and Silence)
 
     -- Evoker
 
