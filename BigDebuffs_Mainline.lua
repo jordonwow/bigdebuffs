@@ -192,24 +192,26 @@ addon.Spells = {
     [58180] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Infected Wounds
     [200851] = { type = IMMUNITY }, -- Rage of the Sleeper
     [410406] = { type = BUFF_OFFENSIVE }, -- Wild Attunement
+    [410063] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Reactive Resin (Snare for 2 stacks then root/silence at 3)
+    [410065] = { type = CROWD_CONTROL }, -- Reactive Resin (Root and Silence)
 
     -- Evoker
 
     [363916] = { type = BUFF_DEFENSIVE }, -- Obsidian Scales
     [370960] = { type = BUFF_DEFENSIVE }, -- Emerald Communion
-	[374348] = { type = BUFF_DEFENSIVE }, -- Renewing Blaze
-	[357170] = { type = BUFF_DEFENSIVE }, -- Time Dilation
+    [374348] = { type = BUFF_DEFENSIVE }, -- Renewing Blaze
+    [357170] = { type = BUFF_DEFENSIVE }, -- Time Dilation
     [375087] = { type = BUFF_OFFENSIVE }, -- Dragonrage
-	[383005] = { type = DEBUFF_OFFENSIVE }, -- Chrono Loop
-	[372048] = { type = DEBUFF_OFFENSIVE }, -- Oppressing Roar
+    [383005] = { type = DEBUFF_OFFENSIVE }, -- Chrono Loop
+    [372048] = { type = DEBUFF_OFFENSIVE }, -- Oppressing Roar
     [360806] = { type = CROWD_CONTROL }, -- Sleep Walk
-	[372245] = { type = CROWD_CONTROL }, -- Terror of the Skies
-	[355689] = { type = ROOT }, -- Landslide
-	[378464] = { type = IMMUNITY }, -- Nullifying Shroud
-	[378441] = { type = IMMUNITY }, -- Time Stop
-	[357210] = { type = IMMUNITY, nonameplates = true }, -- Deep Breath (Immune to CC)
-	[359816] = { type = IMMUNITY, nonameplates = true }, -- Dream Flight (Immune to CC)
-	[358267] = { type = BUFF_SPEED_BOOST }, -- Hover
+    [372245] = { type = CROWD_CONTROL }, -- Terror of the Skies
+    [355689] = { type = ROOT }, -- Landslide
+    [378464] = { type = IMMUNITY }, -- Nullifying Shroud
+    [378441] = { type = IMMUNITY }, -- Time Stop
+    [357210] = { type = IMMUNITY, nonameplates = true }, -- Deep Breath (Immune to CC)
+    [359816] = { type = IMMUNITY, nonameplates = true }, -- Dream Flight (Immune to CC)
+    [358267] = { type = BUFF_SPEED_BOOST }, -- Hover
 
     -- Hunter
 
@@ -230,7 +232,7 @@ addon.Spells = {
     [117405] = { type = ROOT, nounitFrames = true, nonameplates = true }, -- Binding Shot - aura when you're in the area
     [118922] = { type = BUFF_SPEED_BOOST }, -- Posthaste
     [131894] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- A Murder of Crows
-	[321538] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Bloodshed
+    [321538] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Bloodshed
     [162480] = { type = ROOT }, -- Steel Trap
     [186257] = { type = BUFF_SPEED_BOOST }, -- Aspect of the Cheetah
         [203233] = { type = BUFF_SPEED_BOOST, parent = 186257 }, -- Hunting Pack (PvP Talent)
@@ -259,7 +261,7 @@ addon.Spells = {
     [66] = { type = BUFF_OFFENSIVE }, -- Invisibility (Countdown)
         [32612] = { type = BUFF_OFFENSIVE, parent = 66 }, -- Invisibility
     [110960] = { type = BUFF_DEFENSIVE }, -- Greater Invisibility (Countdown)
-		[113862] = { type = BUFF_DEFENSIVE, parent = 110960 }, -- Greater Invisibility
+	[113862] = { type = BUFF_DEFENSIVE, parent = 110960 }, -- Greater Invisibility
     [118] = { type = CROWD_CONTROL }, -- Polymorph
         [28271] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Turtle
         [28272] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Pig
@@ -274,14 +276,14 @@ addon.Spells = {
         [161372] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Peacock
         [277787] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Direhorn
         [277792] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Bumblebee
-		[391622] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Duck
-	[383121] = { type = CROWD_CONTROL }, -- Mass Polymorph
+	[391622] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Duck
+    [383121] = { type = CROWD_CONTROL }, -- Mass Polymorph
     [122] = { type = ROOT }, -- Frost Nova
     [33395] = { type = ROOT }, -- Freeze
     [365362] = { type = BUFF_OFFENSIVE }, -- Arcane Surge
     [12051] = { type = BUFF_OFFENSIVE }, -- Evocation
     [12472] = { type = BUFF_OFFENSIVE }, -- Icy Veins
-        [198144] = { type = BUFF_OFFENSIVE }, -- Ice Form
+    [198144] = { type = BUFF_OFFENSIVE }, -- Ice Form
     [31661] = { type = CROWD_CONTROL }, -- Dragon's Breath
     [45438] = { type = IMMUNITY }, -- Ice Block
     [41425] = { type = BUFF_OTHER }, -- Hypothermia
@@ -358,7 +360,7 @@ addon.Spells = {
     [31884] = { type = BUFF_OFFENSIVE }, -- Avenging Wrath
         [216331] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Avenging Crusader (Holy Talent)
         [231895] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Crusade (Retribution Talent)
-		[389539] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Sentinel (Protection Talent)
+	[389539] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Sentinel (Protection Talent)
     -- [31935] = { type = CROWD_CONTROL }, -- Avenger's Shield (defined as Interrupt)
     [86659] = { type = BUFF_DEFENSIVE }, -- Guardian of Ancient Kings
         [212641] = { type = BUFF_DEFENSIVE, parent = 86659 }, -- Guardian of Ancient Kings (Glyphed)
@@ -384,8 +386,9 @@ addon.Spells = {
     [343721] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Final Reckoning
     [343527] = { type = DEBUFF_OFFENSIVE }, -- Execution Sentence
     [255941] = { type = CROWD_CONTROL }, -- Wake of Ashes stun
-	[385149] = { type = CROWD_CONTROL }, -- Exorcism stun
+    [385149] = { type = CROWD_CONTROL }, -- Exorcism stun
     [157128] = { type = BUFF_DEFENSIVE }, -- Saved by the Light
+    [410201] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Searing Glare
 
     -- Priest
 
@@ -404,7 +407,7 @@ addon.Spells = {
     [81782] = { type = BUFF_DEFENSIVE }, -- Power Word: Barrier
     [87204] = { type = CROWD_CONTROL }, -- Sin and Punishment
     [194249] = { type = BUFF_OFFENSIVE }, -- Voidform
-	[391109] = { type = BUFF_OFFENSIVE }, -- Dark Ascension
+    [391109] = { type = BUFF_OFFENSIVE }, -- Dark Ascension
     [232707] = { type = BUFF_DEFENSIVE }, -- Ray of Hope (Holy PvP Talent)
     [197862] = { type = BUFF_DEFENSIVE }, -- Archangel (Disc PvP Talent)
     [197871] = { type = BUFF_OFFENSIVE }, -- Dark Archangel (Disc PvP Talent) - on the priest
@@ -480,10 +483,10 @@ addon.Spells = {
     [375939] = { type = BUFF_OFFENSIVE }, -- Sepsis
     [385408] = { type = DEBUFF_OFFENSIVE, priority = true, nonameplates = true }, -- Sepsis
     [360194] = { type = DEBUFF_OFFENSIVE, priority = true, nonameplates = true }, -- Deathmark
-	[193359] = { type = BUFF_OFFENSIVE }, -- True Bearing
+    [193359] = { type = BUFF_OFFENSIVE }, -- True Bearing
     [193357] = { type = BUFF_OFFENSIVE }, -- Ruthless Precision
-	[343142] = { type = BUFF_OFFENSIVE }, -- Dreadblades
-	[319504] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Shiv
+    [343142] = { type = BUFF_OFFENSIVE }, -- Dreadblades
+    [319504] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Shiv
 
     -- Shaman
 
