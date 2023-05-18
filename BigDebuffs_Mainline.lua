@@ -391,7 +391,7 @@ addon.Spells = {
     [157128] = { type = BUFF_DEFENSIVE }, -- Saved by the Light
     [410201] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Searing Glare
 	[255937] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Wake of Ashes
-	
+
     -- Priest
 
     [373447] = { type = BUFF_DEFENSIVE }, -- Translucent Image (Fade)
