@@ -194,6 +194,7 @@ addon.Spells = {
     [410406] = { type = BUFF_OFFENSIVE }, -- Wild Attunement
     [410063] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Reactive Resin (Snare for 2 stacks then root/silence at 3)
     [410065] = { type = CROWD_CONTROL }, -- Reactive Resin (Root and Silence)
+	[202347] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Stellar Flare
 
     -- Evoker
 
@@ -389,6 +390,8 @@ addon.Spells = {
     [385149] = { type = CROWD_CONTROL }, -- Exorcism stun
     [157128] = { type = BUFF_DEFENSIVE }, -- Saved by the Light
     [410201] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Searing Glare
+	[255937] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Wake of Ashes
+	
 
     -- Priest
 
