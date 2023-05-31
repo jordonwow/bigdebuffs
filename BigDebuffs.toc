@@ -1,9 +1,10 @@
-## Interface: 100007
+## Interface: 100100
 ## Title: BigDebuffs
 ## Notes: Increases the debuff size of crowd control effects on the Blizzard raid frames
 ## Version: @project-version@
 ## Author: Jordon
 ## SavedVariables: BigDebuffsDB
+## IconTexture: Interface\AddOns\BigDebuffs\Media\Textures\icon.blp
 ## X-Curse-Project-ID: 82697
 ## X-Wago-ID: WYK98e6L
 ## X-WoWI-ID: 26006
