@@ -1823,7 +1823,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
 
         local function addDebuffs(aura)
             -- aura struct https://wowpedia.fandom.com/wiki/Struct_UnitAuraInfo
-
+            if (not aura) then return end
             local reaction = aura.sourceUnit and UnitReaction("player", aura.sourceUnit) or 0
             local friendlySmokeBomb = aura.spellId == 212183 and reaction > 4
             local isDispellable = self:IsDispellable(unitId, aura.dispelName);
