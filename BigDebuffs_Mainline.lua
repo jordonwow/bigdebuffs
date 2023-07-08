@@ -204,6 +204,7 @@ addon.Spells = {
     [374348] = { type = BUFF_DEFENSIVE }, -- Renewing Blaze
     [357170] = { type = BUFF_DEFENSIVE }, -- Time Dilation
     [406732] = { type = BUFF_DEFENSIVE }, -- Spatial Paradox
+    [360827] = { type = BUFF_DEFENSIVE }, -- Blistering Scales
     [404977] = { type = BUFF_DEFENSIVE }, -- Time Skip
     [375087] = { type = BUFF_OFFENSIVE }, -- Dragonrage
     [383005] = { type = DEBUFF_OFFENSIVE }, -- Chrono Loop
