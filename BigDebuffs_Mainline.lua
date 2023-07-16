@@ -210,7 +210,7 @@ addon.Spells = {
     [372048] = { type = DEBUFF_OFFENSIVE }, -- Oppressing Roar
     [360806] = { type = CROWD_CONTROL }, -- Sleep Walk
     [372245] = { type = CROWD_CONTROL }, -- Terror of the Skies
-    [409438] = { type = CROWD_CONTROL }, -- Seismic Slam
+    [408544] = { type = CROWD_CONTROL }, -- Seismic Slam
     [355689] = { type = ROOT }, -- Landslide
     [378464] = { type = IMMUNITY }, -- Nullifying Shroud
     [378441] = { type = IMMUNITY }, -- Time Stop
