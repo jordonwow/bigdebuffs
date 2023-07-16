@@ -366,6 +366,15 @@ function BigDebuffs:SetupOptions()
                         step = 1,
                         order = 10,
                     },
+                    wrapAt = {
+                        type = "range",
+                        name = L["Wrap After"],
+                        desc = L["Begin a new row or column after this many debuffs"],
+                        min = 0,
+                        max = 10,
+                        step = 1,
+                        order = 11,
+                    },
                     anchor = {
                         name = L["Anchor"],
                         desc = L["Anchor to attach the BigDebuffs frames"],
