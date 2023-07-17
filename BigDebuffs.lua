@@ -1289,19 +1289,27 @@ function BigDebuffs:AddBigDebuffs(frame)
 
     frame.BigDebuffs = frame.BigDebuffs or {}
     local max = self.db.profile.raidFrames.maxDebuffs + 1 -- add a frame for warning debuffs
+    local wrapAt = self.db.profile.raidFrames.wrapAt
     for i = 1, max do
         local big = frame.BigDebuffs[i] or
             CreateFrame("Button", frameName .. "BigDebuffsRaid" .. i, frame, "BigDebuffsDebuffTemplate")
         big:ClearAllPoints()
-        if i > 1 then
-            if self.db.profile.raidFrames.anchor == "INNER" or self.db.profile.raidFrames.anchor == "RIGHT" or
-                self.db.profile.raidFrames.anchor == "TOP" then
+        if i > 1 and i ~= wrapAt + 1 then
+            if self.db.profile.raidFrames.anchor == "INNER" or self.db.profile.raidFrames.anchor == "RIGHT" or self.db.profile.raidFrames.anchor == "TOP" then
                 big:SetPoint("BOTTOMLEFT", frame.BigDebuffs[i - 1], "BOTTOMRIGHT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "LEFT" then
                 big:SetPoint("BOTTOMRIGHT", frame.BigDebuffs[i - 1], "BOTTOMLEFT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "BOTTOM" then
                 big:SetPoint("TOPLEFT", frame.BigDebuffs[i - 1], "TOPRIGHT", 0, 0)
             end
+        elseif i == wrapAt + 1 and  wrapAt ~= 0 then
+            if self.db.profile.raidFrames.anchor == "INNER" or self.db.profile.raidFrames.anchor == "RIGHT" or self.db.profile.raidFrames.anchor == "TOP" then
+                big:SetPoint("BOTTOMLEFT", frame.BigDebuffs[1], "TOPLEFT",0, 1)
+            elseif self.db.profile.raidFrames.anchor == "LEFT" then
+                big:SetPoint("BOTTOMRIGHT", frame.BigDebuffs[1], "TOPRIGHT", 0,1)
+            elseif self.db.profile.raidFrames.anchor == "BOTTOM" then
+                big:SetPoint("TOPLEFT", frame.BigDebuffs[1], "BOTTOMLEFT", 0, -1)
+            end    
         else
             if self.db.profile.raidFrames.anchor == "INNER" then
                 big:SetPoint("BOTTOMLEFT", frame.debuffFrames[1], "BOTTOMLEFT", 0, 0)
