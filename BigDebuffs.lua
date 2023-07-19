@@ -1289,7 +1289,7 @@ function BigDebuffs:AddBigDebuffs(frame)
 
     frame.BigDebuffs = frame.BigDebuffs or {}
     local max = self.db.profile.raidFrames.maxDebuffs + 1 -- add a frame for warning debuffs
-    local wrapAt = self.db.profile.raidFrames.wrapAt
+    local wrapAt = self.db.profile.raidFrames.wrapAt or 10
     for i = 1, max do
         local big = frame.BigDebuffs[i] or
             CreateFrame("Button", frameName .. "BigDebuffsRaid" .. i, frame, "BigDebuffsDebuffTemplate")
@@ -1309,7 +1309,7 @@ function BigDebuffs:AddBigDebuffs(frame)
                 big:SetPoint("BOTTOMRIGHT", frame.BigDebuffs[1], "TOPRIGHT", 0,1)
             elseif self.db.profile.raidFrames.anchor == "BOTTOM" then
                 big:SetPoint("TOPLEFT", frame.BigDebuffs[1], "BOTTOMLEFT", 0, -1)
-            end    
+            end
         else
             if self.db.profile.raidFrames.anchor == "INNER" then
                 big:SetPoint("BOTTOMLEFT", frame.debuffFrames[1], "BOTTOMLEFT", 0, 0)

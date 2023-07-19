@@ -146,3 +146,5 @@ L["Relative Point"] = true
 L["Relative point to attach the BigDebuffs frames"] = true
 L["Match Frame Height"] = true
 L["Match the height of the frame"] = true
+L["Wrap After"] = true
+L["Begin a new row or column after this many debuffs"] = true
