@@ -1148,6 +1148,7 @@ end
 function BigDebuffs:PLAYER_ENTERING_WORLD()
     for i = 1, #units do
         self:AttachUnitFrame(units[i])
+        self:UNIT_AURA(units[i])
     end
 end
 
