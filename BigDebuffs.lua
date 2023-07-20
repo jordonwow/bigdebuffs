@@ -958,6 +958,8 @@ function BigDebuffs:AttachUnitFrame(unit)
                     portraitParent.FrameTexture:SetDrawLayer("ARTWORK", 1)
                 end
                 frame.anchor.portrait:SetDrawLayer("BACKGROUND", 0)
+            elseif frame.anchor.SetDrawLayer then
+                frame.anchor:SetDrawLayer("BACKGROUND", 0)
             end
             frame.cooldown:SetSwipeTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMaskSmall")
         else
