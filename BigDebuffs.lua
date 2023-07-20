@@ -891,7 +891,7 @@ function BigDebuffs:AttachUnitFrame(unit)
     local frameName = addonName .. unit .. "UnitFrame"
 
     if not frame then
-        frame = CreateFrame("Button", frameName, UIParent, "BigDebuffsUnitFrameTemplate")
+        frame = CreateFrame("Frame", frameName, UIParent, "BigDebuffsUnitFrameTemplate")
         self.UnitFrames[unit] = frame
         frame:SetScript("OnEvent", function() self:UNIT_AURA(unit) end)
         if self.db.profile.unitFrames.cooldownCount then
@@ -952,7 +952,13 @@ function BigDebuffs:AttachUnitFrame(unit)
             local parent = frame.anchor.portrait and frame.anchor.portrait:GetParent() or frame.anchor:GetParent()
             frame:SetParent(parent)
             frame:SetFrameLevel(parent:GetFrameLevel())
-            if frame.anchor.portrait then frame.anchor.portrait:SetDrawLayer("BACKGROUND", 0) end
+            if frame.anchor.portrait then
+                local portraitParent = frame.anchor.portrait:GetParent()
+                if portraitParent and portraitParent.FrameTexture then
+                    portraitParent.FrameTexture:SetDrawLayer("ARTWORK", 1)
+                end
+                frame.anchor.portrait:SetDrawLayer("BACKGROUND", 0)
+            end
             frame.cooldown:SetSwipeTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMaskSmall")
         else
             frame:SetParent(frame.parent and frame.parent or frame.anchor)

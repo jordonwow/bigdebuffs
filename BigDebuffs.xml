@@ -37,7 +37,7 @@
             </OnLeave>
         </Scripts>
     </Button>
-    <Button name="BigDebuffsUnitFrameTemplate" parent="UIParent" hidden="true" dontSavePosition="true" virtual="true">
+    <Frame name="BigDebuffsUnitFrameTemplate" parent="UIParent" hidden="true" dontSavePosition="true" virtual="true">
         <Size>
             <AbsDimension x="36" y="36"/>
         </Size>
@@ -45,7 +45,7 @@
             <Anchor point="CENTER"/>
         </Anchors>
         <Layers>
-            <Layer level="BACKGROUND">
+            <Layer level="BACKGROUND" textureSubLevel="7">
                 <Texture name="$parentIcon" parentKey="icon"/>
             </Layer>
             <Layer level="ARTWORK" textureSubLevel="2">
@@ -74,7 +74,7 @@
             </Layer>
         </Layers>
         <Frames>
-            <Cooldown name="$parentCooldown" inherits="CooldownFrameTemplate" parentKey="cooldown" reverse="true" drawBling="false" drawEdge="false" hidden="true">
+            <Cooldown frameLevel="1" name="$parentCooldown" inherits="CooldownFrameTemplate" parentKey="cooldown" reverse="true" drawBling="false" drawEdge="false" hidden="true">
                 <Size x="36" y="36"/>
                 <Anchors>
                     <Anchor point="CENTER" x="0" y="-1"/>
@@ -104,5 +104,5 @@
                 end
             </OnUpdate>
         </Scripts>
-    </Button>
+    </Frame>
 </Ui>
