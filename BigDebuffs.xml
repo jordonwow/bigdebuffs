@@ -44,14 +44,6 @@
         <Anchors>
             <Anchor point="CENTER"/>
         </Anchors>
-        <NormalTexture name="$parentNormalTexture" parentKey="NormalTexture">
-            <Anchors>
-                <Anchor point="TOPLEFT" x="-15" y="15"/>
-                <Anchor point="BOTTOMRIGHT" x="15" y="-15"/>
-            </Anchors>
-        </NormalTexture>
-        <HighlightTexture/>
-        <PushedTexture/>
         <Layers>
             <Layer level="BACKGROUND">
                 <Texture name="$parentIcon" parentKey="icon"/>
@@ -79,28 +71,6 @@
                         </Anchor>
                     </Anchors>
                 </FontString>
-				 <Texture parentKey="flash" hidden="false" alpha="0" alphaMode="ADD" atlas="bags-glow-flash" useAtlasSize="true">
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
-                <Texture parentKey="NewItemTexture" alpha="0" alphaMode="ADD" atlas="bags-glow-blue" useAtlasSize="true">
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
-            </Layer>
-            <Layer level="BACKGROUND" textureSubLevel="-1">
-                <Texture parentKey="TargetTexture" alpha="0" alphaMode="ADD" atlas="bags-glow-purple" useAtlasSize="true">
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
-                <Texture parentKey="FocusTexture" alpha="0" alphaMode="ADD" atlas="bags-glow-white" useAtlasSize="true">
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                </Texture>
             </Layer>
         </Layers>
         <Frames>
