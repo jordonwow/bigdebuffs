@@ -624,6 +624,7 @@ addon.Spells = {
     [202164] = { type = BUFF_SPEED_BOOST }, -- Bounding Stride
     [376080] = { type = CROWD_CONTROL, nounitFrames = true, nonameplates = true }, -- Spear of Bastion
     [354788] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Slaughterhouse
+    [397364] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Thunderous Roar
 
     -- Other
 
