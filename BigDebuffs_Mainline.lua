@@ -587,6 +587,7 @@ addon.Spells = {
     [702] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Curse of Weakness
     [410598] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Soul Rip
     [417537] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Oblivion
+    [205179] = { type = DEBUFF_OFFENSIVE }, -- Phantom Singularity
 
     -- Warrior
 
