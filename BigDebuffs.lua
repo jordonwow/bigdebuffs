@@ -287,6 +287,11 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
             Disease = function() return IsUsableSpell(GetSpellInfo(374251)) end,
             Curse = function() return IsUsableSpell(GetSpellInfo(374251)) end,
         },
+        [1473] = { -- Augmentation Evoker
+            Poison = true,
+            Disease = function() return IsUsableSpell(GetSpellInfo(374251)) end,
+            Curse = function() return IsUsableSpell(GetSpellInfo(374251)) end,
+        },
         [577] = {
             Magic = function() return GetSpellInfo(205604) end, -- Reverse Magic
         },
@@ -1829,20 +1834,26 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
         local function addDebuffs(aura)
             -- aura struct https://wowpedia.fandom.com/wiki/Struct_UnitAuraInfo
             if (not aura) then return end
-            local reaction = aura.sourceUnit and UnitReaction("player", aura.sourceUnit) or 0
-            local friendlySmokeBomb = aura.spellId == 212183 and reaction > 4
-            local isDispellable = self:IsDispellable(unitId, aura.dispelName);
-            local size = self:GetDebuffSize(aura.spellId, isDispellable)
-            -- make sure certain debuffs aren't dispalyed as boss auras
-            if size then
-                aura.isBossAura = false
-            end
-            if size and not friendlySmokeBomb then
-                tinsert(debuffs, { aura, size, self:GetDebuffPriority(aura.spellId) })
-            elseif self.db.profile.raidFrames.redirectBliz then
-                if not frame.optionTable.displayOnlyDispellableDebuffs or isDispellable then
-                    tinsert(debuffs, { aura, self.db.profile.raidFrames.default, 0 })
+            if (not BigDebuffsUnwantedSpell(aura.spellId)) then
+                if aura.spellId ~= unwantedSpellID then
+                    local reaction = aura.sourceUnit and UnitReaction("player", aura.sourceUnit) or 0
+                    local friendlySmokeBomb = aura.spellId == 212183 and reaction > 4
+                    local isDispellable = self:IsDispellable(unitId, aura.dispelName);
+                    local size = self:GetDebuffSize(aura.spellId, isDispellable)
+                    -- make sure certain debuffs aren't dispalyed as boss auras
+                    if size then
+                        aura.isBossAura = false
+                    end
+                    if size and not friendlySmokeBomb then
+                        tinsert(debuffs, { aura, size, self:GetDebuffPriority(aura.spellId) })
+                    elseif self.db.profile.raidFrames.redirectBliz then
+                        if not frame.optionTable.displayOnlyDispellableDebuffs or isDispellable then
+                            tinsert(debuffs, { aura, self.db.profile.raidFrames.default, 0 })
+                        end
+                    end
                 end
+            else
+                CompactUnitFrame_HideAllDebuffs(frame)
             end
         end
 

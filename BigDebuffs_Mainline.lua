@@ -587,7 +587,6 @@ addon.Spells = {
     [702] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Curse of Weakness
     [410598] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Soul Rip
     [417537] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Oblivion
-    [205179] = { type = DEBUFF_OFFENSIVE }, -- Phantom Singularity
 
     -- Warrior
 
@@ -682,5 +681,9 @@ addon.Spells = {
 
     -- Special
     --[6788] = { type = "special", nounitFrames = true, noraidFrames = true }, -- Weakened Soul
+
+    -- Dragonflight Dungeons - Season 2
+    [266107] = { type = DEBUFF_OFFENSIVE }, -- Thirst for Blood
+    [368091] = { type = DEBUFF_OFFENSIVE }, -- Infected Bite
 
 }
