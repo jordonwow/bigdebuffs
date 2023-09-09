@@ -11,6 +11,15 @@ local ROOT = "roots"
 local IMMUNITY = "immunities"
 local IMMUNITY_SPELL = "immunities_spells"
 
+addon.HiddenDebuffs = {
+    80354, -- Temporal Displacement
+    371070, -- Rotting From Within
+    390435, -- Exhaustion
+    57723, -- Exhaustion
+    206151, -- Challenger's Burden
+    264689, -- Fatigued
+}
+
 addon.Units = {
     "player",
     "pet",

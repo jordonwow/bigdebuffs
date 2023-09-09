@@ -89,6 +89,7 @@ read_globals = {
     "WOW_PROJECT_ID",
     "WOW_PROJECT_MAINLINE",
     "WOW_PROJECT_WRATH_CLASSIC",
+    "tContains",
 }
 globals = {
     "BigDebuffs",
