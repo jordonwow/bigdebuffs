@@ -327,6 +327,8 @@ addon.Spells = {
     -- Warrior
 
     [18498] = { type = CROWD_CONTROL }, -- Improved Shield Bash
+    [5246] = { type = CROWD_CONTROL }, -- Intimidating Shout (Other targets)
+        [20511] = { type = CROWD_CONTROL, parent = 5246 }, -- (Main target)
     [20230] = { type = IMMUNITY }, -- Retaliation
     [1719] = { type = BUFF_OFFENSIVE }, -- Recklessness
     [871] = { type = BUFF_DEFENSIVE }, -- Shield Wall
