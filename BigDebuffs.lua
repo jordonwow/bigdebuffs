@@ -330,6 +330,7 @@ else
             Magic = function() return IsUsableSpell(GetSpellInfo(19736)) or IsUsableSpell(GetSpellInfo(19476)) end,
         },
         EVOKER = {
+            Bleed = function() return IsUsableSpell(GetSpellInfo(374251)) end,
             Poison = true,
             Disease = function() return IsUsableSpell(GetSpellInfo(374251)) end,
             Curse = function() return IsUsableSpell(GetSpellInfo(374251)) end,
