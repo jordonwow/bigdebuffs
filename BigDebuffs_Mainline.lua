@@ -577,6 +577,7 @@ addon.Spells = {
     [111400] = { type = BUFF_SPEED_BOOST }, -- Burning Rush
     [265273] = { type = BUFF_OFFENSIVE }, -- Demonic Power (Demonic Tyrant)
     [118699] = { type = CROWD_CONTROL }, -- Fear
+    [130616] = { type = CROWD_CONTROL }, -- Fear (Horrify)
     [196364] = { type = CROWD_CONTROL }, -- Unstable Affliction (Silence)
     [212295] = { type = IMMUNITY_SPELL }, -- Nether Ward (PvP Talent)
     [1098] = { type = CROWD_CONTROL }, -- Subjugate Demon
