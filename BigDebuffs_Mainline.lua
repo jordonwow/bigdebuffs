@@ -253,7 +253,6 @@ addon.Spells = {
         [203233] = { type = BUFF_SPEED_BOOST, parent = 186257 }, -- Hunting Pack (PvP Talent)
     [186265] = { type = IMMUNITY }, -- Aspect of the Turtle
     [186289] = { type = BUFF_OFFENSIVE }, -- Aspect of the Eagle
-    [193530] = { type = BUFF_OFFENSIVE }, -- Aspect of the Wild
     [199483] = { type = BUFF_OTHER }, -- Camouflage
     [209997] = { type = BUFF_DEFENSIVE }, -- Play Dead
     [212638] = { type = ROOT }, -- Tracker's Net
@@ -506,7 +505,6 @@ addon.Spells = {
     [360194] = { type = DEBUFF_OFFENSIVE, priority = true, nonameplates = true }, -- Deathmark
     [193359] = { type = BUFF_OFFENSIVE }, -- True Bearing
     [193357] = { type = BUFF_OFFENSIVE }, -- Ruthless Precision
-    [343142] = { type = BUFF_OFFENSIVE }, -- Dreadblades
     [319504] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Shiv
 
     -- Shaman
@@ -577,7 +575,7 @@ addon.Spells = {
     [111400] = { type = BUFF_SPEED_BOOST }, -- Burning Rush
     [265273] = { type = BUFF_OFFENSIVE }, -- Demonic Power (Demonic Tyrant)
     [118699] = { type = CROWD_CONTROL }, -- Fear
-    [130616] = { type = CROWD_CONTROL }, -- Fear (Horrify)
+	[130616] = { type = CROWD_CONTROL, parent = 118699 }, -- Fear (Horrify)
     [196364] = { type = CROWD_CONTROL }, -- Unstable Affliction (Silence)
     [212295] = { type = IMMUNITY_SPELL }, -- Nether Ward (PvP Talent)
     [1098] = { type = CROWD_CONTROL }, -- Subjugate Demon
@@ -586,7 +584,6 @@ addon.Spells = {
     [30213] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Legion Strike
     [200587] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Fel Fissure (PvP Talent)
     [333889] = { type = BUFF_DEFENSIVE }, -- Fel Domination
-    [344566] = { type = BUFF_OFFENSIVE }, -- Rapid Contagion (Affliction PvP Talent)
     [267171] = { type = BUFF_OFFENSIVE }, -- Demonic Strength
     [267218] = { type = BUFF_OFFENSIVE }, -- Nether Portal
     [80240] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Havoc
