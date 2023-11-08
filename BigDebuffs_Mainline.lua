@@ -471,6 +471,7 @@ addon.Spells = {
     [358861] = { type = CROWD_CONTROL }, -- Void Volley: Horrify (Shadow PvP Talent)
     [114404] = { type = ROOT }, -- Void Tendrils
     [408558] = { type = IMMUNITY }, -- Phase Shift
+    [421453] = { type = IMMUNITY }, -- Ultimate Penitence
 
     -- Rogue
 
@@ -624,6 +625,7 @@ addon.Spells = {
 	[389774] = { type = IMMUNITY, parent = 227847 }, -- Bladestorm (Hurricane)
     [236077] = { type = CROWD_CONTROL }, -- Disarm (PvP Talent)
     [199042] = { type = ROOT }, -- Thunderstruck (Prot PvP Talent)
+    [424752] = { type = ROOT }, -- Piercing Howl (PvP Talent Root)
     [236273] = { type = CROWD_CONTROL }, -- Duel (Arms PvP Talent)
     [236321] = { type = BUFF_DEFENSIVE }, -- War Banner (PvP Talent)
     [199085] = { type = CROWD_CONTROL }, -- Warpath (Prot PvP Talent)
