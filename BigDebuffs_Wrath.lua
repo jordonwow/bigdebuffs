@@ -30,7 +30,9 @@ addon.WarningDebuffs = {
     30108, -- Unstable Affliction
     30404, -- Unstable Affliction
     30405, -- Unstable Affliction
+    47843, -- Unstable Affliction
     34914, -- Vampiric Touch
+    48160, -- Vampiric Touch
 }
 
 -- Make sure we always see these debuffs, but don't make them bigger
@@ -155,6 +157,7 @@ addon.Spells = {
     -- Priest
 
     -- WoTLK
+    [6788] = { type = "special", nounitFrames = true }, -- Weakened Soul   
     [20711] = { type = BUFF_DEFENSIVE, },  -- Spirit of Redemption
     [47585] = { type = IMMUNITY, },  -- Dispersion
     [47788] = { type = BUFF_DEFENSIVE, },  -- Guardian Spirit
