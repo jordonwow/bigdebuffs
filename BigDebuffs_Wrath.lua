@@ -157,7 +157,6 @@ addon.Spells = {
     -- Priest
 
     -- WoTLK
-    [6788] = { type = "special", nounitFrames = true }, -- Weakened Soul   
     [20711] = { type = BUFF_DEFENSIVE, },  -- Spirit of Redemption
     [47585] = { type = IMMUNITY, },  -- Dispersion
     [47788] = { type = BUFF_DEFENSIVE, },  -- Guardian Spirit
