@@ -87,6 +87,7 @@ addon.Spells = {
 
     [47476] = { type = CROWD_CONTROL }, -- Strangulate
     [48707] = { type = IMMUNITY_SPELL }, -- Anti-Magic Shell
+	[410358] = { type = IMMUNITY_SPELL, parent = 48707 }, -- Anti-Magic Shell (Spellwarden)
     [145629] = { type = BUFF_DEFENSIVE }, -- Anti-Magic Zone
     [48265] = { type = BUFF_SPEED_BOOST }, -- Death's Advance
     [48792] = { type = BUFF_DEFENSIVE }, -- Icebound Fortitude
@@ -361,8 +362,8 @@ addon.Spells = {
         [403876] = { type = BUFF_DEFENSIVE, parent = 498 }, -- Divine Protection (Retribution)
     [642] = { type = IMMUNITY }, -- Divine Shield
     [853] = { type = CROWD_CONTROL }, -- Hammer of Justice
-    [1022] = { type = BUFF_DEFENSIVE }, -- Blessing of Protection
-    [204018] = { type = BUFF_DEFENSIVE }, -- Blessing of Spellwarding
+    [1022] = { type = IMMUNITY }, -- Blessing of Protection
+    [204018] = { type = IMMUNITY_SPELL }, -- Blessing of Spellwarding
     [1044] = { type = BUFF_DEFENSIVE }, -- Blessing of Freedom
         [305395] = { type = BUFF_DEFENSIVE, parent = 1044 }, -- Blessing of Freedom with Unbound Freedom (PvP Talent)
     [6940] = { type = BUFF_DEFENSIVE }, -- Blessing of Sacrifice
@@ -507,6 +508,7 @@ addon.Spells = {
     [193359] = { type = BUFF_OFFENSIVE }, -- True Bearing
     [193357] = { type = BUFF_OFFENSIVE }, -- Ruthless Precision
     [319504] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Shiv
+    [196937] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Ghostly Strike
 
     -- Shaman
 
