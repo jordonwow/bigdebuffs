@@ -134,6 +134,7 @@ addon.Spells = {
     [14892] = { type = BUFF_DEFENSIVE }, -- Inspiration
         [15362] = { parent = 14892 },
         [15363] = { parent = 14892 },
+    [6346] = { type = BUFF_DEFENSIVE }, -- Fear Ward
 
     -- Warlock
 
