@@ -172,6 +172,8 @@ addon.Spells = {
     [8178] = { type = IMMUNITY }, -- Grounding Totem Effect
     [16188] = { type = BUFF_DEFENSIVE }, -- Nature's Swiftness
     [12548] = { type = ROOT }, -- Frost Shock
+    [425876] = { type = IMMUNITY }, -- Decoy Totem (Redirect)
+    [436391] = { type = BUFF_DEFENSIVE }, -- Decoy Totem (Freedom)
 
     -- Paladin
 
@@ -324,6 +326,7 @@ addon.Spells = {
     [14278] = { type = BUFF_DEFENSIVE }, -- Ghostly Strike
     [3409] = { type = ROOT }, -- Crippling Poison
         [11201] = { parent = 3409 },
+    [400009] = { type = CROWD_CONTROL }, -- Between the Eyes
 
     -- Warrior
 
