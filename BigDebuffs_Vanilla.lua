@@ -308,8 +308,6 @@ addon.Spells = {
     [10191] = { parent = 1463 },
     [10192] = { parent = 1463 },
     [10193] = { parent = 1463 },
-    [31589] = { type = BUFF_OFFENSIVE }, -- Slow
-    [31661] = { type = BUFF_OFFENSIVE }, -- Dragon's Breath
 
     -- Rogue
 
