@@ -176,7 +176,8 @@ local spellIdByName
 if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
     spellIdByName = {}
     for id, value in pairs(BigDebuffs.Spells) do
-        if not value.parent then spellIdByName[GetSpellInfo(id)] = id end
+        local spellName =  GetSpellInfo(id)
+        if spellName and (not value.parent) then spellIdByName[spellName] = id end
     end
 else
     defaults.profile.unitFrames.focus = {
