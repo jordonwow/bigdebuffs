@@ -465,11 +465,13 @@ addon.Spells = {
         [8458] = { parent = 543 },
         [10223] = { parent = 543 },
         [10225] = { parent = 543 },
+        [43010] = { parent = 543 },
     [6143] = { type = BUFF_DEFENSIVE }, -- Frost Ward
         [8461] = { parent = 6143 },
         [8462] = { parent = 6143 },
         [10177] = { parent = 6143 },
         [28609] = { parent = 6143 },
+        [43012] = { parent = 6143 },
     [12355] = { type = CROWD_CONTROL }, -- Impact Stun
     [12494] = { type = ROOT }, -- Frostbite
     [122] = { type = ROOT }, -- Frost Nova
