@@ -324,6 +324,8 @@ addon.Spells = {
     [210824] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Touch of the Magi
     [12654] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Ignite
     [390612] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Frost Bomb
+    [44461] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Living Bomb
+        [244813] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true, parent = 44461 }, -- Living Bomb (spread effect)
 
     -- Monk
 
