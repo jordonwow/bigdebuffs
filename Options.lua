@@ -7,24 +7,26 @@ if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
     for i = 1, #BigDebuffs.WarningDebuffs do
         local id = BigDebuffs.WarningDebuffs[i]
         local name = GetSpellInfo(id)
-        WarningDebuffs[name] = {
-            type = "toggle",
-            get = function(info) local key = info[#info-2] return BigDebuffs.db.profile[key].warningList[id] end,
-            set = function(info, value)
-                local key = info[#info-2]
-                BigDebuffs.db.profile[key].warningList[id] = value BigDebuffs:Refresh()
-            end,
-            name = name,
-            desc = function()
-                local s = Spell:CreateFromSpellID(id)
-                local spellDesc = s:GetSpellDescription() or ""
-                local extra =
-                "\n\n|cffffd700"..L["Spell ID"].."|r "..id..
-                "\n------------------\n"..
-                L["Show this debuff if present while BigDebuffs are displayed"]
-                return spellDesc..extra
-            end,
-        }
+        if name then
+            WarningDebuffs[name] = {
+                type = "toggle",
+                get = function(info) local key = info[#info-2] return BigDebuffs.db.profile[key].warningList[id] end,
+                set = function(info, value)
+                    local key = info[#info-2]
+                    BigDebuffs.db.profile[key].warningList[id] = value BigDebuffs:Refresh()
+                end,
+                name = name,
+                desc = function()
+                    local s = Spell:CreateFromSpellID(id)
+                    local spellDesc = s:GetSpellDescription() or ""
+                    local extra =
+                    "\n\n|cffffd700"..L["Spell ID"].."|r "..id..
+                    "\n------------------\n"..
+                    L["Show this debuff if present while BigDebuffs are displayed"]
+                    return spellDesc..extra
+                end,
+            }
+        end
     end
 end
 
