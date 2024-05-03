@@ -28,11 +28,7 @@ addon.Units = {
 -- Show one of these when a big debuff is displayed
 addon.WarningDebuffs = {
     30108, -- Unstable Affliction
-    30404, -- Unstable Affliction
-    30405, -- Unstable Affliction
-    47843, -- Unstable Affliction
     34914, -- Vampiric Touch
-    48160, -- Vampiric Touch
 }
 
 -- Make sure we always see these debuffs, but don't make them bigger
