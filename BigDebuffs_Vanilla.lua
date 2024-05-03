@@ -135,6 +135,9 @@ addon.Spells = {
         [15362] = { parent = 14892 },
         [15363] = { parent = 14892 },
     [6346] = { type = BUFF_DEFENSIVE }, -- Fear Ward
+    [9484] = { type = CROWD_CONTROL }, -- Shackle Undead
+        [9485] = { parent = 9484 },
+        [10955] = { parent = 9484 },
     [402004] = { type = BUFF_DEFENSIVE },  -- Pain Suppression
     [425294] = { type = BUFF_DEFENSIVE },  -- Dispersion
 
