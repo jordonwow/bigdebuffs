@@ -528,17 +528,13 @@ local GetNameplateAnchor = {
         end
     end,
     ThreatPlates = function(frame)
-        local tp_frame = frame.TPFrame
-        if tp_frame then
-            local visual = tp_frame.visual
-            -- healthbar and name are always defined, so checks are not really needed here.
-            if visual.healthbar and visual.healthbar:IsShown() then
-                return visual.healthbar, tp_frame
-            elseif visual.name and visual.name:IsShown() then
-                return visual.name, tp_frame
-            else
-                return tp_frame, tp_frame
-            end
+        if frame.TPFrame.GetAnchor then
+            return frame.TPFrame:GetAnchor()
+        elseif frame.UnitFrame:IsShown() then
+            return frame.UnitFrame, frame.UnitFrame
+        else
+            -- Fallback solution if TP was not yet updated and GetAnchor is not available.
+            return frame.TPFrame, frame.TPFrame
         end
     end,
     TidyPlates = function(frame)
@@ -597,7 +593,7 @@ local nameplatesAnchors = {
     [6] = {
         used = function(frame)
             -- IsAddOnLoaded("TidyPlates_ThreatPlates") should be better
-            return TidyPlatesThreat ~= nil and frame.TPFrame:IsShown()
+            return TidyPlatesThreat ~= nil
         end,
         func = GetNameplateAnchor.ThreatPlates,
     },
