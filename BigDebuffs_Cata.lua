@@ -115,7 +115,7 @@ addon.Spells = {
     -- Interrupts
 
     [15752] = { type = INTERRUPT, duration = 10 }, -- Linken's Boomerang Disarm
-        [19647] = { parent = 19244, duration = 6 }, -- Spell Lock - Rank 2 (Warlock)
+    [19647] = { type = INTERRUPT, duration = 6 }, -- Spell Lock - Rank 2 (Warlock)
     [13491] = { type = INTERRUPT, duration = 5 }, -- Iron Knuckles
     [16979] = { type = INTERRUPT, duration = 4 }, -- Feral Charge (Druid)
     [2139] = { type = INTERRUPT, duration = 8 }, -- Counterspell (Mage)
@@ -290,7 +290,7 @@ addon.Spells = {
     [770] = { type = BUFF_OTHER }, -- Faerie Fire
         [16857] = { parent = 770 }, -- Faerie Fire (Feral)
     [33786] = { type = CROWD_CONTROL }, -- Cyclone
-        [45334] = { parent = 19675 },
+    [45334] = { type = ROOT }, -- Feral Charge Effect
     [17116] = { type = BUFF_DEFENSIVE }, -- Nature's Swiftness
 
     -- Mage
@@ -337,7 +337,7 @@ addon.Spells = {
     [13877] = { type = BUFF_OFFENSIVE}, -- Blade Flurry
     [1833] = { type = CROWD_CONTROL }, -- Cheap Shot
     [408] = { type = CROWD_CONTROL }, -- Kidney Shot
-        [6770] = { parent = 2070 },
+    [6770] = { type = CROWD_CONTROL }, -- Sap
     [2094] = { type = CROWD_CONTROL }, -- Blind
     [2983] = { type = BUFF_OFFENSIVE }, -- Sprint
     [5277] = { type = BUFF_DEFENSIVE }, -- Evasion
