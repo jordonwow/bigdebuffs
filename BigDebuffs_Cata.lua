@@ -223,8 +223,8 @@ addon.Spells = {
     [64205] = { type = BUFF_DEFENSIVE, }, -- Divine Sacrifice
 
     [1022] = { type = IMMUNITY },-- Blessing of Protection
+    [498] = { type = BUFF_DEFENSIVE }, -- Divine Protection
     [642] = { type = IMMUNITY }, -- Divine Shield
-        [498] = { parent = 642 },
     [853] = { type = CROWD_CONTROL }, -- Hammer of Justice
     [1044] = { type = BUFF_DEFENSIVE }, -- Blessing of Freedom
     [20066] = { type = CROWD_CONTROL }, -- Repentance
