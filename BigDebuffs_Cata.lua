@@ -122,7 +122,6 @@ addon.Spells = {
     [1766] = { type = INTERRUPT, duration = 5 }, -- Kick (Rogue)
     [26679] = { type = INTERRUPT, duration = 3 }, -- Deadly Throw
     [6552] = { type = INTERRUPT, duration = 4 }, -- Pummel
-    [22570] = { type = INTERRUPT, duration = 3 }, -- Maim
     [29443] = { type = INTERRUPT, duration = 10 }, -- Clutch of Foresight
 
     -- Death Knight
@@ -270,6 +269,7 @@ addon.Spells = {
     -- WoTLK
     [768] = { type = BUFF_OTHER, }, -- Cat Form
     [783] = { type = BUFF_OTHER, }, -- Travel Form
+    [22570] = { type = CROWD_CONTROL, duration = 3 }, -- Maim
     [22842] = { type = BUFF_DEFENSIVE, },  -- Frenzied Regeneration
     [24858] = { type = BUFF_OTHER, }, -- Moonkin Form
     [33891] = { type = BUFF_OTHER, }, -- Tree of Life
