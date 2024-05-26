@@ -381,6 +381,7 @@ local GetAnchor = {
                     end
                 end
             end
+            return
         end
 
         if unit and (unit:match("arena") or unit:match("arena")) then
