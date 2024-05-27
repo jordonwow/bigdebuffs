@@ -337,6 +337,17 @@ else
             Curse = function() return IsUsableSpell(GetSpellInfo(374251)) end,
         },
     }
+    if WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC then
+        classDispel.SHAMAN = {
+            Magic = function() return IsPlayerSpell(77130) end,
+            Curse = true,
+        }
+        classDispel.PALADIN = {
+            Magic = function() return IsPlayerSpell(53551) end,
+            Poison = true,
+            Disease = true,
+        }
+    end
     local _, class = UnitClass("player")
     BigDebuffs.dispelTypes = classDispel[class]
 end
