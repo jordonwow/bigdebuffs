@@ -302,8 +302,8 @@ addon.Spells = {
     [44572] = { type = CROWD_CONTROL, }, -- Deep Freeze
     [55021] = { type = CROWD_CONTROL, }, -- Improved Counterspell
     [64346] = { type = CROWD_CONTROL, }, -- Fiery Payback (Fire Mage Disarm)
-    [82691 ] = { type = CROWD_CONTROL, }, -- Ring of Frost
-    [83302  ] = { type = ROOT, }, -- Improved Cone of Cold
+    [82691] = { type = CROWD_CONTROL, }, -- Ring of Frost
+    [83302] = { type = ROOT, }, -- Improved Cone of Cold
 
     [18469] = { type = CROWD_CONTROL }, -- Improved Counterspell
     [118] = { type = CROWD_CONTROL }, -- Polymorph
