@@ -233,6 +233,10 @@ addon.Spells = {
     [31884] = { type = BUFF_OFFENSIVE }, -- Avenging Wrath
     [31842] = { type = BUFF_DEFENSIVE }, -- Divine Illumination
 
+    -- Cataclysm
+
+    [96231] = { type = INTERRUPT, duration = 4 }, -- Rebuke
+
     -- Hunter
 
     -- WoTLK
