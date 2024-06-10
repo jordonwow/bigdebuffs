@@ -137,7 +137,7 @@ addon.Spells = {
     [49039] = { type = IMMUNITY_SPELL, },  -- Lichborne
     [49203] = { type = CROWD_CONTROL, }, -- Hungering Cold
     [50461] = { type = BUFF_DEFENSIVE, },  -- Anti-Magic Zone
-	[49016] = { type = BUFF_OFFENSIVE, },  -- Unholy Frenzy
+    [49016] = { type = BUFF_OFFENSIVE, },  -- Unholy Frenzy
 
     -- Priest
 
