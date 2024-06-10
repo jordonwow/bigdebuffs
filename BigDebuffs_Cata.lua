@@ -299,6 +299,7 @@ addon.Spells = {
     [33786] = { type = CROWD_CONTROL }, -- Cyclone
     [45334] = { type = ROOT }, -- Feral Charge Effect
     [17116] = { type = BUFF_DEFENSIVE }, -- Nature's Swiftness
+    [81261] = { type = CROWD_CONTROL, },  -- Solar Beam
 
     -- Mage
 
