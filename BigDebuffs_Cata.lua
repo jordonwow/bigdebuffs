@@ -339,6 +339,7 @@ addon.Spells = {
     [12043] = { type = BUFF_OFFENSIVE }, -- Presence of Mind
     [33395] = { type = ROOT }, -- Freeze
     [12472] = { type = BUFF_OFFENSIVE }, -- Icy Veins
+    [87023] = { type = BUFF_OTHER, }, -- Cauterize
 
     -- Rogue
 
