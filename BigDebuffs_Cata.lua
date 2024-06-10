@@ -236,6 +236,8 @@ addon.Spells = {
     -- Cataclysm
 
     [96231] = { type = INTERRUPT, duration = 4 }, -- Rebuke
+    [80965] = { type = INTERRUPT, duration = 4 }, -- Skull Bash (Cat)
+    [80964] = { type = INTERRUPT, duration = 4 }, -- Skull Bash (Bear)
 
     -- Hunter
 
