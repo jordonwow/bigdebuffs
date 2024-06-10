@@ -123,6 +123,8 @@ addon.Spells = {
     [26679] = { type = INTERRUPT, duration = 3 }, -- Deadly Throw
     [6552] = { type = INTERRUPT, duration = 4 }, -- Pummel
     [29443] = { type = INTERRUPT, duration = 10 }, -- Clutch of Foresight
+    [80965] = { type = INTERRUPT, duration = 4 }, -- Skull Bash (Cat)
+    [80964] = { type = INTERRUPT, duration = 4 }, -- Skull Bash (Bear)
 
     -- Death Knight
 
@@ -237,8 +239,6 @@ addon.Spells = {
     -- Cataclysm
 
     [96231] = { type = INTERRUPT, duration = 4 }, -- Rebuke
-    [80965] = { type = INTERRUPT, duration = 4 }, -- Skull Bash (Cat)
-    [80964] = { type = INTERRUPT, duration = 4 }, -- Skull Bash (Bear)
 
     -- Hunter
 
