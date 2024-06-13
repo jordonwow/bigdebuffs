@@ -272,7 +272,21 @@ addon.Spells = {
     [5384] = { type = BUFF_DEFENSIVE }, -- Feign Death
     [24394] = { type = CROWD_CONTROL }, -- Intimidation
     [19577] = { type = BUFF_OFFENSIVE, parent = 24394 }, -- Intimidation (Buff)
-
+	[50479] = { type = INTERRUPT, duration = 2},  -- Nether Shock (nether ray pet kick)
+	[90327] = { type = ROOT }, -- Lock Jaw (dog pet root)
+	[50245] = { type = ROOT }, -- Pin (crab pet root)
+	[52825] = { type = ROOT }, -- Swoop (carrion bird pet root)
+	[54706] = { type = ROOT }, -- Venom Web Spray (silithid pet root)
+	[4167] = { type = ROOT }, -- Web (spider pet root)
+	[96201] = { type = ROOT }, -- Web Wrap (shale spider pet root)
+	[90337] = { type = CROWD_CONTROL }, -- Bad Manner (monkey stun)
+	[50519] = { type = CROWD_CONTROL }, -- Sonic Blast (bat pet stun)
+	[56626] = { type = CROWD_CONTROL }, -- Sting (wasp pet stun)
+	[50541] = { type = CROWD_CONTROL }, -- Clench (scorpid pet disarm)
+	[91644] = { type = CROWD_CONTROL }, -- Snatch (bird of prey pet disarm)
+	[50318] = { type = CROWD_CONTROL }, -- Serenity Dust (moth pet silence)
+	[56626] = { type = CROWD_CONTROL }, -- Sting (wasp pet stun)
+	
 
     -- Druid
 
