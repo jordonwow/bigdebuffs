@@ -165,6 +165,7 @@ addon.Spells = {
     [27827] = { type = IMMUNITY }, -- Spirit of Redemption
     [33206] = { type = BUFF_DEFENSIVE }, -- Pain Suppression
     [14751] = { type = BUFF_DEFENSIVE }, -- Inner Focus
+	[87204] = { type = CROWD_CONTROL }, -- Sin and Punishment (VT dispel)
 
     -- Warlock
 
