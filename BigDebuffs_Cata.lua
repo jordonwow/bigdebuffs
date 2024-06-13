@@ -191,7 +191,7 @@ addon.Spells = {
     [18708] = { type = BUFF_DEFENSIVE }, -- Fel Domination
     [32752] = { type = CROWD_CONTROL }, -- Summoning Disorientation
     [19482] = { type = CROWD_CONTROL }, -- Doom Guard Stun
-    [30153] = { type = CROWD_CONTROL }, -- Felguard Stun
+    [89766] = { type = CROWD_CONTROL }, -- Axe Toss (felguard stun)
 
     -- Shaman
 
