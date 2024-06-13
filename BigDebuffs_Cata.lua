@@ -140,6 +140,8 @@ addon.Spells = {
     [49203] = { type = CROWD_CONTROL, }, -- Hungering Cold
     [50461] = { type = BUFF_DEFENSIVE, },  -- Anti-Magic Zone
     [49016] = { type = BUFF_OFFENSIVE, },  -- Unholy Frenzy
+	[91802] = { type = INTERRUPT, duration = 2 },  -- Shambling Rush (pet dk kick)
+	[91797] = { type = CROWD_CONTROL },  -- Monstrous Blow (dk abom stun)
 
     -- Priest
 
