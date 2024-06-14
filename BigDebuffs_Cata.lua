@@ -247,7 +247,6 @@ addon.Spells = {
 
     -- WoTLK
     [1742] = { type = BUFF_DEFENSIVE, }, -- Cower (Pet)
-    [4167] = { type = ROOT, }, -- Web (Pet)
     [26064] = { type = BUFF_DEFENSIVE, }, -- Shell Shield (Pet)
     [26090] = { type = INTERRUPT, duration = 2, }, -- Pummel (Pet)
     [53271] = { type = BUFF_DEFENSIVE, },  -- Master's Call
@@ -281,12 +280,11 @@ addon.Spells = {
     [96201] = { type = ROOT }, -- Web Wrap (shale spider pet root)
     [90337] = { type = CROWD_CONTROL }, -- Bad Manner (monkey stun)
     [50519] = { type = CROWD_CONTROL }, -- Sonic Blast (bat pet stun)
-    [56626] = { type = CROWD_CONTROL }, -- Sting (wasp pet stun)
     [50541] = { type = CROWD_CONTROL }, -- Clench (scorpid pet disarm)
     [91644] = { type = CROWD_CONTROL }, -- Snatch (bird of prey pet disarm)
     [50318] = { type = CROWD_CONTROL }, -- Serenity Dust (moth pet silence)
     [56626] = { type = CROWD_CONTROL }, -- Sting (wasp pet stun)
-	
+
 
     -- Druid
 
