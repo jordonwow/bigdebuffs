@@ -315,6 +315,7 @@ addon.Spells = {
     [45334] = { type = ROOT }, -- Feral Charge Effect
     [17116] = { type = BUFF_DEFENSIVE }, -- Nature's Swiftness
     [81261] = { type = CROWD_CONTROL, },  -- Solar Beam
+    [78675] = { type = INTERRUPT, duration = 5 }, -- Solar Beam interrupt
 
     -- Mage
 
