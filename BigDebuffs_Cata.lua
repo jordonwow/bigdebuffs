@@ -381,6 +381,7 @@ addon.Spells = {
     [45182] = { type = BUFF_DEFENSIVE }, -- Cheating Death
     [14177] = { type = BUFF_OFFENSIVE }, -- Cold Blood
     [14251] = { type = BUFF_OTHER }, -- Riposte (Rogue)
+    [86759] = { type = CROWD_CONTROL }, -- Improved Kick (Rank 2)
 
     -- Warrior
 
