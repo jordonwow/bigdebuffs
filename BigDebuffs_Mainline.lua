@@ -511,6 +511,7 @@ addon.Spells = {
     [193357] = { type = BUFF_OFFENSIVE }, -- Ruthless Precision
     [319504] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Shiv
     [196937] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Ghostly Strike
+    [385627] = { type = DEBUFF_OFFENSIVE }, -- Kingsbane
 
     -- Shaman
 
