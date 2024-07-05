@@ -2,6 +2,7 @@ local addonName, addon = ...
 
 local BUFF_DEFENSIVE = "buffs_defensive"
 local BUFF_OFFENSIVE = "buffs_offensive"
+local DEBUFF_OFFENSIVE = "debuffs_offensive"
 local BUFF_OTHER = "buffs_other"
 local INTERRUPT = "interrupts"
 local CROWD_CONTROL = "cc"
@@ -142,6 +143,10 @@ addon.Spells = {
     [49016] = { type = BUFF_OFFENSIVE, },  -- Unholy Frenzy
     [91802] = { type = INTERRUPT, duration = 2 },  -- Shambling Rush (pet dk kick)
     [91797] = { type = CROWD_CONTROL },  -- Monstrous Blow (dk abom stun)
+
+    -- Cataclysm
+
+    [49206] = { type = DEBUFF_OFFENSIVE, },  -- Summon Gargoyle
 
     -- Priest
 
@@ -357,6 +362,10 @@ addon.Spells = {
     [33395] = { type = ROOT }, -- Freeze
     [12472] = { type = BUFF_OFFENSIVE }, -- Icy Veins
     [87023] = { type = BUFF_OTHER, }, -- Cauterize
+
+    -- Cataclysm
+
+    [83853] = { type = DEBUFF_OFFENSIVE, }, -- Combustion
 
     -- Rogue
 
