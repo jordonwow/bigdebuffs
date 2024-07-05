@@ -2012,7 +2012,7 @@ else
                         break
                     end
                 end
-                tinsert(debuffs, { warning, size, 0, 0, true })
+                tinsert(debuffs, { warning, size, 0, 0, warningId })
             else
                 warning = nil
             end
