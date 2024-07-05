@@ -247,6 +247,7 @@ addon.Spells = {
     -- Cataclysm
 
     [96231] = { type = INTERRUPT, duration = 4 }, -- Rebuke
+    [85696] = { type = BUFF_OFFENSIVE }, -- Zealotry
 
     -- Hunter
 
