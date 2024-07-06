@@ -83,6 +83,7 @@ addon.Spells = {
     [22734] = { type = BUFF_OTHER }, -- Drink
     [23605] = { type = BUFF_OTHER }, -- Nightfall, Spell Vulnerability
     [13494] = { type = BUFF_OFFENSIVE }, -- Manual Crowd Pummeler Haste buff
+    [446391] = { type = CROWD_CONTROL }, -- Torment
 
     -- Interrupts
 
