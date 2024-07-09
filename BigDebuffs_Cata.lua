@@ -200,6 +200,11 @@ addon.Spells = {
     [32752] = { type = CROWD_CONTROL }, -- Summoning Disorientation
     [19482] = { type = CROWD_CONTROL }, -- Doom Guard Stun
     [89766] = { type = CROWD_CONTROL }, -- Axe Toss (felguard stun)
+    [79462] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Felguard
+    [79460] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Felhunter
+    [79459] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Imp
+    [79463] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Succubus
+    [79464] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Voidwalker
 
     -- Shaman
 
