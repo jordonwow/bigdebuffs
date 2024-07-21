@@ -397,6 +397,7 @@ addon.Spells = {
     [14177] = { type = BUFF_OFFENSIVE }, -- Cold Blood
     [14251] = { type = BUFF_OTHER }, -- Riposte (Rogue)
     [86759] = { type = CROWD_CONTROL }, -- Improved Kick (Rank 2)
+    [74001] = { type = BUFF_DEFENSIVE }, -- Combat Readines
 
     -- Warrior
 
