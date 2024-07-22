@@ -173,6 +173,7 @@ addon.Spells = {
     [33206] = { type = BUFF_DEFENSIVE }, -- Pain Suppression
     [14751] = { type = BUFF_DEFENSIVE }, -- Inner Focus
     [87204] = { type = CROWD_CONTROL }, -- Sin and Punishment (VT dispel)
+    [96267] = { type = BUFF_DEFENSIVE }, -- Strength of Soul
 
     -- Warlock
 
@@ -397,6 +398,7 @@ addon.Spells = {
     [14177] = { type = BUFF_OFFENSIVE }, -- Cold Blood
     [14251] = { type = BUFF_OTHER }, -- Riposte (Rogue)
     [86759] = { type = CROWD_CONTROL }, -- Improved Kick (Rank 2)
+    [74001] = { type = BUFF_DEFENSIVE }, -- Combat Readiness
 
     -- Warrior
 
