@@ -1345,7 +1345,8 @@ function BigDebuffs:AddBigDebuffs(frame)
 
         big.cooldown:SetHideCountdownNumbers(not self.db.profile.raidFrames.cooldownCount)
         big.cooldown.noCooldownCount = not self.db.profile.raidFrames.cooldownCount
-
+        big.cooldown:GetRegions():SetFont(LibSharedMedia:Fetch("font", BigDebuffs.db.profile.raidFrames.cooldownFont),
+            BigDebuffs.db.profile.raidFrames.cooldownFontSize, BigDebuffs.db.profile.raidFrames.cooldownFontEffect);
         big.cooldown:SetDrawEdge(false)
         frame.BigDebuffs[i] = big
         big:Hide()
