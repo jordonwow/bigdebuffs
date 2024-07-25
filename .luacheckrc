@@ -67,6 +67,7 @@ read_globals = {
     "Plater",
     "PLAYER",
     "SetPortraitToTexture",
+    "Settings",
     "Spell",
     "SpellGetVisibilityInfo",
     "SpellIsSelfBuff",
