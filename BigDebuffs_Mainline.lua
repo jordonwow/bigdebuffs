@@ -86,9 +86,11 @@ addon.Spells = {
     -- Death Knight
 
     [47476] = { type = CROWD_CONTROL }, -- Strangulate
+    [374776] = { type = CROWD_CONTROL }, -- Tightening Grasp (Silence)
     [48707] = { type = IMMUNITY_SPELL }, -- Anti-Magic Shell
 	[410358] = { type = IMMUNITY_SPELL, parent = 48707 }, -- Anti-Magic Shell (Spellwarden)
     [145629] = { type = BUFF_DEFENSIVE }, -- Anti-Magic Zone
+    [454863] = { type = BUFF_DEFENSIVE }, -- Lesser Anti-Magic Shell
     [48265] = { type = BUFF_SPEED_BOOST }, -- Death's Advance
     [48792] = { type = BUFF_DEFENSIVE }, -- Icebound Fortitude
     [49039] = { type = BUFF_OTHER }, -- Lichborne
@@ -103,6 +105,7 @@ addon.Spells = {
     [152279] = { type = BUFF_OFFENSIVE }, -- Breath of Sindragosa
     [194679] = { type = BUFF_DEFENSIVE }, -- Rune Tap
     [194844] = { type = BUFF_DEFENSIVE }, -- Bonestorm
+    [454787] = { type = ROOT }, -- Ice Prison
     [204080] = { type = ROOT }, -- Deathchill
         [233395] = { type = ROOT, parent = 204080 }, -- when applied by Remorseless Winter
         [204085] = { type = ROOT, parent = 204080 }, -- when applied by Chains of Ice
@@ -200,12 +203,10 @@ addon.Spells = {
     [362486] = { type = IMMUNITY }, -- Keeper of the Grove
     [274838] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Feral Frenzy
     [58180] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Infected Wounds
-    [200851] = { type = IMMUNITY }, -- Rage of the Sleeper
-    [410406] = { type = BUFF_OFFENSIVE }, -- Wild Attunement
+    [200851] = { type = BUFF_DEFENSIVE }, -- Rage of the Sleeper
     [410063] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Reactive Resin (Snare for 2 stacks then root/silence at 3)
     [410065] = { type = CROWD_CONTROL }, -- Reactive Resin (Root and Silence)
     [202347] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Stellar Flare
-    [200947] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- High Winds
 
     -- Evoker
 
@@ -234,10 +235,9 @@ addon.Spells = {
     [136] = { type = BUFF_DEFENSIVE }, -- Mend Pet
     [1513] = { type = CROWD_CONTROL }, -- Scare Beast
     [3355] = { type = CROWD_CONTROL }, -- Freezing Trap
+	[203337] = { type = CROWD_CONTROL, parent = 3355 }, -- Diamond Ice (Survival PvP Talent)
     [356723] = { type = CROWD_CONTROL }, -- Scorpid Venom
     [356727] = { type = CROWD_CONTROL }, -- Spider Venom
-    [324149] = { type = DEBUFF_OFFENSIVE }, -- Flayed Shot
-        [203337] = { type = CROWD_CONTROL, parent = 3355 }, -- Diamond Ice (Survival PvP Talent)
     [5384] = { type = BUFF_DEFENSIVE }, -- Feign Death
     [19574] = { type = BUFF_OFFENSIVE }, -- Bestial Wrath
         [186254] = { type = BUFF_OFFENSIVE, parent = 19574 }, -- Bestial Wrath buff on the pet
@@ -249,10 +249,10 @@ addon.Spells = {
     [118922] = { type = BUFF_SPEED_BOOST }, -- Posthaste
     [131894] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- A Murder of Crows
     [321538] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Bloodshed
-    [162480] = { type = ROOT }, -- Steel Trap
     [186257] = { type = BUFF_SPEED_BOOST }, -- Aspect of the Cheetah
         [203233] = { type = BUFF_SPEED_BOOST, parent = 186257 }, -- Hunting Pack (PvP Talent)
     [186265] = { type = IMMUNITY }, -- Aspect of the Turtle
+    [264735] = { type = BUFF_DEFENSIVE }, -- Survival of the Fittest
     [186289] = { type = BUFF_OFFENSIVE }, -- Aspect of the Eagle
     [199483] = { type = BUFF_OTHER }, -- Camouflage
     [209997] = { type = BUFF_DEFENSIVE }, -- Play Dead
@@ -320,12 +320,11 @@ addon.Spells = {
     [383874] = { type = BUFF_OFFENSIVE }, -- Hyperthermia
     [228358] = { type = DEBUFF_OFFENSIVE }, -- Winter's Chill
     [389831] = { type = CROWD_CONTROL }, -- Snowdrift
-    [376103] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Radiant Spark
     [210824] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Touch of the Magi
     [12654] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Ignite
     [390612] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Frost Bomb
-    [44461] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Living Bomb
-        [244813] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true, parent = 44461 }, -- Living Bomb (spread effect)
+    [217694] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Living Bomb
+        [244813] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true, parent = 217694 }, -- Living Bomb (spread effect)
 
     -- Monk
 
@@ -342,7 +341,6 @@ addon.Spells = {
     [122470] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Touch of Karma (Debuff)
     [122783] = { type = BUFF_DEFENSIVE }, -- Diffuse Magic
     [137639] = { type = BUFF_OFFENSIVE }, -- Storm, Earth, and Fire
-    [152173] = { type = BUFF_OFFENSIVE }, -- Serenity
     [198909] = { type = CROWD_CONTROL }, -- Song of Chi-Ji
     [202162] = { type = BUFF_DEFENSIVE }, -- Avert Harm (Brew PvP Talent)
     [202274] = { type = CROWD_CONTROL }, -- Incendiary Brew (Brew PvP Talent)
@@ -355,7 +353,6 @@ addon.Spells = {
     [202248] = { type = IMMUNITY_SPELL }, -- Guided Meditation (Brew PvP Talent)
     [213664] = { type = BUFF_DEFENSIVE }, -- Nimble Brew (Brew PvP Talent)
     [132578] = { type = BUFF_DEFENSIVE }, -- Invoke Niuzao, the Black Ox
-    [393047] = { type = DEBUFF_OFFENSIVE }, -- Skyreach
     [353319] = { type = IMMUNITY_SPELL }, -- Peaceweaver
 
     -- Paladin
@@ -378,7 +375,9 @@ addon.Spells = {
     [31850] = { type = BUFF_DEFENSIVE }, -- Ardent Defender
     [31884] = { type = BUFF_OFFENSIVE }, -- Avenging Wrath
         [216331] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Avenging Crusader (Holy Talent)
+	[454351] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Avenging Wrath (Radiant Glory)
         [231895] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Crusade (Retribution Talent)
+	[454373] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Crusade (Radiant Glory)
 	[389539] = { type = BUFF_OFFENSIVE, parent = 31884 }, -- Sentinel (Protection Talent)
     -- [31935] = { type = CROWD_CONTROL }, -- Avenger's Shield (defined as Interrupt)
     [86659] = { type = BUFF_DEFENSIVE }, -- Guardian of Ancient Kings
@@ -390,7 +389,6 @@ addon.Spells = {
     [199545] = { type = BUFF_DEFENSIVE }, -- Steed of Glory (Protection PvP Talent)
     [210256] = { type = BUFF_DEFENSIVE }, -- Blessing of Sanctuary (Ret PvP Talent)
     [210294] = { type = BUFF_DEFENSIVE }, -- Divine Favor
-    [415246] = { type = BUFF_DEFENSIVE }, -- Divine Plea (Holy PvP Talent)
     [215652] = { type = BUFF_OFFENSIVE }, -- Shield of Virtue (Protection PvP Talent) - "next cast will..." buff
     -- [217824] = { type = CROWD_CONTROL }, -- Shield of Virtue (Protection PvP Talent) (defined as Interrupt)
     [221883] = { type = BUFF_SPEED_BOOST }, -- Divine Steed (Human?) (Each race has its own buff, pulled from wowhead - some might be incorrect)
@@ -438,8 +436,6 @@ addon.Spells = {
     [200183] = { type = BUFF_DEFENSIVE }, -- Apotheosis
     [200196] = { type = CROWD_CONTROL }, -- Holy Word: Chastise
         [200200] = { type = CROWD_CONTROL, parent = 200196 }, -- Holy Word: Chastise (Stun)
-    [205369] = { type = CROWD_CONTROL }, -- Mind Bomb (Countdown)
-        [226943] = { type = CROWD_CONTROL, parent = 205369 }, -- Mind Bomb (Disorient)
     [213610] = { type = IMMUNITY_SPELL }, -- Holy Ward
     --[27827] = { type = BUFF_DEFENSIVE }, -- Spirit of Redemption
     [215769] = { type = BUFF_DEFENSIVE }, -- Spirit of Redemption (Spirit of the Redeemer Holy PvP Talent)
@@ -470,7 +466,7 @@ addon.Spells = {
     [65081] = { type = BUFF_SPEED_BOOST }, -- Body and Soul
     [121557] = { type = BUFF_SPEED_BOOST }, -- Angelic Feather
     [199845] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Psyflay (Psyfiend) debuff
-	[214621] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Schism
+    [214621] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Schism
     [358861] = { type = CROWD_CONTROL }, -- Void Volley: Horrify (Shadow PvP Talent)
     [114404] = { type = ROOT }, -- Void Tendrils
     [408558] = { type = IMMUNITY }, -- Phase Shift
@@ -542,7 +538,6 @@ addon.Spells = {
     [118337] = { type = BUFF_DEFENSIVE }, -- Harden Skin
     [118905] = { type = CROWD_CONTROL }, -- Static Charge
     [191634] = { type = BUFF_OFFENSIVE }, -- Stormkeeper (Ele)
-    [383009] = { type = BUFF_OFFENSIVE }, -- Stormkeeper (Resto)
     [197214] = { type = CROWD_CONTROL }, -- Sundering
     [201633] = { type = BUFF_DEFENSIVE }, -- Earthen Wall Totem
     [384352] = { type = BUFF_OFFENSIVE }, -- Doom Winds
@@ -551,8 +546,8 @@ addon.Spells = {
     [305485] = { type = CROWD_CONTROL }, -- Lightning Lasso (PvP Talent)
     [546] = { type = BUFF_OTHER }, -- Water Walking
     [333957] = { type = BUFF_OFFENSIVE }, -- Feral Spirit
-    [204361] = { type = BUFF_OFFENSIVE }, -- Bloodlust (Enhancement PvP Talent)
-        [204362] = { type = BUFF_OFFENSIVE, parent = 204361 }, -- Heroism (Enhancement PvP Talent)
+    [204361] = { type = BUFF_OFFENSIVE }, -- Bloodlust (Enhancement/Elemental PvP Talent)
+        [204362] = { type = BUFF_OFFENSIVE, parent = 204361 }, -- Heroism (Enhancement/Elemental PvP Talent)
     [192082] = { type = BUFF_SPEED_BOOST }, -- Windrush Totem
     [378076] = { type = BUFF_SPEED_BOOST }, -- Thunderous Paws
     [375986] = { type = BUFF_OFFENSIVE }, -- Primordial Wave
@@ -591,7 +586,6 @@ addon.Spells = {
     [200587] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Fel Fissure (PvP Talent)
     [333889] = { type = BUFF_DEFENSIVE }, -- Fel Domination
     [267171] = { type = BUFF_OFFENSIVE }, -- Demonic Strength
-    [267218] = { type = BUFF_OFFENSIVE }, -- Nether Portal
     [80240] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Havoc
         [200548] = { type = DEBUFF_OFFENSIVE, parent = 80240 }, -- Bane of Havoc (Destro PvP Talent)
     [213688] = { type = CROWD_CONTROL }, -- Fel Cleave - Fel Lord stun (Demo PvP Talent)
@@ -627,16 +621,14 @@ addon.Spells = {
     [208086] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Colossus Smash
     [213871] = { type = BUFF_DEFENSIVE }, -- Bodyguard (Prot PvP Talent)
     [227847] = { type = IMMUNITY }, -- Bladestorm (Arms)
-	[389774] = { type = IMMUNITY, parent = 227847 }, -- Bladestorm (Hurricane)
     [236077] = { type = CROWD_CONTROL }, -- Disarm (PvP Talent)
     [199042] = { type = ROOT }, -- Thunderstruck (Prot PvP Talent)
-    [424752] = { type = ROOT }, -- Piercing Howl (PvP Talent Root)
     [236273] = { type = CROWD_CONTROL }, -- Duel (Arms PvP Talent)
     [236321] = { type = BUFF_DEFENSIVE }, -- War Banner (PvP Talent)
     [199085] = { type = CROWD_CONTROL }, -- Warpath (Prot PvP Talent)
     [198819] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Strike when applied with Sharpen Blade (50% healing reduc)
     [202164] = { type = BUFF_SPEED_BOOST }, -- Bounding Stride
-    [376080] = { type = CROWD_CONTROL, nounitFrames = true, nonameplates = true }, -- Spear of Bastion
+    [376080] = { type = CROWD_CONTROL, nounitFrames = true, nonameplates = true }, -- Champion's Spear
     [354788] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Slaughterhouse
     [397364] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Thunderous Roar
     [199261] = { type = BUFF_OFFENSIVE }, -- Death Wish
