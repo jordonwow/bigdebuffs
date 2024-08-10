@@ -131,7 +131,7 @@ addon.Spells = {
 
     [45524] = { type = ROOT }, -- Chains of Ice
     [47476] = { type = CROWD_CONTROL, },  -- Strangulate
-    [47481] = { type = CROWD_CONTROL, },  -- Gnaw
+    [91800] = { type = CROWD_CONTROL, },  -- Gnaw
     [47484] = { type = BUFF_DEFENSIVE, }, -- Huddle (Ghoul)
     [47528] = { type = INTERRUPT, duration = 4, },  -- Mind Freeze
     [48707] = { type = IMMUNITY_SPELL, },  -- Anti-Magic Shell
