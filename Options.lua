@@ -1,12 +1,15 @@
 local BigDebuffs = LibStub("AceAddon-3.0"):GetAddon("BigDebuffs")
 local L = LibStub("AceLocale-3.0"):GetLocale("BigDebuffs")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local GetSpellInfo = C_Spell.GetSpellInfo
+local GetSpellTexture = C_Spell.GetSpellTexture
+local GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 
 local WarningDebuffs = {}
 if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
     for i = 1, #BigDebuffs.WarningDebuffs do
         local id = BigDebuffs.WarningDebuffs[i]
-        local name = GetSpellInfo(id)
+        local name = C_Spell.GetSpellName(id)
         if name then
             WarningDebuffs[name] = {
                 type = "toggle",
@@ -71,7 +74,7 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                 BigDebuffs:Refresh()
             end,
             name = function(info)
-                local name = SpellNames[spellID] or GetSpellInfo(spellID)
+                local name = SpellNames[spellID] or C_Spell.GetSpellName(spellID)
                 SpellNames[spellID] = name
                 return name
             end,
