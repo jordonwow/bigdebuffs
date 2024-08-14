@@ -61,6 +61,7 @@ addon.Spells = {
     [28730] = { type = CROWD_CONTROL, }, -- Arcane Torrent (Mana)
     [25046] = { type = CROWD_CONTROL, }, -- Arcane Torrent (Energy)
     [50613] = { type = CROWD_CONTROL, }, -- Arcane Torrent (Runic Power)
+    [58984] = { type = BUFF_DEFENSIVE }, -- Shadowmeld
 
     -- Other
 
