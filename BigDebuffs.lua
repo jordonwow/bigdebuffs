@@ -1144,8 +1144,16 @@ end
 local function UnitDebuffTest(unit, index)
     local debuff = TestDebuffs[index]
     if not debuff then return end
-    -- name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId
-    return "Test", debuff[2], 0, debuff[4], 60, GetTime() + 60, nil, nil, nil, debuff[1]
+    return {
+        spellId = debuff[1],
+        icon = debuff[2],
+        applications = 1,
+        isRaid = false,
+        expirationTime = GetTime() + 60,
+        duration = 60,
+        dispelName = debuff[4],
+        points = {},
+    }
 end
 
 function BigDebuffs:OnEnable()
