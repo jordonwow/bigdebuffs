@@ -1686,7 +1686,7 @@ else
     end
 
     local function CompactUnitFrame_UtilShouldDisplayDebuff(unit, index, filter)
-        local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura, isBossAura = UnitDebuff(unit, index, filter);
+        local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura, isBossAura = AuraUtil.UnpackAuraData(UnitDebuff(unit, index, filter));
 
         local hasCustom, alwaysShowMine, showForMySpec = SpellGetVisibilityInfo(spellId, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
 
