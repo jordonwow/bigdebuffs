@@ -16,8 +16,16 @@ if Masque ~= nil then
 end
 
 local UnitDebuff, UnitBuff = C_UnitAuras.GetDebuffDataByIndex, C_UnitAuras.GetBuffDataByIndex
-local GetSpellTexture = C_Spell.GetSpellTexture
-local GetSpellInfo = C_Spell.GetSpellInfo
+local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
+local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
+
+local function GetSpellName(id)
+    if C_Spell and C_Spell.GetSpellName then
+        return C_Spell.GetSpellName(id)
+    else
+        return GetSpellInfo(id)
+    end
+end
 
 -- Defaults
 local defaults = {
@@ -180,7 +188,7 @@ local spellIdByName
 if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
     spellIdByName = {}
     for id, value in pairs(BigDebuffs.Spells) do
-        local spellName = C_Spell.GetSpellName(id)
+        local spellName = GetSpellName(id)
         if spellName and (not value.parent) then spellIdByName[spellName] = id end
     end
 else
@@ -285,25 +293,25 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
         },
         [1467] = { -- Devastation Evoker
             Poison = true,
-            Disease = function() return IsUsableSpell(C_Spell.GetSpellName(374251)) end,
-            Curse = function() return IsUsableSpell(C_Spell.GetSpellName(374251)) end,
+            Disease = function() return IsUsableSpell(GetSpellName(374251)) end,
+            Curse = function() return IsUsableSpell(GetSpellName(374251)) end,
         },
         [1468] = { -- Preservation Evoker
             Magic = true,
             Poison = true,
-            Disease = function() return IsUsableSpell(C_Spell.GetSpellName(374251)) end,
-            Curse = function() return IsUsableSpell(C_Spell.GetSpellName(374251)) end,
+            Disease = function() return IsUsableSpell(GetSpellName(374251)) end,
+            Curse = function() return IsUsableSpell(GetSpellName(374251)) end,
         },
         [1473] = { -- Augmentation Evoker
             Poison = true,
-            Disease = function() return IsUsableSpell(C_Spell.GetSpellName(374251)) end,
-            Curse = function() return IsUsableSpell(C_Spell.GetSpellName(374251)) end,
+            Disease = function() return IsUsableSpell(GetSpellName(374251)) end,
+            Curse = function() return IsUsableSpell(GetSpellName(374251)) end,
         },
         [577] = {
-            Magic = function() return C_Spell.GetSpellName(205604) end, -- Reverse Magic
+            Magic = function() return GetSpellName(205604) end, -- Reverse Magic
         },
         [581] = {
-            Magic = function() return C_Spell.GetSpellName(205604) end, -- Reverse Magic
+            Magic = function() return GetSpellName(205604) end, -- Reverse Magic
         },
     }
 else
@@ -328,17 +336,17 @@ else
             Disease = true,
             Poison = true,
             -- Shamans 'Cleanse Spirit' restoration talent
-            Curse = function() return IsUsableSpell(C_Spell.GetSpellName(51886)) end
+            Curse = function() return IsUsableSpell(GetSpellName(51886)) end
         },
         WARLOCK = {
             -- Felhunter's Devour Magic or Doomguard's Dispel Magic
-            Magic = function() return IsUsableSpell(C_Spell.GetSpellName(19736)) or IsUsableSpell(C_Spell.GetSpellName(19476)) end,
+            Magic = function() return IsUsableSpell(GetSpellName(19736)) or IsUsableSpell(GetSpellName(19476)) end,
         },
         EVOKER = {
-            Bleed = function() return IsUsableSpell(C_Spell.GetSpellName(374251)) end,
+            Bleed = function() return IsUsableSpell(GetSpellName(374251)) end,
             Poison = true,
-            Disease = function() return IsUsableSpell(C_Spell.GetSpellName(374251)) end,
-            Curse = function() return IsUsableSpell(C_Spell.GetSpellName(374251)) end,
+            Disease = function() return IsUsableSpell(GetSpellName(374251)) end,
+            Curse = function() return IsUsableSpell(GetSpellName(374251)) end,
         },
     }
     if WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC then
