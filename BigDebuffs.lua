@@ -293,19 +293,19 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
         },
         [1467] = { -- Devastation Evoker
             Poison = true,
-            Disease = function() return IsUsableSpell(GetSpellName(374251)) end,
-            Curse = function() return IsUsableSpell(GetSpellName(374251)) end,
+            Disease = function() return IsPlayerSpell(374251) end,
+            Curse = function() return IsPlayerSpell(374251) end,
         },
         [1468] = { -- Preservation Evoker
             Magic = true,
             Poison = true,
-            Disease = function() return IsUsableSpell(GetSpellName(374251)) end,
-            Curse = function() return IsUsableSpell(GetSpellName(374251)) end,
+            Disease = function() return IsPlayerSpell(374251) end,
+            Curse = function() return IsPlayerSpell(374251) end,
         },
         [1473] = { -- Augmentation Evoker
             Poison = true,
-            Disease = function() return IsUsableSpell(GetSpellName(374251)) end,
-            Curse = function() return IsUsableSpell(GetSpellName(374251)) end,
+            Disease = function() return IsPlayerSpell(374251) end,
+            Curse = function() return IsPlayerSpell(374251) end,
         },
         [577] = {
             Magic = function() return GetSpellName(205604) end, -- Reverse Magic
@@ -336,17 +336,17 @@ else
             Disease = true,
             Poison = true,
             -- Shamans 'Cleanse Spirit' restoration talent
-            Curse = function() return IsUsableSpell(GetSpellName(51886)) end
+            Curse = function() return IsPlayerSpell(51886) end
         },
         WARLOCK = {
             -- Felhunter's Devour Magic or Doomguard's Dispel Magic
-            Magic = function() return IsUsableSpell(GetSpellName(19736)) or IsUsableSpell(GetSpellName(19476)) end,
+            Magic = function() return IsPlayerSpell(19736) or IsPlayerSpell(19476) end,
         },
         EVOKER = {
-            Bleed = function() return IsUsableSpell(GetSpellName(374251)) end,
+            Bleed = function() return IsPlayerSpell(374251) end,
             Poison = true,
-            Disease = function() return IsUsableSpell(GetSpellName(374251)) end,
-            Curse = function() return IsUsableSpell(GetSpellName(374251)) end,
+            Disease = function() return IsPlayerSpell(374251) end,
+            Curse = function() return IsPlayerSpell(374251) end,
         },
     }
     if WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC then
