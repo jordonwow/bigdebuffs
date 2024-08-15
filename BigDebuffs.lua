@@ -308,10 +308,10 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
             Curse = function() return IsPlayerSpell(374251) end,
         },
         [577] = {
-            Magic = function() return GetSpellName(205604) end, -- Reverse Magic
+            Magic = function() return IsPlayerSpell(205604) end, -- Reverse Magic
         },
         [581] = {
-            Magic = function() return GetSpellName(205604) end, -- Reverse Magic
+            Magic = function() return IsPlayerSpell(205604) end, -- Reverse Magic
         },
     }
 else
