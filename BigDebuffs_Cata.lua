@@ -236,7 +236,7 @@ addon.Spells = {
     [31821] = { type = BUFF_DEFENSIVE, },  -- Aura Mastery
     [54428] = { type = BUFF_OTHER, }, -- Divine Plea
     [59578] = { type = BUFF_OTHER, }, -- The Art of War
-    [63529] = { type = CROWD_CONTROL, }, -- Silenced - Shield of the Templar
+    [31935] = { type = CROWD_CONTROL, }, -- Silenced - Avenger's Shield
     [64205] = { type = BUFF_DEFENSIVE, }, -- Divine Sacrifice
 
     [1022] = { type = IMMUNITY },-- Blessing of Protection
