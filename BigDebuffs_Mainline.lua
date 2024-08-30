@@ -629,7 +629,7 @@ addon.Spells = {
     [208086] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Colossus Smash
     [213871] = { type = BUFF_DEFENSIVE }, -- Bodyguard (Prot PvP Talent)
     [227847] = { type = IMMUNITY }, -- Bladestorm
-	[446035] = { type = IMMUNITY, parent = 227847 }, -- Bladestorm (Demolish)
+	[446035] = { type = IMMUNITY, parent = 227847 }, -- Bladestorm
     [236077] = { type = CROWD_CONTROL }, -- Disarm (PvP Talent)
     [199042] = { type = ROOT }, -- Thunderstruck (Prot PvP Talent)
     [236273] = { type = CROWD_CONTROL }, -- Duel (Arms PvP Talent)
