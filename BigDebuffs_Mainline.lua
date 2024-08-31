@@ -92,6 +92,7 @@ addon.Spells = {
     [145629] = { type = BUFF_DEFENSIVE }, -- Anti-Magic Zone
     [454863] = { type = BUFF_DEFENSIVE }, -- Lesser Anti-Magic Shell
     [48265] = { type = BUFF_SPEED_BOOST }, -- Death's Advance
+	[444347] = { type = BUFF_SPEED_BOOST, parent = 48265 }, -- Death Charge
     [48792] = { type = BUFF_DEFENSIVE }, -- Icebound Fortitude
     [49039] = { type = BUFF_OTHER }, -- Lichborne
     [81256] = { type = BUFF_DEFENSIVE }, -- Dancing Rune Weapon
@@ -228,6 +229,7 @@ addon.Spells = {
     [357210] = { type = IMMUNITY, nonameplates = true }, -- Deep Breath (Immune to CC)
     [359816] = { type = IMMUNITY, nonameplates = true }, -- Dream Flight (Immune to CC)
     [403631] = { type = IMMUNITY, nonameplates = true }, -- Breath of Eons (Immune to CC)
+    [445134] = { type = DEBUFF_OFFENSIVE }, -- Shape of Flame
     [358267] = { type = BUFF_SPEED_BOOST }, -- Hover
 
     -- Hunter
@@ -268,6 +270,7 @@ addon.Spells = {
     [248519] = { type = IMMUNITY_SPELL }, -- Interlope (BM PvP Talent)
     [212431] = { type = DEBUFF_OFFENSIVE }, -- Explosive Shot
     [393456] = { type = ROOT }, -- Entrapment
+    [451517] = { type = ROOT }, -- Catch Out
     [407032] = { type = CROWD_CONTROL }, -- Sticky Tar Bomb
 	[407031] = { type = CROWD_CONTROL, parent = 407032 }, -- Sticky Tar Bomb (AoE)
 
@@ -341,6 +344,7 @@ addon.Spells = {
     [122470] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Touch of Karma (Debuff)
     [122783] = { type = BUFF_DEFENSIVE }, -- Diffuse Magic
     [137639] = { type = BUFF_OFFENSIVE }, -- Storm, Earth, and Fire
+    [443028] = { type = BUFF_OFFENSIVE }, -- Celestial Conduit
     [198909] = { type = CROWD_CONTROL }, -- Song of Chi-Ji
     [202162] = { type = BUFF_DEFENSIVE }, -- Avert Harm (Brew PvP Talent)
     [202274] = { type = CROWD_CONTROL }, -- Incendiary Brew (Brew PvP Talent)
@@ -557,6 +561,8 @@ addon.Spells = {
     [285515] = { type = ROOT }, -- Surge of Power (Root)
     [356824] = { type = DEBUFF_OFFENSIVE }, -- Water Unleashed
     [188389] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Flame Shock
+    [378081] = { type = BUFF_OFFENSIVE }, -- Nature's Swiftness (Shaman)
+        [443454] = { type = BUFF_OFFENSIVE, parent = 378081 }, -- Ancestral Swiftness
     [409293] = { type = IMMUNITY }, -- Burrow
 
     -- Warlock
@@ -593,6 +599,7 @@ addon.Spells = {
     [1714] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Curse of Tongues
     [702] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Curse of Weakness
     [410598] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Soul Rip
+    [442726] = { type = BUFF_OFFENSIVE }, -- Malevolence
     [417537] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Oblivion
 
     -- Warrior
@@ -615,12 +622,14 @@ addon.Spells = {
     [107574] = { type = BUFF_OFFENSIVE }, -- Avatar
     [118038] = { type = BUFF_DEFENSIVE }, -- Die by the Sword
     [132169] = { type = CROWD_CONTROL }, -- Storm Bolt
+    [385954] = { type = CROWD_CONTROL }, -- Shield Charge
     [147833] = { type = BUFF_DEFENSIVE }, -- Intervene
     [184364] = { type = BUFF_DEFENSIVE }, -- Enraged Regeneration
     [386208] = { type = BUFF_DEFENSIVE }, -- Defensive Stance
     [208086] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Colossus Smash
     [213871] = { type = BUFF_DEFENSIVE }, -- Bodyguard (Prot PvP Talent)
-    [227847] = { type = IMMUNITY }, -- Bladestorm (Arms)
+    [227847] = { type = IMMUNITY }, -- Bladestorm
+	[446035] = { type = IMMUNITY, parent = 227847 }, -- Bladestorm
     [236077] = { type = CROWD_CONTROL }, -- Disarm (PvP Talent)
     [199042] = { type = ROOT }, -- Thunderstruck (Prot PvP Talent)
     [236273] = { type = CROWD_CONTROL }, -- Duel (Arms PvP Talent)
