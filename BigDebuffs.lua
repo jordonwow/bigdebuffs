@@ -2194,7 +2194,8 @@ function BigDebuffs:UNIT_AURA(unit)
                         if (container.AlternatePowerFrameTexture and container.AlternatePowerFrameTexture:GetTexture() == 4642466)
                             or (container.FrameTexture and container.FrameTexture:GetTexture() == 4642466) then
                             frame.mask:SetAtlas("UI-HUD-UnitFrame-Player-Portrait-Mask", _G.TextureKitConstants.UseAtlasSize)
-                        end                    end
+                        end
+                    end
                     frame.icon:AddMaskTexture(frame.mask)
                 end
             else
