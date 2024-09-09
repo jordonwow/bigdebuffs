@@ -2188,7 +2188,13 @@ function BigDebuffs:UNIT_AURA(unit)
                     frame.mask:SetAllPoints(frame.icon)
                     frame.mask:SetTexture("Interface/CHARACTERFRAME/TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
                     if frame.unit == "player" then
-                        frame.mask:SetAtlas("UI-HUD-UnitFrame-Player-Portrait-Mask", _G.TextureKitConstants.UseAtlasSize)
+
+                        local container = PlayerFrame.PlayerFrameContainer
+                        -- set the frame.mask atlas only if the new frame textures are actually present (4642466)
+                        if (container.AlternatePowerFrameTexture and container.AlternatePowerFrameTexture:GetTexture() == 4642466)
+                            or (container.FrameTexture and container.FrameTexture:GetTexture() == 4642466) then
+                            frame.mask:SetAtlas("UI-HUD-UnitFrame-Player-Portrait-Mask", _G.TextureKitConstants.UseAtlasSize)
+                        end
                     end
                     frame.icon:AddMaskTexture(frame.mask)
                 end
