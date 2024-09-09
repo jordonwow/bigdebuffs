@@ -68,6 +68,7 @@ read_globals = {
     "NeatPlates",
     "Plater",
     "PLAYER",
+    "PlayerFrame",
     "SetPortraitToTexture",
     "Settings",
     "Spell",
