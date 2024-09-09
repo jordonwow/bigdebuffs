@@ -89,6 +89,7 @@ addon.Spells = {
     [374776] = { type = CROWD_CONTROL }, -- Tightening Grasp (Silence)
     [48707] = { type = IMMUNITY_SPELL }, -- Anti-Magic Shell
 	[410358] = { type = IMMUNITY_SPELL, parent = 48707 }, -- Anti-Magic Shell (Spellwarden)
+	[444741] = { type = IMMUNITY_SPELL, parent = 48707 }, -- Anti-Magic Shell (Horsemen's Aid)
     [145629] = { type = BUFF_DEFENSIVE }, -- Anti-Magic Zone
     [454863] = { type = BUFF_DEFENSIVE }, -- Lesser Anti-Magic Shell
     [48265] = { type = BUFF_SPEED_BOOST }, -- Death's Advance
@@ -298,6 +299,7 @@ addon.Spells = {
     [383121] = { type = CROWD_CONTROL }, -- Mass Polymorph
     [122] = { type = ROOT }, -- Frost Nova
     [33395] = { type = ROOT }, -- Freeze
+    [449700] = { type = ROOT }, -- Gravity Lapse (Wowhead labels it as a root mechanic)
     [365362] = { type = BUFF_OFFENSIVE }, -- Arcane Surge
     [12051] = { type = BUFF_OFFENSIVE }, -- Evocation
     [12472] = { type = BUFF_OFFENSIVE }, -- Icy Veins
