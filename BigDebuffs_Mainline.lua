@@ -228,8 +228,10 @@ addon.Spells = {
     [378464] = { type = IMMUNITY }, -- Nullifying Shroud
     [378441] = { type = IMMUNITY }, -- Time Stop
     [357210] = { type = IMMUNITY, nonameplates = true }, -- Deep Breath (Immune to CC)
+	[433874] = { type = IMMUNITY, nonameplates = true, parent = 357210 }, -- (Maneuverability)
     [359816] = { type = IMMUNITY, nonameplates = true }, -- Dream Flight (Immune to CC)
     [403631] = { type = IMMUNITY, nonameplates = true }, -- Breath of Eons (Immune to CC)
+	[442204] = { type = IMMUNITY, nonameplates = true, parent = 403631 }, -- (Maneuverability)
     [445134] = { type = DEBUFF_OFFENSIVE }, -- Shape of Flame
     [358267] = { type = BUFF_SPEED_BOOST }, -- Hover
 
