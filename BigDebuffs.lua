@@ -397,7 +397,17 @@ local GetAnchor = {
             end
         end
 
-        if unit and (unit:match("party") or unit:match("player")) then
+        if unit and unit:match("player") then
+            local unitGUID = UnitGUID(unit)
+            local elvUIFrame = _G["ElvUF_Player"]
+            if elvUIFrame and elvUIFrame:IsVisible() and elvUIFrame.unit then
+                if unitGUID == UnitGUID(elvUIFrame.unit) then
+                    return elvUIFrame
+                end
+            end
+        end
+
+        if unit and unit:match("party") then
             local unitGUID = UnitGUID(unit)
             for i = 1, 5, 1 do
                 local elvUIFrame = _G["ElvUF_PartyGroup1UnitButton" .. i]
