@@ -296,6 +296,8 @@ addon.Spells = {
         [277787] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Direhorn
         [277792] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Bumblebee
 	[391622] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Duck
+	[460392] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Mosswool
+	[461489] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Moss
     [383121] = { type = CROWD_CONTROL }, -- Mass Polymorph
     [122] = { type = ROOT }, -- Frost Nova
     [33395] = { type = ROOT }, -- Freeze
