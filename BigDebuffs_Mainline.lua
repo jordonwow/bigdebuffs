@@ -206,8 +206,6 @@ addon.Spells = {
     [274838] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Feral Frenzy
     [58180] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Infected Wounds
     [200851] = { type = BUFF_DEFENSIVE }, -- Rage of the Sleeper
-    [410063] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Reactive Resin (Snare for 2 stacks then root/silence at 3)
-    [410065] = { type = CROWD_CONTROL }, -- Reactive Resin (Root and Silence)
     [202347] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Stellar Flare
 
     -- Evoker
@@ -298,6 +296,8 @@ addon.Spells = {
         [277787] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Direhorn
         [277792] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Bumblebee
 	[391622] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Duck
+	[460392] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Mosswool
+	[461489] = { type = CROWD_CONTROL, parent = 118 }, -- Polymorph Moss
     [383121] = { type = CROWD_CONTROL }, -- Mass Polymorph
     [122] = { type = ROOT }, -- Frost Nova
     [33395] = { type = ROOT }, -- Freeze
@@ -398,6 +398,7 @@ addon.Spells = {
     [199545] = { type = BUFF_DEFENSIVE }, -- Steed of Glory (Protection PvP Talent)
     [210256] = { type = BUFF_DEFENSIVE }, -- Blessing of Sanctuary (Ret PvP Talent)
     [210294] = { type = BUFF_DEFENSIVE }, -- Divine Favor
+    [415246] = { type = BUFF_DEFENSIVE }, -- Divine Plea (Holy PvP Talent)
     [215652] = { type = BUFF_OFFENSIVE }, -- Shield of Virtue (Protection PvP Talent) - "next cast will..." buff
     -- [217824] = { type = CROWD_CONTROL }, -- Shield of Virtue (Protection PvP Talent) (defined as Interrupt)
     [221883] = { type = BUFF_SPEED_BOOST }, -- Divine Steed (Human?) (Each race has its own buff, pulled from wowhead - some might be incorrect)
@@ -509,8 +510,6 @@ addon.Spells = {
     [115192] = { type = BUFF_OFFENSIVE }, -- Subterfuge
     [256735] = { type = BUFF_OFFENSIVE }, -- Master Assassin
     [394758] = { type = BUFF_OFFENSIVE }, -- Flagellation
-    [375939] = { type = BUFF_OFFENSIVE }, -- Sepsis
-    [385408] = { type = DEBUFF_OFFENSIVE, priority = true, nonameplates = true }, -- Sepsis
     [360194] = { type = DEBUFF_OFFENSIVE, priority = true, nonameplates = true }, -- Deathmark
     [193359] = { type = BUFF_OFFENSIVE }, -- True Bearing
     [193357] = { type = BUFF_OFFENSIVE }, -- Ruthless Precision
