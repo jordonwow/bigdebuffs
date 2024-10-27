@@ -653,26 +653,6 @@ local nameplatesAnchors = {
 }
 
 local anchors = {
-    ["GladiusExParty"] = {
-        noPortait = true,
-        units = {
-            party1 = "GladiusExButtonFrameparty1",
-            party2 = "GladiusExButtonFrameparty2",
-            party3 = "GladiusExButtonFrameparty3",
-            party4 = "GladiusExButtonFrameparty4"
-        }
-    },
-    ["GladiusExArena"] = {
-        noPortait = true,
-        alignLeft = true,
-        units = {
-            arena1 = "GladiusExButtonFramearena1",
-            arena2 = "GladiusExButtonFramearena2",
-            arena3 = "GladiusExButtonFramearena3",
-            arena4 = "GladiusExButtonFramearena4",
-            arena5 = "GladiusExButtonFramearena5",
-        }
-    },
     ["ElvUI"] = {
         func = GetAnchor.ElvUIFrames,
         noPortait = true,
