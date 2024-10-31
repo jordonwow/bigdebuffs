@@ -706,4 +706,8 @@ addon.Spells = {
     [266107] = { type = DEBUFF_OFFENSIVE }, -- Thirst for Blood
     [368091] = { type = DEBUFF_OFFENSIVE }, -- Infected Bite
 
+    -- The War Within World Buffs
+    [443026] = {type = IMMUNITY}, -- General's Phalanx (The General Tier 4 Benefit)
+    [462823] = {type = IMMUNITY}, -- General's Bulwark (The General Tier 6 Benefit)
+
 }
