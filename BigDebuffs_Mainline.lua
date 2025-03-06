@@ -444,7 +444,6 @@ addon.Spells = {
     [194249] = { type = BUFF_OFFENSIVE }, -- Voidform
     [391109] = { type = BUFF_OFFENSIVE }, -- Dark Ascension
     [232707] = { type = BUFF_DEFENSIVE }, -- Ray of Hope (Holy PvP Talent)
-    [197862] = { type = BUFF_DEFENSIVE }, -- Archangel (Disc PvP Talent)
     [197871] = { type = BUFF_OFFENSIVE }, -- Dark Archangel (Disc PvP Talent) - on the priest
         [197874] = { type = BUFF_OFFENSIVE, parent = 197871 }, -- Dark Archangel (Disc PvP Talent) - on others
     [200183] = { type = BUFF_DEFENSIVE }, -- Apotheosis
