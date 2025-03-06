@@ -230,6 +230,8 @@ addon.Spells = {
     [403631] = { type = IMMUNITY, nonameplates = true }, -- Breath of Eons (Immune to CC)
 	[442204] = { type = IMMUNITY, nonameplates = true, parent = 403631 }, -- (Maneuverability)
     [445134] = { type = DEBUFF_OFFENSIVE }, -- Shape of Flame
+    [368970] = { type = BUFF_OTHER }, -- Tail Swipe (Snare)
+    [357214] = { type = BUFF_OTHER }, -- Wing Buffet (Snare)
     [358267] = { type = BUFF_SPEED_BOOST }, -- Hover
 
     -- Hunter
