@@ -113,7 +113,6 @@ addon.Spells = {
         [204085] = { type = ROOT, parent = 204080 }, -- when applied by Chains of Ice
     [47568] = { type = BUFF_OFFENSIVE }, -- Empower Rune Weapon
     [207167] = { type = CROWD_CONTROL }, -- Blinding Sleet
-    [287254] = { type = CROWD_CONTROL }, -- Dead of Winter
     [207289] = { type = BUFF_OFFENSIVE }, -- Unholy Assault
     [212552] = { type = BUFF_SPEED_BOOST }, -- Wraith Walk
     [219809] = { type = BUFF_DEFENSIVE }, -- Tombstone
@@ -202,7 +201,7 @@ addon.Spells = {
         [108294] = { type = BUFF_OFFENSIVE, parent = 319454 }, -- with Resto Affinity
     [5215] = { type = BUFF_OTHER }, -- Prowl
     [391528] = { type = BUFF_OFFENSIVE }, -- Convoke the Spirits
-    [362486] = { type = IMMUNITY }, -- Keeper of the Grove
+    [473909] = { type = IMMUNITY }, -- Ancient of Lore
     [274838] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Feral Frenzy
     [58180] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Infected Wounds
     [200851] = { type = BUFF_DEFENSIVE }, -- Rage of the Sleeper
@@ -231,6 +230,8 @@ addon.Spells = {
     [403631] = { type = IMMUNITY, nonameplates = true }, -- Breath of Eons (Immune to CC)
 	[442204] = { type = IMMUNITY, nonameplates = true, parent = 403631 }, -- (Maneuverability)
     [445134] = { type = DEBUFF_OFFENSIVE }, -- Shape of Flame
+    [368970] = { type = BUFF_OTHER }, -- Tail Swipe (Snare)
+    [357214] = { type = BUFF_OTHER }, -- Wing Buffet (Snare)
     [358267] = { type = BUFF_SPEED_BOOST }, -- Hover
 
     -- Hunter
@@ -266,6 +267,7 @@ addon.Spells = {
     [360952] = { type = BUFF_OFFENSIVE }, -- Coordinated Assault
     [360966] = { type = BUFF_OFFENSIVE }, -- Spearhead
     [288613] = { type = BUFF_OFFENSIVE }, -- Trueshot
+    [260402] = { type = BUFF_OFFENSIVE }, -- Double Tap
     [190925] = { type = ROOT }, -- Harpoon
     [202748] = { type = BUFF_DEFENSIVE }, -- Survival Tactics (PvP Talent)
     [248519] = { type = IMMUNITY_SPELL }, -- Interlope (BM PvP Talent)
@@ -312,13 +314,13 @@ addon.Spells = {
     [41425] = { type = BUFF_OTHER }, -- Hypothermia
     [342242] = { type = BUFF_OFFENSIVE }, -- Time Warp procced by Time Anomality (Arcane Talent)
     [82691] = { type = CROWD_CONTROL }, -- Ring of Frost
+    [353084] = { type = CROWD_CONTROL }, -- Ring of Fire
     [87023] = { type = BUFF_OTHER }, -- Cauterize
     [108839] = { type = BUFF_OTHER }, -- Ice Floes
     [342246] = { type = BUFF_DEFENSIVE }, -- Alter Time (Arcane)
         [110909] = { type = BUFF_DEFENSIVE, parent = 342246 }, -- Alter Time (Fire/Frost)
     [157997] = { type = ROOT }, -- Ice Nova
     [190319] = { type = BUFF_OFFENSIVE }, -- Combustion
-    [198111] = { type = BUFF_DEFENSIVE }, -- Temporal Shield (Arcane PvP Talent)
     [414664] = { type = BUFF_OFFENSIVE }, -- Mass Invisibility
     [205025] = { type = BUFF_OFFENSIVE }, -- Presence of Mind
     [228600] = { type = ROOT }, -- Glacial Spike Root
@@ -330,6 +332,7 @@ addon.Spells = {
     [210824] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Touch of the Magi
     [12654] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Ignite
     [390612] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Frost Bomb
+    [1221107] = { type = IMMUNITY }, -- Overpowered Barrier
     [217694] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Living Bomb
         [244813] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true, parent = 217694 }, -- Living Bomb (spread effect)
 
@@ -362,6 +365,7 @@ addon.Spells = {
     [213664] = { type = BUFF_DEFENSIVE }, -- Nimble Brew (Brew PvP Talent)
     [132578] = { type = BUFF_DEFENSIVE }, -- Invoke Niuzao, the Black Ox
     [353319] = { type = IMMUNITY_SPELL }, -- Peaceweaver
+    [456499] = { type = IMMUNITY }, -- Absolute Serenity
     [432180] = { type = BUFF_DEFENSIVE }, -- Dance of the Wind
 
     -- Paladin
@@ -429,7 +433,7 @@ addon.Spells = {
     [10060] = { type = BUFF_OFFENSIVE }, -- Power Infusion
     [15487] = { type = CROWD_CONTROL }, -- Silence
     [33206] = { type = BUFF_DEFENSIVE }, -- Pain Suppression
-    [47536] = { type = BUFF_DEFENSIVE }, -- Rapture
+    [472433] = { type = BUFF_DEFENSIVE }, -- Evangelism
     [47585] = { type = BUFF_DEFENSIVE }, -- Dispersion
     [47788] = { type = BUFF_DEFENSIVE }, -- Guardian Spirit
     [64044] = { type = CROWD_CONTROL }, -- Psychic Horror
@@ -440,7 +444,6 @@ addon.Spells = {
     [194249] = { type = BUFF_OFFENSIVE }, -- Voidform
     [391109] = { type = BUFF_OFFENSIVE }, -- Dark Ascension
     [232707] = { type = BUFF_DEFENSIVE }, -- Ray of Hope (Holy PvP Talent)
-    [197862] = { type = BUFF_DEFENSIVE }, -- Archangel (Disc PvP Talent)
     [197871] = { type = BUFF_OFFENSIVE }, -- Dark Archangel (Disc PvP Talent) - on the priest
         [197874] = { type = BUFF_OFFENSIVE, parent = 197871 }, -- Dark Archangel (Disc PvP Talent) - on others
     [200183] = { type = BUFF_DEFENSIVE }, -- Apotheosis
@@ -501,7 +504,6 @@ addon.Spells = {
     [51690] = { type = BUFF_OFFENSIVE }, -- Killing Spree
     [121471] = { type = BUFF_OFFENSIVE }, -- Shadow Blades
     [185422] = { type = BUFF_OFFENSIVE }, -- Shadow Dance
-    [207736] = { type = BUFF_OFFENSIVE }, -- Shadowy Duel
     [212283] = { type = BUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Symbols of Death
     [207777] = { type = CROWD_CONTROL }, -- Dismantle
     [212183] = { type = CROWD_CONTROL }, -- Smoke Bomb (PvP Talent)
@@ -533,7 +535,6 @@ addon.Spells = {
         [309328] = { type = CROWD_CONTROL, parent = 51514 }, -- Hex (Living Honey)
     [58875] = { type = BUFF_SPEED_BOOST }, -- Spirit Walk
     [79206] = { type = BUFF_OTHER }, -- Spiritwalker's Grace
-    [108281] = { type = BUFF_DEFENSIVE }, -- Ancestral Guidance
     [64695] = { type = ROOT }, -- Earthgrab Totem
     [77505] = { type = CROWD_CONTROL }, -- Earthquake (Stun)
     [325174] = { type = BUFF_DEFENSIVE }, -- Spirit Link Totem
@@ -567,6 +568,7 @@ addon.Spells = {
     [188389] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Flame Shock
     [378081] = { type = BUFF_OFFENSIVE }, -- Nature's Swiftness (Shaman)
         [443454] = { type = BUFF_OFFENSIVE, parent = 378081 }, -- Ancestral Swiftness
+    [1218125] = { type = BUFF_OFFENSIVE }, -- Primordial Storm
     [409293] = { type = IMMUNITY }, -- Burrow
 
     -- Warlock
@@ -619,6 +621,7 @@ addon.Spells = {
     [12975] = { type = BUFF_DEFENSIVE }, -- Last Stand
     [18499] = { type = BUFF_OTHER }, -- Berserker Rage
 	[384100] = { type = BUFF_OTHER, parent = 18499 }, -- Berserker Shout
+	[1219201] = { type = BUFF_OTHER, parent = 18499 }, -- Berserker Roar
     [23920] = { type = IMMUNITY_SPELL }, -- Spell Reflection
     [132168] = { type = CROWD_CONTROL }, -- Shockwave
     [97463] = { type = BUFF_DEFENSIVE }, -- Rallying Cry
@@ -638,8 +641,7 @@ addon.Spells = {
     [236077] = { type = CROWD_CONTROL }, -- Disarm (PvP Talent)
     [199042] = { type = ROOT }, -- Thunderstruck (Prot PvP Talent)
     [236273] = { type = CROWD_CONTROL }, -- Duel (Arms PvP Talent)
-    [236321] = { type = BUFF_DEFENSIVE }, -- War Banner (PvP Talent)
-    [199085] = { type = CROWD_CONTROL }, -- Warpath (Prot PvP Talent)
+    [1219209] = { type = BUFF_DEFENSIVE }, -- Berserker Roar (PvP Talent)
     [198819] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Strike when applied with Sharpen Blade (50% healing reduc)
     [202164] = { type = BUFF_SPEED_BOOST }, -- Bounding Stride
     [376080] = { type = CROWD_CONTROL, nounitFrames = true, nonameplates = true }, -- Champion's Spear
@@ -650,6 +652,7 @@ addon.Spells = {
     -- Other
 
     [115804] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Mortal Wounds
+    [1217789] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Grevious Injury (Marksmanship Hunter MS)
     [34709] = { type = BUFF_OTHER }, -- Shadow Sight
     [345231] = { type = BUFF_DEFENSIVE }, -- Gladiator's Emblem
     [314646] = { type = BUFF_OTHER }, -- Drink (40k mana vendor item)
