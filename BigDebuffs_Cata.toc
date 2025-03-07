@@ -1,4 +1,4 @@
-## Interface: 40400
+## Interface: 40402, 40401
 ## Title: BigDebuffs
 ## Notes: Increases the debuff size of crowd control effects on the Blizzard raid frames
 ## Version: @project-version@
