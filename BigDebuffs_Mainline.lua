@@ -268,6 +268,7 @@ addon.Spells = {
     [360966] = { type = BUFF_OFFENSIVE }, -- Spearhead
     [288613] = { type = BUFF_OFFENSIVE }, -- Trueshot
     [260402] = { type = BUFF_OFFENSIVE }, -- Double Tap
+    [359844] = { type = BUFF_OFFENSIVE }, -- Call of the Wild
     [190925] = { type = ROOT }, -- Harpoon
     [202748] = { type = BUFF_DEFENSIVE }, -- Survival Tactics (PvP Talent)
     [248519] = { type = IMMUNITY_SPELL }, -- Interlope (BM PvP Talent)
