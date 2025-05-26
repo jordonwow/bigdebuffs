@@ -15,6 +15,7 @@ if Masque ~= nil then
     BigDebuffs.MasqueGroup.NamePlate = Masque:Group("BigDebuffs", "NamePlate")
 end
 
+local LoadAddOn = C_AddOns.LoadAddOn
 local UnitDebuff, UnitBuff = C_UnitAuras.GetDebuffDataByIndex, C_UnitAuras.GetBuffDataByIndex
 local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
 local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
