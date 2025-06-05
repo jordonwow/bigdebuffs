@@ -175,9 +175,14 @@ addon.Spells = {
     [14751] = { type = BUFF_DEFENSIVE }, -- Inner Focus
     [87204] = { type = CROWD_CONTROL }, -- Sin and Punishment (VT dispel)
     [96267] = { type = BUFF_DEFENSIVE }, -- Strength of Soul
-
+    -- MoP
+    [113506] = { type = CROWD_CONTROL }, -- Cyclone (Symbiosis)
+    [113792] = { type = CROWD_CONTROL }, -- Psychic Terror (Psyfiend)
+    [113275] = { type = ROOT }, -- Entangling Roots (Symbiosis)
+    [114404] = { type = ROOT }, -- Void Tendril's Grasp
+    [114239] = { type = IMMUNITY_SPELL }, -- Phantasm
+ 
     -- Warlock
-
     -- WoTLK
     [47241] = { type = BUFF_OFFENSIVE, }, -- Metamorphosis
     [60995] = { type = CROWD_CONTROL, }, -- Demon Charge (Metamorphosis)
