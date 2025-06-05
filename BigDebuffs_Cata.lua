@@ -403,6 +403,14 @@ addon.Spells = {
 
     [83853] = { type = DEBUFF_OFFENSIVE, }, -- Combustion
 
+    -- MoP
+    [115760] = { type = IMMUNITY_SPELL }, -- Glyph of Ice Block
+    [118271] = { type = CROWD_CONTROL }, -- Combustion Impact
+    [102051] = { type = CROWD_CONTROL }, -- Frostjaw (Root Silence)
+    [111340] = { type = ROOT }, -- Ice Ward
+    [121288] = { type = ROOT }, -- Chilled (Frost Armor)
+    [113092] = { type = ROOT }, -- Frost Bomb
+
     -- Rogue
 
     -- WoTLK
