@@ -207,6 +207,17 @@ addon.Spells = {
     [79459] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Imp
     [79463] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Succubus
     [79464] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Voidwalker
+    -- MoP
+    [137143] = { type = BUFF_DEFENSIVE }, -- Blood Horror
+    [130616] = { type = CROWD_CONTROL }, -- Fear (Glyph of Fear)
+    [132412] = { type = CROWD_CONTROL }, -- Seduction (Grimoire of Sacrifice)
+    [104045] = { type = CROWD_CONTROL }, -- Sleep (Metamorphosis)
+    [132409] = { type = CROWD_CONTROL }, -- Spell Lock (Grimoire of Sacrifice)
+    [110913] = { type = BUFF_DEFENSIVE }, -- Dark Bargain
+    [104773] = { type = BUFF_DEFENSIVE }, -- Unending Resolve
+    [115268] = { type = CROWD_CONTROL }, -- Mesmerize (Shivarra)
+    [115782] = { type = CROWD_CONTROL }, -- Optical Blast (Observer)
+    [118093] = { type = CROWD_CONTROL }, -- Disarm (Voidwalker/Voidlord)
 
     -- Shaman
 
