@@ -239,9 +239,13 @@ addon.Spells = {
     [39796] = { type = CROWD_CONTROL }, -- Stoneclaw Totem
     [16166] = { type = BUFF_OFFENSIVE }, -- Elemental Mastery
     [30823] = { type = BUFF_DEFENSIVE }, -- Shamanistic Rage
+    -- MoP
+    [118905] = { type = CROWD_CONTROL },  -- Static Charge (Capacitor Totem)
+    [113287] = { type = CROWD_CONTROL },  -- Solar Beam (Symbiosis)
+    [116947] = { type = ROOT },  -- Earthbind (Earthgrab Totem)
+    [118345] = { type = CROWD_CONTROL },  -- Pulverize (Primal Earth Elemental)
 
     -- Paladin
-
     -- WoTLK
     [25771] = { type = BUFF_OTHER, }, -- Forbearance
     [31821] = { type = BUFF_DEFENSIVE, },  -- Aura Mastery
