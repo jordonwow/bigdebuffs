@@ -476,4 +476,25 @@ addon.Spells = {
     [147531] = { type = ROOT }, -- Bloodbath
     [129923] = { type = ROOT }, -- Sluggish (Glyph of Hindering Strikes)
     [114028] = { type = IMMUNITY_SPELL }, -- Mass Spell Reflection
+
+    -- Monk
+    [131523] = { type = IMMUNITY_SPELL }, -- Zen Meditation
+    [132168] = { type = CROWD_CONTROL }, -- Breath of Fire (Glyph of Breath of Fire)
+    [126451] = { type = CROWD_CONTROL }, -- Clash
+    [122242] = { type = CROWD_CONTROL }, -- Clash
+    [119392] = { type = CROWD_CONTROL }, -- Charging Ox Wave
+    [120086] = { type = CROWD_CONTROL }, -- Fists of Fury
+    [119381] = { type = CROWD_CONTROL }, -- Leg Sweep
+    [115078] = { type = CROWD_CONTROL }, -- Paralysis
+    [117368] = { type = CROWD_CONTROL }, -- Grapple Weapon
+    [140023] = { type = CROWD_CONTROL }, -- Ring of Peace
+    [137461] = { type = CROWD_CONTROL }, -- Disarmed (Ring of Peace)
+    [137460] = { type = CROWD_CONTROL }, -- Silenced (Ring of Peace)
+    [116709] = { type = CROWD_CONTROL }, -- Spear Hand Strike (Silence)
+    [116706] = { type = ROOT }, -- Disable (Root)
+    [113275] = { type = ROOT }, -- Entangling Roots (Symbiosis)
+    [123407] = { type = ROOT }, -- Spinning Fire Blossom
+    [116095] = { type = ROOT }, -- Disable
+    [123586] = { type = ROOT }, -- Flying Serpent Kick
+    [123727] = { type = ROOT }, -- Dizzying Haze
 }
