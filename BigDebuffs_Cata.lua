@@ -416,7 +416,6 @@ addon.Spells = {
     [60503] = { type = BUFF_OFFENSIVE, }, -- Taste for Blood
     [65925] = { type = BUFF_OFFENSIVE, }, -- Unrelenting Assault (2/2)
     [85388] = { type = CROWD_CONTROL }, -- Throwdown
-
     [18498] = { type = CROWD_CONTROL }, -- Improved Shield Bash
     [20230] = { type = IMMUNITY }, -- Retaliation
     [1719] = { type = BUFF_OFFENSIVE }, -- Recklessness
@@ -434,5 +433,15 @@ addon.Spells = {
     [23920] = { type = IMMUNITY_SPELL }, -- Spell Reflection
     [12976] = { type = BUFF_DEFENSIVE }, -- Last Stand
     [12294] = { type = BUFF_OTHER }, -- Mortal Strike
-
+    -- MoP
+    [118895] = { type = CROWD_CONTROL }, -- Dragon Roar
+    [132168] = { type = CROWD_CONTROL }, -- Shockwave
+    [107570] = { type = CROWD_CONTROL }, -- Storm Bolt
+    [132169] = { type = CROWD_CONTROL }, -- Storm Bolt
+    [107566] = { type = ROOT }, -- Staggering Shout
+    [147531] = { type = ROOT }, -- Warbringer
+    [137637] = { type = ROOT }, -- Warbringer
+    [147531] = { type = ROOT }, -- Bloodbath
+    [129923] = { type = ROOT }, -- Sluggish (Glyph of Hindering Strikes)
+    [114028] = { type = IMMUNITY_SPELL }, -- Mass Spell Reflection
 }
