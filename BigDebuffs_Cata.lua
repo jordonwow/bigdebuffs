@@ -415,7 +415,11 @@ addon.Spells = {
     [14251] = { type = BUFF_OTHER }, -- Riposte (Rogue)
     [86759] = { type = CROWD_CONTROL }, -- Improved Kick (Rank 2)
     [74001] = { type = BUFF_DEFENSIVE }, -- Combat Readiness
-
+    -- MoP
+    [113953] = { type = CROWD_CONTROL },  -- Paralysis (Paralytic Poison)
+    [115197] = { type = ROOT },  -- Partial Paralysis
+    [119696] = { type = ROOT },  -- Debilitation
+    
     -- Warrior
 
     -- WoTLK
