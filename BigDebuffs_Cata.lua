@@ -325,8 +325,13 @@ addon.Spells = {
     [91644] = { type = CROWD_CONTROL }, -- Snatch (bird of prey pet disarm)
     [50318] = { type = CROWD_CONTROL }, -- Serenity Dust (moth pet silence)
     [56626] = { type = CROWD_CONTROL }, -- Sting (wasp pet stun)
-
-
+    -- MoP
+    [117526] = { type = CROWD_CONTROL }, -- Binding Shot
+    [128405] = { type = ROOT }, -- Narrow Escape
+    [126246] = { type = CROWD_CONTROL }, -- Lullaby (Crane)
+    [126355] = { type = CROWD_CONTROL }, -- Paralyzing Quill (Porcupine)
+    [126423] = { type = CROWD_CONTROL }, -- Petrifying Gaze (Basilisk)
+	
     -- Druid
 
     -- WoTLK
