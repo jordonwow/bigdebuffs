@@ -272,9 +272,17 @@ addon.Spells = {
     [31842] = { type = BUFF_DEFENSIVE }, -- Divine Illumination
 
     -- Cataclysm
-
     [96231] = { type = INTERRUPT, duration = 4 }, -- Rebuke
     [85696] = { type = BUFF_OFFENSIVE }, -- Zealotry
+    
+    -- MoP
+    [105421] = { type = CROWD_CONTROL }, -- Blinding Light
+    [115752] = { type = CROWD_CONTROL }, -- Blinding Light (Glyph of Blinding Light)
+    [105593] = { type = CROWD_CONTROL }, -- Fist of Justice
+    [119072] = { type = CROWD_CONTROL }, -- Holy Wrath
+    [145067] = { type = CROWD_CONTROL }, -- Turn Evil (Evil is a Point of View)
+    [110300] = { type = ROOT }, -- Burden of Guilt
+    [15487] = { type = CROWD_CONTROL }, -- Silence
 
     -- Hunter
 
