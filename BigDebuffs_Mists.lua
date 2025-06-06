@@ -144,10 +144,21 @@ addon.Spells = {
     [49016] = { type = BUFF_OFFENSIVE, },  -- Unholy Frenzy
     [91802] = { type = INTERRUPT, duration = 2 },  -- Shambling Rush (pet dk kick)
     [91797] = { type = CROWD_CONTROL },  -- Monstrous Blow (dk abom stun)
-
     -- Cataclysm
-
     [49206] = { type = DEBUFF_OFFENSIVE, },  -- Summon Gargoyle
+    -- MoP
+    [108194] = { type = CROWD_CONTROL, },  -- Asphyxiate
+    [115001] = { type = CROWD_CONTROL, },  -- Remorseless Winter
+    [91800] = { type = CROWD_CONTROL, },  -- dk pet Gnaw
+    [96294] = { type = ROOT }, -- Chains of Ice (Chilblains)
+    [45524] = { type = ROOT }, -- Chains of Ice
+    [50435] = { type = ROOT }, -- Chilblains
+    [115000] = { type = ROOT }, -- Remorseless Winter
+    [115018] = { type = IMMUNITY }, -- Desecrated Ground
+    [51271] = { type = BUFF_OFFENSIVE, },  -- Pillar of Frost
+    [91807] = { type = ROOT }, -- Shambling Rush (Dark Transformation)
+
+
 
     -- Priest
 
