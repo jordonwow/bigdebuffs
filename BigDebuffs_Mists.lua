@@ -113,6 +113,14 @@ addon.Spells = {
         [57073] = { parent = 22734 }, -- Drink
     [23605] = { type = BUFF_OTHER }, -- Nightfall, Spell Vulnerability
     [13494] = { type = BUFF_OFFENSIVE }, -- Manual Crowd Pummeler Haste buff
+    -- MoP
+    [107079] = { type = CROWD_CONTROL }, -- Quaking Palm
+    [129597] = { type = CROWD_CONTROL }, -- Arcane Torrent (Chi)
+    [126679] = { type = BUFF_OFFENSIVE }, -- Call of Victory
+    [126690] = { type = BUFF_OFFENSIVE }, -- Call of Conquest
+    [126683] = { type = BUFF_OFFENSIVE }, -- Call of Dominance	
+	
+
 
     -- Interrupts
 
