@@ -362,6 +362,33 @@ addon.Spells = {
     [17116] = { type = BUFF_DEFENSIVE }, -- Nature's Swiftness
     [81261] = { type = CROWD_CONTROL, },  -- Solar Beam
     [78675] = { type = INTERRUPT, duration = 5 }, -- Solar Beam interrupt
+    -- MoP
+    [113801] = { type = CROWD_CONTROL }, -- Bash (Force of Nature - Feral Treants)
+    [102795] = { type = CROWD_CONTROL }, -- Bear Hug
+    [99] = { type = CROWD_CONTROL }, -- Disorienting Roar
+    [102546] = { type = CROWD_CONTROL }, -- Pounce (Incarnation)
+    [114238] = { type = CROWD_CONTROL }, -- Fae Silence (Glyph of Fae Silence)
+    [33786] = { type = CROWD_CONTROL }, -- Cyclone
+    [113770] = { type = ROOT }, -- Entangling Roots (Force of Nature - Balance Treants)
+    [102359] = { type = ROOT }, -- Mass Entanglement
+    [127797] = { type = CROWD_CONTROL }, -- Ursol's Vortex
+    -- Druid Symbiosis
+    [110698] = { type = CROWD_CONTROL }, -- Hammer of Justice (Paladin)
+    [113004] = { type = CROWD_CONTROL }, -- Intimidating Roar [flee] (Warrior)
+    [113056] = { type = CROWD_CONTROL }, -- Intimidating Roar [cower]] (Warrior)	
+    [126458] = { type = CROWD_CONTROL }, -- Grapple Weapon (Monk)
+    [126458] = { type = ROOT }, -- Frost Nova (Mage)
+    [110617] = { type = IMMUNITY }, -- Deterrence (Hunter)
+    [110715] = { type = IMMUNITY }, -- Dispersion (Priest)
+    [110700] = { type = IMMUNITY }, -- Divine Shield (Paladin)
+    [110696] = { type = IMMUNITY }, -- Ice Block (Mage)		
+    [110570] = { type = IMMUNITY_SPELL }, -- Anti-Magic Shell (Death Knight)
+    [110788] = { type = IMMUNITY_SPELL }, -- Cloak of Shadows (Rogue)
+    [113002] = { type = IMMUNITY_SPELL }, -- Spell Reflection (Warrior)	
+    [110791] = { type = BUFF_DEFENSIVE }, -- Evasion (Rogue)
+    [110575] = { type = BUFF_DEFENSIVE }, -- Icebound Fortitude (Death Knight)
+    [122291] = { type = BUFF_DEFENSIVE }, -- Unending Resolve (Warlock)
+
 
     -- Mage
 
