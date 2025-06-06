@@ -62,6 +62,7 @@ addon.Spells = {
     [25046] = { type = CROWD_CONTROL, }, -- Arcane Torrent (Energy)
     [50613] = { type = CROWD_CONTROL, }, -- Arcane Torrent (Runic Power)
     [58984] = { type = BUFF_DEFENSIVE }, -- Shadowmeld
+    [107079] = { type = CROWD_CONTROL }, -- Quaking Palm (Pandarian)
 
     -- Other
 
@@ -114,7 +115,6 @@ addon.Spells = {
     [23605] = { type = BUFF_OTHER }, -- Nightfall, Spell Vulnerability
     [13494] = { type = BUFF_OFFENSIVE }, -- Manual Crowd Pummeler Haste buff
     -- MoP
-    [107079] = { type = CROWD_CONTROL }, -- Quaking Palm
     [129597] = { type = CROWD_CONTROL }, -- Arcane Torrent (Chi)
     [126679] = { type = BUFF_OFFENSIVE }, -- Call of Victory
     [126690] = { type = BUFF_OFFENSIVE }, -- Call of Conquest
