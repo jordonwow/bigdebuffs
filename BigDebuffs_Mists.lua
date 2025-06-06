@@ -118,8 +118,8 @@ addon.Spells = {
     [129597] = { type = CROWD_CONTROL }, -- Arcane Torrent (Chi)
     [126679] = { type = BUFF_OFFENSIVE }, -- Call of Victory
     [126690] = { type = BUFF_OFFENSIVE }, -- Call of Conquest
-    [126683] = { type = BUFF_OFFENSIVE }, -- Call of Dominance	
-	
+    [126683] = { type = BUFF_OFFENSIVE }, -- Call of Dominance
+
 
 
     -- Interrupts
@@ -157,9 +157,7 @@ addon.Spells = {
     -- MoP
     [108194] = { type = CROWD_CONTROL, },  -- Asphyxiate
     [115001] = { type = CROWD_CONTROL, },  -- Remorseless Winter
-    [91800] = { type = CROWD_CONTROL, },  -- dk pet Gnaw
     [96294] = { type = ROOT }, -- Chains of Ice (Chilblains)
-    [45524] = { type = ROOT }, -- Chains of Ice
     [50435] = { type = ROOT }, -- Chilblains
     [115000] = { type = ROOT }, -- Remorseless Winter
     [115018] = { type = IMMUNITY }, -- Desecrated Ground
@@ -197,11 +195,11 @@ addon.Spells = {
     -- MoP
     [113506] = { type = CROWD_CONTROL }, -- Cyclone (Symbiosis)
     [113792] = { type = CROWD_CONTROL }, -- Psychic Terror (Psyfiend)
-    [113275] = { type = ROOT }, -- Entangling Roots (Symbiosis)
+    -- [113275] = { type = ROOT }, -- Entangling Roots (Symbiosis)
     [114404] = { type = ROOT }, -- Void Tendril's Grasp
     [114239] = { type = IMMUNITY_SPELL }, -- Phantasm
     [88625] = { type = CROWD_CONTROL }, -- Holy Word: Chastise
- 
+
     -- Warlock
     -- WoTLK
     [47241] = { type = BUFF_OFFENSIVE, }, -- Metamorphosis
@@ -295,7 +293,7 @@ addon.Spells = {
     -- Cataclysm
     [96231] = { type = INTERRUPT, duration = 4 }, -- Rebuke
     [85696] = { type = BUFF_OFFENSIVE }, -- Zealotry
-    
+
     -- MoP
     [105421] = { type = CROWD_CONTROL }, -- Blinding Light
     [115752] = { type = CROWD_CONTROL }, -- Blinding Light (Glyph of Blinding Light)
@@ -303,7 +301,6 @@ addon.Spells = {
     [119072] = { type = CROWD_CONTROL }, -- Holy Wrath
     [145067] = { type = CROWD_CONTROL }, -- Turn Evil (Evil is a Point of View)
     [110300] = { type = ROOT }, -- Burden of Guilt
-    [15487] = { type = CROWD_CONTROL }, -- Silence
 
     -- Hunter
 
@@ -352,7 +349,7 @@ addon.Spells = {
     [126246] = { type = CROWD_CONTROL }, -- Lullaby (Crane)
     [126355] = { type = CROWD_CONTROL }, -- Paralyzing Quill (Porcupine)
     [126423] = { type = CROWD_CONTROL }, -- Petrifying Gaze (Basilisk)
-	
+
     -- Druid
 
     -- WoTLK
@@ -395,16 +392,16 @@ addon.Spells = {
     -- Druid Symbiosis
     [110698] = { type = CROWD_CONTROL }, -- Hammer of Justice (Paladin)
     [113004] = { type = CROWD_CONTROL }, -- Intimidating Roar [flee] (Warrior)
-    [113056] = { type = CROWD_CONTROL }, -- Intimidating Roar [cower]] (Warrior)	
-    [126458] = { type = CROWD_CONTROL }, -- Grapple Weapon (Monk)
+    [113056] = { type = CROWD_CONTROL }, -- Intimidating Roar [cower]] (Warrior)
+    -- [126458] = { type = CROWD_CONTROL }, -- Grapple Weapon (Monk)
     [126458] = { type = ROOT }, -- Frost Nova (Mage)
     [110617] = { type = IMMUNITY }, -- Deterrence (Hunter)
     [110715] = { type = IMMUNITY }, -- Dispersion (Priest)
     [110700] = { type = IMMUNITY }, -- Divine Shield (Paladin)
-    [110696] = { type = IMMUNITY }, -- Ice Block (Mage)		
+    [110696] = { type = IMMUNITY }, -- Ice Block (Mage)
     [110570] = { type = IMMUNITY_SPELL }, -- Anti-Magic Shell (Death Knight)
     [110788] = { type = IMMUNITY_SPELL }, -- Cloak of Shadows (Rogue)
-    [113002] = { type = IMMUNITY_SPELL }, -- Spell Reflection (Warrior)	
+    [113002] = { type = IMMUNITY_SPELL }, -- Spell Reflection (Warrior)
     [110791] = { type = BUFF_DEFENSIVE }, -- Evasion (Rogue)
     [110575] = { type = BUFF_DEFENSIVE }, -- Icebound Fortitude (Death Knight)
     [122291] = { type = BUFF_DEFENSIVE }, -- Unending Resolve (Warlock)
@@ -492,7 +489,7 @@ addon.Spells = {
     [113953] = { type = CROWD_CONTROL },  -- Paralysis (Paralytic Poison)
     [115197] = { type = ROOT },  -- Partial Paralysis
     [119696] = { type = ROOT },  -- Debilitation
-    
+
     -- Warrior
 
     -- WoTLK
@@ -527,11 +524,11 @@ addon.Spells = {
     [12294] = { type = BUFF_OTHER }, -- Mortal Strike
     -- MoP
     [118895] = { type = CROWD_CONTROL }, -- Dragon Roar
-    [132168] = { type = CROWD_CONTROL }, -- Shockwave
+    -- [132168] = { type = CROWD_CONTROL }, -- Shockwave
     [107570] = { type = CROWD_CONTROL }, -- Storm Bolt
     [132169] = { type = CROWD_CONTROL }, -- Storm Bolt
     [107566] = { type = ROOT }, -- Staggering Shout
-    [147531] = { type = ROOT }, -- Warbringer
+    -- [147531] = { type = ROOT }, -- Warbringer
     [137637] = { type = ROOT }, -- Warbringer
     [147531] = { type = ROOT }, -- Bloodbath
     [129923] = { type = ROOT }, -- Sluggish (Glyph of Hindering Strikes)
