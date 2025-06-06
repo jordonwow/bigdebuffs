@@ -379,7 +379,6 @@ addon.Spells = {
     [99] = { type = CROWD_CONTROL }, -- Disorienting Roar
     [102546] = { type = CROWD_CONTROL }, -- Pounce (Incarnation)
     [114238] = { type = CROWD_CONTROL }, -- Fae Silence (Glyph of Fae Silence)
-    [33786] = { type = CROWD_CONTROL }, -- Cyclone
     [113770] = { type = ROOT }, -- Entangling Roots (Force of Nature - Balance Treants)
     [102359] = { type = ROOT }, -- Mass Entanglement
     [127797] = { type = CROWD_CONTROL }, -- Ursol's Vortex
