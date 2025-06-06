@@ -200,6 +200,7 @@ addon.Spells = {
     [113275] = { type = ROOT }, -- Entangling Roots (Symbiosis)
     [114404] = { type = ROOT }, -- Void Tendril's Grasp
     [114239] = { type = IMMUNITY_SPELL }, -- Phantasm
+    [88625] = { type = CROWD_CONTROL }, -- Holy Word: Chastise
  
     -- Warlock
     -- WoTLK
