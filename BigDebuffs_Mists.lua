@@ -243,6 +243,7 @@ addon.Spells = {
     [115268] = { type = CROWD_CONTROL }, -- Mesmerize (Shivarra)
     [115782] = { type = CROWD_CONTROL }, -- Optical Blast (Observer)
     [118093] = { type = CROWD_CONTROL }, -- Disarm (Voidwalker/Voidlord)
+    [118699] = { type = CROWD_CONTROL }, -- Fear (new?)
 
     -- Shaman
 
