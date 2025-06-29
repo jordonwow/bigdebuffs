@@ -268,6 +268,7 @@ addon.Spells = {
     [113287] = { type = CROWD_CONTROL },  -- Solar Beam (Symbiosis)
     [116947] = { type = ROOT },  -- Earthbind (Earthgrab Totem)
     [118345] = { type = CROWD_CONTROL },  -- Pulverize (Primal Earth Elemental)
+    [110806] = { type = BUFF_OTHER },  -- Spiritwalker's Grace
 
     -- Paladin
     -- WoTLK
@@ -554,4 +555,5 @@ addon.Spells = {
     [116095] = { type = ROOT }, -- Disable
     [123586] = { type = ROOT }, -- Flying Serpent Kick
     [123727] = { type = ROOT }, -- Dizzying Haze
+    [126456] = { type = BUFF_DEFENSIVE }, -- Fortifying Brew
 }
