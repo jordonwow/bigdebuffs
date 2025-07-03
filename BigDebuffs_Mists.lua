@@ -285,7 +285,7 @@ addon.Spells = {
     [853] = { type = CROWD_CONTROL }, -- Hammer of Justice
     [1044] = { type = BUFF_DEFENSIVE }, -- Blessing of Freedom
     [20066] = { type = CROWD_CONTROL }, -- Repentance
-    [20170] = { type = CROWD_CONTROL }, -- Seal of Justice stun
+    [20170] = { type = ROOT }, -- Seal of Justice slow
     [6940] = { type = BUFF_DEFENSIVE }, -- Blessing of Sacrifice
     [10326] = { type = CROWD_CONTROL }, -- Turn Evil
     [31884] = { type = BUFF_OFFENSIVE }, -- Avenging Wrath
