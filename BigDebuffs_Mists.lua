@@ -240,6 +240,8 @@ addon.Spells = {
     [104773] = { type = BUFF_DEFENSIVE }, -- Unending Resolve
     [115268] = { type = CROWD_CONTROL }, -- Mesmerize (Shivarra)
     [115782] = { type = CROWD_CONTROL }, -- Optical Blast (Observer)
+    [115781] = { type = INTERRUPT, duration = 6 }, -- Optical Blast (Interrupt)
+    [119911] = { type = INTERRUPT, duration = 6 }, -- Optical Blast (Interrupt)
     [118093] = { type = CROWD_CONTROL }, -- Disarm (Voidwalker/Voidlord)
     [118699] = { type = CROWD_CONTROL }, -- Fear (new?)
 
