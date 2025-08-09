@@ -332,6 +332,7 @@ addon.Spells = {
     [228358] = { type = DEBUFF_OFFENSIVE }, -- Winter's Chill
     [389831] = { type = CROWD_CONTROL }, -- Snowdrift
     [210824] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Touch of the Magi
+	[1233452] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Nether Flux
     [12654] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Ignite
     [390612] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Frost Bomb
     [1221107] = { type = IMMUNITY }, -- Overpowered Barrier
