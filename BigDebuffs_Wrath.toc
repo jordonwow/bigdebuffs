@@ -1,4 +1,4 @@
-## Interface: 30404
+## Interface: 30405
 ## Title: BigDebuffs
 ## Notes: Increases the debuff size of crowd control effects on the Blizzard raid frames
 ## Version: @project-version@
