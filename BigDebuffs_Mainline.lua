@@ -93,7 +93,8 @@ addon.Spells = {
     [145629] = { type = BUFF_DEFENSIVE }, -- Anti-Magic Zone
     [454863] = { type = BUFF_DEFENSIVE }, -- Lesser Anti-Magic Shell
     [48265] = { type = BUFF_SPEED_BOOST }, -- Death's Advance
-	[444347] = { type = BUFF_SPEED_BOOST, parent = 48265 }, -- Death Charge
+		[444347] = { type = BUFF_SPEED_BOOST, parent = 48265 }, -- Death Charge
+		[1233429] = { type = BUFF_SPEED_BOOST, parent = 48265 }, -- Price of Progress
     [48792] = { type = BUFF_DEFENSIVE }, -- Icebound Fortitude
     [49039] = { type = BUFF_OTHER }, -- Lichborne
     [81256] = { type = BUFF_DEFENSIVE }, -- Dancing Rune Weapon
@@ -104,7 +105,7 @@ addon.Spells = {
     [91800] = { type = CROWD_CONTROL }, -- Gnaw
         [91797] = { type = CROWD_CONTROL, parent = 91800 }, -- Monstrous Blow
     [221562] = { type = CROWD_CONTROL }, -- Asphyxiate
-    [152279] = { type = BUFF_OFFENSIVE }, -- Breath of Sindragosa
+    [1249658] = { type = BUFF_OFFENSIVE }, -- Breath of Sindragosa
     [194679] = { type = BUFF_DEFENSIVE }, -- Rune Tap
     [194844] = { type = BUFF_DEFENSIVE }, -- Bonestorm
     [454787] = { type = ROOT }, -- Ice Prison
@@ -123,7 +124,7 @@ addon.Spells = {
     [210141] = { type = CROWD_CONTROL}, -- Zombie Explosion (Reanimation Unholy PvP Talent)
     [288849] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Crypt Fever (Necromancer's Bargain Unholy PvP Talent)
     [3714] = { type = BUFF_OTHER }, -- Path of Frost
-    [383269] = { type = BUFF_OFFENSIVE }, -- Abomination Limb
+    [383269] = { type = BUFF_OFFENSIVE }, -- Legion of Souls
 
     -- Demon Hunter
 
@@ -331,6 +332,7 @@ addon.Spells = {
     [228358] = { type = DEBUFF_OFFENSIVE }, -- Winter's Chill
     [389831] = { type = CROWD_CONTROL }, -- Snowdrift
     [210824] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Touch of the Magi
+	[1233452] = { type = DEBUFF_OFFENSIVE, nonameplates = true }, -- Nether Flux
     [12654] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Ignite
     [390612] = { type = DEBUFF_OFFENSIVE, nounitFrames = true, nonameplates = true }, -- Frost Bomb
     [1221107] = { type = IMMUNITY }, -- Overpowered Barrier
@@ -340,7 +342,6 @@ addon.Spells = {
     -- Monk
 
     [115078] = { type = CROWD_CONTROL }, -- Paralysis
-    [115176] = { type = BUFF_DEFENSIVE }, -- Zen Meditation
     [120954] = { type = BUFF_DEFENSIVE }, -- Fortifying Brew (Brewmaster)
     [116706] = { type = ROOT }, -- Disable
     [116841] = { type = BUFF_SPEED_BOOST }, -- Tiger's Lust
@@ -362,7 +363,6 @@ addon.Spells = {
     [387184] = { type = BUFF_OFFENSIVE }, -- Weapons of Order (Brewmaster)
     [202335] = { type = BUFF_OFFENSIVE }, -- Double Barrel (Brew PvP Talent) - "next cast will..." buff
     [202346] = { type = CROWD_CONTROL }, -- Double Barrel (Brew PvP Talent)
-    [202248] = { type = IMMUNITY_SPELL }, -- Guided Meditation (Brew PvP Talent)
     [213664] = { type = BUFF_DEFENSIVE }, -- Nimble Brew (Brew PvP Talent)
     [132578] = { type = BUFF_DEFENSIVE }, -- Invoke Niuzao, the Black Ox
     [353319] = { type = IMMUNITY_SPELL }, -- Peaceweaver
