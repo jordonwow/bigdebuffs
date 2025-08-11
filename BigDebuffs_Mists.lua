@@ -129,6 +129,7 @@ addon.Spells = {
     [13491] = { type = INTERRUPT, duration = 5 }, -- Iron Knuckles
     [16979] = { type = INTERRUPT, duration = 4 }, -- Feral Charge (Druid)
     [2139] = { type = INTERRUPT, duration = 8 }, -- Counterspell (Mage)
+    [147362] = { type = INTERRUPT, duration = 3}, -- Counter Shot (Hunter)
     [1766] = { type = INTERRUPT, duration = 5 }, -- Kick (Rogue)
     [26679] = { type = INTERRUPT, duration = 3 }, -- Deadly Throw
     [6552] = { type = INTERRUPT, duration = 4 }, -- Pummel
