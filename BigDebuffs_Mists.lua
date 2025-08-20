@@ -234,6 +234,7 @@ addon.Spells = {
     [79464] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Voidwalker
     -- MoP
     [137143] = { type = BUFF_DEFENSIVE }, -- Blood Horror
+    [111397] = { type = BUFF_DEFENSIVE }, -- Blood Horror
     [130616] = { type = CROWD_CONTROL }, -- Fear (Glyph of Fear)
     [132412] = { type = CROWD_CONTROL }, -- Seduction (Grimoire of Sacrifice)
     [104045] = { type = CROWD_CONTROL }, -- Sleep (Metamorphosis)
@@ -400,6 +401,8 @@ addon.Spells = {
     [113770] = { type = ROOT }, -- Entangling Roots (Force of Nature - Balance Treants)
     [102359] = { type = ROOT }, -- Mass Entanglement
     [127797] = { type = CROWD_CONTROL }, -- Ursol's Vortex
+    [102342] = { type = BUFF_DEFENSIVE }, -- Ironbark
+    [102351] = { type = BUFF_DEFENSIVE }, -- Cenarion Ward
     -- Druid Symbiosis
     [110698] = { type = CROWD_CONTROL }, -- Hammer of Justice (Paladin)
     [113004] = { type = CROWD_CONTROL }, -- Intimidating Roar [flee] (Warrior)
@@ -470,7 +473,8 @@ addon.Spells = {
     [111340] = { type = ROOT }, -- Ice Ward
     [121288] = { type = ROOT }, -- Chilled (Frost Armor)
     [113092] = { type = ROOT }, -- Frost Bomb
-
+    [110909] = { type = BUFF_DEFENSIVE }, -- Alter Time
+    [115610] = { type = BUFF_DEFENSIVE }, -- Temporal Shield
     -- Rogue
 
     -- WoTLK
@@ -500,6 +504,7 @@ addon.Spells = {
     [113953] = { type = CROWD_CONTROL },  -- Paralysis (Paralytic Poison)
     [115197] = { type = ROOT },  -- Partial Paralysis
     [119696] = { type = ROOT },  -- Debilitation
+    [114018] = { type = BUFF_OTHER }, -- Shroud of Concealment
 
     -- Warrior
 
@@ -544,6 +549,8 @@ addon.Spells = {
     [147531] = { type = ROOT }, -- Bloodbath
     [129923] = { type = ROOT }, -- Sluggish (Glyph of Hindering Strikes)
     [114028] = { type = IMMUNITY_SPELL }, -- Mass Spell Reflection
+    [118038] = { type = BUFF_DEFENSIVE }, -- Die by the Sword
+    [114203] = { type = BUFF_OFFENSIVE }, -- Demoralizing Banner
 
     -- Monk
     [131523] = { type = IMMUNITY_SPELL }, -- Zen Meditation
