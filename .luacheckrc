@@ -39,6 +39,7 @@ read_globals = {
     "CompactUnitFrame_UtilSetDebuff",
     "CompactUnitFrame_UtilSetDispelDebuff",
     "CompactUnitFrame_UtilShouldDisplayBuff",
+    "CompactUnitFrame",
     "CooldownFrame_Clear",
     "CooldownFrame_Set",
     "CreateFrame",

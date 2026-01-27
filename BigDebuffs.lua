@@ -1711,7 +1711,7 @@ else
                     local debuffFrame = frame.debuffFrames[frameNum];
                     CompactUnitFrame_UtilSetDebuff(debuffFrame, frame.displayedUnit, index, filter, true, false);
                     frameNum = frameNum + 1;
-					--Boss debuffs are about twice as big as normal debuffs, so display one less.		
+					--Boss debuffs are about twice as big as normal debuffs, so display one less.
                     local bossDebuffScale = (debuffFrame.baseSize + BOSS_DEBUFF_SIZE_INCREASE) / debuffFrame.baseSize
                     maxDebuffs = maxDebuffs - (bossDebuffScale - 1);
                 end
