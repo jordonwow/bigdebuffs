@@ -1711,6 +1711,7 @@ else
                     local debuffFrame = frame.debuffFrames[frameNum];
                     CompactUnitFrame_UtilSetDebuff(debuffFrame, frame.displayedUnit, index, filter, true, false);
                     frameNum = frameNum + 1;
+					--Boss debuffs are about twice as big as normal debuffs, so display one less.		
                     local bossDebuffScale = (debuffFrame.baseSize + BOSS_DEBUFF_SIZE_INCREASE) / debuffFrame.baseSize
                     maxDebuffs = maxDebuffs - (bossDebuffScale - 1);
                 end
@@ -1719,7 +1720,7 @@ else
             end
             index = index + 1;
         end
-
+		--Then we go through all the buffs looking for any boss flagged ones.
         index = 1;
         while (frameNum <= maxDebuffs) do
             local debuffName = AuraUtil.UnpackAuraData(UnitBuff(frame.displayedUnit, index, filter));
@@ -1728,6 +1729,7 @@ else
                     local debuffFrame = frame.debuffFrames[frameNum];
                     CompactUnitFrame_UtilSetDebuff(debuffFrame, frame.displayedUnit, index, filter, true, true);
                     frameNum = frameNum + 1;
+					--Boss debuffs are about twice as big as normal debuffs, so display one less.
                     local bossDebuffScale = (debuffFrame.baseSize + BOSS_DEBUFF_SIZE_INCREASE) / debuffFrame.baseSize
                     maxDebuffs = maxDebuffs - (bossDebuffScale - 1);
                 end
@@ -1736,7 +1738,7 @@ else
             end
             index = index + 1;
         end
-
+		--Now we go through the debuffs with a priority (e.g. Weakened Soul and Forbearance)
         index = 1;
         while (frameNum <= maxDebuffs) do
             local debuffName = AuraUtil.UnpackAuraData(UnitDebuff(frame.displayedUnit, index, filter));
@@ -1757,6 +1759,7 @@ else
         end
 
         index = 1;
+		--Now, we display all normal debuffs.
         if (frame.optionTable.displayNonBossDebuffs) then
             while (frameNum <= maxDebuffs) do
                 local debuffName = AuraUtil.UnpackAuraData(UnitDebuff(frame.displayedUnit, index, filter));
