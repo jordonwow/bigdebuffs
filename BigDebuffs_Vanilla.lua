@@ -16,6 +16,7 @@ addon.Units = {
     "party2",
     "party3",
     "party4",
+    "targettarget",
 }
 
 -- Make sure we always see these debuffs, but don't make them bigger

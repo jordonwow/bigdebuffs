@@ -23,6 +23,7 @@ addon.Units = {
     "arena3",
     "arena4",
     "arena5",
+    "targettarget",
 }
 
 -- Show one of these when a big debuff is displayed
