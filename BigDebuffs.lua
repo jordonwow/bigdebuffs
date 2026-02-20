@@ -397,7 +397,251 @@ for i = 1, 40 do
     table.insert(unitsWithRaid, "raid" .. i)
 end
 
+local MAX_COMPACT_PARTY_MEMBERS = MEMBERS_PER_RAID_GROUP or 5
+
+local MAX_GW_PARTY_FRAMES = 5
+local MAX_GW_PARTY_GROUPS = 5
+
+local function GetUnitGuidSafe(unit)
+    if not unit or not UnitExists(unit) then return end
+    return UnitGUID(unit)
+end
+
+local function Gw2FrameMatchesUnit(frame, unit, targetGUID)
+    if not frame then return end
+
+    local frameUnit = frame.unit
+
+    if not frameUnit and frame.GetAttribute then
+        frameUnit = frame:GetAttribute("unit")
+
+        if not frameUnit then
+            local base = frame:GetAttribute("unitbase")
+            local suffix = frame:GetAttribute("unitsuffix")
+            if base and suffix then
+                frameUnit = base .. suffix
+            end
+        end
+    end
+
+    if not frameUnit and frame.displayedUnit then
+        frameUnit = frame.displayedUnit
+    end
+
+    if frameUnit and unit and frameUnit == unit then
+        return frame
+    end
+
+    if targetGUID then
+        if frame.guid and frame.guid == targetGUID then
+            return frame
+        end
+
+        if frameUnit then
+            local frameGUID = GetUnitGuidSafe(frameUnit)
+            if frameGUID and frameGUID == targetGUID then
+                return frame
+            end
+        end
+
+        if frame.displayedUnit then
+            local displayedGUID = GetUnitGuidSafe(frame.displayedUnit)
+            if displayedGUID and displayedGUID == targetGUID then
+                return frame
+            end
+        end
+    end
+end
+
+local function FindGw2FrameInGroup(group, unit, targetGUID)
+    if not group then return end
+
+    if group.GetAttribute then
+        local childIndex = 1
+        while true do
+            local child = group:GetAttribute("child" .. childIndex)
+            if not child then break end
+
+            local match = Gw2FrameMatchesUnit(child, unit, targetGUID)
+            if match then
+                return match
+            end
+
+            childIndex = childIndex + 1
+        end
+    end
+
+    if group.GetChildren then
+        local children = { group:GetChildren() }
+        for i = 1, #children do
+            local match = Gw2FrameMatchesUnit(children[i], unit, targetGUID)
+            if match then
+                return match
+            end
+        end
+    end
+end
+
+local function FindGw2UIRaidStylePartyFrame(unit)
+    if not unit then return end
+
+    local targetGUID = GetUnitGuidSafe(unit)
+
+    local container = _G.GW2_PartyGridContainer
+    if container and type(container.groups) == "table" then
+        for _, group in ipairs(container.groups) do
+            local frame = FindGw2FrameInGroup(group, unit, targetGUID)
+            if frame then
+                return frame
+            end
+        end
+    else
+        for groupIndex = 1, MAX_GW_PARTY_GROUPS do
+            local group = _G["GW2_PartyGroup" .. groupIndex]
+            local frame = FindGw2FrameInGroup(group, unit, targetGUID)
+            if frame then
+                return frame
+            end
+        end
+    end
+end
+
+local function FindGw2UIPartyFrame(unit)
+    if not unit then return end
+
+    local raidStyleFrame = FindGw2UIRaidStylePartyFrame(unit)
+    if raidStyleFrame then
+        return raidStyleFrame
+    end
+
+    local targetGUID = GetUnitGuidSafe(unit)
+    if _G.GwPartyFrame1 then
+        for i = 1, MAX_GW_PARTY_FRAMES do
+            local frame = _G["GwPartyFrame" .. i]
+            if frame and frame:IsVisible() then
+                local frameUnit = frame.unit
+                if frameUnit and frameUnit == unit then
+                    return frame
+                end
+
+                if targetGUID then
+                    local frameGUID = frame.guid or GetUnitGuidSafe(frameUnit)
+                    if frameGUID and frameGUID == targetGUID then
+                        return frame
+                    end
+
+                    if frame.displayedUnit then
+                        local displayedGUID = GetUnitGuidSafe(frame.displayedUnit)
+                        if displayedGUID and displayedGUID == targetGUID then
+                            return frame
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local function FindCompactPartyFrame(unit)
+    if not CompactPartyFrame or not CompactPartyFrame:IsShown() then return end
+
+    for i = 1, MAX_COMPACT_PARTY_MEMBERS do
+        local member = _G["CompactPartyFrameMember" .. i]
+        if member and member:IsShown() then
+            local displayedUnit = member.displayedUnit or member.unit
+            if displayedUnit == unit then
+                member.BigDebuffsForceSquareMask = true
+                if member.portrait then member.portrait.BigDebuffsForceSquareMask = true end
+                if member.Portrait then member.Portrait.BigDebuffsForceSquareMask = true end
+                return member
+            end
+        end
+    end
+end
+
+local function GetFramePortraitTexture(frame)
+    if not frame or type(frame) ~= "table" then return end
+
+    if frame.portrait and frame.portrait.GetObjectType and frame.portrait:GetObjectType() == "Texture" then
+        return frame.portrait
+    end
+
+    if frame.Portrait and frame.Portrait.GetObjectType and frame.Portrait:GetObjectType() == "Texture" then
+        return frame.Portrait
+    end
+
+    if frame.PortraitContainer then
+        if frame.PortraitContainer.portrait then
+            return frame.PortraitContainer.portrait
+        end
+        if frame.PortraitContainer.Portrait then
+            return frame.PortraitContainer.Portrait
+        end
+    end
+
+    if frame.GetName then
+        local portrait = _G[frame:GetName() .. "Portrait"]
+        if portrait then
+            return portrait
+        end
+    end
+end
+
 local GetAnchor = {
+    Blizzard = function(anchor)
+        local anchors = BigDebuffs.anchors
+        local unit
+
+        for u, configAnchor in pairs(anchors.Blizzard.units) do
+            if anchor == configAnchor then
+                unit = u
+                break
+            end
+        end
+
+        local candidate = anchor
+
+        if type(candidate) == "string" then
+            candidate = _G[candidate]
+        end
+
+        if unit and unit:match("^party%d") then
+            local needsCompact = false
+
+            if not candidate then
+                needsCompact = true
+            elseif candidate.GetObjectType and candidate:GetObjectType() == "Texture" then
+                needsCompact = not (candidate:IsShown() and candidate:GetParent() and candidate:GetParent():IsShown())
+            elseif candidate.IsShown then
+                needsCompact = not candidate:IsShown()
+            end
+
+            if needsCompact then
+                local compact = FindCompactPartyFrame(unit)
+                if compact then
+                    candidate = compact
+                    candidate.BigDebuffsForceSquareMask = true
+                end
+            end
+        end
+
+        if not candidate then return end
+
+        if candidate.GetObjectType and candidate:GetObjectType() == "Texture" then
+            return candidate, candidate:GetParent()
+        end
+
+        local portrait = GetFramePortraitTexture(candidate)
+        if portrait and portrait:IsShown() then
+            if candidate.BigDebuffsForceSquareMask then
+                portrait.BigDebuffsForceSquareMask = true
+            end
+            candidate.portrait = portrait
+            return portrait, candidate
+        end
+
+        return candidate, candidate, true
+    end,
     ElvUIFrames = function(anchor)
         local anchors, unit = BigDebuffs.anchors
 
@@ -541,6 +785,41 @@ local GetAnchor = {
             end
             return
         end
+    end,
+    GW2_UIFrames = function(anchor)
+        local anchors = BigDebuffs.anchors
+        local gw2Config = anchors and anchors["GW2 UI"]
+        local unit
+
+        if gw2Config and gw2Config.units then
+            for u, configAnchor in pairs(gw2Config.units) do
+                if anchor == configAnchor then
+                    unit = u
+                    break
+                end
+            end
+        end
+
+        if unit and unit:match("^party") then
+            local frame = FindGw2UIPartyFrame(unit)
+            if frame then
+                if frame.portrait and frame.portrait:IsShown() then
+                    return frame.portrait, frame
+                else
+                    return frame, frame, true
+                end
+            end
+            return
+        end
+
+        local frame = _G[anchor]
+        if not frame then return end
+
+        if frame.portrait and frame.portrait:IsShown() then
+            return frame.portrait, frame
+        end
+
+        return frame, frame, true
     end,
 }
 
@@ -778,7 +1057,23 @@ local anchors = {
             party4 = "CellPartyFrameMember5",
         },
     },
+    ["GW2 UI"] = {
+        func = GetAnchor.GW2_UIFrames,
+        units = {
+            player = "GwPlayerUnitFrame",
+            target = "GwTargetUnitFrame",
+            focus = "GwFocusUnitFrame",
+            targettarget = "GwTargetTargetUnitFrame",
+            focustarget = "GwFocusTargetUnitFrame",
+            party1 = "GwPartyFrame1",
+            party2 = "GwPartyFrame2",
+            party3 = "GwPartyFrame3",
+            party4 = "GwPartyFrame4",
+            party5 = "GwPartyFrame5",
+        },
+    },
     ["Blizzard"] = {
+        func = GetAnchor.Blizzard,
         units = {
             player = "PlayerPortrait",
             pet = "PetPortrait",
@@ -954,6 +1249,7 @@ function BigDebuffs:AttachUnitFrame(unit)
 
     frame.anchor = nil
     frame.blizzard = nil
+    frame.forceSquareMask = nil
 
     local config = self.db.profile.unitFrames[unit:gsub("%d", "")]
 
@@ -984,6 +1280,8 @@ function BigDebuffs:AttachUnitFrame(unit)
     end
 
     if frame.anchor then
+        frame.forceSquareMask = (frame.anchor and frame.anchor.BigDebuffsForceSquareMask) or
+            (frame.parent and frame.parent.BigDebuffsForceSquareMask)
         if frame.blizzard then
             local parent = frame.anchor.portrait and frame.anchor.portrait:GetParent() or frame.anchor:GetParent()
             frame:SetParent(parent)
@@ -2182,16 +2480,23 @@ function BigDebuffs:UNIT_AURA(unit)
     if debuff then
         if duration < 1 then duration = 1 end -- auras like Solar Beam don't have a duration
 
-        if frame.current ~= icon then
-            if frame.blizzard then
-                -- Blizzard Frame
+        if frame.blizzard then
+            -- Blizzard Frame
 
-                -- fix Obsidian Claw icon
+            -- fix Obsidian Claw icon
+            if frame.current ~= icon then
                 icon = icon == 611425 and 1508487 or icon
-
                 frame.icon:SetTexture(icon)
-                frame.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+            end
 
+            if frame.forceSquareMask then
+                frame.icon:SetTexCoord(0, 1, 0, 1)
+                if frame.mask and frame.maskActive then
+                    frame.icon:RemoveMaskTexture(frame.mask)
+                    frame.maskActive = false
+                end
+            else
+                frame.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
                 if not frame.mask then
                     frame.mask = frame:CreateMaskTexture()
                     frame.mask:SetAllPoints(frame.icon)
@@ -2206,9 +2511,14 @@ function BigDebuffs:UNIT_AURA(unit)
                             end
                         end
                     end
-                    frame.icon:AddMaskTexture(frame.mask)
                 end
-            else
+                if frame.mask and not frame.maskActive then
+                    frame.icon:AddMaskTexture(frame.mask)
+                    frame.maskActive = true
+                end
+            end
+        else
+            if frame.current ~= icon then
                 frame.icon:SetTexture(icon)
             end
         end
