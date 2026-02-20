@@ -1283,7 +1283,24 @@ function BigDebuffs:AttachUnitFrame(unit)
         frame.forceSquareMask = (frame.anchor and frame.anchor.BigDebuffsForceSquareMask) or
             (frame.parent and frame.parent.BigDebuffsForceSquareMask)
         if frame.blizzard then
-            local parent = frame.anchor.portrait and frame.anchor.portrait:GetParent() or frame.anchor:GetParent()
+            local anchorIsCompact = frame.anchor
+                and frame.anchor.GetObjectType
+                and frame.anchor:GetObjectType() ~= "Texture"
+                and (frame.anchor.displayedUnit or frame.anchor.unit)
+
+            local parent = nil
+            if frame.anchor.portrait then
+                parent = frame.anchor.portrait:GetParent()
+            elseif anchorIsCompact then
+                parent = frame.anchor
+            elseif frame.anchor.GetParent then
+                parent = frame.anchor:GetParent()
+            end
+
+            local fallbackParent = (frame.anchor and frame.anchor.GetObjectType and frame.anchor:GetObjectType() ~= "Texture") and frame.anchor or nil
+
+            parent = parent or fallbackParent or UIParent
+
             frame:SetParent(parent)
             frame:SetFrameLevel(parent:GetFrameLevel())
             if frame.anchor.portrait then
