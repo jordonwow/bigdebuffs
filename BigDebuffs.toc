@@ -1,4 +1,4 @@
-## Interface: 110207, 120000, 120001
+## Interface: 11508, 20505, 38000, 50500, 50503, 120000, 120001
 ## Title: BigDebuffs
 ## Notes: Increases the debuff size of crowd control effects on the Blizzard raid frames
 ## Version: @project-version@
@@ -21,12 +21,13 @@ Libs\AceHook-3.0\AceHook-3.0.xml
 Libs\AceGUI-3.0\AceGUI-3.0.xml
 Libs\AceConfig-3.0\AceConfig-3.0.xml
 Libs\AceLocale-3.0\AceLocale-3.0.xml
-Libs\LibDualSpec-1.0\LibDualSpec-1.0.lua
+Libs\LibDualSpec-1.0\LibDualSpec-1.0.lua [AllowLoadGameType mainline, mists, cata, wrath]
 Libs\LibSharedMedia-3.0\lib.xml
+Libs\LibClassicDurations\LibClassicDurations.xml [AllowLoadGameType vanilla]
 #@end-no-lib-strip@
 
 Locales\Locales.xml
 BigDebuffs.xml
-BigDebuffs_Mainline.lua
+Spells\[Game].lua
 BigDebuffs.lua
 Options.lua

@@ -466,4 +466,7 @@ addon.Spells = {
         [25248] = { parent = 12294 },
         [30330] = { parent = 12294 },
 
+    [6074] = { type = CROWD_CONTROL }, -- debug
+    [6788] = { type = CROWD_CONTROL }, -- debug
+
 }

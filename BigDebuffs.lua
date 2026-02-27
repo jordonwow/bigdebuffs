@@ -6,6 +6,7 @@ BigDebuffs = LibStub("AceAddon-3.0"):NewAddon(addonName, "AceEvent-3.0", "AceHoo
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibClassicDurations = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and LibStub("LibClassicDurations")
 if LibClassicDurations then LibClassicDurations:Register(addonName) end
+local BigDebuffsData = setmetatable({}, {__mode = "k"})
 
 -- Adding in Masque support, preparing groups if it is available
 local Masque = LibStub("Masque", true)
@@ -16,7 +17,13 @@ if Masque ~= nil then
 end
 
 local LoadAddOn = C_AddOns.LoadAddOn
-local UnitDebuff, UnitBuff = C_UnitAuras.GetDebuffDataByIndex, C_UnitAuras.GetBuffDataByIndex
+local UnitDebuff, UnitBuff
+if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+    UnitDebuff = function(unit, i) return C_UnitAuras.GetAuraDataByIndex(unit, i, "HARMFUL") end
+    UnitBuff = function(unit, i) return C_UnitAuras.GetAuraDataByIndex(unit, i, "HELPFUL") end
+else
+    UnitDebuff, UnitBuff = C_UnitAuras.GetDebuffDataByIndex, C_UnitAuras.GetBuffDataByIndex
+end
 local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
 local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
 
@@ -27,6 +34,15 @@ local function GetSpellName(id)
         return GetSpellInfo(id)
     end
 end
+
+local function UnpackAura(auraData)
+    if not auraData then return end
+    return auraData.name, auraData.icon, auraData.applications, auraData.dispelName,
+           auraData.duration, auraData.expirationTime, auraData.sourceUnit,
+           auraData.isStealable, auraData.nameplateShowPersonal, auraData.spellId
+end
+
+local issecretvalue = issecretvalue or function() return false end
 
 -- Defaults
 local defaults = {
@@ -190,7 +206,7 @@ local defaults = {
 }
 
 BigDebuffs.WarningDebuffs = addon.WarningDebuffs or {}
-BigDebuffs.Spells = addon.Spells
+BigDebuffs.Spells = addon.Spells or {}
 BigDebuffs.HiddenDebuffs = addon.HiddenDebuffs or {}
 local tContains = tContains
 
@@ -385,7 +401,24 @@ BigDebuffs.PriorityDebuffs = addon.PriorityDebuffs
 -- Store interrupt spellId and start time
 BigDebuffs.units = {}
 
-local units = addon.Units
+local units = addon.Units or {
+    "player",
+    "pet",
+    "target",
+    "targettarget",
+    "focus",
+    "party1",
+    "party2",
+    "party3",
+    "party4",
+    "arena1",
+    "arena2",
+    "arena3",
+    "arena4",
+    "arena5",
+}
+
+
 
 local unitsWithRaid = {}
 
@@ -550,9 +583,16 @@ local function FindCompactPartyFrame(unit)
         if member and member:IsShown() then
             local displayedUnit = member.displayedUnit or member.unit
             if displayedUnit == unit then
-                member.BigDebuffsForceSquareMask = true
-                if member.portrait then member.portrait.BigDebuffsForceSquareMask = true end
-                if member.Portrait then member.Portrait.BigDebuffsForceSquareMask = true end
+                BigDebuffsData[member] = BigDebuffsData[member] or {}
+                BigDebuffsData[member].forceSquareMask = true
+                if member.portrait then
+                    BigDebuffsData[member.portrait] = BigDebuffsData[member.portrait] or {}
+                    BigDebuffsData[member.portrait].forceSquareMask = true
+                end
+                if member.Portrait then
+                    BigDebuffsData[member.Portrait] = BigDebuffsData[member.Portrait] or {}
+                    BigDebuffsData[member.Portrait].forceSquareMask = true
+                end
                 return member
             end
         end
@@ -620,7 +660,8 @@ local GetAnchor = {
                 local compact = FindCompactPartyFrame(unit)
                 if compact then
                     candidate = compact
-                    candidate.BigDebuffsForceSquareMask = true
+                    BigDebuffsData[candidate] = BigDebuffsData[candidate] or {}
+                    BigDebuffsData[candidate].forceSquareMask = true
                 end
             end
         end
@@ -633,10 +674,13 @@ local GetAnchor = {
 
         local portrait = GetFramePortraitTexture(candidate)
         if portrait and portrait:IsShown() then
-            if candidate.BigDebuffsForceSquareMask then
-                portrait.BigDebuffsForceSquareMask = true
+            local cData = BigDebuffsData[candidate]
+            if cData and cData.forceSquareMask then
+                BigDebuffsData[portrait] = BigDebuffsData[portrait] or {}
+                BigDebuffsData[portrait].forceSquareMask = true
             end
-            candidate.portrait = portrait
+            BigDebuffsData[candidate] = BigDebuffsData[candidate] or {}
+            BigDebuffsData[candidate].portrait = portrait
             return portrait, candidate
         end
 
@@ -1184,7 +1228,10 @@ end
 
 function BigDebuffs:Refresh()
     for frame, _ in pairs(self.frames) do
-        if frame:IsVisible() then CompactUnitFrame_UpdateAuras(frame) end
+        local unit = frame.displayedUnit or frame.unit
+        if frame:IsVisible() and unit and UnitExists(unit) then
+            pcall(CompactUnitFrame_UpdateAuras, frame)
+        end
         if frame and frame.BigDebuffs then self:AddBigDebuffs(frame) end
     end
     for unit, frame in pairs(self.UnitFrames) do
@@ -1282,8 +1329,8 @@ function BigDebuffs:AttachUnitFrame(unit)
     end
 
     if frame.anchor then
-        frame.forceSquareMask = (frame.anchor and frame.anchor.BigDebuffsForceSquareMask) or
-            (frame.parent and frame.parent.BigDebuffsForceSquareMask)
+        frame.forceSquareMask = (frame.anchor and BigDebuffsData[frame.anchor] and BigDebuffsData[frame.anchor].forceSquareMask) or
+            (frame.parent and BigDebuffsData[frame.parent] and BigDebuffsData[frame.parent].forceSquareMask)
         if frame.blizzard then
             local anchorIsCompact = frame.anchor
                 and frame.anchor.GetObjectType
@@ -1482,7 +1529,9 @@ function BigDebuffs:OnEnable()
     self:RegisterEvent("PLAYER_TARGET_CHANGED")
     self:RegisterEvent("UNIT_PET")
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
-    self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+    if WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE then
+        self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+    end
 
     self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
     self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
@@ -1523,12 +1572,13 @@ end
 
 local function UnitBuffByName(unit, name)
     for i = 1, 40 do
-        local n = AuraUtil.UnpackAuraData(UnitBuff(unit, i))
+        local n = UnpackAura(UnitBuff(unit, i))
         if n == name then return true end
     end
 end
 
 function BigDebuffs:COMBAT_LOG_EVENT_UNFILTERED()
+    if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then return end
 
     local _, event, _, _, _, _, _, destGUID, _, _, _, spellId, spellName = CombatLogGetCurrentEventInfo()
 
@@ -1670,7 +1720,8 @@ function BigDebuffs:AddBigDebuffs(frame)
             end
         else
             if self.db.profile.raidFrames.anchor == "INNER" then
-                big:SetPoint("BOTTOMLEFT", frame.debuffFrames[1], "BOTTOMLEFT", 0, 0)
+                local anchorTarget = frame.debuffFrames and frame.debuffFrames[1] or frame
+                big:SetPoint("BOTTOMLEFT", anchorTarget, "BOTTOMLEFT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "LEFT" then
                 big:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", 0, 1)
             elseif self.db.profile.raidFrames.anchor == "RIGHT" then
@@ -1704,8 +1755,14 @@ hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
 	if frame:IsForbidden() then return end
 	local name = frame:GetName()
 	if not name or not name:match("^Compact") then return end
-	if InCombatLockdown() and not frame.BigDebuffs then
-		if not pending[frame] then pending[frame] = true end
+	if InCombatLockdown() then
+		if not frame.BigDebuffs then
+			if not pending[frame] then pending[frame] = true end
+		elseif WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+			BigDebuffs:ShowBigDebuffs(frame)
+		else
+			BigDebuffs:AddBigDebuffs(frame)
+		end
 --	if not IsInGroup() or GetNumGroupMembers() > 5 then return end
 	else
 		BigDebuffs:AddBigDebuffs(frame)
@@ -1887,24 +1944,27 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNI
         -- add extra buffs
         local frameNum = 1
         local maxBuffs = BigDebuffs.db.profile.raidFrames.increaseBuffs and INCREASED_MAX_BUFFS or frame.maxBuffs
-        frame.buffs:Iterate(function(auraInstanceID, aura)
-            if frameNum > maxBuffs then
-                return true
-            end
-            local buffFrame = frame.buffFrames[frameNum]
+        if frame.buffs and frame.buffFrames then
+            frame.buffs:Iterate(function(auraInstanceID, aura)
+                if frameNum > maxBuffs then
+                    return true
+                end
+                local buffFrame = frame.buffFrames[frameNum]
+                if not buffFrame then return true end
 
-            -- set size
-            local size = frame:GetHeight() * BigDebuffs.db.profile.raidFrames.buffs * 0.01
-            buffFrame:SetSize(size, size)
+                -- set size
+                local size = frame:GetHeight() * BigDebuffs.db.profile.raidFrames.buffs * 0.01
+                buffFrame:SetSize(size, size)
 
-            -- we only need to set extra buffs
-            if frameNum > frame.maxBuffs then
-                CompactUnitFrame_UtilSetBuff(buffFrame, aura)
-            end
-            frameNum = frameNum + 1
+                -- we only need to set extra buffs
+                if frameNum > frame.maxBuffs then
+                    CompactUnitFrame_UtilSetBuff(buffFrame, aura)
+                end
+                frameNum = frameNum + 1
 
-            return false
-        end)
+                return false
+            end)
+        end
     end)
 else
     CompactUnitFrame_UtilSetDebuff = function(debuffFrame, unit, index, filter, isBossAura, isBossBuff, ...)
@@ -2178,7 +2238,6 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNI
     function BigDebuffs:ShowBigDebuffs(frame)
 
         if (not self.db.profile.raidFrames.enabled) or
-            (not frame.debuffFrames) or
             (not frame.BigDebuffs) or
             (not self:ShowInRaids()) or
             (not UnitIsPlayer(frame.displayedUnit))
@@ -2200,17 +2259,26 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNI
         local function addDebuffs(aura)
             -- aura struct https://wowpedia.fandom.com/wiki/Struct_UnitAuraInfo
             if (not aura) then return end
+            if issecretvalue(aura.spellId) then return end
             if tContains(self.HiddenDebuffs, aura.spellId) then return end
             local reaction = aura.sourceUnit and UnitReaction("player", aura.sourceUnit) or 0
             local friendlySmokeBomb = aura.spellId == 212183 and reaction > 4
             local isDispellable = self:IsDispellable(unitId, aura.dispelName);
             local size = self:GetDebuffSize(aura.spellId, isDispellable)
+            local isUnknownCC = false
+            if not size and WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+                and C_Spell.IsSpellCrowdControl and C_Spell.IsSpellCrowdControl(aura.spellId)
+            then
+                size = self.db.profile.raidFrames.cc
+                isUnknownCC = true
+            end
             -- make sure certain debuffs aren't dispalyed as boss auras
             if size then
                 aura.isBossAura = false
             end
             if size and not friendlySmokeBomb then
-                tinsert(debuffs, { aura, size, self:GetDebuffPriority(aura.spellId) })
+                local debuffPriority = isUnknownCC and self.db.profile.priority.cc or self:GetDebuffPriority(aura.spellId)
+                tinsert(debuffs, { aura, size, debuffPriority })
             elseif self.db.profile.raidFrames.redirectBliz then
                 if not frame.optionTable.displayOnlyDispellableDebuffs or isDispellable then
                     tinsert(debuffs, { aura, self.db.profile.raidFrames.default, 0 })
@@ -2218,8 +2286,52 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNI
             end
         end
 
+        if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and not self.test then
+            local ccSize = self.db.profile.raidFrames.cc or 50
+            local defSize = self.db.profile.raidFrames.immunities or 50
+
+            for i = 1, 40 do
+                local auraData = C_UnitAuras.GetAuraDataByIndex(unitId, i, "HARMFUL|CROWD_CONTROL")
+                if not auraData then break end
+                tinsert(debuffs, { auraData, ccSize, 2 })
+            end
+
+            for i = 1, 40 do
+                local auraData = C_UnitAuras.GetAuraDataByIndex(unitId, i, "HELPFUL|BIG_DEFENSIVE")
+                if not auraData then break end
+                tinsert(debuffs, { auraData, defSize, 1 })
+            end
+
+            if #debuffs > 0 then
+                table.sort(debuffs, function(a, b) return a[3] > b[3] end)
+
+                if self.db.profile.raidFrames.hideBliz or
+                self.db.profile.raidFrames.anchor == "INNER" or
+                self.db.profile.raidFrames.redirectBliz then
+                    if CompactUnitFrame_HideAllDebuffs then CompactUnitFrame_HideAllDebuffs(frame) end
+                end
+
+                local index = 1
+                for i = 1, #debuffs do
+                    if index > self.db.profile.raidFrames.maxDebuffs then break end
+                    local debuffFrame = frame.BigDebuffs[index]
+                    if not debuffFrame then break end
+                    local frameHeight = frame:GetHeight()
+                    debuffFrame.baseSize = frameHeight * debuffs[i][2] * 0.01
+                    debuffFrame.spellId = debuffs[i][1].spellId
+                    if not debuffFrame.maxHeight then debuffFrame.maxHeight = frameHeight end
+                    if CompactUnitFrame_UtilSetDebuff then
+                        CompactUnitFrame_UtilSetDebuff(debuffFrame, debuffs[i][1])
+                    end
+                    debuffFrame.cooldown:SetSwipeColor(0, 0, 0, 0.7)
+                    index = index + 1
+                end
+            end
+            return
+        end
+
         if (not self.test) then
-            AuraUtil.ForEachAura(unitId, "HARMFUL", nil, addDebuffs, true)
+            pcall(AuraUtil.ForEachAura, unitId, "HARMFUL", nil, addDebuffs, true)
 
             -- check for interrupts
             local guid = UnitGUID(unitId)
@@ -2258,7 +2370,7 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNI
         if self.db.profile.raidFrames.hideBliz or
         self.db.profile.raidFrames.anchor == "INNER" or
         self.db.profile.raidFrames.redirectBliz then
-            CompactUnitFrame_HideAllDebuffs(frame)
+            if CompactUnitFrame_HideAllDebuffs then CompactUnitFrame_HideAllDebuffs(frame) end
         end
 
         for i = 1, #debuffs do -- math.min maybe?
@@ -2271,7 +2383,29 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNI
                 if not debuffFrame.maxHeight then
                     debuffFrame.maxHeight = frameHeight;
                 end
-                CompactUnitFrame_UtilSetDebuff(debuffFrame, debuffs[i][1])
+                if self.test then
+                    local aura = debuffs[i][1]
+                    debuffFrame.auraInstanceID = nil
+                    debuffFrame.icon:SetTexture(aura.icon)
+                    debuffFrame.count:Hide()
+                    local startTime = aura.expirationTime - aura.duration
+                    CooldownFrame_Set(debuffFrame.cooldown, startTime, aura.duration, true)
+                    local r, g, b
+                    if AuraUtil and AuraUtil.GetDebuffTypeColor then
+                        r, g, b = AuraUtil.GetDebuffTypeColor(aura.dispelName)
+                    else
+                        local color = (DebuffTypeColor and (DebuffTypeColor[aura.dispelName] or DebuffTypeColor["none"])) or { r=0, g=0, b=0 }
+                        r, g, b = color.r, color.g, color.b
+                    end
+                    debuffFrame.border:SetVertexColor(r, g, b)
+                    debuffFrame.isBossBuff = false
+                    debuffFrame:SetSize(debuffFrame.baseSize, debuffFrame.baseSize)
+                    debuffFrame:Show()
+                else
+                    if CompactUnitFrame_UtilSetDebuff then
+                        CompactUnitFrame_UtilSetDebuff(debuffFrame, debuffs[i][1])
+                    end
+                end
                 frame.BigDebuffs[index].cooldown:SetSwipeColor(0, 0, 0, 0.7)
                 index = index + 1
             end
@@ -2421,9 +2555,112 @@ function BigDebuffs:UNIT_AURA(unit)
     local now = GetTime()
     local left, priority, duration, expires, icon, debuff, buff, interrupt = 0, 0
 
+    if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and not BigDebuffs.test then
+        local cooldownStart
+        for i = 1, 40 do
+            local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "HARMFUL|CROWD_CONTROL")
+            if not auraData then break end
+            local durationInfo = C_UnitAuras.GetAuraDuration(unit, auraData.auraInstanceID)
+            if durationInfo then
+                icon = auraData.icon
+                cooldownStart = durationInfo:GetStartTime()
+                duration = durationInfo:GetTotalDuration()
+                debuff = i
+                break
+            end
+        end
+        if not debuff then
+            for i = 1, 40 do
+                local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "HELPFUL|BIG_DEFENSIVE")
+                if not auraData then break end
+                local durationInfo = C_UnitAuras.GetAuraDuration(unit, auraData.auraInstanceID)
+                if durationInfo then
+                    icon = auraData.icon
+                    cooldownStart = durationInfo:GetStartTime()
+                    duration = durationInfo:GetTotalDuration()
+                    debuff = i
+                    buff = true
+                    break
+                end
+            end
+        end
+        if debuff then
+            frame.current = nil
+            frame.icon:SetTexture(icon)
+            frame.cooldown:SetCooldown(cooldownStart, duration)
+            frame:Show()
+            frame.cooldown:SetSwipeColor(0, 0, 0, 0.6)
+            frame:SetID(debuff)
+            frame.buff = buff
+            frame.interrupt = nil
+        else
+            frame:Hide()
+            frame.current = nil
+        end
+        return
+    end
+
+    if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and not BigDebuffs.test then
+        local debuffIndex = 0
+        pcall(AuraUtil.ForEachAura, unit, "HARMFUL", nil, function(aura)
+            debuffIndex = debuffIndex + 1
+            local id, n, d, e, caster = aura.spellId, aura.icon, aura.duration, aura.expirationTime, aura.sourceUnit
+            if issecretvalue(id) then return end
+            if self.Spells[id] and (not tContains(self.HiddenDebuffs, id)) then
+                local reaction = caster and UnitReaction("player", caster) or 0
+                local friendlySmokeBomb = id == 212183 and reaction > 4
+                local p = self:GetAuraPriority(id)
+                if p and p >= priority and not friendlySmokeBomb then
+                    if p > priority or self:IsPriorityBigDebuff(id) or e == 0 or e - now > left then
+                        left = e - now
+                        duration = d
+                        debuff = debuffIndex
+                        priority = p
+                        expires = e
+                        icon = n
+                    end
+                end
+            elseif self.db.profile.unitFrames.cc
+                and not tContains(self.HiddenDebuffs, id)
+                and C_Spell.IsSpellCrowdControl and C_Spell.IsSpellCrowdControl(id)
+            then
+                local p = self.db.profile.priority.cc
+                if p and p >= priority then
+                    if p > priority or e == 0 or e - now > left then
+                        left = e - now
+                        duration = d
+                        debuff = debuffIndex
+                        priority = p
+                        expires = e
+                        icon = n
+                    end
+                end
+            end
+        end, true)
+        local buffIndex = 0
+        pcall(AuraUtil.ForEachAura, unit, "HELPFUL", nil, function(aura)
+            buffIndex = buffIndex + 1
+            local id, n, d, e = aura.spellId, aura.icon, aura.duration, aura.expirationTime
+            if issecretvalue(id) then return end
+            if self.Spells[id] then
+                local p = self:GetAuraPriority(id)
+                if p and p >= priority then
+                    if p > priority or self:IsPriorityBigDebuff(id) or e == 0 or e - now > left then
+                        left = e - now
+                        duration = d
+                        debuff = buffIndex
+                        priority = p
+                        expires = e
+                        icon = n
+                        buff = true
+                    end
+                end
+            end
+        end, true)
+    else
     for i = 1, 40 do
         -- Check debuffs
-        local _, n, _, _, d, e, caster, _, _, id = AuraUtil.UnpackAuraData(UnitDebuff(unit, i))
+        local _, n, _, _, d, e, caster, _, _, id = UnpackAura(UnitDebuff(unit, i))
         if id then
             if self.Spells[id] and (not tContains(self.HiddenDebuffs, id)) then
                 if LibClassicDurations then
@@ -2446,14 +2683,31 @@ function BigDebuffs:UNIT_AURA(unit)
                         icon = n
                     end
                 end
+            elseif WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+                and self.db.profile.unitFrames.cc
+                and not tContains(self.HiddenDebuffs, id)
+                and C_Spell.IsSpellCrowdControl and C_Spell.IsSpellCrowdControl(id)
+            then
+                local p = self.db.profile.priority.cc
+                if p and p >= priority then
+                    if p > priority or e == 0 or e - now > left then
+                        left = e - now
+                        duration = d
+                        debuff = i
+                        priority = p
+                        expires = e
+                        icon = n
+                    end
+                end
             end
         end
 
-        -- Check buffs
+        -- Check buffs (skip in test mode — only fake debuffs are shown)
+        if not BigDebuffs.test then
         if LibClassicDurations then
             _, n, _, _, d, e, caster, _, _, id = LibClassicDurations:UnitAura(unit, i, "HELPFUL")
         else
-            _, n, _, _, d, e, caster, _, _, id = AuraUtil.UnpackAuraData(UnitBuff(unit, i))
+            _, n, _, _, d, e, caster, _, _, id = UnpackAura(UnitBuff(unit, i))
         end
         if id then
             if self.Spells[id] then
@@ -2478,6 +2732,8 @@ function BigDebuffs:UNIT_AURA(unit)
                 end
             end
         end
+        end
+    end
     end
 
     -- Check for interrupt
@@ -2570,9 +2826,112 @@ function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
     local now = GetTime()
     local left, priority, duration, expires, icon, debuff, buff, interrupt = 0, 0
 
+    if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and not BigDebuffs.test then
+        local cooldownStart
+        for i = 1, 40 do
+            local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "HARMFUL|CROWD_CONTROL")
+            if not auraData then break end
+            local durationInfo = C_UnitAuras.GetAuraDuration(unit, auraData.auraInstanceID)
+            if durationInfo then
+                icon = auraData.icon
+                cooldownStart = durationInfo:GetStartTime()
+                duration = durationInfo:GetTotalDuration()
+                debuff = i
+                break
+            end
+        end
+        if not debuff then
+            for i = 1, 40 do
+                local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "HELPFUL|BIG_DEFENSIVE")
+                if not auraData then break end
+                local durationInfo = C_UnitAuras.GetAuraDuration(unit, auraData.auraInstanceID)
+                if durationInfo then
+                    icon = auraData.icon
+                    cooldownStart = durationInfo:GetStartTime()
+                    duration = durationInfo:GetTotalDuration()
+                    debuff = i
+                    buff = true
+                    break
+                end
+            end
+        end
+        if debuff then
+            frame.current = nil
+            frame.icon:SetTexture(icon)
+            frame.cooldown:SetCooldown(cooldownStart, duration)
+            frame:Show()
+            frame.cooldown:SetSwipeColor(0, 0, 0, 0.6)
+            frame:SetID(debuff)
+            frame.buff = buff
+            frame.interrupt = nil
+        else
+            frame:Hide()
+            frame.current = nil
+        end
+        return
+    end
+
+    if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and not BigDebuffs.test then
+        local debuffIndex = 0
+        pcall(AuraUtil.ForEachAura, unit, "HARMFUL", nil, function(aura)
+            debuffIndex = debuffIndex + 1
+            local id, n, d, e, caster = aura.spellId, aura.icon, aura.duration, aura.expirationTime, aura.sourceUnit
+            if issecretvalue(id) then return end
+            if self.Spells[id] and (not tContains(self.HiddenDebuffs, id)) then
+                local reaction = caster and UnitReaction("player", caster) or 0
+                local friendlySmokeBomb = id == 212183 and reaction > 4
+                local p = self:GetNameplatesPriority(id)
+                if p and p >= priority and not friendlySmokeBomb then
+                    if p > priority or self:IsPriorityBigDebuff(id) or e == 0 or e - now > left then
+                        left = e - now
+                        duration = d
+                        debuff = debuffIndex
+                        priority = p
+                        expires = e
+                        icon = n
+                    end
+                end
+            elseif self.db.profile.nameplates.cc
+                and not tContains(self.HiddenDebuffs, id)
+                and C_Spell.IsSpellCrowdControl and C_Spell.IsSpellCrowdControl(id)
+            then
+                local p = self.db.profile.priority.cc
+                if p and p >= priority then
+                    if p > priority or e == 0 or e - now > left then
+                        left = e - now
+                        duration = d
+                        debuff = debuffIndex
+                        priority = p
+                        expires = e
+                        icon = n
+                    end
+                end
+            end
+        end, true)
+        local buffIndex = 0
+        pcall(AuraUtil.ForEachAura, unit, "HELPFUL", nil, function(aura)
+            buffIndex = buffIndex + 1
+            local id, n, d, e = aura.spellId, aura.icon, aura.duration, aura.expirationTime
+            if issecretvalue(id) then return end
+            if self.Spells[id] then
+                local p = self:GetNameplatesPriority(id)
+                if p and p >= priority then
+                    if p > priority or self:IsPriorityBigDebuff(id) or e == 0 or e - now > left then
+                        left = e - now
+                        duration = d
+                        debuff = buffIndex
+                        priority = p
+                        expires = e
+                        icon = n
+                        buff = true
+                    end
+                end
+            end
+        end, true)
+    else
     for i = 1, 40 do
         -- Check debuffs
-        local _, n, _, _, d, e, caster, _, _, id = AuraUtil.UnpackAuraData(UnitDebuff(unit, i))
+        local _, n, _, _, d, e, caster, _, _, id = UnpackAura(UnitDebuff(unit, i))
         if id then
             if self.Spells[id] and (not tContains(self.HiddenDebuffs, id)) then
                 if LibClassicDurations then
@@ -2595,14 +2954,31 @@ function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
                         icon = n
                     end
                 end
+            elseif WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+                and self.db.profile.nameplates.cc
+                and not tContains(self.HiddenDebuffs, id)
+                and C_Spell.IsSpellCrowdControl and C_Spell.IsSpellCrowdControl(id)
+            then
+                local p = self.db.profile.priority.cc
+                if p and p >= priority then
+                    if p > priority or e == 0 or e - now > left then
+                        left = e - now
+                        duration = d
+                        debuff = i
+                        priority = p
+                        expires = e
+                        icon = n
+                    end
+                end
             end
         end
 
-        -- Check buffs
+        -- Check buffs (skip in test mode — only fake debuffs are shown)
+        if not BigDebuffs.test then
         if LibClassicDurations then
             _, n, _, _, d, e, caster, _, _, id = LibClassicDurations:UnitAura(unit, i, "HELPFUL")
         else
-            _, n, _, _, d, e, caster, _, _, id = AuraUtil.UnpackAuraData(UnitBuff(unit, i))
+            _, n, _, _, d, e, caster, _, _, id = UnpackAura(UnitBuff(unit, i))
         end
         if id then
             if self.Spells[id] then
@@ -2627,6 +3003,8 @@ function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
                 end
             end
         end
+        end
+    end
     end
 
     -- Check for interrupt
@@ -2709,7 +3087,7 @@ function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
 
     if not frame.BigDebuffs then
         frame.BigDebuffs = CreateFrame("Button", "$parent.BigDebuffs", frame)
-        frame.BigDebuffs:SetFrameLevel(frame:GetFrameLevel())
+        frame.BigDebuffs:SetFrameLevel(frame:GetFrameLevel() + 10)
 
         frame.BigDebuffs.icon = frame.BigDebuffs:CreateTexture("$parent.Icon", "OVERLAY", nil, 3)
         frame.BigDebuffs.icon:SetAllPoints(frame.BigDebuffs)
@@ -2723,24 +3101,26 @@ function BigDebuffs:NAME_PLATE_UNIT_ADDED(_, unit)
         frame.BigDebuffs.cooldown:SetReverse(true)
 
         frame.BigDebuffs:SetScript("OnEnter", function(self)
-            if NamePlateTooltip:IsForbidden() then return end
+            local tooltip = NamePlateTooltip or GameTooltip
+            if tooltip:IsForbidden() then return end
             if (BigDebuffs.db.profile.nameplates.tooltips) then
-                NamePlateTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
+                tooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
                 if self.interrupt then
-                    NamePlateTooltip:SetSpellByID(self.interrupt)
+                    tooltip:SetSpellByID(self.interrupt)
                 elseif self.buff then
-                    NamePlateTooltip:SetUnitBuff(self.unit, self:GetID());
+                    tooltip:SetUnitBuff(self.unit, self:GetID());
                 else
-                    NamePlateTooltip:SetUnitDebuff(self.unit, self:GetID());
+                    tooltip:SetUnitDebuff(self.unit, self:GetID());
                 end
-            elseif NamePlateTooltip:IsOwned(self) then
-                NamePlateTooltip:Hide();
+            elseif tooltip:IsOwned(self) then
+                tooltip:Hide();
             end
         end)
 
         frame.BigDebuffs:SetScript("OnLeave", function()
-            if NamePlateTooltip:IsForbidden() then return end
-            NamePlateTooltip:Hide()
+            local tooltip = NamePlateTooltip or GameTooltip
+            if tooltip:IsForbidden() then return end
+            tooltip:Hide()
         end)
     end
 
@@ -2788,11 +3168,26 @@ end
 
 SLASH_BigDebuffs1 = "/bd"
 SLASH_BigDebuffs2 = "/bigdebuffs"
+local function OpenBigDebuffsSettings()
+    if Settings and Settings.OpenToCategory and BigDebuffs.optionsCategory then
+        Settings.OpenToCategory(BigDebuffs.optionsCategory)
+    elseif InterfaceOptionsFrame_OpenToCategory then
+        InterfaceOptionsFrame_OpenToCategory(addonName)
+        InterfaceOptionsFrame_OpenToCategory(addonName)
+    end
+end
+
 SlashCmdList.BigDebuffs = function(msg)
-    if Settings and Settings.OpenToCategory then
-        Settings.OpenToCategory(addonName)
+    if InCombatLockdown() then
+        local f = CreateFrame("Frame")
+        f:RegisterEvent("PLAYER_REGEN_ENABLED")
+        f:SetScript("OnEvent", function(self)
+            self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+            self:SetScript("OnEvent", nil)
+            OpenBigDebuffsSettings()
+        end)
+        print("|cffff9900BigDebuffs:|r Settings will open after combat.")
     else
-        InterfaceOptionsFrame_OpenToCategory(addonName)
-        InterfaceOptionsFrame_OpenToCategory(addonName)
+        OpenBigDebuffsSettings()
     end
 end
