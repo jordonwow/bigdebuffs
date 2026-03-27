@@ -2293,13 +2293,15 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNI
             for i = 1, 40 do
                 local auraData = C_UnitAuras.GetAuraDataByIndex(unitId, i, "HARMFUL|CROWD_CONTROL")
                 if not auraData then break end
-                tinsert(debuffs, { auraData, ccSize, 2 })
+                local durationInfo = C_UnitAuras.GetAuraDuration(unitId, auraData.auraInstanceID)
+                tinsert(debuffs, { auraData, ccSize, 2, durationInfo })
             end
 
             for i = 1, 40 do
                 local auraData = C_UnitAuras.GetAuraDataByIndex(unitId, i, "HELPFUL|BIG_DEFENSIVE")
                 if not auraData then break end
-                tinsert(debuffs, { auraData, defSize, 1 })
+                local durationInfo = C_UnitAuras.GetAuraDuration(unitId, auraData.auraInstanceID)
+                tinsert(debuffs, { auraData, defSize, 1, durationInfo })
             end
 
             if #debuffs > 0 then
@@ -2322,6 +2324,10 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNI
                     if not debuffFrame.maxHeight then debuffFrame.maxHeight = frameHeight end
                     if CompactUnitFrame_UtilSetDebuff then
                         CompactUnitFrame_UtilSetDebuff(debuffFrame, debuffs[i][1])
+                    end
+                    -- Use DurationObject to set cooldown (SetCooldown rejects secret values in tainted context)
+                    if debuffs[i][4] then
+                        debuffFrame.cooldown:SetCooldownFromDurationObject(debuffs[i][4])
                     end
                     debuffFrame.cooldown:SetSwipeColor(0, 0, 0, 0.7)
                     index = index + 1
@@ -2556,15 +2562,14 @@ function BigDebuffs:UNIT_AURA(unit)
     local left, priority, duration, expires, icon, debuff, buff, interrupt = 0, 0
 
     if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and not BigDebuffs.test then
-        local cooldownStart
+        local storedDurationInfo
         for i = 1, 40 do
             local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "HARMFUL|CROWD_CONTROL")
             if not auraData then break end
             local durationInfo = C_UnitAuras.GetAuraDuration(unit, auraData.auraInstanceID)
             if durationInfo then
                 icon = auraData.icon
-                cooldownStart = durationInfo:GetStartTime()
-                duration = durationInfo:GetTotalDuration()
+                storedDurationInfo = durationInfo
                 debuff = i
                 break
             end
@@ -2576,8 +2581,7 @@ function BigDebuffs:UNIT_AURA(unit)
                 local durationInfo = C_UnitAuras.GetAuraDuration(unit, auraData.auraInstanceID)
                 if durationInfo then
                     icon = auraData.icon
-                    cooldownStart = durationInfo:GetStartTime()
-                    duration = durationInfo:GetTotalDuration()
+                    storedDurationInfo = durationInfo
                     debuff = i
                     buff = true
                     break
@@ -2587,7 +2591,7 @@ function BigDebuffs:UNIT_AURA(unit)
         if debuff then
             frame.current = nil
             frame.icon:SetTexture(icon)
-            frame.cooldown:SetCooldown(cooldownStart, duration)
+            frame.cooldown:SetCooldownFromDurationObject(storedDurationInfo)
             frame:Show()
             frame.cooldown:SetSwipeColor(0, 0, 0, 0.6)
             frame:SetID(debuff)
@@ -2827,15 +2831,14 @@ function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
     local left, priority, duration, expires, icon, debuff, buff, interrupt = 0, 0
 
     if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and not BigDebuffs.test then
-        local cooldownStart
+        local storedDurationInfo
         for i = 1, 40 do
             local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "HARMFUL|CROWD_CONTROL")
             if not auraData then break end
             local durationInfo = C_UnitAuras.GetAuraDuration(unit, auraData.auraInstanceID)
             if durationInfo then
                 icon = auraData.icon
-                cooldownStart = durationInfo:GetStartTime()
-                duration = durationInfo:GetTotalDuration()
+                storedDurationInfo = durationInfo
                 debuff = i
                 break
             end
@@ -2847,8 +2850,7 @@ function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
                 local durationInfo = C_UnitAuras.GetAuraDuration(unit, auraData.auraInstanceID)
                 if durationInfo then
                     icon = auraData.icon
-                    cooldownStart = durationInfo:GetStartTime()
-                    duration = durationInfo:GetTotalDuration()
+                    storedDurationInfo = durationInfo
                     debuff = i
                     buff = true
                     break
@@ -2858,7 +2860,7 @@ function BigDebuffs:UNIT_AURA_NAMEPLATE(unit)
         if debuff then
             frame.current = nil
             frame.icon:SetTexture(icon)
-            frame.cooldown:SetCooldown(cooldownStart, duration)
+            frame.cooldown:SetCooldownFromDurationObject(storedDurationInfo)
             frame:Show()
             frame.cooldown:SetSwipeColor(0, 0, 0, 0.6)
             frame:SetID(debuff)
