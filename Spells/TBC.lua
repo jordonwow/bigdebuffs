@@ -349,8 +349,14 @@ addon.Spells = {
         [17329] = { parent = 16689 },
     [770] = { type = BUFF_OTHER }, -- Faerie Fire
         [778] = { parent = 770 },
-        [9749] = { parent = 770 },
+        [779] = { parent = 770 },
         [9907] = { parent = 770 },
+		[26993] = { parent = 770 },
+        [16857] = { parent = 770 },
+		[17390] = { parent = 770 },
+        [17391] = { parent = 770 },
+		[17392] = { parent = 770 },
+        [27011] = { parent = 770 },
     [33786] = { type = CROWD_CONTROL }, -- Cyclone
     [19675] = { type = ROOT }, -- Feral Charge Effect
         [45334] = { parent = 19675 },
