@@ -5,8 +5,42 @@
             <AbsValue val="8"/>
         </FontHeight>
     </Font>
-    <Button name="BigDebuffsDebuffTemplate" inherits="CompactDebuffTemplate" virtual="true">
+    <!--
+        Self-contained copy of Blizzard's old CompactAuraTemplate + CompactDebuffTemplate.
+        The Blizzard templates were removed from the modernized clients
+        (MoP Classic 5.5.4+, TBC Anniversary, Midnight), which caused
+        "Couldn't find inherited node: CompactDebuffTemplate".
+    -->
+    <Button name="BigDebuffsDebuffTemplate" virtual="true">
+        <Size x="11" y="11"/>
+        <Layers>
+            <Layer level="BORDER">
+                <Texture parentKey="border" file="Interface\Buttons\UI-Debuff-Overlays">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="-1" y="1"/>
+                        <Anchor point="BOTTOMRIGHT" x="1" y="-1"/>
+                    </Anchors>
+                    <TexCoords left="0.296875" right="0.5703125" top="0" bottom="0.515625"/>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
+                <Texture parentKey="icon" setAllPoints="true"/>
+            </Layer>
+            <Layer level="OVERLAY">
+                <FontString parentKey="count" inherits="NumberFontNormalSmall" justifyH="RIGHT">
+                    <Anchors>
+                        <Anchor point="BOTTOMRIGHT"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Cooldown parentKey="cooldown" setAllPoints="true" inherits="CooldownFrameTemplate" reverse="true" drawEdge="false"/>
+        </Frames>
         <Scripts>
+            <OnLoad>
+                self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+            </OnLoad>
             <OnUpdate>
                 if ( GameTooltip:IsOwned(self) ) then
                     if not self.auraInstanceID and self.spellId then
