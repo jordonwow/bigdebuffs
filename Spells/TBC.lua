@@ -7,15 +7,31 @@ local INTERRUPT = "interrupts"
 local CROWD_CONTROL = "cc"
 local ROOT = "roots"
 local IMMUNITY = "immunities"
+local IMMUNITY_SPELL = "immunities_spells"
 
 addon.Units = {
     "player",
     "pet",
     "target",
+    "targettarget",
+    "focus",
     "party1",
     "party2",
     "party3",
     "party4",
+    "arena1",
+    "arena2",
+    "arena3",
+    "arena4",
+    "arena5",
+}
+
+-- Show one of these when a big debuff is displayed
+addon.WarningDebuffs = {
+    30108, -- Unstable Affliction
+    30404, -- Unstable Affliction
+    30405, -- Unstable Affliction
+    34914, -- Vampiric Touch
 }
 
 -- Make sure we always see these debuffs, but don't make them bigger
@@ -46,9 +62,20 @@ addon.Spells = {
     [7744] = { type = BUFF_OFFENSIVE }, -- Will of the Forsaken
     [20549] = { type = CROWD_CONTROL }, -- War Stomp
     [20594] = { type = BUFF_OFFENSIVE }, -- Stoneform
+    [20572] = { type = BUFF_OFFENSIVE }, -- Blood Fury
 
     -- Other
 
+    [13099] = { type = ROOT }, -- Net-o-Matic
+    [13119] = { type = ROOT }, -- Net-o-Matic
+    [13120] = { type = ROOT }, -- Net-o-Matic
+    [13138] = { type = ROOT }, -- Net-o-Matic
+    [13139] = { type = ROOT }, -- Net-o-Matic
+    [16566] = { type = ROOT }, -- Net-o-Matic
+    [23723] = { type = BUFF_OFFENSIVE }, -- Mind Quickening Gem
+    [30456] = { type = BUFF_DEFENSIVE }, -- Nigh-Invulnerability
+    [30457] = { type = CROWD_CONTROL }, -- Complete Vulnerability
+    [33961] = { type = IMMUNITY_SPELL }, -- Spell Reflection (Sethekk Initiate)
     [23451] = { type = BUFF_OFFENSIVE }, -- Battleground Speed buff
     [23493] = { type = BUFF_DEFENSIVE }, -- Battleground Heal buff
     [23505] = { type = BUFF_OFFENSIVE }, -- Battleground Damage buff
@@ -81,16 +108,16 @@ addon.Spells = {
     [9774] = { type = BUFF_OFFENSIVE }, -- Spider Belt & Ornate Mithril Boots
     [18798] = { type = CROWD_CONTROL }, -- Freezing Band
     [22734] = { type = BUFF_OTHER }, -- Drink
+        [46755] = { parent = 22734 }, -- Drink
+        [27089] = { parent = 22734 }, -- Drink
     [23605] = { type = BUFF_OTHER }, -- Nightfall, Spell Vulnerability
     [13494] = { type = BUFF_OFFENSIVE }, -- Manual Crowd Pummeler Haste buff
-    [446391] = { type = CROWD_CONTROL }, -- Torment
-    [6533] = { type = ROOT }, -- Net
 
     -- Interrupts
 
     [15752] = { type = INTERRUPT, duration = 10 }, -- Linken's Boomerang Disarm
-    [19244] = { type = INTERRUPT, duration = 6 }, -- Spell Lock - Rank 1 (Warlock)
-        [19647] = { parent = 19244, duration = 8 }, -- Spell Lock - Rank 2 (Warlock)
+    [19244] = { type = INTERRUPT, duration = 5 }, -- Spell Lock - Rank 1 (Warlock)
+        [19647] = { parent = 19244, duration = 6 }, -- Spell Lock - Rank 2 (Warlock)
     [8042] = { type = INTERRUPT, duration = 2 }, -- Earth Shock (Shaman)
         [8044] = { parent = 8042 },
         [8045] = { parent = 8042 },
@@ -98,22 +125,32 @@ addon.Spells = {
         [10412] = { parent = 8042 },
         [10413] = { parent = 8042 },
         [10414] = { parent = 8042 },
+        [25454] = { parent = 8042 },
+    [13491] = { type = INTERRUPT, duration = 5 }, -- Iron Knuckles
     [16979] = { type = INTERRUPT, duration = 4 }, -- Feral Charge (Druid)
-    [2139] = { type = INTERRUPT, duration = 10 }, -- Counterspell (Mage)
+    [2139] = { type = INTERRUPT, duration = 8 }, -- Counterspell (Mage)
     [1766] = { type = INTERRUPT, duration = 5 }, -- Kick (Rogue)
         [1767] = { parent = 1766 },
         [1768] = { parent = 1766 },
         [1769] = { parent = 1766 },
-    [14251] = { type = INTERRUPT, duration = 6 }, -- Riposte (Rogue)
+        [38768] = { parent = 1766 },
+    [26679] = { type = INTERRUPT, duration = 3 }, -- Deadly Throw
     [6552] = { type = INTERRUPT, duration = 4 }, -- Pummel
         [6554] = { parent = 6552 },
     [72] = { type = INTERRUPT, duration = 6 }, -- Shield Bash
         [1671] = { parent = 72 },
         [1672] = { parent = 72 },
+        [29704] = { parent = 72 },
+    [22570] = { type = INTERRUPT, duration = 3 }, -- Maim
+    [29443] = { type = INTERRUPT, duration = 10 }, -- Clutch of Foresight
 
     -- Priest
 
     [17] = { type = BUFF_DEFENSIVE }, -- Power Word: Shield
+    [453] = { type = BUFF_OTHER }, -- Mind Soothe
+        [8192] = { parent = 453 },
+        [10953] = { parent = 453 },
+        [25596] = { parent = 453 },
     [592] = { parent = 17 }, -- Power Word: Shield
         [600] = { parent = 17 },
         [3747] = { parent = 17 },
@@ -136,12 +173,20 @@ addon.Spells = {
     [14892] = { type = BUFF_DEFENSIVE }, -- Inspiration
         [15362] = { parent = 14892 },
         [15363] = { parent = 14892 },
+    [2651] = { type = BUFF_DEFENSIVE }, -- Elune's Grace
     [6346] = { type = BUFF_DEFENSIVE }, -- Fear Ward
     [9484] = { type = CROWD_CONTROL }, -- Shackle Undead
         [9485] = { parent = 9484 },
         [10955] = { parent = 9484 },
-    [402004] = { type = BUFF_DEFENSIVE },  -- Pain Suppression
-    [425294] = { type = BUFF_DEFENSIVE },  -- Dispersion
+    [44041] = { type = ROOT }, -- Chastise
+        [44043] = { parent = 44041 },
+        [44044] = { parent = 44041 },
+        [44045] = { parent = 44041 },
+        [44046] = { parent = 44041 },
+        [44047] = { parent = 44041 },
+    [27827] = { type = IMMUNITY }, -- Spirit of Redemption
+    [33206] = { type = BUFF_DEFENSIVE }, -- Pain Suppression
+    [14751] = { type = BUFF_DEFENSIVE }, -- Inner Focus
 
     -- Warlock
 
@@ -157,6 +202,7 @@ addon.Spells = {
     [6789] = { type = CROWD_CONTROL }, -- Death Coil
         [17925] = { parent = 6789 },
         [17926] = { parent = 6789 },
+        [27223] = { parent = 6789 },
     [6229] = { type = BUFF_DEFENSIVE }, -- Shadow Ward
         [11739] = { parent = 6229 },
         [11740] = { parent = 6229 },
@@ -173,24 +219,40 @@ addon.Spells = {
         [18313] = { parent = 18223 },
     [1714] = { type = ROOT }, -- Curse of Tongues
         [11719] = { parent =  1714 },
+    [22703] = { type = CROWD_CONTROL }, -- Inferno Effect
+    [30283] = { type = CROWD_CONTROL }, -- Shadowfury
+        [30413] = { parent = 30283 },
+        [30414] = { parent = 30283 },
+    [43523] = { type = CROWD_CONTROL }, -- Unstable Affliction
+        [31117] = { parent = 43523 },
+    [30300] = { type = IMMUNITY_SPELL }, -- Nether Protection
+    [18708] = { type = BUFF_DEFENSIVE }, -- Fel Domination
+    [32752] = { type = CROWD_CONTROL }, -- Summoning Disorientation
+    [4511] = { type = IMMUNITY }, -- Phase Shift
+    [19482] = { type = CROWD_CONTROL }, -- Doom Guard Stun
+    [30153] = { type = CROWD_CONTROL }, -- Felguard Stun
+        [30195] = { parent = 30153 },
+        [30197] = { parent = 30153 },
+
 
     -- Shaman
 
-    [8178] = { type = IMMUNITY }, -- Grounding Totem Effect
+    [8178] = { type = IMMUNITY_SPELL }, -- Grounding Totem Effect
     [16188] = { type = BUFF_DEFENSIVE }, -- Nature's Swiftness
     [12548] = { type = ROOT }, -- Frost Shock
-    [425876] = { type = IMMUNITY }, -- Decoy Totem (Redirect)
-    [436391] = { type = BUFF_DEFENSIVE }, -- Decoy Totem (Freedom)
+    [39796] = { type = CROWD_CONTROL }, -- Stoneclaw Totem
+    [16166] = { type = BUFF_OFFENSIVE }, -- Elemental Mastery
+    [30823] = { type = BUFF_DEFENSIVE }, -- Shamanistic Rage
 
     -- Paladin
 
     [1022] = { type = IMMUNITY },-- Blessing of Protection
         [5599] = { parent = 1022 },
         [10278] = { parent = 1022 },
-    [498] = { type = IMMUNITY }, -- Divine Shield
-        [5573] = { parent = 498 },
-        [642] = { parent = 498 },
-        [1020] = { parent = 498 },
+    [642] = { type = IMMUNITY }, -- Divine Shield
+        [498] = { parent = 642 },
+        [1020] = { parent = 642 },
+        [5573] = { parent = 642 },
     [853] = { type = CROWD_CONTROL }, -- Hammer of Justice
         [5588] = { parent = 853 },
         [5589] = { parent = 853 },
@@ -200,18 +262,24 @@ addon.Spells = {
     [20170] = { type = CROWD_CONTROL }, -- Seal of Justice stun
     [6940] = { type = BUFF_DEFENSIVE }, -- Blessing of Sacrifice
         [20729] = { parent = 6940 },
-    [407613] = { type = BUFF_DEFENSIVE }, -- Beacon of Light
-    [412019] = { type = BUFF_DEFENSIVE }, -- Sacred Shield
-    [427719] = { type = CROWD_CONTROL }, -- Unstable Affliction (Silence)
+    [19753] = { type = IMMUNITY }, -- Divine Intervention
+    [10326] = { type = CROWD_CONTROL }, -- Turn Evil
+        [2878] = { parent = 10326 },
+        [5627] = { parent = 10326 },
+    [20216] = { type = BUFF_DEFENSIVE }, -- Divine Favor
+    [31884] = { type = BUFF_OFFENSIVE }, -- Avenging Wrath
+    [31842] = { type = BUFF_DEFENSIVE }, -- Divine Illumination
 
     -- Hunter
 
+    [27046] = { type = BUFF_DEFENSIVE }, -- Mend Pet
     [13159] = { type = BUFF_OFFENSIVE }, -- Aspect of the Pack
         [5118] = { parent = 13159 }, -- Aspect of the Cheetah
     [1513] = { type = CROWD_CONTROL }, -- Scare Beast
         [14326] = { parent = 1513 },
         [14327] = { parent = 1513 },
     [19410] = { type = CROWD_CONTROL }, -- Concussive Shot Stun
+        [28445] = { parent = 19410 },
     [3045] = { type = BUFF_OFFENSIVE }, -- Rapid Fire
     [19263] = { type = BUFF_DEFENSIVE }, -- Deterrence
     [19574] = { type = BUFF_OFFENSIVE }, -- Bestial Wrath
@@ -222,16 +290,24 @@ addon.Spells = {
     [19306] = { type = ROOT }, -- Counterattack Root
         [20909] = { parent = 19306 },
         [20910] = { parent = 19306 },
+        [27067] = { parent = 19306 },
     [19386] = { type = CROWD_CONTROL }, --Wyvern Sting
         [24132] = { parent = 19386 },
         [24133] = { parent = 19386 },
+        [27068] = { parent = 19386 },
     [19185] = { type = ROOT }, -- Entrapment
     [19503] = { type = CROWD_CONTROL }, -- Scatter Shot
     [25999] = { type = ROOT }, -- Boar Charge
     [3034] = { type = ROOT }, -- Viper Sting
         [14279] = { parent = 3034 },
         [14280] = { parent = 3034 },
-    [409368] = { type = BUFF_OFFENSIVE }, -- Beast Mastery
+        [27018] = { parent = 3034 },
+    [34490] = { type = CROWD_CONTROL }, -- Silencing Shot
+    [34471] = { type = IMMUNITY_SPELL }, -- The Beast Within
+    [5384] = { type = BUFF_DEFENSIVE }, -- Feign Death
+    [24394] = { type = CROWD_CONTROL }, -- Intimidation
+    [19577] = { type = BUFF_OFFENSIVE, parent = 24394 }, -- Intimidation (Buff)
+
 
     -- Druid
 
@@ -242,12 +318,14 @@ addon.Spells = {
         [5196] = { parent = 339 },
         [9852] = { parent = 339 },
         [9853] = { parent = 339 },
+        [26989] = { parent = 339 },
         [19970] = { parent = 339 }, -- Nature's Grasp Rank 6
         [19971] = { parent = 339 }, -- Nature's Grasp Rank 5
         [19972] = { parent = 339 }, -- Nature's Grasp Rank 4
         [19973] = { parent = 339 }, -- Nature's Grasp Rank 3
         [19974] = { parent = 339 }, -- Nature's Grasp Rank 2
         [19975] = { parent = 339 }, -- Nature's Grasp Rank 1
+        [27010] = { parent = 339 },
     [2637] = { type = CROWD_CONTROL }, -- Hibernate
         [18657] = { parent = 2637 },
         [18658] = { parent = 2637 },
@@ -255,6 +333,7 @@ addon.Spells = {
     [9005] = { type = CROWD_CONTROL }, -- Pounce Stun
         [9823] = { parent = 9005 },
         [9827] = { parent = 9005 },
+        [27006] = { parent = 9005 },
     [16922] = { type = CROWD_CONTROL }, -- Starfire Stun
     [5211] = { type = CROWD_CONTROL}, -- Bash
         [6798] = { parent = 5211 },
@@ -270,9 +349,18 @@ addon.Spells = {
         [17329] = { parent = 16689 },
     [770] = { type = BUFF_OTHER }, -- Faerie Fire
         [778] = { parent = 770 },
-        [9749] = { parent = 770 },
+        [779] = { parent = 770 },
         [9907] = { parent = 770 },
-    [417141] = { type = BUFF_OFFENSIVE }, -- Berserk
+		[26993] = { parent = 770 },
+        [16857] = { parent = 770 },
+		[17390] = { parent = 770 },
+        [17391] = { parent = 770 },
+		[17392] = { parent = 770 },
+        [27011] = { parent = 770 },
+    [33786] = { type = CROWD_CONTROL }, -- Cyclone
+    [19675] = { type = ROOT }, -- Feral Charge Effect
+        [45334] = { parent = 19675 },
+    [17116] = { type = BUFF_DEFENSIVE }, -- Nature's Swiftness
 
     -- Mage
 
@@ -304,15 +392,23 @@ addon.Spells = {
         [865] = { parent = 122 },
         [6131] = { parent = 122 },
         [10230] = { parent = 122 },
+        [27088] = { parent = 122 },
     [12042] = { type = BUFF_OFFENSIVE }, -- Arcane Power
-    [11958] = { type = IMMUNITY }, -- Ice Block
+    [45438] = { type = IMMUNITY }, -- Ice Block
     [12051] = { type = BUFF_OFFENSIVE }, -- Evocation
     [1463] = { type = BUFF_DEFENSIVE }, -- Mana Shield
-    [8494] = { parent = 1463 },
-    [8495] = { parent = 1463 },
-    [10191] = { parent = 1463 },
-    [10192] = { parent = 1463 },
-    [10193] = { parent = 1463 },
+        [8494] = { parent = 1463 },
+        [8495] = { parent = 1463 },
+        [10191] = { parent = 1463 },
+        [10192] = { parent = 1463 },
+        [10193] = { parent = 1463 },
+    [31661] = { type = CROWD_CONTROL }, -- Dragon's Breath
+        [33041] = { parent = 31661 },
+        [33042] = { parent = 31661 },
+        [33043] = { parent = 31661 },
+    [12043] = { type = BUFF_OFFENSIVE }, -- Presence of Mind
+    [33395] = { type = ROOT }, -- Freeze
+    [12472] = { type = BUFF_OFFENSIVE }, -- Icy Veins
 
     -- Rogue
 
@@ -330,33 +426,53 @@ addon.Spells = {
         [8696] = { parent = 2983 },
         [11305] = { parent = 2983 },
     [5277] = { type = BUFF_DEFENSIVE }, -- Evasion
+        [26669] = { parent = 5277 },
     [1776] = { type = CROWD_CONTROL }, -- Gouge
         [1777] = { parent = 1776 },
         [8629] = { parent = 1776 },
         [11285] = { parent = 1776 },
         [11286] = { parent = 1776 },
+        [38764] = { parent = 1776 },
     [14278] = { type = BUFF_DEFENSIVE }, -- Ghostly Strike
     [3409] = { type = ROOT }, -- Crippling Poison
         [11201] = { parent = 3409 },
-    [400009] = { type = CROWD_CONTROL }, -- Between the Eyes
+    [1330] = { type = CROWD_CONTROL }, -- Garrote Silence
+    [31224] = { type = IMMUNITY_SPELL }, -- Cloak of Shadows
+    [45182] = { type = BUFF_DEFENSIVE }, -- Cheating Death
+    [14177] = { type = BUFF_OFFENSIVE }, -- Cold Blood
+    [14251] = { type = BUFF_OTHER }, -- Riposte (Rogue)
 
     -- Warrior
 
     [18498] = { type = CROWD_CONTROL }, -- Improved Shield Bash
-    [5246] = { type = CROWD_CONTROL }, -- Intimidating Shout (Other targets)
-        [20511] = { type = CROWD_CONTROL, parent = 5246 }, -- (Main target)
     [20230] = { type = IMMUNITY }, -- Retaliation
     [1719] = { type = BUFF_OFFENSIVE }, -- Recklessness
     [871] = { type = BUFF_DEFENSIVE }, -- Shield Wall
-    [12328] = { type = BUFF_OFFENSIVE }, -- Death Wish
+    [12292] = { type = BUFF_OFFENSIVE }, -- Death Wish
     [23694] = { type = ROOT }, -- Improved Hamstring
-    [18499] = { type = BUFF_OFFENSIVE}, -- Berserker Rage
+    [18499] = { type = BUFF_OFFENSIVE }, -- Berserker Rage
     [20253] = { type = CROWD_CONTROL }, -- Intercept Stun
         [20614] = { parent = 20253 },
         [20615] = { parent = 20253 },
+        [25273] = { parent = 20253 },
+        [25274] = { parent = 20253 },
     [12798] = { type = CROWD_CONTROL }, -- Revenge Stun
     [12809] = { type = CROWD_CONTROL }, -- Concussion Blow
     [7922] = { type = CROWD_CONTROL }, -- Charge Stun
     [5530] = { type = CROWD_CONTROL }, -- Mace Spec Stun (Warrior & Rogue)
+    [5246] = { type = CROWD_CONTROL }, -- Intimidating Shout
+        [20511] = { parent = 5246 },
+    [676] = { type = BUFF_OTHER }, -- Disarm
+    [23920] = { type = IMMUNITY_SPELL }, -- Spell Reflection
+    [12976] = { type = BUFF_DEFENSIVE }, -- Last Stand
+    [12294] = { type = BUFF_OTHER }, -- Mortal Strike
+        [21551] = { parent = 12294 },
+        [21552] = { parent = 12294 },
+        [21553] = { parent = 12294 },
+        [25248] = { parent = 12294 },
+        [30330] = { parent = 12294 },
+
+    [6074] = { type = CROWD_CONTROL }, -- debug
+    [6788] = { type = CROWD_CONTROL }, -- debug
 
 }

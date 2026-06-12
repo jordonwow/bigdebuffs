@@ -14,6 +14,7 @@ addon.Units = {
     "player",
     "pet",
     "target",
+    "targettarget",
     "focus",
     "party1",
     "party2",
@@ -62,7 +63,6 @@ addon.Spells = {
     [25046] = { type = CROWD_CONTROL, }, -- Arcane Torrent (Energy)
     [50613] = { type = CROWD_CONTROL, }, -- Arcane Torrent (Runic Power)
     [58984] = { type = BUFF_DEFENSIVE }, -- Shadowmeld
-    [107079] = { type = CROWD_CONTROL }, -- Quaking Palm (Pandarian)
 
     -- Other
 
@@ -114,13 +114,6 @@ addon.Spells = {
         [57073] = { parent = 22734 }, -- Drink
     [23605] = { type = BUFF_OTHER }, -- Nightfall, Spell Vulnerability
     [13494] = { type = BUFF_OFFENSIVE }, -- Manual Crowd Pummeler Haste buff
-    -- MoP
-    [129597] = { type = CROWD_CONTROL }, -- Arcane Torrent (Chi)
-    [126679] = { type = BUFF_OFFENSIVE }, -- Call of Victory
-    [126690] = { type = BUFF_OFFENSIVE }, -- Call of Conquest
-    [126683] = { type = BUFF_OFFENSIVE }, -- Call of Dominance
-
-
 
     -- Interrupts
 
@@ -129,7 +122,6 @@ addon.Spells = {
     [13491] = { type = INTERRUPT, duration = 5 }, -- Iron Knuckles
     [16979] = { type = INTERRUPT, duration = 4 }, -- Feral Charge (Druid)
     [2139] = { type = INTERRUPT, duration = 8 }, -- Counterspell (Mage)
-    [147362] = { type = INTERRUPT, duration = 3}, -- Counter Shot (Hunter)
     [1766] = { type = INTERRUPT, duration = 5 }, -- Kick (Rogue)
     [26679] = { type = INTERRUPT, duration = 3 }, -- Deadly Throw
     [6552] = { type = INTERRUPT, duration = 4 }, -- Pummel
@@ -153,20 +145,10 @@ addon.Spells = {
     [49016] = { type = BUFF_OFFENSIVE, },  -- Unholy Frenzy
     [91802] = { type = INTERRUPT, duration = 2 },  -- Shambling Rush (pet dk kick)
     [91797] = { type = CROWD_CONTROL },  -- Monstrous Blow (dk abom stun)
+
     -- Cataclysm
+
     [49206] = { type = DEBUFF_OFFENSIVE, },  -- Summon Gargoyle
-    -- MoP
-    [108194] = { type = CROWD_CONTROL, },  -- Asphyxiate
-    [115001] = { type = CROWD_CONTROL, },  -- Remorseless Winter
-    [96294] = { type = ROOT }, -- Chains of Ice (Chilblains)
-    [50435] = { type = ROOT }, -- Chilblains
-    [115000] = { type = ROOT }, -- Remorseless Winter
-    [115018] = { type = IMMUNITY }, -- Desecrated Ground
-    [51271] = { type = BUFF_OFFENSIVE, },  -- Pillar of Frost
-    [91807] = { type = ROOT }, -- Shambling Rush (Dark Transformation)
-    [130735] = { type = DEBUFF_OFFENSIVE },  -- Soul Reaper (Frost)
-        [130736] = { parent = 130735 }, -- Soul Reaper (Unholy)
-        [114866] = { parent = 130735 }, -- Soul Reaper (Blood)
 
     -- Priest
 
@@ -194,15 +176,9 @@ addon.Spells = {
     [14751] = { type = BUFF_DEFENSIVE }, -- Inner Focus
     [87204] = { type = CROWD_CONTROL }, -- Sin and Punishment (VT dispel)
     [96267] = { type = BUFF_DEFENSIVE }, -- Strength of Soul
-    -- MoP
-    [113506] = { type = CROWD_CONTROL }, -- Cyclone (Symbiosis)
-    [113792] = { type = CROWD_CONTROL }, -- Psychic Terror (Psyfiend)
-    -- [113275] = { type = ROOT }, -- Entangling Roots (Symbiosis)
-    [114404] = { type = ROOT }, -- Void Tendril's Grasp
-    [114239] = { type = IMMUNITY_SPELL }, -- Phantasm
-    [88625] = { type = CROWD_CONTROL }, -- Holy Word: Chastise
 
     -- Warlock
+
     -- WoTLK
     [47241] = { type = BUFF_OFFENSIVE, }, -- Metamorphosis
     [60995] = { type = CROWD_CONTROL, }, -- Demon Charge (Metamorphosis)
@@ -232,22 +208,6 @@ addon.Spells = {
     [79459] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Imp
     [79463] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Succubus
     [79464] = { type = BUFF_OFFENSIVE }, -- Demon Soul: Voidwalker
-    -- MoP
-    [137143] = { type = BUFF_DEFENSIVE }, -- Blood Horror
-    [111397] = { type = BUFF_DEFENSIVE }, -- Blood Horror
-    [130616] = { type = CROWD_CONTROL }, -- Fear (Glyph of Fear)
-    [132412] = { type = CROWD_CONTROL }, -- Seduction (Grimoire of Sacrifice)
-    [104045] = { type = CROWD_CONTROL }, -- Sleep (Metamorphosis)
-    [132409] = { type = CROWD_CONTROL }, -- Spell Lock (Grimoire of Sacrifice)
-    [110913] = { type = BUFF_DEFENSIVE }, -- Dark Bargain
-    [104773] = { type = BUFF_DEFENSIVE }, -- Unending Resolve
-    [115268] = { type = CROWD_CONTROL }, -- Mesmerize (Shivarra)
-    [115782] = { type = CROWD_CONTROL }, -- Optical Blast (Observer)
-    [115781] = { type = INTERRUPT, duration = 6 }, -- Optical Blast (Interrupt)
-    [119911] = { type = INTERRUPT, duration = 6 }, -- Optical Blast (Interrupt)
-    [118093] = { type = CROWD_CONTROL }, -- Disarm (Voidwalker/Voidlord)
-    [118699] = { type = CROWD_CONTROL }, -- Fear (new?)
-    [80240] = { type = CROWD_CONTROL }, -- Havoc
 
     -- Shaman
 
@@ -269,18 +229,9 @@ addon.Spells = {
     [39796] = { type = CROWD_CONTROL }, -- Stoneclaw Totem
     [16166] = { type = BUFF_OFFENSIVE }, -- Elemental Mastery
     [30823] = { type = BUFF_DEFENSIVE }, -- Shamanistic Rage
-    -- MoP
-    [118905] = { type = CROWD_CONTROL },  -- Static Charge (Capacitor Totem)
-    [113287] = { type = CROWD_CONTROL },  -- Solar Beam (Symbiosis)
-    [116947] = { type = ROOT },  -- Earthbind (Earthgrab Totem)
-    [118345] = { type = CROWD_CONTROL },  -- Pulverize (Primal Earth Elemental)
-    [110806] = { type = BUFF_OTHER },  -- Spiritwalker's Grace
-    [114049] = { type = BUFF_OFFENSIVE }, -- Ascendance
-        [114052] = { parent = 114049 }, -- Ascendance
-        [114051] = { parent = 114049 }, -- Ascendance
-        [114050] = { parent = 114049 }, -- Ascendance
 
     -- Paladin
+
     -- WoTLK
     [25771] = { type = BUFF_OTHER, }, -- Forbearance
     [31821] = { type = BUFF_DEFENSIVE, },  -- Aura Mastery
@@ -295,23 +246,16 @@ addon.Spells = {
     [853] = { type = CROWD_CONTROL }, -- Hammer of Justice
     [1044] = { type = BUFF_DEFENSIVE }, -- Blessing of Freedom
     [20066] = { type = CROWD_CONTROL }, -- Repentance
-    [20170] = { type = ROOT }, -- Seal of Justice slow
+    [20170] = { type = CROWD_CONTROL }, -- Seal of Justice stun
     [6940] = { type = BUFF_DEFENSIVE }, -- Blessing of Sacrifice
     [10326] = { type = CROWD_CONTROL }, -- Turn Evil
     [31884] = { type = BUFF_OFFENSIVE }, -- Avenging Wrath
     [31842] = { type = BUFF_DEFENSIVE }, -- Divine Illumination
 
     -- Cataclysm
+
     [96231] = { type = INTERRUPT, duration = 4 }, -- Rebuke
     [85696] = { type = BUFF_OFFENSIVE }, -- Zealotry
-
-    -- MoP
-    [105421] = { type = CROWD_CONTROL }, -- Blinding Light
-    [115752] = { type = CROWD_CONTROL }, -- Blinding Light (Glyph of Blinding Light)
-    [105593] = { type = CROWD_CONTROL }, -- Fist of Justice
-    [119072] = { type = CROWD_CONTROL }, -- Holy Wrath
-    [145067] = { type = CROWD_CONTROL }, -- Turn Evil (Evil is a Point of View)
-    [110300] = { type = ROOT }, -- Burden of Guilt
 
     -- Hunter
 
@@ -354,13 +298,7 @@ addon.Spells = {
     [91644] = { type = CROWD_CONTROL }, -- Snatch (bird of prey pet disarm)
     [50318] = { type = CROWD_CONTROL }, -- Serenity Dust (moth pet silence)
     [56626] = { type = CROWD_CONTROL }, -- Sting (wasp pet stun)
-    -- MoP
-    [117526] = { type = CROWD_CONTROL }, -- Binding Shot
-    [128405] = { type = ROOT }, -- Narrow Escape
-    [126246] = { type = CROWD_CONTROL }, -- Lullaby (Crane)
-    [126355] = { type = CROWD_CONTROL }, -- Paralyzing Quill (Porcupine)
-    [126423] = { type = CROWD_CONTROL }, -- Petrifying Gaze (Basilisk)
-    [3674] = { type = BUFF_OFFENSIVE }, -- Black Arrow
+
 
     -- Druid
 
@@ -392,34 +330,6 @@ addon.Spells = {
     [17116] = { type = BUFF_DEFENSIVE }, -- Nature's Swiftness
     [81261] = { type = CROWD_CONTROL, },  -- Solar Beam
     [78675] = { type = INTERRUPT, duration = 5 }, -- Solar Beam interrupt
-    -- MoP
-    [113801] = { type = CROWD_CONTROL }, -- Bash (Force of Nature - Feral Treants)
-    [102795] = { type = CROWD_CONTROL }, -- Bear Hug
-    [99] = { type = CROWD_CONTROL }, -- Disorienting Roar
-    [102546] = { type = CROWD_CONTROL }, -- Pounce (Incarnation)
-    [114238] = { type = CROWD_CONTROL }, -- Fae Silence (Glyph of Fae Silence)
-    [113770] = { type = ROOT }, -- Entangling Roots (Force of Nature - Balance Treants)
-    [102359] = { type = ROOT }, -- Mass Entanglement
-    [127797] = { type = CROWD_CONTROL }, -- Ursol's Vortex
-    [102342] = { type = BUFF_DEFENSIVE }, -- Ironbark
-    [102351] = { type = BUFF_DEFENSIVE }, -- Cenarion Ward
-    -- Druid Symbiosis
-    [110698] = { type = CROWD_CONTROL }, -- Hammer of Justice (Paladin)
-    [113004] = { type = CROWD_CONTROL }, -- Intimidating Roar [flee] (Warrior)
-    [113056] = { type = CROWD_CONTROL }, -- Intimidating Roar [cower]] (Warrior)
-    -- [126458] = { type = CROWD_CONTROL }, -- Grapple Weapon (Monk)
-    [126458] = { type = ROOT }, -- Frost Nova (Mage)
-    [110617] = { type = IMMUNITY }, -- Deterrence (Hunter)
-    [110715] = { type = IMMUNITY }, -- Dispersion (Priest)
-    [110700] = { type = IMMUNITY }, -- Divine Shield (Paladin)
-    [110696] = { type = IMMUNITY }, -- Ice Block (Mage)
-    [110570] = { type = IMMUNITY_SPELL }, -- Anti-Magic Shell (Death Knight)
-    [110788] = { type = IMMUNITY_SPELL }, -- Cloak of Shadows (Rogue)
-    [113002] = { type = IMMUNITY_SPELL }, -- Spell Reflection (Warrior)
-    [110791] = { type = BUFF_DEFENSIVE }, -- Evasion (Rogue)
-    [110575] = { type = BUFF_DEFENSIVE }, -- Icebound Fortitude (Death Knight)
-    [122291] = { type = BUFF_DEFENSIVE }, -- Unending Resolve (Warlock)
-
 
     -- Mage
 
@@ -466,15 +376,6 @@ addon.Spells = {
 
     [83853] = { type = DEBUFF_OFFENSIVE, }, -- Combustion
 
-    -- MoP
-    [115760] = { type = IMMUNITY_SPELL }, -- Glyph of Ice Block
-    [118271] = { type = CROWD_CONTROL }, -- Combustion Impact
-    [102051] = { type = CROWD_CONTROL }, -- Frostjaw (Root Silence)
-    [111340] = { type = ROOT }, -- Ice Ward
-    [121288] = { type = ROOT }, -- Chilled (Frost Armor)
-    [113092] = { type = ROOT }, -- Frost Bomb
-    [110909] = { type = BUFF_DEFENSIVE }, -- Alter Time
-    [115610] = { type = BUFF_DEFENSIVE }, -- Temporal Shield
     -- Rogue
 
     -- WoTLK
@@ -500,11 +401,6 @@ addon.Spells = {
     [14251] = { type = BUFF_OTHER }, -- Riposte (Rogue)
     [86759] = { type = CROWD_CONTROL }, -- Improved Kick (Rank 2)
     [74001] = { type = BUFF_DEFENSIVE }, -- Combat Readiness
-    -- MoP
-    [113953] = { type = CROWD_CONTROL },  -- Paralysis (Paralytic Poison)
-    [115197] = { type = ROOT },  -- Partial Paralysis
-    [119696] = { type = ROOT },  -- Debilitation
-    [114018] = { type = BUFF_OTHER }, -- Shroud of Concealment
 
     -- Warrior
 
@@ -521,6 +417,7 @@ addon.Spells = {
     [60503] = { type = BUFF_OFFENSIVE, }, -- Taste for Blood
     [65925] = { type = BUFF_OFFENSIVE, }, -- Unrelenting Assault (2/2)
     [85388] = { type = CROWD_CONTROL }, -- Throwdown
+
     [18498] = { type = CROWD_CONTROL }, -- Improved Shield Bash
     [20230] = { type = IMMUNITY }, -- Retaliation
     [1719] = { type = BUFF_OFFENSIVE }, -- Recklessness
@@ -538,40 +435,5 @@ addon.Spells = {
     [23920] = { type = IMMUNITY_SPELL }, -- Spell Reflection
     [12976] = { type = BUFF_DEFENSIVE }, -- Last Stand
     [12294] = { type = BUFF_OTHER }, -- Mortal Strike
-    -- MoP
-    [118895] = { type = CROWD_CONTROL }, -- Dragon Roar
-    -- [132168] = { type = CROWD_CONTROL }, -- Shockwave
-    [107570] = { type = CROWD_CONTROL }, -- Storm Bolt
-    [132169] = { type = CROWD_CONTROL }, -- Storm Bolt
-    [107566] = { type = ROOT }, -- Staggering Shout
-    -- [147531] = { type = ROOT }, -- Warbringer
-    [137637] = { type = ROOT }, -- Warbringer
-    [147531] = { type = ROOT }, -- Bloodbath
-    [129923] = { type = ROOT }, -- Sluggish (Glyph of Hindering Strikes)
-    [114028] = { type = IMMUNITY_SPELL }, -- Mass Spell Reflection
-    [118038] = { type = BUFF_DEFENSIVE }, -- Die by the Sword
-    [114203] = { type = BUFF_OFFENSIVE }, -- Demoralizing Banner
 
-    -- Monk
-    [131523] = { type = IMMUNITY_SPELL }, -- Zen Meditation
-    [122465] = { type = IMMUNITY_SPELL }, -- Dematerialize
-    [132168] = { type = CROWD_CONTROL }, -- Breath of Fire (Glyph of Breath of Fire)
-    [126451] = { type = CROWD_CONTROL }, -- Clash
-    [122242] = { type = CROWD_CONTROL }, -- Clash
-    [119392] = { type = CROWD_CONTROL }, -- Charging Ox Wave
-    [120086] = { type = CROWD_CONTROL }, -- Fists of Fury
-    [119381] = { type = CROWD_CONTROL }, -- Leg Sweep
-    [115078] = { type = CROWD_CONTROL }, -- Paralysis
-    [117368] = { type = CROWD_CONTROL }, -- Grapple Weapon
-    [140023] = { type = CROWD_CONTROL }, -- Ring of Peace
-    [137461] = { type = CROWD_CONTROL }, -- Disarmed (Ring of Peace)
-    [137460] = { type = CROWD_CONTROL }, -- Silenced (Ring of Peace)
-    [116709] = { type = CROWD_CONTROL }, -- Spear Hand Strike (Silence)
-    [116706] = { type = ROOT }, -- Disable (Root)
-    [113275] = { type = ROOT }, -- Entangling Roots (Symbiosis)
-    [123407] = { type = ROOT }, -- Spinning Fire Blossom
-    [116095] = { type = ROOT }, -- Disable
-    [123586] = { type = ROOT }, -- Flying Serpent Kick
-    [123727] = { type = ROOT }, -- Dizzying Haze
-    [126456] = { type = BUFF_DEFENSIVE }, -- Fortifying Brew
 }

@@ -291,6 +291,7 @@ function BigDebuffs:SetupOptions()
                         type = "toggle",
                         width = "normal",
                         name = L["Hide Other Debuffs"],
+                        hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                         set = function(info, value)
                             if value then
                                 self.db.profile.raidFrames.redirectBliz = false
@@ -305,6 +306,7 @@ function BigDebuffs:SetupOptions()
                         type = "toggle",
                         width = "normal",
                         name = L["Redirect Other Debuffs"],
+                        hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                         set = function(info, value)
                             if value then
                                 self.db.profile.raidFrames.hideBliz = false
@@ -320,6 +322,7 @@ function BigDebuffs:SetupOptions()
                         width = "normal",
                         name = L["Show All Class Buffs"],
                         desc = L["Show all the buffs our class can apply"],
+                        hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                         order = 4,
                     },
                     increaseBuffs = {
@@ -327,6 +330,7 @@ function BigDebuffs:SetupOptions()
                         width = "normal",
                         name = L["Increase Maximum Buffs"],
                         desc = L["Sets the maximum buffs to 6"],
+                        hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                         order = 5,
                     },
                     cooldownCount = {
@@ -421,6 +425,7 @@ function BigDebuffs:SetupOptions()
                                 isPercent = true,
                                 name = L["Dispellable CC"],
                                 desc = L["Set the size of dispellable crowd control debuffs"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 min = 0,
                                 max = 1,
                                 step = 0.01,
@@ -438,7 +443,7 @@ function BigDebuffs:SetupOptions()
                             cc = {
                                 type = "range",
                                 isPercent = true,
-                                name = L["Other CC"],
+                                name = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and L["cc"] or L["Other CC"] end,
                                 desc = L["Set the size of crowd control debuffs"],
                                 min = 0,
                                 max = 1,
@@ -450,6 +455,7 @@ function BigDebuffs:SetupOptions()
                                 isPercent = true,
                                 name = L["Dispellable Roots"],
                                 desc = L["Set the size of dispellable roots"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 min = 0,
                                 max = 1,
                                 step = 0.01,
@@ -469,6 +475,7 @@ function BigDebuffs:SetupOptions()
                                 isPercent = true,
                                 name = L["Other Roots"],
                                 desc = L["Set the size of roots"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 min = 0,
                                 max = 1,
                                 step = 0.01,
@@ -479,6 +486,7 @@ function BigDebuffs:SetupOptions()
                                 isPercent = true,
                                 name = L["Offensive Debuffs"],
                                 desc = L["Set the size of offensive debuffs"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 min = 0,
                                 max = 1,
                                 step = 0.01,
@@ -489,6 +497,7 @@ function BigDebuffs:SetupOptions()
                                 isPercent = true,
                                 name = L["Other Debuffs"],
                                 desc = L["Set the size of other debuffs"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 min = 0,
                                 max = 1,
                                 step = 0.01,
@@ -499,6 +508,7 @@ function BigDebuffs:SetupOptions()
                                 isPercent = true,
                                 name = L["Dispellable PvE"],
                                 desc = L["Set the size of dispellable PvE debuffs"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 min = 0,
                                 max = 1,
                                 step = 0.01,
@@ -509,6 +519,7 @@ function BigDebuffs:SetupOptions()
                                 isPercent = true,
                                 name = L["interrupts"],
                                 desc = L["Set the size of interrupts"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 min = 0,
                                 max = 1,
                                 step = 0.01,
@@ -517,7 +528,7 @@ function BigDebuffs:SetupOptions()
                             buffs = {
                                 type = "range",
                                 isPercent = true,
-                                name = L["buffs"],
+                                name = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and L["buffs_defensive"] or L["buffs"] end,
                                 desc = L["Set the size of buffs"],
                                 min = 0,
                                 max = 0.5,
@@ -914,6 +925,146 @@ function BigDebuffs:SetupOptions()
                         desc = L["Enable BigDebuffs on the target frame"],
                         order = 2,
                     },
+                    targettarget = {
+                        type = "group",
+                        disabled = function(info)
+                            return not self.db.profile[info[1]].enabled or
+                                (info[3] and not self.db.profile.unitFrames[info[2]].enabled)
+                        end,
+                        get = function(info)
+                            local name = info[#info]
+                            return self.db.profile.unitFrames.targettarget[name]
+                        end,
+                        set = function(info, value)
+                            local name = info[#info]
+                            self.db.profile.unitFrames.targettarget[name] = value
+                            self:Refresh()
+                        end,
+                        args = {
+                            enabled = {
+                                type = "toggle",
+                                disabled = function(info) return not self.db.profile[info[1]].enabled end,
+                                name = L["Enabled"],
+                                order = 1,
+                                width = "full",
+                                desc = "Enable BigDebuffs on the target of target frame",
+                            },
+                            anchor = {
+                                name = L["Anchor"],
+                                desc = L["Anchor to attach the BigDebuffs frames"],
+                                type = "select",
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["manual"] = L["Manual"],
+                                },
+                                width = "normal",
+                                order = 2,
+                            },
+                            anchorPoint = {
+                                name = L["Anchor Point"],
+                                desc = L["Anchor point to attach the BigDebuffs frames"],
+                                type = "select",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                                end,
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["TOP"] = L["TOP"],
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                    ["TOPRIGHT"] = L["TOPRIGHT"],
+                                    ["TOPLEFT"] = L["TOPLEFT"],
+                                    ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                                    ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                                    ["CENTER"] = L["CENTER"],
+                                },
+                                order = 3,
+                            },
+                            relativePoint = {
+                                name = L["Relative Point"],
+                                desc = L["Relative point to attach the BigDebuffs frames"],
+                                type = "select",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                values = {
+                                    ["auto"] = L["Automatic"],
+                                    ["TOP"] = L["TOP"],
+                                    ["RIGHT"] = L["RIGHT"],
+                                    ["BOTTOM"] = L["BOTTOM"],
+                                    ["LEFT"] = L["LEFT"],
+                                    ["TOPRIGHT"] = L["TOPRIGHT"],
+                                    ["TOPLEFT"] = L["TOPLEFT"],
+                                    ["BOTTOMLEFT"] = L["BOTTOMLEFT"],
+                                    ["BOTTOMRIGHT"] = L["BOTTOMRIGHT"],
+                                    ["CENTER"] = L["CENTER"],
+                                },
+                                order = 4,
+                            },
+                            x = {
+                                type = "range",
+                                name = L["X offset"],
+                                desc = L["Set the X offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                order = 5,
+                            },
+                            y = {
+                                type = "range",
+                                name = L["Y offset"],
+                                desc = L["Set the Y offset"],
+                                width = 1.5,
+                                min = -100,
+                                max = 100,
+                                step = 1,
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual" or
+                                        self.db.profile.unitFrames[name].anchorPoint == "auto"
+                                end,
+                                order = 6,
+                            },
+                            matchFrameHeight = {
+                                name = L["Match Frame Height"],
+                                desc = L["Match the height of the frame"],
+                                type = "toggle",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or self.db.profile.unitFrames[name].anchor == "manual"
+                                end,
+                                order = 7,
+                            },
+                            size = {
+                                type = "range",
+                                disabled = function(info)
+                                    local name = info[2]
+                                    return not self.db.profile.unitFrames[name].enabled or
+                                        (self.db.profile.unitFrames[name].anchor == "auto" and self.db.profile.unitFrames[name].matchFrameHeight)
+                                end,
+                                name = L["Size"],
+                                width = "double",
+                                desc = L["Set the size of the frame"],
+                                min = 8,
+                                max = 512,
+                                step = 1,
+                                order = 8,
+                            },
+                        },
+                        name = "Target of Target Frame",
+                        desc = "Enable BigDebuffs on the target of target frame",
+                        order = 3,
+                    },
                     pet = {
                         type = "group",
                         disabled = function(info)
@@ -1212,6 +1363,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["immunities"],
                                 desc = L["Show Immunities on the unit frames"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 2,
                             },
                             interrupts = {
@@ -1219,6 +1371,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["interrupts"],
                                 desc = L["Show Interrupts on the unit frames"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 3,
                             },
                             immunities_spells = {
@@ -1226,6 +1379,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["immunities_spells"],
                                 desc = L["Show Spell Immunities on the unit frames"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 4,
                             },
                             buffs_defensive = {
@@ -1240,6 +1394,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["buffs_offensive"],
                                 desc = L["Show Offensive Buffs on the unit frames"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 6,
                             },
                             debuffs_offensive = {
@@ -1247,6 +1402,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["debuffs_offensive"],
                                 desc = L["Show Offensive Debuffs on the unit frames"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 7,
                             },
                             buffs_other = {
@@ -1254,6 +1410,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["buffs_other"],
                                 desc = L["Show Other Buffs on the unit frames"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 8,
                             },
                             roots = {
@@ -1261,6 +1418,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["roots"],
                                 desc = L["Show Roots on the unit frames"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 9,
                             },
                             buffs_speed_boost = {
@@ -1268,6 +1426,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["buffs_speed_boost"],
                                 desc = L["Show Speed Boosts on the unit frames"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 10,
                             },
                         },
@@ -1377,6 +1536,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["immunities"],
                                 desc = L["Show Immunities on nameplates"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 2,
                             },
                             interrupts = {
@@ -1384,6 +1544,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["interrupts"],
                                 desc = L["Show Interrupts on nameplates"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 3,
                             },
                             immunities_spells = {
@@ -1391,6 +1552,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["immunities_spells"],
                                 desc = L["Show Spell Immunities on nameplates"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 4,
                             },
                             buffs_defensive = {
@@ -1405,6 +1567,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["buffs_offensive"],
                                 desc = L["Show Offensive Buffs on nameplates"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 6,
                             },
                             debuffs_offensive = {
@@ -1412,6 +1575,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["debuffs_offensive"],
                                 desc = L["Show Offensive Debuffs on nameplates"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 7,
                             },
                             buffs_other = {
@@ -1419,6 +1583,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["buffs_other"],
                                 desc = L["Show Other Buffs on nameplates"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 8,
                             },
                             roots = {
@@ -1426,6 +1591,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["roots"],
                                 desc = L["Show Roots on nameplates"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 9,
                             },
                             buffs_speed_boost = {
@@ -1433,6 +1599,7 @@ function BigDebuffs:SetupOptions()
                                 width = "normal",
                                 name = L["buffs_speed_boost"],
                                 desc = L["Show Speed Boosts on nameplates"],
+                                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                                 order = 10,
                             },
                         },
@@ -1587,6 +1754,7 @@ function BigDebuffs:SetupOptions()
                 name = L["Spells"],
                 type = "group",
                 childGroups = "tab",
+                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 order = 40,
                 args = Spells,
             },
@@ -1599,6 +1767,7 @@ function BigDebuffs:SetupOptions()
             order = 30,
             type = "group",
             inline = true,
+            hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
             args = WarningDebuffs,
         }
 
@@ -1607,6 +1776,7 @@ function BigDebuffs:SetupOptions()
             isPercent = true,
             name = L["Warning Debuffs"],
             desc = L["Set the size of warning debuffs"],
+            hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
             min = 0,
             max = 1,
             step = 0.01,
@@ -1909,6 +2079,7 @@ function BigDebuffs:SetupOptions()
                 width = "double",
                 name = L["immunities"],
                 desc = L["Higher priority spells will take precedence regardless of duration"],
+                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 min = 1,
                 max = 100,
                 step = 1,
@@ -1919,6 +2090,7 @@ function BigDebuffs:SetupOptions()
                 width = "double",
                 name = L["immunities_spells"],
                 desc = L["Higher priority spells will take precedence regardless of duration"],
+                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 min = 1,
                 max = 100,
                 step = 1,
@@ -1939,6 +2111,7 @@ function BigDebuffs:SetupOptions()
                 width = "double",
                 name = L["interrupts"],
                 desc = L["Higher priority spells will take precedence regardless of duration"],
+                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 min = 1,
                 max = 100,
                 step = 1,
@@ -1959,6 +2132,7 @@ function BigDebuffs:SetupOptions()
                 width = "double",
                 name = L["buffs_offensive"],
                 desc = L["Higher priority spells will take precedence regardless of duration"],
+                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 min = 1,
                 max = 100,
                 step = 1,
@@ -1969,6 +2143,7 @@ function BigDebuffs:SetupOptions()
                 width = "double",
                 name = L["debuffs_offensive"],
                 desc = L["Higher priority spells will take precedence regardless of duration"],
+                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 min = 1,
                 max = 100,
                 step = 1,
@@ -1979,6 +2154,7 @@ function BigDebuffs:SetupOptions()
                 width = "double",
                 name = L["buffs_other"],
                 desc = L["Higher priority spells will take precedence regardless of duration"],
+                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 min = 1,
                 max = 100,
                 step = 1,
@@ -1989,6 +2165,7 @@ function BigDebuffs:SetupOptions()
                 width = "double",
                 name = L["roots"],
                 desc = L["Higher priority spells will take precedence regardless of duration"],
+                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 min = 1,
                 max = 100,
                 step = 1,
@@ -1999,6 +2176,7 @@ function BigDebuffs:SetupOptions()
                 width = "double",
                 name = L["buffs_speed_boost"],
                 desc = L["Higher priority spells will take precedence regardless of duration"],
+                hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 min = 1,
                 max = 100,
                 step = 1,
@@ -2009,12 +2187,13 @@ function BigDebuffs:SetupOptions()
 
     self.options.plugins.profiles = { profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db) }
 
-    if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+    if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC and WOW_PROJECT_ID ~= WOW_PROJECT_BURNING_CRUSADE_CLASSIC then
         local LibDualSpec = LibStub('LibDualSpec-1.0')
         LibDualSpec:EnhanceDatabase(self.db, "BigDebuffsDB")
         LibDualSpec:EnhanceOptions(self.options.plugins.profiles.profiles, self.db)
     end
 
     LibStub("AceConfig-3.0"):RegisterOptionsTable("BigDebuffs", self.options)
-    LibStub("AceConfigDialog-3.0"):AddToBlizOptions("BigDebuffs", "BigDebuffs")
+    local _, categoryID = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("BigDebuffs", "BigDebuffs")
+    self.optionsCategory = categoryID
 end
