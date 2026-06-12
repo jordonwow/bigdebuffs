@@ -1,4 +1,4 @@
-## Interface: 11508, 20505, 38000, 50500, 50503, 50504, 120000, 120001
+## Interface: 11508, 20505, 38000, 50500, 50503, 50504, 110205, 110207, 120000, 120001
 ## Title: BigDebuffs
 ## Notes: Increases the debuff size of crowd control effects on the Blizzard raid frames
 ## Version: @project-version@
