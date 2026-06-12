@@ -44,6 +44,17 @@ end
 
 local issecretvalue = issecretvalue or function() return false end
 
+-- Modernized clients (MoP Classic 5.5.4+, TBC Anniversary, Midnight) ship the
+-- retail CompactUnitFrame code: CompactUnitFrame_UpdateDebuffs and the
+-- Compact*Template XML templates were removed, auras live in frame.buffs/.debuffs.
+-- Detect by capability instead of WOW_PROJECT_ID so future client updates keep working.
+local hasLegacyCUF = type(CompactUnitFrame_UpdateDebuffs) == "function"
+local useModernAuraPath = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+    or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+    or not hasLegacyCUF
+local hasCompactBuffTemplate = not (C_XMLUtil and C_XMLUtil.GetTemplateInfo)
+    or (C_XMLUtil.GetTemplateInfo("CompactBuffTemplate") ~= nil)
+
 -- Defaults
 local defaults = {
     profile = {
@@ -1230,7 +1241,7 @@ function BigDebuffs:Refresh()
     for frame, _ in pairs(self.frames) do
         local unit = frame.displayedUnit or frame.unit
         if frame:IsVisible() and unit and UnitExists(unit) then
-            pcall(CompactUnitFrame_UpdateAuras, frame)
+            if CompactUnitFrame_UpdateAuras then pcall(CompactUnitFrame_UpdateAuras, frame) end
         end
         if frame and frame.BigDebuffs then self:AddBigDebuffs(frame) end
     end
@@ -1682,13 +1693,17 @@ function BigDebuffs:AddBigDebuffs(frame)
 
     for i = 1, maxBuffs do
         if i > frame.maxBuffs then
-            local buffFrame = _G[buffPrefix .. i] or
-                CreateFrame("Button", buffPrefix .. i, frame, "CompactBuffTemplate")
-            buffFrame:ClearAllPoints()
-            if math.fmod(i - 1, 3) == 0 then
-                buffFrame:SetPoint("BOTTOMRIGHT", _G[buffPrefix .. i - 3], "TOPRIGHT")
-            else
-                buffFrame:SetPoint("BOTTOMRIGHT", _G[buffPrefix .. i - 1], "BOTTOMLEFT")
+            local buffFrame = _G[buffPrefix .. i]
+            if not buffFrame and hasCompactBuffTemplate then
+                buffFrame = CreateFrame("Button", buffPrefix .. i, frame, "CompactBuffTemplate")
+            end
+            if buffFrame and _G[buffPrefix .. i - 1] then
+                buffFrame:ClearAllPoints()
+                if math.fmod(i - 1, 3) == 0 then
+                    buffFrame:SetPoint("BOTTOMRIGHT", _G[buffPrefix .. i - 3], "TOPRIGHT")
+                else
+                    buffFrame:SetPoint("BOTTOMRIGHT", _G[buffPrefix .. i - 1], "BOTTOMLEFT")
+                end
             end
         end
     end
@@ -1733,14 +1748,32 @@ function BigDebuffs:AddBigDebuffs(frame)
             end
         end
 
-        big.cooldown:SetHideCountdownNumbers(not self.db.profile.raidFrames.cooldownCount)
-        big.cooldown.noCooldownCount = not self.db.profile.raidFrames.cooldownCount
-        big.cooldown:GetRegions():SetFont(LibSharedMedia:Fetch("font", BigDebuffs.db.profile.raidFrames.cooldownFont),
-            BigDebuffs.db.profile.raidFrames.cooldownFontSize, BigDebuffs.db.profile.raidFrames.cooldownFontEffect);
-        big.cooldown:SetDrawEdge(false)
+        if big.cooldown then
+            big.cooldown:SetHideCountdownNumbers(not self.db.profile.raidFrames.cooldownCount)
+            big.cooldown.noCooldownCount = not self.db.profile.raidFrames.cooldownCount
+            local cooldownText = big.cooldown:GetRegions()
+            if cooldownText and cooldownText.SetFont then
+                cooldownText:SetFont(LibSharedMedia:Fetch("font", BigDebuffs.db.profile.raidFrames.cooldownFont),
+                    BigDebuffs.db.profile.raidFrames.cooldownFontSize, BigDebuffs.db.profile.raidFrames.cooldownFontEffect);
+            end
+            big.cooldown:SetDrawEdge(false)
+        end
         frame.BigDebuffs[i] = big
         big:Hide()
         self.frames[frame] = true
+        if not frame.BigDebuffsAuraWatcher then
+            local watcher = CreateFrame("Frame", nil, frame)
+            watcher:SetScript("OnEvent", function()
+                if frame:IsForbidden() then return end
+                BigDebuffs:ShowBigDebuffs(frame)
+            end)
+            frame.BigDebuffsAuraWatcher = watcher
+        end
+        local watcher = frame.BigDebuffsAuraWatcher
+        watcher:UnregisterEvent("UNIT_AURA")
+        if frame.displayedUnit then
+            watcher:RegisterUnitEvent("UNIT_AURA", frame.displayedUnit)
+        end
         self:ShowBigDebuffs(frame)
     end
     return true
@@ -1758,7 +1791,7 @@ hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
 	if InCombatLockdown() then
 		if not frame.BigDebuffs then
 			if not pending[frame] then pending[frame] = true end
-		elseif WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+		elseif WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or not hasLegacyCUF then
 			BigDebuffs:ShowBigDebuffs(frame)
 		else
 			BigDebuffs:AddBigDebuffs(frame)
@@ -1932,40 +1965,42 @@ end
 
 local CompactUnitFrame_UtilSetDebuff = CompactUnitFrame_UtilSetDebuff
 
-if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC then
-    hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
-        if not BigDebuffs.db.profile then return end
-        if not BigDebuffs.db.profile.raidFrames then return end
-        if not BigDebuffs.db.profile.raidFrames.enabled then return end
-        if (not frame) or frame:IsForbidden() then return end
-        if (not UnitIsPlayer(frame.displayedUnit)) then return end
-        BigDebuffs:ShowBigDebuffs(frame)
+if useModernAuraPath then
+    if type(CompactUnitFrame_UpdateAuras) == "function" then
+        hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
+            if not BigDebuffs.db.profile then return end
+            if not BigDebuffs.db.profile.raidFrames then return end
+            if not BigDebuffs.db.profile.raidFrames.enabled then return end
+            if (not frame) or frame:IsForbidden() then return end
+            if (not UnitIsPlayer(frame.displayedUnit)) then return end
+            BigDebuffs:ShowBigDebuffs(frame)
 
-        -- add extra buffs
-        local frameNum = 1
-        local maxBuffs = BigDebuffs.db.profile.raidFrames.increaseBuffs and INCREASED_MAX_BUFFS or frame.maxBuffs
-        if frame.buffs and frame.buffFrames then
-            frame.buffs:Iterate(function(auraInstanceID, aura)
-                if frameNum > maxBuffs then
-                    return true
-                end
-                local buffFrame = frame.buffFrames[frameNum]
-                if not buffFrame then return true end
+            -- add extra buffs
+            local frameNum = 1
+            local maxBuffs = BigDebuffs.db.profile.raidFrames.increaseBuffs and INCREASED_MAX_BUFFS or frame.maxBuffs
+            if frame.buffs and frame.buffFrames then
+                frame.buffs:Iterate(function(auraInstanceID, aura)
+                    if frameNum > maxBuffs then
+                        return true
+                    end
+                    local buffFrame = frame.buffFrames[frameNum]
+                    if not buffFrame then return true end
 
-                -- set size
-                local size = frame:GetHeight() * BigDebuffs.db.profile.raidFrames.buffs * 0.01
-                buffFrame:SetSize(size, size)
+                    -- set size
+                    local size = frame:GetHeight() * BigDebuffs.db.profile.raidFrames.buffs * 0.01
+                    buffFrame:SetSize(size, size)
 
-                -- we only need to set extra buffs
-                if frameNum > frame.maxBuffs then
-                    CompactUnitFrame_UtilSetBuff(buffFrame, aura)
-                end
-                frameNum = frameNum + 1
+                    -- we only need to set extra buffs
+                    if frameNum > frame.maxBuffs and CompactUnitFrame_UtilSetBuff then
+                        CompactUnitFrame_UtilSetBuff(buffFrame, aura)
+                    end
+                    frameNum = frameNum + 1
 
-                return false
-            end)
-        end
-    end)
+                    return false
+                end)
+            end
+        end)
+    end
 else
     CompactUnitFrame_UtilSetDebuff = function(debuffFrame, unit, index, filter, isBossAura, isBossBuff, ...)
         local UnitDebuff = BigDebuffs.test and UnitDebuffTest or UnitDebuff
@@ -2082,6 +2117,7 @@ else
         end
     end
 
+    if type(CompactUnitFrame_UpdateDebuffs) == "function" then
     hooksecurefunc("CompactUnitFrame_UpdateDebuffs", function(frame)
         if (not frame.debuffFrames or not frame.optionTable.displayDebuffs) then
             CompactUnitFrame_HideAllDebuffs(frame);
@@ -2176,8 +2212,10 @@ else
 
         BigDebuffs:ShowBigDebuffs(frame)
     end)
+    end
 
     -- Show extra buffs
+    if type(CompactUnitFrame_UpdateAuras) == "function" then
     hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame)
         if (not frame.buffFrames or not frame.optionTable.displayBuffs) then
             CompactUnitFrame_HideAllBuffs(frame);
@@ -2225,9 +2263,10 @@ else
             end
         end
     end)
+    end
 
 end
-if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC then
+if useModernAuraPath then
     function BigDebuffs.GetTestAuras()
         local testAuras = {}
         for _,debuff in ipairs (TestDebuffs) do
@@ -2389,29 +2428,32 @@ if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_BURNI
                 if not debuffFrame.maxHeight then
                     debuffFrame.maxHeight = frameHeight;
                 end
-                if self.test then
-                    local aura = debuffs[i][1]
-                    debuffFrame.auraInstanceID = nil
-                    debuffFrame.icon:SetTexture(aura.icon)
-                    debuffFrame.count:Hide()
-                    local startTime = aura.expirationTime - aura.duration
-                    CooldownFrame_Set(debuffFrame.cooldown, startTime, aura.duration, true)
-                    local r, g, b
-                    if AuraUtil and AuraUtil.GetDebuffTypeColor then
-                        r, g, b = AuraUtil.GetDebuffTypeColor(aura.dispelName)
-                    else
-                        local color = (DebuffTypeColor and (DebuffTypeColor[aura.dispelName] or DebuffTypeColor["none"])) or { r=0, g=0, b=0 }
-                        r, g, b = color.r, color.g, color.b
-                    end
-                    debuffFrame.border:SetVertexColor(r, g, b)
-                    debuffFrame.isBossBuff = false
-                    debuffFrame:SetSize(debuffFrame.baseSize, debuffFrame.baseSize)
-                    debuffFrame:Show()
+                local aura = debuffs[i][1]
+                debuffFrame.auraInstanceID = self.test and nil or aura.auraInstanceID
+                debuffFrame.icon:SetTexture(aura.icon)
+                local stacks = aura.applications or aura.charges or 0
+                if stacks > 1 then
+                    debuffFrame.count:SetText(stacks >= 100 and BUFF_STACKS_OVERFLOW or stacks)
+                    debuffFrame.count:Show()
                 else
-                    if CompactUnitFrame_UtilSetDebuff then
-                        CompactUnitFrame_UtilSetDebuff(debuffFrame, debuffs[i][1])
-                    end
+                    debuffFrame.count:Hide()
                 end
+                if aura.expirationTime and aura.duration and aura.duration > 0 then
+                    CooldownFrame_Set(debuffFrame.cooldown, aura.expirationTime - aura.duration, aura.duration, true)
+                else
+                    CooldownFrame_Clear(debuffFrame.cooldown)
+                end
+                local r, g, b
+                if AuraUtil and AuraUtil.GetDebuffTypeColor then
+                    r, g, b = AuraUtil.GetDebuffTypeColor(aura.dispelName)
+                else
+                    local color = (DebuffTypeColor and (DebuffTypeColor[aura.dispelName] or DebuffTypeColor["none"])) or { r=0, g=0, b=0 }
+                    r, g, b = color.r, color.g, color.b
+                end
+                debuffFrame.border:SetVertexColor(r, g, b)
+                debuffFrame.isBossBuff = false
+                debuffFrame:SetSize(debuffFrame.baseSize, debuffFrame.baseSize)
+                debuffFrame:Show()
                 frame.BigDebuffs[index].cooldown:SetSwipeColor(0, 0, 0, 0.7)
                 index = index + 1
             end
