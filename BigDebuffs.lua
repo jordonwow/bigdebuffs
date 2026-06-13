@@ -1237,6 +1237,38 @@ local function HideBigDebuffs(frame)
     end
 end
 
+local function HideNativeDebuffs(frame)
+    if not frame.debuffFrames then return end
+    for i = 1, #frame.debuffFrames do
+        local df = frame.debuffFrames[i]
+        if df then df:Hide() end
+    end
+end
+
+local DispelColors = {
+    Magic   = { r = 0.20, g = 0.60, b = 1.00 },
+    Curse   = { r = 0.60, g = 0.00, b = 1.00 },
+    Disease = { r = 0.60, g = 0.40, b = 0.00 },
+    Poison  = { r = 0.00, g = 0.60, b = 0.00 },
+}
+local DefaultDispelColor = { r = 0.80, g = 0.00, b = 0.00 }
+
+local function SetAuraBorder(borderRegion, dispelName)
+    if not borderRegion then return end
+    if AuraUtil and AuraUtil.SetAuraBorderAtlas and DEBUFF_DISPLAY_INFO then
+        AuraUtil.SetAuraBorderAtlas(borderRegion, dispelName, true)
+        return
+    end
+    local color = (DebuffTypeColor and DebuffTypeColor[dispelName])
+                  or DispelColors[dispelName]
+                  or (DebuffTypeColor and DebuffTypeColor["none"])
+                  or DefaultDispelColor
+
+    borderRegion:SetTexture("Interface\\Buttons\\UI-Debuff-Overlays")
+    borderRegion:SetTexCoord(0.296875, 0.5703125, 0, 0.515625)
+    borderRegion:SetVertexColor(color.r, color.g, color.b)
+end
+
 function BigDebuffs:Refresh()
     for frame, _ in pairs(self.frames) do
         local unit = frame.displayedUnit or frame.unit
@@ -2067,8 +2099,7 @@ else
             CooldownFrame_Clear(debuffFrame.cooldown);
         end
 
-        local color = DebuffTypeColor[debuffType] or DebuffTypeColor["none"];
-        debuffFrame.border:SetVertexColor(color.r, color.g, color.b);
+        SetAuraBorder(debuffFrame.border, debuffType);
 
         debuffFrame.isBossBuff = isBossBuff;
         if (isBossAura) then
@@ -2349,7 +2380,11 @@ if useModernAuraPath then
                 if self.db.profile.raidFrames.hideBliz or
                 self.db.profile.raidFrames.anchor == "INNER" or
                 self.db.profile.raidFrames.redirectBliz then
-                    if CompactUnitFrame_HideAllDebuffs then CompactUnitFrame_HideAllDebuffs(frame) end
+                    if CompactUnitFrame_HideAllDebuffs then
+                        CompactUnitFrame_HideAllDebuffs(frame)
+                    else
+                        HideNativeDebuffs(frame)
+                    end
                 end
 
                 local index = 1
@@ -2415,7 +2450,11 @@ if useModernAuraPath then
         if self.db.profile.raidFrames.hideBliz or
         self.db.profile.raidFrames.anchor == "INNER" or
         self.db.profile.raidFrames.redirectBliz then
-            if CompactUnitFrame_HideAllDebuffs then CompactUnitFrame_HideAllDebuffs(frame) end
+            if CompactUnitFrame_HideAllDebuffs then
+                CompactUnitFrame_HideAllDebuffs(frame)
+            else
+                HideNativeDebuffs(frame)
+            end
         end
 
         for i = 1, #debuffs do -- math.min maybe?
@@ -2443,14 +2482,7 @@ if useModernAuraPath then
                 else
                     CooldownFrame_Clear(debuffFrame.cooldown)
                 end
-                local r, g, b
-                if AuraUtil and AuraUtil.GetDebuffTypeColor then
-                    r, g, b = AuraUtil.GetDebuffTypeColor(aura.dispelName)
-                else
-                    local color = (DebuffTypeColor and (DebuffTypeColor[aura.dispelName] or DebuffTypeColor["none"])) or { r=0, g=0, b=0 }
-                    r, g, b = color.r, color.g, color.b
-                end
-                debuffFrame.border:SetVertexColor(r, g, b)
+                SetAuraBorder(debuffFrame.border, aura.dispelName)
                 debuffFrame.isBossBuff = false
                 debuffFrame:SetSize(debuffFrame.baseSize, debuffFrame.baseSize)
                 debuffFrame:Show()
