@@ -1767,7 +1767,9 @@ function BigDebuffs:AddBigDebuffs(frame)
             end
         else
             if self.db.profile.raidFrames.anchor == "INNER" then
-                local anchorTarget = frame.debuffFrames and frame.debuffFrames[1] or frame
+                local anchorTarget = (frame.healthBar and frame.healthBar:IsShown() and frame.healthBar)
+                                     or (frame.debuffFrames and frame.debuffFrames[1])
+                                     or frame
                 big:SetPoint("BOTTOMLEFT", anchorTarget, "BOTTOMLEFT", 0, 0)
             elseif self.db.profile.raidFrames.anchor == "LEFT" then
                 big:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", 0, 1)
