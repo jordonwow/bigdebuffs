@@ -14,7 +14,10 @@
     <Button name="BigDebuffsDebuffTemplate" virtual="true">
         <Size x="11" y="11"/>
         <Layers>
-            <Layer level="BORDER">
+            <Layer level="ARTWORK">
+                <Texture parentKey="icon" setAllPoints="true"/>
+            </Layer>
+            <Layer level="OVERLAY">
                 <Texture parentKey="border" file="Interface\Buttons\UI-Debuff-Overlays">
                     <Anchors>
                         <Anchor point="TOPLEFT" x="-1" y="1"/>
@@ -22,11 +25,6 @@
                     </Anchors>
                     <TexCoords left="0.296875" right="0.5703125" top="0" bottom="0.515625"/>
                 </Texture>
-            </Layer>
-            <Layer level="ARTWORK">
-                <Texture parentKey="icon" setAllPoints="true"/>
-            </Layer>
-            <Layer level="OVERLAY">
                 <FontString parentKey="count" inherits="NumberFontNormalSmall" justifyH="RIGHT">
                     <Anchors>
                         <Anchor point="BOTTOMRIGHT"/>
