@@ -46,6 +46,7 @@ read_globals = {
     "CooldownFrame_Clear",
     "CooldownFrame_Set",
     "CreateFrame",
+    "DEBUFF_DISPLAY_INFO",
     "DebuffTypeColor",
     "ElvUI",
     "GameTooltip",
