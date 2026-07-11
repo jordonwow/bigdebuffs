@@ -1148,18 +1148,21 @@ local anchors = {
     },
 }
 
-if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+local hasModernBlizzardFrames = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or not hasLegacyCUF
+
+if hasModernBlizzardFrames then
+    local arenaPrefix = _G["ArenaEnemyMatchFrame1ClassPortrait"] and "ArenaEnemyMatchFrame%dClassPortrait" or "ArenaEnemyFrame%dClassPortrait"
     anchors.Blizzard.units = {
         player = "PlayerFrame",
         pet = "PetPortrait",
         target = "TargetFrame",
         targettarget = "TargetFrameToT",
         focus = "FocusFrame",
-        arena1 = "ArenaEnemyMatchFrame1ClassPortrait",
-        arena2 = "ArenaEnemyMatchFrame2ClassPortrait",
-        arena3 = "ArenaEnemyMatchFrame3ClassPortrait",
-        arena4 = "ArenaEnemyMatchFrame4ClassPortrait",
-        arena5 = "ArenaEnemyMatchFrame5ClassPortrait",
+        arena1 = arenaPrefix:format(1),
+        arena2 = arenaPrefix:format(2),
+        arena3 = arenaPrefix:format(3),
+        arena4 = arenaPrefix:format(4),
+        arena5 = arenaPrefix:format(5),
     }
 end
 
@@ -1273,7 +1276,9 @@ function BigDebuffs:Refresh()
     for frame, _ in pairs(self.frames) do
         local unit = frame.displayedUnit or frame.unit
         if frame:IsVisible() and unit and UnitExists(unit) then
-            if CompactUnitFrame_UpdateAuras then pcall(CompactUnitFrame_UpdateAuras, frame) end
+            if CompactUnitFrame_UpdateAuras then
+                pcall(CompactUnitFrame_UpdateAuras, frame)
+            end
         end
         if frame and frame.BigDebuffs then self:AddBigDebuffs(frame) end
     end
@@ -1815,7 +1820,7 @@ end
 
 local pending = {}
 
-hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
+local function OnCompactUnitFrame_UpdateAll(frame)
 	if not BigDebuffs.db.profile then return end
 	if not BigDebuffs.db.profile.raidFrames then return end
 	if not BigDebuffs.db.profile.raidFrames.enabled then return end
@@ -1830,11 +1835,19 @@ hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
 		else
 			BigDebuffs:AddBigDebuffs(frame)
 		end
---	if not IsInGroup() or GetNumGroupMembers() > 5 then return end
 	else
 		BigDebuffs:AddBigDebuffs(frame)
 	end
-end)
+
+	if frame.auraSize and BigDebuffs.db.profile.raidFrames.enabled then
+		local size = frame:GetHeight() * BigDebuffs.db.profile.raidFrames.buffs * 0.01
+		frame.auraSize = size
+	end
+end
+
+if type(CompactUnitFrame_UpdateAll) == "function" then
+    hooksecurefunc("CompactUnitFrame_UpdateAll", OnCompactUnitFrame_UpdateAll)
+end
 
 if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
     function BigDebuffs:PLAYER_TALENT_UPDATE()
@@ -2000,40 +2013,42 @@ end
 local CompactUnitFrame_UtilSetDebuff = CompactUnitFrame_UtilSetDebuff
 
 if useModernAuraPath then
+    local function OnUpdateAuras(frame, unitAuraUpdateInfo)
+        if not BigDebuffs.db.profile then return end
+        if not BigDebuffs.db.profile.raidFrames then return end
+        if not BigDebuffs.db.profile.raidFrames.enabled then return end
+        if (not frame) or frame:IsForbidden() then return end
+        if (not UnitIsPlayer(frame.displayedUnit)) then return end
+        BigDebuffs:ShowBigDebuffs(frame)
+
+        -- add extra buffs
+        local frameNum = 1
+        local maxBuffs = BigDebuffs.db.profile.raidFrames.increaseBuffs and INCREASED_MAX_BUFFS or frame.maxBuffs
+        if frame.buffs and frame.buffFrames then
+            frame.buffs:Iterate(function(auraInstanceID, aura)
+                if frameNum > maxBuffs then
+                    return true
+                end
+                local buffFrame = frame.buffFrames[frameNum]
+                if not buffFrame then return true end
+
+                -- set size
+                local size = frame:GetHeight() * BigDebuffs.db.profile.raidFrames.buffs * 0.01
+                buffFrame:SetSize(size, size)
+
+                -- we only need to set extra buffs
+                if frameNum > frame.maxBuffs and CompactUnitFrame_UtilSetBuff then
+                    CompactUnitFrame_UtilSetBuff(buffFrame, aura)
+                end
+                frameNum = frameNum + 1
+
+                return false
+            end)
+        end
+    end
+
     if type(CompactUnitFrame_UpdateAuras) == "function" then
-        hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
-            if not BigDebuffs.db.profile then return end
-            if not BigDebuffs.db.profile.raidFrames then return end
-            if not BigDebuffs.db.profile.raidFrames.enabled then return end
-            if (not frame) or frame:IsForbidden() then return end
-            if (not UnitIsPlayer(frame.displayedUnit)) then return end
-            BigDebuffs:ShowBigDebuffs(frame)
-
-            -- add extra buffs
-            local frameNum = 1
-            local maxBuffs = BigDebuffs.db.profile.raidFrames.increaseBuffs and INCREASED_MAX_BUFFS or frame.maxBuffs
-            if frame.buffs and frame.buffFrames then
-                frame.buffs:Iterate(function(auraInstanceID, aura)
-                    if frameNum > maxBuffs then
-                        return true
-                    end
-                    local buffFrame = frame.buffFrames[frameNum]
-                    if not buffFrame then return true end
-
-                    -- set size
-                    local size = frame:GetHeight() * BigDebuffs.db.profile.raidFrames.buffs * 0.01
-                    buffFrame:SetSize(size, size)
-
-                    -- we only need to set extra buffs
-                    if frameNum > frame.maxBuffs and CompactUnitFrame_UtilSetBuff then
-                        CompactUnitFrame_UtilSetBuff(buffFrame, aura)
-                    end
-                    frameNum = frameNum + 1
-
-                    return false
-                end)
-            end
-        end)
+        hooksecurefunc("CompactUnitFrame_UpdateAuras", OnUpdateAuras)
     end
 else
     CompactUnitFrame_UtilSetDebuff = function(debuffFrame, unit, index, filter, isBossAura, isBossBuff, ...)
@@ -2434,6 +2449,11 @@ if useModernAuraPath then
             end
         end
 
+        -- resize raid frame buffs
+        if frame.auraSize then
+            frame.auraSize = frame:GetHeight() * self.db.profile.raidFrames.buffs * 0.01
+        end
+
         if #debuffs < 1 then return end
 
         -- sort by priority > size > duration > index
@@ -2492,6 +2512,7 @@ if useModernAuraPath then
                 index = index + 1
             end
         end
+
     end
 else
     function BigDebuffs:ShowBigDebuffs(frame)
