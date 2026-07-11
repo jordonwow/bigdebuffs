@@ -31,6 +31,7 @@ read_globals = {
     "CompactUnitFrame_HideAllDebuffs",
     "CompactUnitFrame_HideAllDispelDebuffs",
     "CompactUnitFrame_SetMaxBuffs",
+    "CompactUnitFrame_UpdateAll",
     "CompactUnitFrame_UpdateAuras",
     "CompactUnitFrame_UpdateDebuffs",
     "CompactUnitFrame_Util_IsBossAura",
