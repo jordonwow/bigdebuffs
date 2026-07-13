@@ -303,7 +303,7 @@ addon.Spells = {
     [56626] = { type = CROWD_CONTROL }, -- Sting (wasp pet stun)
     -- MoP
     [117526] = { type = CROWD_CONTROL }, -- Binding Shot
-    [128405] = { type = ROOT }, -- Narrow Escape
+    [136634] = { type = ROOT }, -- Narrow Escape (root aura; 128405 is the talent, not the applied aura)
     [126246] = { type = CROWD_CONTROL }, -- Lullaby (Crane)
     [126355] = { type = CROWD_CONTROL }, -- Paralyzing Quill (Porcupine)
     [126423] = { type = CROWD_CONTROL }, -- Petrifying Gaze (Basilisk)
