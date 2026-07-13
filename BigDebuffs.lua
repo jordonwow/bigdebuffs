@@ -1278,6 +1278,23 @@ function BigDebuffs:Refresh()
         if frame:IsVisible() and unit and UnitExists(unit) then
             if CompactUnitFrame_UpdateAuras then
                 pcall(CompactUnitFrame_UpdateAuras, frame)
+            elseif frame.auraSize and type(CompactUnitFrame_UpdateAll) == "function" then
+                -- Midnight-era clients (MoP Classic 5.5.4, TBC Anniversary 2.5.6):
+                -- native buff icons render in C with no buffFrames array to resize,
+                -- so the only lever is frame.auraSize. The C aura layout only re-reads
+                -- it on a full CompactUnitFrame_UpdateAll, and Refresh (e.g. moving the
+                -- Buff Size slider) otherwise never pushes it.
+                --
+                -- auraSize drives BOTH native buffs and native debuffs, and forcing a
+                -- full UpdateAll re-runs the native aura layout (which fights the custom
+                -- BigDebuffs icons and causes flicker). Only push it when the buff size
+                -- actually changed, so unrelated sliders (e.g. Dispellable Roots) don't
+                -- resize native auras or churn the layout on every Refresh tick.
+                local newAuraSize = frame:GetHeight() * self.db.profile.raidFrames.buffs * 0.01
+                if math.abs((frame.auraSize or 0) - newAuraSize) > 0.01 then
+                    frame.auraSize = newAuraSize
+                    pcall(CompactUnitFrame_UpdateAll, frame)
+                end
             end
         end
         if frame and frame.BigDebuffs then self:AddBigDebuffs(frame) end
