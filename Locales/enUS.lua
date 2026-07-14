@@ -148,3 +148,21 @@ L["Match Frame Height"] = true
 L["Match the height of the frame"] = true
 L["Wrap After"] = true
 L["Begin a new row or column after this many debuffs"] = true
+
+-- Custom spells
+L["Category"] = true
+L["Change which category this spell belongs to"] = true
+L["Custom Spells"] = true
+L["Add Custom Spell"] = true
+L["Add a spell by its ID and assign it a category. Use this to track debuffs the presets are missing."] = true
+L["Add Spell"] = true
+L["Duration"] = true
+L["Override the icon timer duration in seconds (leave empty to use the spell default)"] = true
+L["Remove Spell"] = true
+L["Remove this custom spell"] = true
+L["No custom spells added yet."] = true
+L["Please enter a number"] = true
+L["No spell exists with that ID"] = true
+L["That spell is already tracked"] = true
+L["Change the spell ID this entry tracks (enter the original ID to reset)"] = true
+L["Replaces preset"] = true

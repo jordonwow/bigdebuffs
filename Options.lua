@@ -54,22 +54,33 @@ local order = {
 }
 local SpellNames = {}
 local SpellIcons = {}
-local Spells = {}
-for spellID, spell in pairs(BigDebuffs.Spells) do
-    if not spell.parent then
-        Spells[spell.type] = Spells[spell.type] or {
-            name = L[spell.type],
-            type = "group",
-            order = order[spell.type],
-            args = {},
-        }
-        local key = "spell"..spellID
+
+-- Categories offered in the category dropdown (localized), in display order
+local categorySorting = {
+    "immunities", "immunities_spells", "cc", "interrupts",
+    "buffs_defensive", "buffs_offensive", "debuffs_offensive",
+    "buffs_other", "roots", "buffs_speed_boost",
+}
+local categoryValues = {}
+for _, key in ipairs(categorySorting) do categoryValues[key] = L[key] end
+
+-- Preset spells that other spells link to as a parent (shared ranks) must not
+-- be re-mapped to a different ID, or their children would be orphaned.
+local parentIDs = {}
+for _, s in pairs(BigDebuffs.BaseSpells) do
+    if s.parent then parentIDs[s.parent] = true end
+end
+
+-- Build the options card for a single spell (preset or custom). The card is
+-- keyed by spellID and reads its effective category from BigDebuffs.Spells so
+-- category overrides and custom spells are reflected the moment they change.
+local function BuildSpellCard(spellID, spell, isCustom)
         local raidFrames = spell.type == "cc" or
             spell.type == "roots" or
             spell.type == "special" or
             spell.type == "interrupts" or
             spell.type == "debuffs_offensive"
-        Spells[spell.type].args[key] = {
+        return {
             type = "group",
             get = function(info)
                 local name = info[#info]
@@ -98,8 +109,96 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                 return spellDesc..extra
             end,
             args = {
-                visibility = {
+                spellId = {
+                    order = 0,
+                    type = "input",
+                    name = L["Spell ID"],
+                    desc = function()
+                        local s = BigDebuffs.Spells[spellID]
+                        if s and s.replacedFrom then
+                            local baseName = GetSpellName(s.replacedFrom) or "?"
+                            return L["Replaces preset"]..": "..baseName.." ("..s.replacedFrom..")"
+                                .."\n\n"..L["Change the spell ID this entry tracks (enter the original ID to reset)"]
+                        end
+                        return L["Change the spell ID this entry tracks (enter the original ID to reset)"]
+                    end,
+                    width = "half",
+                    disabled = function()
+                        if isCustom then return false end
+                        local s = BigDebuffs.Spells[spellID]
+                        local baseKey = (s and s.replacedFrom) or spellID
+                        return parentIDs[baseKey] and true or false
+                    end,
+                    get = function() return tostring(spellID) end,
+                    validate = function(_, value)
+                        local n = tonumber(value)
+                        if not n then return L["Please enter a number"] end
+                        if not GetSpellName(n) then return L["No spell exists with that ID"] end
+                        if n ~= spellID and BigDebuffs.Spells[n] then return L["That spell is already tracked"] end
+                        return true
+                    end,
+                    set = function(_, value)
+                        local newID = tonumber(value)
+                        if not newID or newID == spellID then return end
+                        local sp = BigDebuffs.db.profile.spells
+                        if isCustom then
+                            local cs = BigDebuffs.db.profile.customSpells
+                            cs[newID] = cs[spellID]
+                            cs[spellID] = nil
+                        else
+                            local s = BigDebuffs.Spells[spellID]
+                            local baseID = (s and s.replacedFrom) or spellID
+                            local repl = BigDebuffs.db.profile.spellReplacements
+                            if newID == baseID then
+                                repl[baseID] = nil
+                            else
+                                repl[baseID] = newID
+                            end
+                        end
+                        -- Move per-spell overrides to the new effective ID
+                        if sp[spellID] then
+                            sp[newID] = sp[spellID]
+                            sp[spellID] = nil
+                        end
+                        BigDebuffs:BuildSpellList()
+                        BigDebuffs:RefreshSpellOptions()
+                        BigDebuffs:Refresh()
+                    end,
+                },
+                category = {
                     order = 1,
+                    type = "select",
+                    name = L["Category"],
+                    desc = L["Change which category this spell belongs to"],
+                    width = "half",
+                    values = categoryValues,
+                    sorting = categorySorting,
+                    get = function()
+                        local s = BigDebuffs.Spells[spellID]
+                        return s and s.type
+                    end,
+                    set = function(_, value)
+                        if isCustom then
+                            local c = BigDebuffs.db.profile.customSpells
+                            c[spellID] = c[spellID] or {}
+                            c[spellID].type = value
+                        else
+                            local ov = BigDebuffs.db.profile.spells
+                            ov[spellID] = ov[spellID] or {}
+                            local base = BigDebuffs.BaseSpells[spellID]
+                            if base and base.type == value then
+                                ov[spellID].type = nil
+                            else
+                                ov[spellID].type = value
+                            end
+                        end
+                        BigDebuffs:BuildSpellList()
+                        BigDebuffs:RefreshSpellOptions()
+                        BigDebuffs:Refresh()
+                    end,
+                },
+                visibility = {
+                    order = 2,
                     type = "group",
                     name = L["Visibility"],
                     inline = true,
@@ -235,9 +334,190 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                         },
                     },
                 } or nil,
+                duration = isCustom and {
+                    order = 6,
+                    type = "input",
+                    name = L["Duration"],
+                    desc = L["Override the icon timer duration in seconds (leave empty to use the spell default)"],
+                    get = function()
+                        local c = BigDebuffs.db.profile.customSpells[spellID]
+                        return (c and c.duration) and tostring(c.duration) or ""
+                    end,
+                    set = function(_, value)
+                        local c = BigDebuffs.db.profile.customSpells[spellID]
+                        if c then
+                            local n = tonumber(value)
+                            c.duration = (n and n > 0) and n or nil
+                        end
+                        BigDebuffs:BuildSpellList()
+                        BigDebuffs:Refresh()
+                    end,
+                    validate = function(_, value)
+                        if value == "" or tonumber(value) then return true end
+                        return L["Please enter a number"]
+                    end,
+                } or nil,
+                remove = isCustom and {
+                    order = 7,
+                    type = "execute",
+                    name = L["Remove Spell"],
+                    desc = L["Remove this custom spell"],
+                    width = "full",
+                    confirm = true,
+                    func = function()
+                        BigDebuffs.db.profile.customSpells[spellID] = nil
+                        BigDebuffs.db.profile.spells[spellID] = nil
+                        BigDebuffs:BuildSpellList()
+                        BigDebuffs:RefreshSpellOptions()
+                        BigDebuffs:Refresh()
+                    end,
+                } or nil,
             },
         }
+end
+
+-- Pending values for the "add custom spell" form
+local pendingID
+local pendingType = "cc"
+
+-- Tracks whether the Custom Spells tab title is currently drawn highlighted
+-- (green) so the tab bar can be refreshed when the selection changes
+-- (see the tab colour sync below)
+local customTabHighlighted = true
+local tabSyncPending = false
+
+-- Assemble the whole Spells tab: presets grouped by their (effective) category,
+-- plus a Custom Spells page for adding, editing and removing user spells.
+function BigDebuffs:BuildSpellOptions()
+    local groups = {}
+
+    for spellID, spell in pairs(BigDebuffs.Spells) do
+        if not spell.parent and not spell.custom then
+            local t = spell.type
+            groups[t] = groups[t] or {
+                name = L[t] or t,
+                type = "group",
+                order = order[t] or 50,
+                args = {},
+            }
+            groups[t].args["spell"..spellID] = BuildSpellCard(spellID, spell, false)
+        end
     end
+
+    local custom = {
+        name = function()
+            local status = LibStub("AceConfigDialog-3.0"):GetStatusTable("BigDebuffs", { "spells" })
+            local selected = status and status.groups and status.groups.selected
+            customTabHighlighted = selected ~= "custom"
+            if customTabHighlighted then
+                return "|cff20ff20"..L["Custom Spells"].."|r"
+            end
+            return L["Custom Spells"]
+        end,
+        type = "group",
+        order = 100,
+        args = {
+            add = {
+                order = 1,
+                type = "group",
+                inline = true,
+                name = L["Add Custom Spell"],
+                args = {
+                    desc = {
+                        order = 0,
+                        type = "description",
+                        name = L["Add a spell by its ID and assign it a category. Use this to track debuffs the presets are missing."].."\n",
+                    },
+                    id = {
+                        order = 1,
+                        type = "input",
+                        name = L["Spell ID"],
+                        get = function() return pendingID and tostring(pendingID) or "" end,
+                        set = function(_, value) pendingID = tonumber(value) end,
+                        validate = function(_, value)
+                            local n = tonumber(value)
+                            if not n then return L["Please enter a number"] end
+                            if not GetSpellName(n) then return L["No spell exists with that ID"] end
+                            if BigDebuffs.Spells[n] then return L["That spell is already tracked"] end
+                            return true
+                        end,
+                    },
+                    category = {
+                        order = 2,
+                        type = "select",
+                        name = L["Category"],
+                        values = categoryValues,
+                        sorting = categorySorting,
+                        get = function() return pendingType end,
+                        set = function(_, value) pendingType = value end,
+                    },
+                    exec = {
+                        order = 3,
+                        type = "execute",
+                        name = L["Add Spell"],
+                        disabled = function()
+                            return not (pendingID and GetSpellName(pendingID)
+                                and not BigDebuffs.Spells[pendingID])
+                        end,
+                        func = function()
+                            BigDebuffs.db.profile.customSpells[pendingID] = { type = pendingType or "cc" }
+                            pendingID = nil
+                            BigDebuffs:BuildSpellList()
+                            BigDebuffs:RefreshSpellOptions()
+                            BigDebuffs:Refresh()
+                        end,
+                    },
+                },
+            },
+            noneDesc = {
+                order = 2,
+                type = "description",
+                name = L["No custom spells added yet."],
+                hidden = function() return next(BigDebuffs.db.profile.customSpells) ~= nil end,
+            },
+        },
+    }
+
+    for spellID in pairs(BigDebuffs.db.profile.customSpells) do
+        local spell = BigDebuffs.Spells[spellID]
+        if spell then
+            custom.args["custom"..spellID] = BuildSpellCard(spellID, spell, true)
+        end
+    end
+
+    groups.custom = custom
+
+    -- Keep the Custom Spells tab title highlighted while it is not the active
+    -- sub-tab. The tab bar is only rebuilt on a full panel refresh, not when a
+    -- sub-tab is clicked, so every sub-tab carries a hidden checker that requests
+    -- a refresh when the drawn colour no longer matches the current selection.
+    for key, group in pairs(groups) do
+        group.args._tabColorSync = {
+            order = -1000,
+            type = "description",
+            name = "",
+            hidden = function()
+                local shouldHighlight = key ~= "custom"
+                if customTabHighlighted ~= shouldHighlight and not tabSyncPending then
+                    tabSyncPending = true
+                    C_Timer.After(0, function()
+                        tabSyncPending = false
+                        LibStub("AceConfigRegistry-3.0"):NotifyChange("BigDebuffs")
+                    end)
+                end
+                return true
+            end,
+        }
+    end
+
+    return groups
+end
+
+-- Rebuild the Spells tab in place and refresh the open panel
+function BigDebuffs:RefreshSpellOptions()
+    if not self.options then return end
+    self.options.args.spells.args = self:BuildSpellOptions()
+    LibStub("AceConfigRegistry-3.0"):NotifyChange("BigDebuffs")
 end
 
 function BigDebuffs:SetupOptions()
@@ -1756,10 +2036,13 @@ function BigDebuffs:SetupOptions()
                 childGroups = "tab",
                 hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 order = 40,
-                args = Spells,
+                args = {},
             },
         }
     }
+
+    -- Populate the Spells tab (presets + custom) after the options tree exists
+    self.options.args.spells.args = self:BuildSpellOptions()
 
     if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
         self.options.args.raidFrames.args.warning = {

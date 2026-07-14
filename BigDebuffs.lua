@@ -213,11 +213,16 @@ local defaults = {
             buffs_speed_boost = 10,
         },
         spells = {},
+        customSpells = {},
+        spellReplacements = {},
     }
 }
 
 BigDebuffs.WarningDebuffs = addon.WarningDebuffs or {}
 BigDebuffs.Spells = addon.Spells or {}
+-- Immutable static presets, used to detect when a user category override matches
+-- the default (BigDebuffs.Spells is rebuilt into the effective merged table).
+BigDebuffs.BaseSpells = addon.Spells or {}
 BigDebuffs.HiddenDebuffs = addon.HiddenDebuffs or {}
 local tContains = tContains
 
@@ -1174,6 +1179,72 @@ end
 
 BigDebuffs.anchors = anchors
 
+-- Rebuild the effective spell list from the static presets, the per-spell
+-- category overrides and the user defined custom spells. Called on load and
+-- whenever the user edits categories or adds/removes a custom spell.
+function BigDebuffs:BuildSpellList()
+    local base = addon.Spells or {}
+    local merged = {}
+
+    -- Static presets
+    for id, data in pairs(base) do
+        merged[id] = data
+    end
+
+    -- ID replacements: re-map a preset onto a different spell ID (used to
+    -- correct a wrong/rank-variant preset ID). The base entry is removed and
+    -- its data (category, duration, flags) is carried over to the new ID.
+    local replacements = self.db and self.db.profile.spellReplacements
+    if replacements then
+        for baseID, newID in pairs(replacements) do
+            if base[baseID] and not base[baseID].parent and newID ~= baseID and not base[newID] then
+                local eff = {}
+                for k, v in pairs(base[baseID]) do eff[k] = v end
+                eff.replacedFrom = baseID
+                merged[newID] = eff
+                merged[baseID] = nil
+            end
+        end
+    end
+
+    -- Category overrides on existing (non-child) spells, keyed by effective ID
+    local overrides = self.db and self.db.profile.spells
+    if overrides then
+        for id, ov in pairs(overrides) do
+            if ov.type and merged[id] and not merged[id].parent and not merged[id].custom then
+                local eff = {}
+                for k, v in pairs(merged[id]) do eff[k] = v end
+                eff.type = ov.type
+                merged[id] = eff
+            end
+        end
+    end
+
+    -- User defined custom spells
+    local custom = self.db and self.db.profile.customSpells
+    if custom then
+        for id, cs in pairs(custom) do
+            if cs.type then
+                local eff = { type = cs.type, custom = true }
+                if cs.duration and cs.duration > 0 then eff.duration = cs.duration end
+                merged[id] = eff
+            end
+        end
+    end
+
+    self.Spells = merged
+    BigDebuffs.Spells = merged
+
+    -- Rebuild the Classic name -> id lookup (0 spellId in the combat log)
+    if spellIdByName then
+        wipe(spellIdByName)
+        for id, value in pairs(merged) do
+            local spellName = GetSpellName(id)
+            if spellName and (not value.parent) then spellIdByName[spellName] = id end
+        end
+    end
+end
+
 function BigDebuffs:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("BigDebuffsDB", defaults, true)
 
@@ -1224,13 +1295,22 @@ function BigDebuffs:OnInitialize()
         self.db.profile.raidFrames.showAllClassBuffs = true
     end
 
-    self.db.RegisterCallback(self, "OnProfileChanged", "Refresh")
-    self.db.RegisterCallback(self, "OnProfileCopied", "Refresh")
-    self.db.RegisterCallback(self, "OnProfileReset", "Refresh")
+    self.db.RegisterCallback(self, "OnProfileChanged", "OnProfileUpdated")
+    self.db.RegisterCallback(self, "OnProfileCopied", "OnProfileUpdated")
+    self.db.RegisterCallback(self, "OnProfileReset", "OnProfileUpdated")
     self.frames = {}
     self.UnitFrames = {}
     self.Nameplates = {}
+    self:BuildSpellList()
     self:SetupOptions()
+end
+
+-- Profiles carry their own category overrides and custom spells, so rebuild
+-- the effective spell list (and the options tree) whenever the profile changes.
+function BigDebuffs:OnProfileUpdated()
+    self:BuildSpellList()
+    if self.RefreshSpellOptions then self:RefreshSpellOptions() end
+    self:Refresh()
 end
 
 local function HideBigDebuffs(frame)
