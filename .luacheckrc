@@ -14,6 +14,9 @@ ignore = {
     "432",
 }
 read_globals = {
+    "wipe",
+    "ChatFontNormal",
+    "PlaySound",
     "ActionBarButtonEventsFrame",
     "AuraUtil",
     "BOSS_DEBUFF_SIZE_INCREASE",
