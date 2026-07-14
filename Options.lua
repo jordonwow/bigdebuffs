@@ -122,7 +122,8 @@ local function BuildSpellCard(spellID, spell, isCustom)
                         end
                         return L["Change the spell ID this entry tracks (enter the original ID to reset)"]
                     end,
-                    width = "half",
+                    width = "relative",
+                    relWidth = 0.5,
                     disabled = function()
                         if isCustom then return false end
                         local s = BigDebuffs.Spells[spellID]
@@ -170,7 +171,8 @@ local function BuildSpellCard(spellID, spell, isCustom)
                     type = "select",
                     name = L["Category"],
                     desc = L["Change which category this spell belongs to"],
-                    width = "half",
+                    width = "relative",
+                    relWidth = 0.5,
                     values = categoryValues,
                     sorting = categorySorting,
                     get = function()
