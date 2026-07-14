@@ -1770,6 +1770,12 @@ function BigDebuffs:AddBigDebuffs(frame)
     for i = 1, max do
         local big = frame.BigDebuffs[i] or
             CreateFrame("Button", frameName .. "BigDebuffsRaid" .. i, frame, "BigDebuffsDebuffTemplate")
+        -- Draw above the native (Blizzard) debuff icons. On Midnight-era clients those
+        -- are C-rendered and can't be hidden per-frame, and they sit on a strata above
+        -- the compact frame's LOW, so a higher frame level alone isn't enough -- raise
+        -- the strata so the BigDebuff isn't obscured by the small native duplicate.
+        big:SetFrameStrata("HIGH")
+        big:SetFrameLevel(frame:GetFrameLevel() + 10)
         big:ClearAllPoints()
         if i > 1 and i ~= wrapAt + 1 then
             if self.db.profile.raidFrames.anchor == "INNER" or self.db.profile.raidFrames.anchor == "RIGHT" or self.db.profile.raidFrames.anchor == "TOP" then
