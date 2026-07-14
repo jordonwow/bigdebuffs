@@ -13,6 +13,256 @@ local function GetSpellName(id)
     end
 end
 
+-- A trimmed EditBox widget with no confirm ("okay") button. Stock AceGUI
+-- EditBoxes only commit their value (and trigger a full options panel
+-- rebuild) when Enter is pressed or the checkmark is clicked; anything typed
+-- but not yet confirmed is lost the moment a sibling widget (e.g. a select
+-- dropdown) triggers that rebuild. This widget instead calls the option's
+-- `set` directly on every keystroke, so the backing value is always current
+-- and no explicit confirmation step is needed.
+do
+    local AceGUI = LibStub("AceGUI-3.0")
+    local WidgetType = "BigDebuffsLiveEditBox"
+    if not AceGUI:GetWidgetVersion(WidgetType) then
+        local function Control_OnEnter(frame) frame.obj:Fire("OnEnter") end
+        local function Control_OnLeave(frame) frame.obj:Fire("OnLeave") end
+        local function EditBox_OnEscapePressed(frame) AceGUI:ClearFocus() end
+        local function EditBox_OnEnterPressed(frame)
+            local self = frame.obj
+            self:Fire("OnEnterPressed", frame:GetText())
+        end
+        local function EditBox_OnFocusGained(frame) AceGUI:SetFocus(frame.obj) end
+
+        local function EditBox_OnTextChanged(frame)
+            local self = frame.obj
+            local value = frame:GetText()
+            if tostring(value) ~= tostring(self.lasttext) then
+                self.lasttext = value
+                self:Fire("OnTextChanged", value)
+                -- Commit immediately, bypassing AceConfigDialog's Enter-only
+                -- ActivateControl path so no full panel rebuild happens
+                -- while typing (which would steal keyboard focus).
+                local user = self:GetUserDataTable()
+                local option = user and user.option
+                if option and type(option.set) == "function" then
+                    option.set(nil, value)
+                end
+            end
+        end
+
+        local methods = {
+            ["OnAcquire"] = function(self)
+                self:SetWidth(200)
+                self:SetDisabled(false)
+                self:SetLabel()
+                self:SetText()
+                self:SetMaxLetters(0)
+            end,
+            ["OnRelease"] = function(self) self:ClearFocus() end,
+            ["SetDisabled"] = function(self, disabled)
+                self.disabled = disabled
+                if disabled then
+                    self.editbox:EnableMouse(false)
+                    self.editbox:ClearFocus()
+                    self.editbox:SetTextColor(0.5, 0.5, 0.5)
+                    self.label:SetTextColor(0.5, 0.5, 0.5)
+                else
+                    self.editbox:EnableMouse(true)
+                    self.editbox:SetTextColor(1, 1, 1)
+                    self.label:SetTextColor(1, .82, 0)
+                end
+            end,
+            ["SetText"] = function(self, text)
+                self.lasttext = text or ""
+                self.editbox:SetText(text or "")
+                self.editbox:SetCursorPosition(0)
+            end,
+            ["GetText"] = function(self) return self.editbox:GetText() end,
+            ["SetLabel"] = function(self, text)
+                if text and text ~= "" then
+                    self.label:SetText(text)
+                    self.label:Show()
+                    self.editbox:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 7, -18)
+                    self:SetHeight(44)
+                    self.alignoffset = 30
+                else
+                    self.label:SetText("")
+                    self.label:Hide()
+                    self.editbox:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 7, 0)
+                    self:SetHeight(26)
+                    self.alignoffset = 12
+                end
+            end,
+            ["SetMaxLetters"] = function(self, num) self.editbox:SetMaxLetters(num or 0) end,
+            ["ClearFocus"] = function(self)
+                self.editbox:ClearFocus()
+                self.frame:SetScript("OnShow", nil)
+            end,
+            ["SetFocus"] = function(self) self.editbox:SetFocus() end,
+            ["HighlightText"] = function(self, from, to) self.editbox:HighlightText(from, to) end,
+        }
+
+        local function Constructor()
+            local num = AceGUI:GetNextWidgetNum(WidgetType)
+            local frame = CreateFrame("Frame", nil, UIParent)
+            frame:Hide()
+
+            local editbox = CreateFrame("EditBox", "AceGUI-3.0"..WidgetType..num, frame, "InputBoxTemplate")
+            editbox:SetAutoFocus(false)
+            editbox:SetFontObject(ChatFontNormal)
+            editbox:SetScript("OnEnter", Control_OnEnter)
+            editbox:SetScript("OnLeave", Control_OnLeave)
+            editbox:SetScript("OnEscapePressed", EditBox_OnEscapePressed)
+            editbox:SetScript("OnEnterPressed", EditBox_OnEnterPressed)
+            editbox:SetScript("OnTextChanged", EditBox_OnTextChanged)
+            editbox:SetScript("OnEditFocusGained", EditBox_OnFocusGained)
+            editbox:SetTextInsets(0, 0, 3, 3)
+            editbox:SetMaxLetters(256)
+            editbox:SetPoint("BOTTOMLEFT", 6, 0)
+            editbox:SetPoint("BOTTOMRIGHT")
+            editbox:SetHeight(19)
+
+            local label = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+            label:SetPoint("TOPLEFT", 0, -2)
+            label:SetPoint("TOPRIGHT", 0, -2)
+            label:SetJustifyH("LEFT")
+            label:SetHeight(18)
+
+            local widget = {
+                editbox = editbox,
+                label = label,
+                frame = frame,
+                type = WidgetType,
+            }
+            for method, func in pairs(methods) do
+                widget[method] = func
+            end
+            editbox.obj = widget
+
+            return AceGUI:RegisterAsWidget(widget)
+        end
+
+        AceGUI:RegisterWidgetType(WidgetType, Constructor, 1)
+    end
+end
+
+-- A Button that reserves the same header space a labeled EditBox/Dropdown
+-- does (and shares their alignoffset), so it lines up with the input row
+-- instead of sitting higher, centred on its own shorter, label-less height.
+do
+    local AceGUI = LibStub("AceGUI-3.0")
+    local WidgetType = "BigDebuffsAlignedButton"
+    if not AceGUI:GetWidgetVersion(WidgetType) then
+        local function Button_OnClick(frame, ...)
+            AceGUI:ClearFocus()
+            PlaySound(852) -- SOUNDKIT.IG_MAINMENU_OPTION
+            frame.obj:Fire("OnClick", ...)
+        end
+        local function Control_OnEnter(frame) frame.obj:Fire("OnEnter") end
+        local function Control_OnLeave(frame) frame.obj:Fire("OnLeave") end
+
+        local methods = {
+            ["OnAcquire"] = function(self)
+                self:SetWidth(200)
+                self:SetHeight(44)
+                self:SetDisabled(false)
+                self:SetText()
+            end,
+            ["SetText"] = function(self, text) self.text:SetText(text) end,
+            ["SetDisabled"] = function(self, disabled)
+                self.disabled = disabled
+                if disabled then self.button:Disable() else self.button:Enable() end
+            end,
+        }
+
+        local function Constructor()
+            local num = AceGUI:GetNextWidgetNum(WidgetType)
+            local frame = CreateFrame("Frame", nil, UIParent)
+            frame:Hide()
+
+            local button = CreateFrame("Button", "AceGUI30"..WidgetType..num, frame, "UIPanelButtonTemplate")
+            button:EnableMouse(true)
+            button:SetScript("OnClick", Button_OnClick)
+            button:SetScript("OnEnter", Control_OnEnter)
+            button:SetScript("OnLeave", Control_OnLeave)
+            button:SetPoint("BOTTOMLEFT", 0, 0)
+            button:SetPoint("BOTTOMRIGHT", 0, 0)
+            button:SetHeight(19)
+
+            local text = button:GetFontString()
+            text:ClearAllPoints()
+            text:SetPoint("TOPLEFT", 15, -1)
+            text:SetPoint("BOTTOMRIGHT", -15, 1)
+            text:SetJustifyV("MIDDLE")
+
+            local widget = {
+                button = button,
+                text = text,
+                frame = frame,
+                alignoffset = 30, -- matches the labeled EditBox/Dropdown offset
+                type = WidgetType,
+            }
+            for method, func in pairs(methods) do
+                widget[method] = func
+            end
+            button.obj = widget
+
+            return AceGUI:RegisterAsWidget(widget)
+        end
+
+        AceGUI:RegisterWidgetType(WidgetType, Constructor, 1)
+    end
+end
+
+-- A full-width, globally named status line. Explains live (as the user types
+-- a Spell ID) why the Add Spell button is disabled - e.g. that the ID is
+-- already tracked - instead of leaving a greyed-out button with no reason.
+do
+    local AceGUI = LibStub("AceGUI-3.0")
+    local WidgetType = "BigDebuffsStatusLabel"
+    if not AceGUI:GetWidgetVersion(WidgetType) then
+        local methods = {
+            ["OnAcquire"] = function(self)
+                self:SetHeight(18)
+                self:SetText("")
+            end,
+            ["SetText"] = function(self, text) self.fontstring:SetText(text or "") end,
+            -- AceConfigDialog calls this on every render after creation, which
+            -- would otherwise reset the fontstring to its font object's default
+            -- (white) colour - reapply the warning colour each time.
+            ["SetFontObject"] = function(self, font)
+                self.fontstring:SetFontObject(font)
+                self.fontstring:SetTextColor(1, 0.5, 0.2)
+            end,
+        }
+
+        local function Constructor()
+            local num = AceGUI:GetNextWidgetNum(WidgetType)
+            local frame = CreateFrame("Frame", "AceGUI30"..WidgetType..num, UIParent)
+            frame:Hide()
+
+            local fontstring = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+            fontstring:SetPoint("TOPLEFT", 4, 0)
+            fontstring:SetPoint("TOPRIGHT", -4, 0)
+            fontstring:SetJustifyH("LEFT")
+            fontstring:SetTextColor(1, 0.5, 0.2)
+
+            local widget = {
+                fontstring = fontstring,
+                frame = frame,
+                type = WidgetType,
+            }
+            for method, func in pairs(methods) do
+                widget[method] = func
+            end
+
+            return AceGUI:RegisterAsWidget(widget)
+        end
+
+        AceGUI:RegisterWidgetType(WidgetType, Constructor, 1)
+    end
+end
+
 local WarningDebuffs = {}
 if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
     for i = 1, #BigDebuffs.WarningDebuffs do
@@ -54,22 +304,33 @@ local order = {
 }
 local SpellNames = {}
 local SpellIcons = {}
-local Spells = {}
-for spellID, spell in pairs(BigDebuffs.Spells) do
-    if not spell.parent then
-        Spells[spell.type] = Spells[spell.type] or {
-            name = L[spell.type],
-            type = "group",
-            order = order[spell.type],
-            args = {},
-        }
-        local key = "spell"..spellID
+
+-- Categories offered in the category dropdown (localized), in display order
+local categorySorting = {
+    "immunities", "immunities_spells", "cc", "interrupts",
+    "buffs_defensive", "buffs_offensive", "debuffs_offensive",
+    "buffs_other", "roots", "buffs_speed_boost",
+}
+local categoryValues = {}
+for _, key in ipairs(categorySorting) do categoryValues[key] = L[key] end
+
+-- Preset spells that other spells link to as a parent (shared ranks) must not
+-- be re-mapped to a different ID, or their children would be orphaned.
+local parentIDs = {}
+for _, s in pairs(BigDebuffs.BaseSpells) do
+    if s.parent then parentIDs[s.parent] = true end
+end
+
+-- Build the options card for a single spell (preset or custom). The card is
+-- keyed by spellID and reads its effective category from BigDebuffs.Spells so
+-- category overrides and custom spells are reflected the moment they change.
+local function BuildSpellCard(spellID, spell, isCustom)
         local raidFrames = spell.type == "cc" or
             spell.type == "roots" or
             spell.type == "special" or
             spell.type == "interrupts" or
             spell.type == "debuffs_offensive"
-        Spells[spell.type].args[key] = {
+        return {
             type = "group",
             get = function(info)
                 local name = info[#info]
@@ -98,8 +359,98 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                 return spellDesc..extra
             end,
             args = {
-                visibility = {
+                spellId = {
+                    order = 0,
+                    type = "input",
+                    name = L["Spell ID"],
+                    desc = function()
+                        local s = BigDebuffs.Spells[spellID]
+                        if s and s.replacedFrom then
+                            local baseName = GetSpellName(s.replacedFrom) or "?"
+                            return L["Replaces preset"]..": "..baseName.." ("..s.replacedFrom..")"
+                                .."\n\n"..L["Change the spell ID this entry tracks (enter the original ID to reset)"]
+                        end
+                        return L["Change the spell ID this entry tracks (enter the original ID to reset)"]
+                    end,
+                    width = "relative",
+                    relWidth = 0.5,
+                    disabled = function()
+                        if isCustom then return false end
+                        local s = BigDebuffs.Spells[spellID]
+                        local baseKey = (s and s.replacedFrom) or spellID
+                        return parentIDs[baseKey] and true or false
+                    end,
+                    get = function() return tostring(spellID) end,
+                    validate = function(_, value)
+                        local n = tonumber(value)
+                        if not n then return L["Please enter a number"] end
+                        if not GetSpellName(n) then return L["No spell exists with that ID"] end
+                        if n ~= spellID and BigDebuffs.Spells[n] then return L["That spell is already tracked"] end
+                        return true
+                    end,
+                    set = function(_, value)
+                        local newID = tonumber(value)
+                        if not newID or newID == spellID then return end
+                        local sp = BigDebuffs.db.profile.spells
+                        if isCustom then
+                            local cs = BigDebuffs.db.profile.customSpells
+                            cs[newID] = cs[spellID]
+                            cs[spellID] = nil
+                        else
+                            local s = BigDebuffs.Spells[spellID]
+                            local baseID = (s and s.replacedFrom) or spellID
+                            local repl = BigDebuffs.db.profile.spellReplacements
+                            if newID == baseID then
+                                repl[baseID] = nil
+                            else
+                                repl[baseID] = newID
+                            end
+                        end
+                        -- Move per-spell overrides to the new effective ID
+                        if sp[spellID] then
+                            sp[newID] = sp[spellID]
+                            sp[spellID] = nil
+                        end
+                        BigDebuffs:BuildSpellList()
+                        BigDebuffs:RefreshSpellOptions()
+                        BigDebuffs:Refresh()
+                    end,
+                },
+                category = {
                     order = 1,
+                    type = "select",
+                    name = L["Category"],
+                    desc = L["Change which category this spell belongs to"],
+                    width = "relative",
+                    relWidth = 0.5,
+                    values = categoryValues,
+                    sorting = categorySorting,
+                    get = function()
+                        local s = BigDebuffs.Spells[spellID]
+                        return s and s.type
+                    end,
+                    set = function(_, value)
+                        if isCustom then
+                            local c = BigDebuffs.db.profile.customSpells
+                            c[spellID] = c[spellID] or {}
+                            c[spellID].type = value
+                        else
+                            local ov = BigDebuffs.db.profile.spells
+                            ov[spellID] = ov[spellID] or {}
+                            local base = BigDebuffs.BaseSpells[spellID]
+                            if base and base.type == value then
+                                ov[spellID].type = nil
+                            else
+                                ov[spellID].type = value
+                            end
+                        end
+                        BigDebuffs:BuildSpellList()
+                        BigDebuffs:RefreshSpellOptions()
+                        BigDebuffs:Refresh()
+                    end,
+                },
+                visibility = {
+                    order = 2,
                     type = "group",
                     name = L["Visibility"],
                     inline = true,
@@ -235,9 +586,261 @@ for spellID, spell in pairs(BigDebuffs.Spells) do
                         },
                     },
                 } or nil,
+                duration = isCustom and {
+                    order = 6,
+                    type = "input",
+                    name = L["Duration"],
+                    desc = L["Override the icon timer duration in seconds (leave empty to use the spell default)"],
+                    get = function()
+                        local c = BigDebuffs.db.profile.customSpells[spellID]
+                        return (c and c.duration) and tostring(c.duration) or ""
+                    end,
+                    set = function(_, value)
+                        local c = BigDebuffs.db.profile.customSpells[spellID]
+                        if c then
+                            local n = tonumber(value)
+                            c.duration = (n and n > 0) and n or nil
+                        end
+                        BigDebuffs:BuildSpellList()
+                        BigDebuffs:Refresh()
+                    end,
+                    validate = function(_, value)
+                        if value == "" or tonumber(value) then return true end
+                        return L["Please enter a number"]
+                    end,
+                } or nil,
+                remove = isCustom and {
+                    order = 7,
+                    type = "execute",
+                    name = L["Remove Spell"],
+                    desc = L["Remove this custom spell"],
+                    width = "full",
+                    confirm = true,
+                    func = function()
+                        BigDebuffs.db.profile.customSpells[spellID] = nil
+                        BigDebuffs.db.profile.spells[spellID] = nil
+                        BigDebuffs:BuildSpellList()
+                        BigDebuffs:RefreshSpellOptions()
+                        BigDebuffs:Refresh()
+                    end,
+                } or nil,
             },
         }
+end
+
+-- Pending values for the "add custom spell" form
+local pendingID
+local pendingType = "cc"
+
+-- Returns nil if the pending ID can be added, or an explanatory message if
+-- not (blank field, no such spell, or already tracked - and where).
+local function GetPendingSpellIssue()
+    if not pendingID then return nil end
+    if not GetSpellName(pendingID) then
+        return L["No spell exists with that ID"]
     end
+    local existing = BigDebuffs.Spells[pendingID]
+    if existing then
+        local catName = L[existing.type] or existing.type
+        return L["Already tracked"].." ("..catName.."). "..L["Edit its category card above instead of adding it again."]
+    end
+    return nil
+end
+
+local function IsPendingSpellValid()
+    return pendingID ~= nil and GetPendingSpellIssue() == nil
+end
+
+-- The currently rendered "Add Spell" exec option and status label (rebuilt
+-- fresh by BuildSpellOptions on every panel refresh), kept so
+-- SyncAddSpellForm can find the matching live widgets below.
+local currentAddExecOption
+local currentAddStatusOption
+
+-- The Spell ID field commits on every keystroke without forcing a panel
+-- refresh (see BigDebuffsLiveEditBox above), so the Add Spell button's
+-- disabled state and the status message - normally only re-checked on a
+-- full redraw - would go stale while typing. Update them directly on the
+-- live widgets instead.
+local function SyncAddSpellForm()
+    local issue = GetPendingSpellIssue()
+    local disabled = pendingID == nil or issue ~= nil
+    local AceGUI = LibStub("AceGUI-3.0")
+
+    if currentAddExecOption then
+        for i = 1, AceGUI:GetWidgetCount("BigDebuffsAlignedButton") do
+            local frame = _G["AceGUI30BigDebuffsAlignedButton"..i]
+            if frame and frame.obj and frame:IsVisible() then
+                local user = frame.obj:GetUserDataTable()
+                if user and user.option == currentAddExecOption then
+                    frame.obj:SetDisabled(disabled)
+                end
+            end
+        end
+    end
+
+    if currentAddStatusOption then
+        for i = 1, AceGUI:GetWidgetCount("BigDebuffsStatusLabel") do
+            local frame = _G["AceGUI30BigDebuffsStatusLabel"..i]
+            if frame and frame.obj and frame:IsVisible() then
+                local user = frame.obj:GetUserDataTable()
+                if user and user.option == currentAddStatusOption then
+                    frame.obj:SetText(issue)
+                end
+            end
+        end
+    end
+end
+
+-- Tracks whether the Custom Spells tab title is currently drawn highlighted
+-- (green) so the tab bar can be refreshed when the selection changes
+-- (see the tab colour sync below)
+local customTabHighlighted = true
+local tabSyncPending = false
+
+-- Assemble the whole Spells tab: presets grouped by their (effective) category,
+-- plus a Custom Spells page for adding, editing and removing user spells.
+function BigDebuffs:BuildSpellOptions()
+    local groups = {}
+
+    for spellID, spell in pairs(BigDebuffs.Spells) do
+        if not spell.parent and not spell.custom then
+            local t = spell.type
+            groups[t] = groups[t] or {
+                name = L[t] or t,
+                type = "group",
+                order = order[t] or 50,
+                args = {},
+            }
+            groups[t].args["spell"..spellID] = BuildSpellCard(spellID, spell, false)
+        end
+    end
+
+    local custom = {
+        name = function()
+            local status = LibStub("AceConfigDialog-3.0"):GetStatusTable("BigDebuffs", { "spells" })
+            local selected = status and status.groups and status.groups.selected
+            customTabHighlighted = selected ~= "custom"
+            if customTabHighlighted then
+                return "|cff20ff20"..L["Custom Spells"].."|r"
+            end
+            return L["Custom Spells"]
+        end,
+        type = "group",
+        order = 100,
+        args = {
+            add = {
+                order = 1,
+                type = "group",
+                inline = true,
+                name = L["Add Custom Spell"],
+                args = {
+                    desc = {
+                        order = 0,
+                        type = "description",
+                        name = L["Add a spell by its ID and assign it a category. Use this to track debuffs the presets are missing."].."\n",
+                    },
+                    id = {
+                        order = 1,
+                        type = "input",
+                        dialogControl = "BigDebuffsLiveEditBox",
+                        name = L["Spell ID"],
+                        get = function() return pendingID and tostring(pendingID) or "" end,
+                        set = function(_, value)
+                            pendingID = tonumber(value)
+                            SyncAddSpellForm()
+                        end,
+                        validate = function(_, value)
+                            local n = tonumber(value)
+                            if not n then return L["Please enter a number"] end
+                            if not GetSpellName(n) then return L["No spell exists with that ID"] end
+                            if BigDebuffs.Spells[n] then return L["That spell is already tracked"] end
+                            return true
+                        end,
+                    },
+                    category = {
+                        order = 2,
+                        type = "select",
+                        name = L["Category"],
+                        values = categoryValues,
+                        sorting = categorySorting,
+                        get = function() return pendingType end,
+                        set = function(_, value) pendingType = value end,
+                    },
+                    exec = {
+                        order = 3,
+                        type = "execute",
+                        dialogControl = "BigDebuffsAlignedButton",
+                        name = L["Add Spell"],
+                        disabled = function() return not IsPendingSpellValid() end,
+                        func = function()
+                            if not IsPendingSpellValid() then return end
+                            BigDebuffs.db.profile.customSpells[pendingID] = { type = pendingType or "cc" }
+                            pendingID = nil
+                            BigDebuffs:BuildSpellList()
+                            BigDebuffs:RefreshSpellOptions()
+                            BigDebuffs:Refresh()
+                        end,
+                    },
+                    status = {
+                        order = 4,
+                        type = "description",
+                        dialogControl = "BigDebuffsStatusLabel",
+                        name = function() return GetPendingSpellIssue() or "" end,
+                    },
+                },
+            },
+            noneDesc = {
+                order = 2,
+                type = "description",
+                name = L["No custom spells added yet."],
+                hidden = function() return next(BigDebuffs.db.profile.customSpells) ~= nil end,
+            },
+        },
+    }
+    currentAddExecOption = custom.args.add.args.exec
+    currentAddStatusOption = custom.args.add.args.status
+
+    for spellID in pairs(BigDebuffs.db.profile.customSpells) do
+        local spell = BigDebuffs.Spells[spellID]
+        if spell then
+            custom.args["custom"..spellID] = BuildSpellCard(spellID, spell, true)
+        end
+    end
+
+    groups.custom = custom
+
+    -- Keep the Custom Spells tab title highlighted while it is not the active
+    -- sub-tab. The tab bar is only rebuilt on a full panel refresh, not when a
+    -- sub-tab is clicked, so every sub-tab carries a hidden checker that requests
+    -- a refresh when the drawn colour no longer matches the current selection.
+    for key, group in pairs(groups) do
+        group.args._tabColorSync = {
+            order = -1000,
+            type = "description",
+            name = "",
+            hidden = function()
+                local shouldHighlight = key ~= "custom"
+                if customTabHighlighted ~= shouldHighlight and not tabSyncPending then
+                    tabSyncPending = true
+                    C_Timer.After(0, function()
+                        tabSyncPending = false
+                        LibStub("AceConfigRegistry-3.0"):NotifyChange("BigDebuffs")
+                    end)
+                end
+                return true
+            end,
+        }
+    end
+
+    return groups
+end
+
+-- Rebuild the Spells tab in place and refresh the open panel
+function BigDebuffs:RefreshSpellOptions()
+    if not self.options then return end
+    self.options.args.spells.args = self:BuildSpellOptions()
+    LibStub("AceConfigRegistry-3.0"):NotifyChange("BigDebuffs")
 end
 
 function BigDebuffs:SetupOptions()
@@ -1756,10 +2359,13 @@ function BigDebuffs:SetupOptions()
                 childGroups = "tab",
                 hidden = function() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end,
                 order = 40,
-                args = Spells,
+                args = {},
             },
         }
     }
+
+    -- Populate the Spells tab (presets + custom) after the options tree exists
+    self.options.args.spells.args = self:BuildSpellOptions()
 
     if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
         self.options.args.raidFrames.args.warning = {
