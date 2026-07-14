@@ -13,6 +13,256 @@ local function GetSpellName(id)
     end
 end
 
+-- A trimmed EditBox widget with no confirm ("okay") button. Stock AceGUI
+-- EditBoxes only commit their value (and trigger a full options panel
+-- rebuild) when Enter is pressed or the checkmark is clicked; anything typed
+-- but not yet confirmed is lost the moment a sibling widget (e.g. a select
+-- dropdown) triggers that rebuild. This widget instead calls the option's
+-- `set` directly on every keystroke, so the backing value is always current
+-- and no explicit confirmation step is needed.
+do
+    local AceGUI = LibStub("AceGUI-3.0")
+    local WidgetType = "BigDebuffsLiveEditBox"
+    if not AceGUI:GetWidgetVersion(WidgetType) then
+        local function Control_OnEnter(frame) frame.obj:Fire("OnEnter") end
+        local function Control_OnLeave(frame) frame.obj:Fire("OnLeave") end
+        local function EditBox_OnEscapePressed(frame) AceGUI:ClearFocus() end
+        local function EditBox_OnEnterPressed(frame)
+            local self = frame.obj
+            self:Fire("OnEnterPressed", frame:GetText())
+        end
+        local function EditBox_OnFocusGained(frame) AceGUI:SetFocus(frame.obj) end
+
+        local function EditBox_OnTextChanged(frame)
+            local self = frame.obj
+            local value = frame:GetText()
+            if tostring(value) ~= tostring(self.lasttext) then
+                self.lasttext = value
+                self:Fire("OnTextChanged", value)
+                -- Commit immediately, bypassing AceConfigDialog's Enter-only
+                -- ActivateControl path so no full panel rebuild happens
+                -- while typing (which would steal keyboard focus).
+                local user = self:GetUserDataTable()
+                local option = user and user.option
+                if option and type(option.set) == "function" then
+                    option.set(nil, value)
+                end
+            end
+        end
+
+        local methods = {
+            ["OnAcquire"] = function(self)
+                self:SetWidth(200)
+                self:SetDisabled(false)
+                self:SetLabel()
+                self:SetText()
+                self:SetMaxLetters(0)
+            end,
+            ["OnRelease"] = function(self) self:ClearFocus() end,
+            ["SetDisabled"] = function(self, disabled)
+                self.disabled = disabled
+                if disabled then
+                    self.editbox:EnableMouse(false)
+                    self.editbox:ClearFocus()
+                    self.editbox:SetTextColor(0.5, 0.5, 0.5)
+                    self.label:SetTextColor(0.5, 0.5, 0.5)
+                else
+                    self.editbox:EnableMouse(true)
+                    self.editbox:SetTextColor(1, 1, 1)
+                    self.label:SetTextColor(1, .82, 0)
+                end
+            end,
+            ["SetText"] = function(self, text)
+                self.lasttext = text or ""
+                self.editbox:SetText(text or "")
+                self.editbox:SetCursorPosition(0)
+            end,
+            ["GetText"] = function(self) return self.editbox:GetText() end,
+            ["SetLabel"] = function(self, text)
+                if text and text ~= "" then
+                    self.label:SetText(text)
+                    self.label:Show()
+                    self.editbox:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 7, -18)
+                    self:SetHeight(44)
+                    self.alignoffset = 30
+                else
+                    self.label:SetText("")
+                    self.label:Hide()
+                    self.editbox:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 7, 0)
+                    self:SetHeight(26)
+                    self.alignoffset = 12
+                end
+            end,
+            ["SetMaxLetters"] = function(self, num) self.editbox:SetMaxLetters(num or 0) end,
+            ["ClearFocus"] = function(self)
+                self.editbox:ClearFocus()
+                self.frame:SetScript("OnShow", nil)
+            end,
+            ["SetFocus"] = function(self) self.editbox:SetFocus() end,
+            ["HighlightText"] = function(self, from, to) self.editbox:HighlightText(from, to) end,
+        }
+
+        local function Constructor()
+            local num = AceGUI:GetNextWidgetNum(WidgetType)
+            local frame = CreateFrame("Frame", nil, UIParent)
+            frame:Hide()
+
+            local editbox = CreateFrame("EditBox", "AceGUI-3.0"..WidgetType..num, frame, "InputBoxTemplate")
+            editbox:SetAutoFocus(false)
+            editbox:SetFontObject(ChatFontNormal)
+            editbox:SetScript("OnEnter", Control_OnEnter)
+            editbox:SetScript("OnLeave", Control_OnLeave)
+            editbox:SetScript("OnEscapePressed", EditBox_OnEscapePressed)
+            editbox:SetScript("OnEnterPressed", EditBox_OnEnterPressed)
+            editbox:SetScript("OnTextChanged", EditBox_OnTextChanged)
+            editbox:SetScript("OnEditFocusGained", EditBox_OnFocusGained)
+            editbox:SetTextInsets(0, 0, 3, 3)
+            editbox:SetMaxLetters(256)
+            editbox:SetPoint("BOTTOMLEFT", 6, 0)
+            editbox:SetPoint("BOTTOMRIGHT")
+            editbox:SetHeight(19)
+
+            local label = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+            label:SetPoint("TOPLEFT", 0, -2)
+            label:SetPoint("TOPRIGHT", 0, -2)
+            label:SetJustifyH("LEFT")
+            label:SetHeight(18)
+
+            local widget = {
+                editbox = editbox,
+                label = label,
+                frame = frame,
+                type = WidgetType,
+            }
+            for method, func in pairs(methods) do
+                widget[method] = func
+            end
+            editbox.obj = widget
+
+            return AceGUI:RegisterAsWidget(widget)
+        end
+
+        AceGUI:RegisterWidgetType(WidgetType, Constructor, 1)
+    end
+end
+
+-- A Button that reserves the same header space a labeled EditBox/Dropdown
+-- does (and shares their alignoffset), so it lines up with the input row
+-- instead of sitting higher, centred on its own shorter, label-less height.
+do
+    local AceGUI = LibStub("AceGUI-3.0")
+    local WidgetType = "BigDebuffsAlignedButton"
+    if not AceGUI:GetWidgetVersion(WidgetType) then
+        local function Button_OnClick(frame, ...)
+            AceGUI:ClearFocus()
+            PlaySound(852) -- SOUNDKIT.IG_MAINMENU_OPTION
+            frame.obj:Fire("OnClick", ...)
+        end
+        local function Control_OnEnter(frame) frame.obj:Fire("OnEnter") end
+        local function Control_OnLeave(frame) frame.obj:Fire("OnLeave") end
+
+        local methods = {
+            ["OnAcquire"] = function(self)
+                self:SetWidth(200)
+                self:SetHeight(44)
+                self:SetDisabled(false)
+                self:SetText()
+            end,
+            ["SetText"] = function(self, text) self.text:SetText(text) end,
+            ["SetDisabled"] = function(self, disabled)
+                self.disabled = disabled
+                if disabled then self.button:Disable() else self.button:Enable() end
+            end,
+        }
+
+        local function Constructor()
+            local num = AceGUI:GetNextWidgetNum(WidgetType)
+            local frame = CreateFrame("Frame", nil, UIParent)
+            frame:Hide()
+
+            local button = CreateFrame("Button", "AceGUI30"..WidgetType..num, frame, "UIPanelButtonTemplate")
+            button:EnableMouse(true)
+            button:SetScript("OnClick", Button_OnClick)
+            button:SetScript("OnEnter", Control_OnEnter)
+            button:SetScript("OnLeave", Control_OnLeave)
+            button:SetPoint("BOTTOMLEFT", 0, 0)
+            button:SetPoint("BOTTOMRIGHT", 0, 0)
+            button:SetHeight(19)
+
+            local text = button:GetFontString()
+            text:ClearAllPoints()
+            text:SetPoint("TOPLEFT", 15, -1)
+            text:SetPoint("BOTTOMRIGHT", -15, 1)
+            text:SetJustifyV("MIDDLE")
+
+            local widget = {
+                button = button,
+                text = text,
+                frame = frame,
+                alignoffset = 30, -- matches the labeled EditBox/Dropdown offset
+                type = WidgetType,
+            }
+            for method, func in pairs(methods) do
+                widget[method] = func
+            end
+            button.obj = widget
+
+            return AceGUI:RegisterAsWidget(widget)
+        end
+
+        AceGUI:RegisterWidgetType(WidgetType, Constructor, 1)
+    end
+end
+
+-- A full-width, globally named status line. Explains live (as the user types
+-- a Spell ID) why the Add Spell button is disabled - e.g. that the ID is
+-- already tracked - instead of leaving a greyed-out button with no reason.
+do
+    local AceGUI = LibStub("AceGUI-3.0")
+    local WidgetType = "BigDebuffsStatusLabel"
+    if not AceGUI:GetWidgetVersion(WidgetType) then
+        local methods = {
+            ["OnAcquire"] = function(self)
+                self:SetHeight(18)
+                self:SetText("")
+            end,
+            ["SetText"] = function(self, text) self.fontstring:SetText(text or "") end,
+            -- AceConfigDialog calls this on every render after creation, which
+            -- would otherwise reset the fontstring to its font object's default
+            -- (white) colour - reapply the warning colour each time.
+            ["SetFontObject"] = function(self, font)
+                self.fontstring:SetFontObject(font)
+                self.fontstring:SetTextColor(1, 0.5, 0.2)
+            end,
+        }
+
+        local function Constructor()
+            local num = AceGUI:GetNextWidgetNum(WidgetType)
+            local frame = CreateFrame("Frame", "AceGUI30"..WidgetType..num, UIParent)
+            frame:Hide()
+
+            local fontstring = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+            fontstring:SetPoint("TOPLEFT", 4, 0)
+            fontstring:SetPoint("TOPRIGHT", -4, 0)
+            fontstring:SetJustifyH("LEFT")
+            fontstring:SetTextColor(1, 0.5, 0.2)
+
+            local widget = {
+                fontstring = fontstring,
+                frame = frame,
+                type = WidgetType,
+            }
+            for method, func in pairs(methods) do
+                widget[method] = func
+            end
+
+            return AceGUI:RegisterAsWidget(widget)
+        end
+
+        AceGUI:RegisterWidgetType(WidgetType, Constructor, 1)
+    end
+end
+
 local WarningDebuffs = {}
 if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
     for i = 1, #BigDebuffs.WarningDebuffs do
@@ -382,6 +632,66 @@ end
 local pendingID
 local pendingType = "cc"
 
+-- Returns nil if the pending ID can be added, or an explanatory message if
+-- not (blank field, no such spell, or already tracked - and where).
+local function GetPendingSpellIssue()
+    if not pendingID then return nil end
+    if not GetSpellName(pendingID) then
+        return L["No spell exists with that ID"]
+    end
+    local existing = BigDebuffs.Spells[pendingID]
+    if existing then
+        local catName = L[existing.type] or existing.type
+        return L["Already tracked"].." ("..catName.."). "..L["Edit its category card above instead of adding it again."]
+    end
+    return nil
+end
+
+local function IsPendingSpellValid()
+    return pendingID ~= nil and GetPendingSpellIssue() == nil
+end
+
+-- The currently rendered "Add Spell" exec option and status label (rebuilt
+-- fresh by BuildSpellOptions on every panel refresh), kept so
+-- SyncAddSpellForm can find the matching live widgets below.
+local currentAddExecOption
+local currentAddStatusOption
+
+-- The Spell ID field commits on every keystroke without forcing a panel
+-- refresh (see BigDebuffsLiveEditBox above), so the Add Spell button's
+-- disabled state and the status message - normally only re-checked on a
+-- full redraw - would go stale while typing. Update them directly on the
+-- live widgets instead.
+local function SyncAddSpellForm()
+    local issue = GetPendingSpellIssue()
+    local disabled = pendingID == nil or issue ~= nil
+    local AceGUI = LibStub("AceGUI-3.0")
+
+    if currentAddExecOption then
+        for i = 1, AceGUI:GetWidgetCount("BigDebuffsAlignedButton") do
+            local frame = _G["AceGUI30BigDebuffsAlignedButton"..i]
+            if frame and frame.obj and frame:IsVisible() then
+                local user = frame.obj:GetUserDataTable()
+                if user and user.option == currentAddExecOption then
+                    frame.obj:SetDisabled(disabled)
+                end
+            end
+        end
+    end
+
+    if currentAddStatusOption then
+        for i = 1, AceGUI:GetWidgetCount("BigDebuffsStatusLabel") do
+            local frame = _G["AceGUI30BigDebuffsStatusLabel"..i]
+            if frame and frame.obj and frame:IsVisible() then
+                local user = frame.obj:GetUserDataTable()
+                if user and user.option == currentAddStatusOption then
+                    frame.obj:SetText(issue)
+                end
+            end
+        end
+    end
+end
+
 -- Tracks whether the Custom Spells tab title is currently drawn highlighted
 -- (green) so the tab bar can be refreshed when the selection changes
 -- (see the tab colour sync below)
@@ -433,9 +743,13 @@ function BigDebuffs:BuildSpellOptions()
                     id = {
                         order = 1,
                         type = "input",
+                        dialogControl = "BigDebuffsLiveEditBox",
                         name = L["Spell ID"],
                         get = function() return pendingID and tostring(pendingID) or "" end,
-                        set = function(_, value) pendingID = tonumber(value) end,
+                        set = function(_, value)
+                            pendingID = tonumber(value)
+                            SyncAddSpellForm()
+                        end,
                         validate = function(_, value)
                             local n = tonumber(value)
                             if not n then return L["Please enter a number"] end
@@ -456,18 +770,23 @@ function BigDebuffs:BuildSpellOptions()
                     exec = {
                         order = 3,
                         type = "execute",
+                        dialogControl = "BigDebuffsAlignedButton",
                         name = L["Add Spell"],
-                        disabled = function()
-                            return not (pendingID and GetSpellName(pendingID)
-                                and not BigDebuffs.Spells[pendingID])
-                        end,
+                        disabled = function() return not IsPendingSpellValid() end,
                         func = function()
+                            if not IsPendingSpellValid() then return end
                             BigDebuffs.db.profile.customSpells[pendingID] = { type = pendingType or "cc" }
                             pendingID = nil
                             BigDebuffs:BuildSpellList()
                             BigDebuffs:RefreshSpellOptions()
                             BigDebuffs:Refresh()
                         end,
+                    },
+                    status = {
+                        order = 4,
+                        type = "description",
+                        dialogControl = "BigDebuffsStatusLabel",
+                        name = function() return GetPendingSpellIssue() or "" end,
                     },
                 },
             },
@@ -479,6 +798,8 @@ function BigDebuffs:BuildSpellOptions()
             },
         },
     }
+    currentAddExecOption = custom.args.add.args.exec
+    currentAddStatusOption = custom.args.add.args.status
 
     for spellID in pairs(BigDebuffs.db.profile.customSpells) do
         local spell = BigDebuffs.Spells[spellID]

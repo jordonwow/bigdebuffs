@@ -166,3 +166,5 @@ L["No spell exists with that ID"] = true
 L["That spell is already tracked"] = true
 L["Change the spell ID this entry tracks (enter the original ID to reset)"] = true
 L["Replaces preset"] = true
+L["Already tracked"] = true
+L["Edit its category card above instead of adding it again."] = true
