@@ -3,6 +3,20 @@
 
 local L = LibStub("AceLocale-3.0"):NewLocale("BigDebuffs", "enUS", true)
 
+-- Import / Export
+L["Import / Export"] = true
+L["Export"] = true
+L["Import"] = true
+L["Include settings (visibility, priority and size)"] = true
+L["Share your spells and preset changes with others. Click Export for a copy/paste string."] = true
+L["Copy the string below to share your spells and preset changes with others."] = true
+L["Load spells shared by another player. Click Import to paste a string."] = true
+L["Paste a shared string below and click Import."] = true
+L["Replace my spells (reset before importing)"] = true
+L["This will remove all your current custom spells and overrides, then import the shared set. Continue?"] = true
+L["The import string is not valid"] = true
+L["Imported %d custom spell(s) and %d override(s)."] = true
+
 L["Allow Blizzard and other addons to display countdown text on the icons"] = true
 L["Anchor"] = true
 L["Anchor to attach the BigDebuffs frames"] = true

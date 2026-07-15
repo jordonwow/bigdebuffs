@@ -15,6 +15,10 @@ ignore = {
 }
 read_globals = {
     "wipe",
+    "ACCEPT",
+    "CANCEL",
+    "StaticPopup_Show",
+    "StaticPopupDialogs",
     "ChatFontNormal",
     "PlaySound",
     "ActionBarButtonEventsFrame",

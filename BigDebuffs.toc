@@ -21,6 +21,8 @@ Libs\AceHook-3.0\AceHook-3.0.xml
 Libs\AceGUI-3.0\AceGUI-3.0.xml
 Libs\AceConfig-3.0\AceConfig-3.0.xml
 Libs\AceLocale-3.0\AceLocale-3.0.xml
+Libs\AceSerializer-3.0\AceSerializer-3.0.xml
+Libs\LibDeflate\lib.xml
 Libs\LibDualSpec-1.0\LibDualSpec-1.0.lua [AllowLoadGameType mainline, mists, cata, wrath, tbc]
 Libs\LibSharedMedia-3.0\lib.xml
 Libs\LibClassicDurations\LibClassicDurations.xml [AllowLoadGameType vanilla]
@@ -31,3 +33,4 @@ BigDebuffs.xml
 Spells\[Game].lua
 BigDebuffs.lua
 Options.lua
+ImportExport.lua
