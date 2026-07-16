@@ -12,7 +12,9 @@ externals:
   Libs/AceConfig-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceConfig-3.0
   Libs/AceLocale-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceLocale-3.0
   Libs/AceSerializer-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceSerializer-3.0
-  Libs/LibDeflate: https://repos.curseforge.com/wow/libdeflate/trunk
+  Libs/LibDeflate:
+    url: https://github.com/SafeteeWoW/LibDeflate
+    tag: latest
   Libs/LibDualSpec-1.0: https://repos.curseforge.com/wow/libdualspec-1-0
   Libs/LibSharedMedia-3.0: https://repos.curseforge.com/wow/libsharedmedia-3-0/trunk
   Libs/LibClassicDurations: https://repos.curseforge.com/wow/libclassicdurations
