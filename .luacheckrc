@@ -18,7 +18,6 @@ read_globals = {
     "ACCEPT",
     "CANCEL",
     "StaticPopup_Show",
-    "StaticPopupDialogs",
     "ChatFontNormal",
     "PlaySound",
     "ActionBarButtonEventsFrame",
@@ -117,4 +116,5 @@ read_globals = {
 globals = {
     "BigDebuffs",
     "SlashCmdList",
+    "StaticPopupDialogs",
 }
