@@ -809,6 +809,7 @@ function BigDebuffs:BuildSpellOptions()
     end
 
     groups.custom = custom
+    groups.importexport = BigDebuffs:GetImportExportOptions()
 
     -- Keep the Custom Spells tab title highlighted while it is not the active
     -- sub-tab. The tab bar is only rebuilt on a full panel refresh, not when a
