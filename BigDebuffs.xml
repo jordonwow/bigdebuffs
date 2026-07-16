@@ -37,7 +37,7 @@
         </Frames>
         <Scripts>
             <OnLoad>
-                self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+                self:SetMouseClickEnabled(false);
             </OnLoad>
             <OnUpdate>
                 if ( GameTooltip:IsOwned(self) ) then
